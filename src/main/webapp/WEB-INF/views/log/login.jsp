@@ -42,22 +42,21 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome I.C.E.!</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" name="loginFrm" method="post" action="<c:url value="/log/login.do"/>">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" class="form-control form-control-user" id="identNum" aria-describedby="emailHelp" placeholder="Your identification number...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" id="pwd" placeholder="Password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <input type="checkbox" class="custom-control-input" id="rememCheck">
+                        <label class="custom-control-label" for="customCheck" >Remember Me</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </a>
+                   
+                    <input type="submit" value="Login" class="btn btn-primary btn-user btn-block">
                   </form>
                   <hr>
                   <div class="text-center">
