@@ -20,7 +20,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/login.do", method = RequestMethod.POST)
-	public void login_post(@ModelAttribute memberVO mvo) {		
+	public void login_post() {		
 		logger.info("로그인  처리");
 		
 		
