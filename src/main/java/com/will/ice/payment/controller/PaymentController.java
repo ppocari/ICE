@@ -12,8 +12,18 @@ public class PaymentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class); 
 	
-	@RequestMapping(value="/writePayment.do",method=RequestMethod.GET)
+	@RequestMapping(value="/writePay.do",method=RequestMethod.GET)
 	public void writePayment_get() {
-		logger.info("서류 작성 창 보여주기WOWWOW");
+		logger.info("서류 작성 창 보여주기");
+	}
+	
+	@RequestMapping("/summer.do")
+	public void summer() {
+		logger.info("작성 창");
+	}
+	
+	@RequestMapping("/payList.do")
+	public void payList() {
+		
 	}
 }
