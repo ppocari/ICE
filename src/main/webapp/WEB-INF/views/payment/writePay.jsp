@@ -26,8 +26,8 @@ div button {position: relative;text-align: right;}
 <form class="form-inline">
 	<h2>문서 작성</h2>
 	<div class="form-group">
-			<label for="docNo">문서 번호</label> <input type="text"
-				class="form-control" id="docNo" placeholder="">
+			<label for="docNo">문서 번호</label> 
+				<input type="text" class="form-control" id="docNo" placeholder="">
 			<label for="keeping">보존 기간</label> 
 			<select class="form-control" id="keeping">
 				<option value="1">1년</option>
