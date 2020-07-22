@@ -24,11 +24,11 @@
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
-            format: 'L',
-            date: moment()
+            format: 'YYYY-MM-DD',
+            date: moment().add(-7,"days")
         });
 		$('#datetimepicker2').datetimepicker({
-            format: 'L',
+            format: 'YYYY-MM-DD',
             date: moment()
         });
 		$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -38,12 +38,11 @@
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
 		
-		$('#writeBt').click(function(){
-			alert("클릭!");
-			var docType=$('#docType').val();
-			
-			window.open(${contextPath}+'/payment/writePay.do?docType='+docType,'writePay',
-				'width=400,height=700,left=0,top=0,location=yes,resizable=yes');
+		$('#writeFrm').submit(function(){
+			window.open('','viewer','width=1000,height=900,left=0,top=0,location=yes,resizable=no');
+			this.action='<c:url value="/payment/writePay.do"/>';
+			this.method='POST';
+			this.target='viewer';
 		});
 	});
 </script>
@@ -86,11 +85,12 @@
 				<label for="docType">문서종류</label> 
 				<select class="form-control" id="docType" name="docType">
 					<!-- 반복 시작 -->
-					<option value="1">품의서</option>
+					<option value="품의서">품의서</option>
 					<!-- 반복 끝 -->
-				</select> <label for="title">제목</label> <input type="text"
-					class="form-control" id="title" name="title"> <input
-					class="btn btn-primary" type="submit" value="검색">
+				</select> 
+				<label for="title">제목</label> 
+				<input type="text" class="form-control" id="title" name="title"> 
+				<input class="btn btn-primary" type="submit" value="검색">
 			</div>
 		</form>
 	</div>
@@ -122,8 +122,7 @@
 	</table>
 </div>
 <div id="div3">
-	<form name="writeFrm" method="post" class="form-inline" id="writeFrm"
-		action="<c:url value='' />">
+	<form name="writeFrm" class="form-inline" id="writeFrm">
 		<button type="button" class="btn btn-primary" id="docForm">문서양식
 			설정</button>
 		<button type="button" class="btn btn-primary" id="sendEmail">전자결재
@@ -132,7 +131,7 @@
 		<div class="form-group">
 			<select class="form-control" id="docType" name="docType">
 				<!-- 반복 시작 -->
-				<option value="">품의서</option>
+				<option value="품의서">품의서</option>
 				<!-- 반복 끝 -->
 			</select>
 			<button type="submit" class="btn btn-primary" id="writeBt">문서작성</button>
