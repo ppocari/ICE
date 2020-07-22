@@ -18,7 +18,9 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
+	var startDay = $("#scheduleStart").val();
+	var endDay = $("#scheduleEnd").val();
+	//var showWrite = $('#writeModal').show();
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
       defaultView: 'dayGridMonth',
@@ -49,10 +51,8 @@
                   if (!isNaN(date.valueOf())) { // valid?
                     calendar.addEvent({
                       title: '이제 그만 테스트할래...',
-                      start: '2020-07-21',
-                      end: '2020-07-22',
-                      //start: $("#scheduleStart").val(),
-                      //end: $("#scheduleEnd").val(),
+                      start: startDay,
+                      end: endDay,
                       allDay: true
                     });
                     alert('일정이 추가되었습니다!');
@@ -86,15 +86,18 @@
         { id: 'c', title: 'Room C', eventColor: 'orange' },
         { id: 'd', title: 'Room D', eventColor: 'red' }
       ],
-      events: [
-        { id: '1', resourceId: 'a', start: $("#scheduleStart").val(), end: $("#scheduleEnd").val(), title: $("textarea#content").val() },
-        { id: '2', resourceId: 'a', start: '2020-07-12T09:00:00', end: '2020-07-13T14:00:00', title: 'event 2' },
-        { id: '3', resourceId: 'b', start: '2020-07-15T12:00:00', end: '2020-07-15T06:00:00', title: 'event 3' },
-        { id: '4', resourceId: 'c', start: '2020-07-15T07:30:00', end: '2020-07-16T09:30:00', title: 'event 4' },
-        { id: '5', resourceId: 'd', start: '2020-07-20T10:00:00', end: '2020-07-21T15:00:00', title: 'event 5' } 
-      ],
+      events:
+    	  [
+   	        { id: '1', resourceId: 'a', start: startDay, end: endDay, title: $("textarea#content").val() },
+   	        { id: '2', resourceId: 'a', start: '2020-07-12T09:00:00', end: '2020-07-13T14:00:00', title: 'event 2' },
+   	        { id: '3', resourceId: 'b', start: '2020-07-15T12:00:00', end: '2020-07-15T06:00:00', title: 'event 3' },
+   	        { id: '4', resourceId: 'c', start: '2020-07-15T07:30:00', end: '2020-07-16T09:30:00', title: 'event 4' },
+   	        { id: '5', resourceId: 'd', start: '2020-07-20T10:00:00', end: '2020-07-21T15:00:00', title: 'event 5' } 
+ 	  ],
   	
+ 	  //드래그
       select: function(arg) {
+    	$('#writeModal').show();
         console.log(
           'select',
           arg.startStr,
@@ -102,26 +105,29 @@
           arg.resource ? arg.resource.id : '(no resource)'
         );
         
-        //드래그 일정 추가
-        var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-        var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-        if (!isNaN(date.valueOf())) { // valid?
-            calendar.addEvent({
-              title: 'title',
-              start: date,
-              end: '2020-07-29',
-              allDay: true
-            });
-            alert('일정이 추가되었습니다!');
-          }
+        calendar.addEvent({
+            title: 'title',
+            start: startDay,
+            end: endDay,
+            allDay: true
+         });
       },
       
+      //날짜클릭
       dateClick: function(arg) {
+    	$('#writeModal').show();
         console.log(
           'dateClick',
           arg.date,
           arg.resource ? arg.resource.id : '(no resource)'
         );
+        calendar.addEvent({
+            title: 'title',
+            start: startDay,
+            end: endDay,
+            allDay: true
+         });
+        
       },
       
       //일정 보여주기
@@ -135,7 +141,6 @@
     	    // change the border color just for fun
     	    //info.el.style.borderColor = 'red';
    	  },
-      
       
       // 한국어 설정
       locale: 'ko'
@@ -165,6 +170,19 @@
 				return false;
 			}
 		});
+	});
+	
+	$.ajax({
+		url:"<c:url value='/schedule/ajaxWrite.do'/>",
+		type:"get",
+		datatype:"json",
+		data:data,
+		success:function(res){
+			alert(res);
+		},
+		error:function(xhr, status, error){
+			alert(status + ", " + error);
+		},
 	});
 	
 });
