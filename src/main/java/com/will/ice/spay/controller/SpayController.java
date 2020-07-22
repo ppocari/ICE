@@ -11,4 +11,18 @@ public class SpayController {
 		
 		return "spay/spay";
 	}
+	
+	@RequestMapping("/spay/sbuy.do")
+	public String sbuy() {
+		
+		return "spay/sbuy";
+	}
+	
+	@RequestMapping("/spay/sok.do")
+	public String sok() {
+		
+		return "spay/sok";
+	}
+	
+	
 }
