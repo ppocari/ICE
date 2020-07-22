@@ -23,11 +23,11 @@ public class MypageController {
 	@Autowired MypageService mypageService;
 	
 	@RequestMapping(value = "/mypage.do",method = RequestMethod.GET)
-	public String mypage_get(@RequestParam String empNo,Model model) {
+	public String mypage_get(@RequestParam String memNo,Model model) {
 		logger.info("마이페이지 보여주기");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		MypageVO vo = mypageService.selectEmployee(empNo);
+		MypageVO vo = mypageService.selectEmployee(memNo);
 		String date = sdf.format(vo.getHireDate());
 		
 		model.addAttribute("vo",vo);
@@ -43,7 +43,7 @@ public class MypageController {
 		int cnt = mypageService.updateEmployee(vo);
 		logger.info("수정결과 cnt={}",cnt);
 		
-		String msg = "수정실패", url = "/mypage/mypage.do?empNo="+vo.getEmpno();
+		String msg = "수정실패", url = "/mypage/mypage.do?memNo="+vo.getMemNo();
 		if(cnt > 0) {
 			msg = "수정성공";
 		}

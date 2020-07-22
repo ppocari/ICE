@@ -28,6 +28,10 @@ CREATE TABLE member (
 	posCode NUMBER /* 직급코드 */
 );
 
+create sequence member_seq
+start with 1
+increment by 1;
+
 CREATE UNIQUE INDEX PK_member
 	ON member (
 		memNo ASC
@@ -62,21 +66,23 @@ ALTER TABLE member
 		
 create view log_mem
 as
-select name , memno, pwd,  p.PNAME, d.DEPTNAME
+select m.name , m.memno, m.pwd, m.FIREDATE, p.PosNAME
 from member m join position p
- on m.POSCODE = p.POSCODE
- join department d
-  on m.DEPTCODE = d.DEPTCODE;
+ on m.POSCODE = p.POSCODE;
+ 
   
 select * from log_mem;
 
+desc log_mem;
+
 create view mypage_mem
 as
-select m.*,  p.PNAME, d.DEPTNAME
+select m.*,  p.posname , d.DEPTNAME
 from member m join position p
  on m.POSCODE = p.POSCODE
  join department d
   on m.DEPTCODE = d.DEPTCODE;
   
+
   
 select * from mypage_mem;		

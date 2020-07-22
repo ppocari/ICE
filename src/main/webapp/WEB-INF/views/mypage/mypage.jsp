@@ -135,7 +135,7 @@
 			
 			<div class="data">
 				<div>
-					<label>사번</label><input type="text" name="empNo" value="${param.empNo}" readonly="readonly">
+					<label>사번</label><input type="text" name="memNo" value="${param.empNo}" readonly="readonly">
 				</div>
 				<div>
 					<label>성명</label><input type="text" name="name" value="${vo.name }">

@@ -44,10 +44,10 @@
                   </div>
                   <form class="user" name="loginFrm" method="post" action="<c:url value="/log/login.do"/>">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="identNum" aria-describedby="emailHelp" placeholder="Your identification number...">
+                      <input type="text" class="form-control form-control-user" name="identNum" aria-describedby="emailHelp" placeholder="Your identification number...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="pwd" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" name="pwd" placeholder="Password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">

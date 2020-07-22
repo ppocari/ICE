@@ -4,11 +4,11 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.mypage">
 	<select id="selectEmployee" parameterType="string" resultType="MypageVO">
-		select * from employee where empno=#{empno}
+		select * from member where memno=#{memNo}
 	</select>
 	
 	<update id="updateEmployee" parameterType="MypageVO">
-		update EMPLOYEE
+		update member
 		set name=#{name} , pwd=#{pwd} , hp1=#{hp1} , hp2=#{hp2} , hp3=hp3 ,
 		email1=#{email1} , email2=#{email2} , gender=#{gender} , hiredate=#{hiredate} ,
 		zipcode=#{zipcode} , addr=#{addr} , addrdetail=#{addrdetail}
