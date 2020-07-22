@@ -41,9 +41,9 @@
 		position:relative;
 		top:1px;
 	}
-	.p-5{
+	.border1{
 		padding:2rem !important;
-		width:50%;
+		width:100%;
 		text-align: center;
 		border: solid;
 	}
@@ -55,20 +55,22 @@
 		width: 80%;
 		line-height: 100px;
 	}
-	
-	.border1{
-	
-	}
+
 </style>
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="jquery-barcode.js">
+$("#bcTarget1").barcode("1234567890128", "code128");
+</script>
+
 <body>
 	<form action="">
 	<div class="center">
 		<p style="font-size: larger">결제 확인</p>
 		<div>
-			<div class="p-5">
+			<div class="border1">
 				<label>주문시각 : "yyyy-MM-dd"</label><br> <label>주문자명 :
 					"주문명"</label><br> <label>구매자 : "구매자"</label><br> <label>메일
 					: "ice@naver.com"</label><br> <label>전화번호 : "010-1111-2222"</label><br>
@@ -82,9 +84,12 @@
 			<label>결제 금액 :	"결제 금액"</label><br>
 			<label>카드 승인번호 : "카드 승인번호"</label><br>
 		</div>
+		<div id="bcTarget1" style="margin-top:30px;">2134123412</div>
+		<div style=" text-align: center;">
+			<button onclick="<c:url value='/spay/spay.do'/>" class="bt5">확인</button>
+			<button onclick="<c:url value='/spay/sList.do'/>" class="bt5">목록</button>
+		</div>
 	</div>
-	</form>
-
 </body>
 </html>
 
