@@ -14,6 +14,8 @@ from member m join position p
   
 select * from log_mem;
 
+desc log_mem;
+
 create view mypage_mem
 as
 select m.*,  p.PNAME, d.DEPTNAME
@@ -24,5 +26,6 @@ from member m join position p
   
   
 select * from mypage_mem;
+  
   
   
