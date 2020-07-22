@@ -28,8 +28,8 @@ form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
 <form class="form-inline" name="payInfoFrm" method="post" action="">
 	<h2>${param.docType } 작성</h2>
 	<div class="form-group">
-			<label for="docNo">문서 번호</label> 
-				<input type="text" class="form-control" id="docNo" placeholder="">
+			<label for="docNo">문서 번호</label> <input type="text"
+				class="form-control" id="docNo" placeholder="">
 			<label for="keeping">보존 기간</label> 
 			<select class="form-control" id="keeping">
 				<option value="1">1년</option>
