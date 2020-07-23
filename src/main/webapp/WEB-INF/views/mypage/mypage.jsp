@@ -114,13 +114,12 @@
 				$('#email3').css('visibility','hidden');
 			}
 		});
-		
 	});
 </script>
-	
+
 	<img id="list" src="${pageContext.request.contextPath }/resources/img/list.jpg">
 	<h1 id="change_h1">기본정보수정</h1>
-	<form action="<c:url value='/mypage/mypage.do'/>" method="post" enctype="multipart/form-data">
+	<form action="<c:url value='/mypage/mypageEdit.do'/>" method="post" enctype="multipart/form-data">
 		<div class="imgAll">
 			<div class="noimg1">
 				<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
@@ -135,7 +134,7 @@
 			
 			<div class="data">
 				<div>
-					<label>사번</label><input type="text" name="memNo" value="${param.empNo}" readonly="readonly">
+					<label>사번</label><input type="text" name="empNo" value="${param.empNo}" readonly="readonly">
 				</div>
 				<div>
 					<label>성명</label><input type="text" name="name" value="${vo.name }">
@@ -182,7 +181,7 @@
 					<label>성별</label><input type="text" name="gender" value="${vo.gender }">
 				</div>
 				<div>
-					<label>입사일</label><input type="text" name="hireDate" value="${date }" readonly="readonly">
+					<label>입사일</label><input type="text" name="hireDate" value="${vo.hireDate }" readonly="readonly">
 				</div>
 				<div id="div_zipcode">
 					<label for="zipcode" id="lb_zipcode">주소</label>

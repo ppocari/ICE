@@ -42,7 +42,8 @@
   </div>
 
   	<!-- Bootstrap core JavaScript-->
-  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+  	<!-- jquery중복으로 주석처리합니다(은경) -->
+  <%-- <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script> --%>
   <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
   <!-- Core plugin JavaScript-->

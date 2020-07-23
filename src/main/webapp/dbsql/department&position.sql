@@ -9,7 +9,7 @@
 /* 직급 */
 CREATE TABLE position (
 	posCode NUMBER NOT NULL, /* 직급코드 */
-	posName VARCHAR2(100) /* 직급명 */
+	pName VARCHAR2(100) /* 직급명 */
 );
 
 CREATE UNIQUE INDEX PK_position

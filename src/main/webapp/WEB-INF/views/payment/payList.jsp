@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp" %>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
-<style type="text/css">
+
+ <style type="text/css">
 	input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 	#datefrm{padding-top: 10px;text-align: center;height:120px;}
 	#datefrm label, 
@@ -20,14 +20,15 @@
 	#div3 button,#div3 select{margin-left: 10px;}
 	#upperDiv{color: #4e73df;font-size: 1.3em;font-weight: 600;}
 </style>
+
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD',
-            date: moment().add(-7,"days")
+            format: 'L',
+            date: moment()
         });
 		$('#datetimepicker2').datetimepicker({
-            format: 'YYYY-MM-DD',
+            format: 'L',
             date: moment()
         });
 		$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -36,13 +37,14 @@
 		$("#datetimepicker2").on("change.datetimepicker", function(e) {
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
-		$('#writeFrm').submit(function(){
-			window.open('','viewer','width=1000,height=900,left=0,top=0,location=yes,resizable=no');
-			this.action='<c:url value="/payment/writePay.do"/>';
-			this.method='POST';
-			this.target='viewer';
+		
+		$('#writeBt').click(function(){
+			alert("클릭!");
+			var docType=$('#docType').val();
+			
+			window.open(${contextPath}+'/payment/writePay.do?docType='+docType,'writePay',
+				'width=400,height=700,left=0,top=0,location=yes,resizable=yes');
 		});
-
 	});
 </script>
 <div>
@@ -57,7 +59,7 @@
 				<div class="input-group date" id="datetimepicker1"
 					data-target-input="nearest">
 					<input type="text" class="form-control datetimepicker-input"
-						data-target="#datetimepicker1" value="">
+						data-target="datetimepicker1" id="datetimepicker1" value="">
 					<div class="input-group-append" data-target="#datetimepicker1"
 						data-toggle="datetimepicker">
 						<div class="input-group-text">
@@ -70,7 +72,7 @@
 				<div class="input-group date" id="datetimepicker2"
 					data-target-input="nearest">
 					<input type="text" class="form-control datetimepicker-input"
-						data-target="#datetimepicker2" value="">
+						data-target="datetimepicker2" id="datetimepicker2" value="">
 					<div class="input-group-append" data-target="#datetimepicker2"
 						data-toggle="datetimepicker">
 						<div class="input-group-text">
@@ -81,18 +83,14 @@
 			</div>
 			<br>
 			<div class="form-group">
-				<label for="docType">문서종류</label> <select class="form-control"
-					id="docType" name="docType">
+				<label for="docType">문서종류</label> 
+				<select class="form-control" id="docType" name="docType">
 					<!-- 반복 시작 -->
-
-					<option value="">품의서</option>
-
-
+					<option value="1">품의서</option>
 					<!-- 반복 끝 -->
-				</select> 
-				<label for="title">제목</label> 
-				<input type="text" class="form-control" id="title" name="title"> 
-				<input class="btn btn-primary" type="submit" value="검색">
+				</select> <label for="title">제목</label> <input type="text"
+					class="form-control" id="title" name="title"> <input
+					class="btn btn-primary" type="submit" value="검색">
 			</div>
 		</form>
 	</div>
@@ -124,7 +122,8 @@
 	</table>
 </div>
 <div id="div3">
-	<form name="writeFrm" class="form-inline" id="writeFrm">
+	<form name="writeFrm" method="post" class="form-inline" id="writeFrm"
+		action="<c:url value='' />">
 		<button type="button" class="btn btn-primary" id="docForm">문서양식
 			설정</button>
 		<button type="button" class="btn btn-primary" id="sendEmail">전자결재
@@ -133,10 +132,10 @@
 		<div class="form-group">
 			<select class="form-control" id="docType" name="docType">
 				<!-- 반복 시작 -->
-				<option value="품의서">품의서</option>
+				<option value="">품의서</option>
 				<!-- 반복 끝 -->
 			</select>
-			<button type="button" class="btn btn-primary" id="writeBt">문서작성</button>
+			<button type="submit" class="btn btn-primary" id="writeBt">문서작성</button>
 		</div>
 	</form>
 </div>

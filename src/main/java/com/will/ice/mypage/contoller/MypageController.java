@@ -1,7 +1,5 @@
 package com.will.ice.mypage.contoller;
 
-import java.text.SimpleDateFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,28 +20,23 @@ public class MypageController {
 		= LoggerFactory.getLogger(MypageController.class);
 	@Autowired MypageService mypageService;
 	
-	@RequestMapping(value = "/mypage.do",method = RequestMethod.GET)
-	public String mypage_get(@RequestParam String memNo,Model model) {
+	@RequestMapping(value = "/mypage.do", method = RequestMethod.GET)
+	public String mypage_get(@RequestParam String empNo,Model model) {
 		logger.info("마이페이지 보여주기");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		MypageVO vo = mypageService.selectEmployee(memNo);
-		String date = sdf.format(vo.getHireDate());
-		
+		MypageVO vo = mypageService.selectEmployee(empNo);
 		model.addAttribute("vo",vo);
-		model.addAttribute("date",date);
 		
 		return "mypage/mypage";
 	}
 	
-	@RequestMapping(value = "/mypage.do",method = RequestMethod.POST)
+	@RequestMapping(value = "/mypageEdit.do", method = RequestMethod.POST)
 	public String mypage_post(@ModelAttribute MypageVO vo,Model model) {
 		logger.info("마이페이지 수정하기, 파라미터 vo={}",vo);
 		
 		int cnt = mypageService.updateEmployee(vo);
-		logger.info("수정결과 cnt={}",cnt);
 		
-		String msg = "수정실패", url = "/mypage/mypage.do?memNo="+vo.getMemNo();
+		String msg = "수정실패", url = "/mypage/mypage.do";
 		if(cnt > 0) {
 			msg = "수정성공";
 		}
