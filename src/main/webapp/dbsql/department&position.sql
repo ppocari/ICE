@@ -23,6 +23,33 @@ ALTER TABLE position
 		PRIMARY KEY (
 			posCode
 		);
+		
+insert into position
+values('910', '사원1');
+
+insert into position
+values('911', '사원2');
+
+insert into position
+values('912', '사원3');
+
+insert into position
+values('920', '경리');
+
+insert into position
+values('930', '과장');
+
+insert into position
+values('940', '차장');
+
+insert into position
+values('950', '부장');
+
+insert into position
+values('960', '이사');	
+
+insert into position
+values('999', '관리자');
 
 /* 부서 */
 CREATE TABLE department (
@@ -41,3 +68,23 @@ ALTER TABLE department
 		PRIMARY KEY (
 			deptCode
 		);
+	
+insert into department
+values('111', '영업1팀');
+
+insert into department
+values('121', '기획팀');
+
+insert into department
+values('131', '법무팀');
+
+insert into department
+values('141', '마케팅');
+
+insert into department
+values('999', '전산팀');	
+
+
+
+		
+	

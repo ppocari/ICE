@@ -53,6 +53,7 @@ public class LoginController {
 			//session에 저장
 			HttpSession session=request.getSession();
 			session.setAttribute("identNum", identNum);
+			session.setAttribute("posCode", memVo.getPosCode());
 			session.setAttribute("userName", memVo.getName());
 			
 			//쿠키에 저장
@@ -69,7 +70,17 @@ public class LoginController {
 			}
 			
 			msg=  memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-			url="/index.do";
+			if(memVo.getPosCode().equals("999")) {	//관리자
+				url = "/main_admin.do";
+				
+			}else if(memVo.getPosCode().equals("910")){	//사원
+				url = "/main_user.do";
+			}else if(memVo.getPosCode().equals("920")){ //경리
+				url = "/main_account.do";
+			}else if(Integer.parseInt(memVo.getPosCode()) > 940){	//과장 이상
+				url = "/main_manager.do";
+			}
+			
 		}else if(result==MemberService.PWD_DISAGREE){
 			msg="비밀번호가 일치하지 않습니다.";			
 		}else if(result==MemberService.ID_NONE) {

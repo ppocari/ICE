@@ -7,7 +7,9 @@ public class MemberVO_log {
 	private String memNo;
 	private String pwd;
 	private Timestamp fireDate;
+	private String posCode;
 	private String posName;
+	private String deptCode;
 	private String deptName;
 	public String getName() {
 		return name;
@@ -24,20 +26,32 @@ public class MemberVO_log {
 	public String getPwd() {
 		return pwd;
 	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 	public Timestamp getFireDate() {
 		return fireDate;
 	}
 	public void setFireDate(Timestamp fireDate) {
 		this.fireDate = fireDate;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public String getPosCode() {
+		return posCode;
+	}
+	public void setPosCode(String posCode) {
+		this.posCode = posCode;
 	}
 	public String getPosName() {
 		return posName;
 	}
 	public void setPosName(String posName) {
 		this.posName = posName;
+	}
+	public String getDeptCode() {
+		return deptCode;
+	}
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
 	}
 	public String getDeptName() {
 		return deptName;
@@ -48,9 +62,8 @@ public class MemberVO_log {
 	@Override
 	public String toString() {
 		return "MemberVO_log [name=" + name + ", memNo=" + memNo + ", pwd=" + pwd + ", fireDate=" + fireDate
-				+ ", posName=" + posName + ", deptName=" + deptName + "]";
+				+ ", posCode=" + posCode + ", posName=" + posName + ", deptCode=" + deptCode + ", deptName=" + deptName
+				+ "]";
 	}
-	
-	
 	
 }

@@ -6,9 +6,11 @@ select * from department;
 
 create view log_mem
 as
-select m.name , m.memno, m.pwd, m.FIREDATE, p.PosNAME
+select m.name , m.memno, m.pwd, m.FIREDATE, p.posCode,p.PosNAME ,d.deptCode,d.deptNAME
 from member m join position p
- on m.POSCODE = p.POSCODE;
+ on m.POSCODE = p.POSCODE
+join department d
+ on m.DEPTCODE = d.DEPTCODE;
  
   
 select * from log_mem;
@@ -38,19 +40,19 @@ select * from mypage_mem;
   
   commit;
   
+ --delete from member;
+  
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values(member_seq.nextval, 'Á¤±×·¡', '123', '111','910');
+values('111910', 'Á¤±×·¡', '123', '111','910');
 
-insert into department
-values('111', '¿µ¾÷1ÆÀ');
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('121920', 'ÀÌ°æ¸®', '123', '121','920');
 
-insert into department
-values('121', '±âÈ¹ÆÀ');
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('141930', '±è°úÀå', '123', '141','930');
+
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('999999', '±è°úÀå', '123', '999','999');
 
 
-insert into position
-values('910', '»ç¿ø');
-
-insert into position
-values('920', '°æ¸®');
