@@ -41,9 +41,11 @@
     </div>
   </div>
 
+
+
   	<!-- Bootstrap core JavaScript-->
-  	<!-- 제이쿼리...중.복..오류..주석...처리..-정은경 -->
-  <%-- <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script> --%>
+  	<!-- 제이쿼리...중.복..오류..주석...처리..-정은경ㅋㅋㅋㅋ화났엉??ㅜㅜ -->
+  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
   <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
   <!-- Core plugin JavaScript-->
@@ -52,12 +54,12 @@
   <!-- Custom scripts for all pages-->
   <script src="<c:url value = "/resources/js/sb-admin-2.min.js"/>"></script>
 
-  <!-- Page level plugins -->
+ <%--  <!-- Page level plugins -->
   <script src="<c:url value = "/resources/vendor/chart.js/Chart.min.js"/>"></script>
 
   <!-- Page level custom scripts -->
   <script src="<c:url value = "/resources/js/demo/chart-area-demo.js"/>"></script>
-  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script>
+  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script> --%>
 
 </body>
 

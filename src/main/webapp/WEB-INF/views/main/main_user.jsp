@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="inc/top.jsp" %>
+<%@ include file="../inc/top.jsp" %>
         <!-- Begin Page Content -->
         
         <div class="container-fluid">
@@ -40,8 +40,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">법인카드 잔액</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">1,000/100,000</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">좋은 글귀 랜덤 보여주기</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">하하</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -308,4 +308,4 @@
       </div>
       <!-- End of Main Content -->
 
- <%@ include file="inc/bottom.jsp" %>     
+ <%@ include file="../inc/bottom.jsp" %>     

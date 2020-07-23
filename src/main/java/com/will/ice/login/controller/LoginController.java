@@ -71,14 +71,14 @@ public class LoginController {
 			
 			msg=  memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
 			if(memVo.getPosCode().equals("999")) {	//관리자
-				url = "/main_admin.do";
+				url = "/main/main_admin.do";
 				
 			}else if(memVo.getPosCode().equals("910")){	//사원
-				url = "/main_user.do";
+				url = "/main/main_user.do";
 			}else if(memVo.getPosCode().equals("920")){ //경리
-				url = "/main_account.do";
+				url = "/main/main_account.do";
 			}else if(Integer.parseInt(memVo.getPosCode()) > 940){	//과장 이상
-				url = "/main_manager.do";
+				url = "/main/main_manager.do";
 			}
 			
 		}else if(result==MemberService.PWD_DISAGREE){

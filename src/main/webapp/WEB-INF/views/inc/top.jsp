@@ -65,7 +65,7 @@
 			<%
 				
 				String posCode = (String)session.getAttribute("posCode");
-				if (posCode.equals("999999")) { //관리자
+				if (posCode.equals("999")) { //관리자
 			%>
 			<div class="sidebar-heading">management</div>
 
