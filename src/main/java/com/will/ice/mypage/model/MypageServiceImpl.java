@@ -8,8 +8,8 @@ public class MypageServiceImpl implements MypageService{
 	@Autowired MypageDAO mypagedao;
 
 	@Override
-	public MypageVO selectEmployee(String empNo) {
-		return mypagedao.selectEmployee(empNo);
+	public MypageVO selectEmployee(String memNo) {
+		return mypagedao.selectEmployee(memNo);
 	}
 
 	@Override

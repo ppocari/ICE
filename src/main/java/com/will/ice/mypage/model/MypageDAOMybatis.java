@@ -10,8 +10,8 @@ public class MypageDAOMybatis implements MypageDAO{
 	String namespace = "com.mybatis.mapper.oracle.mypage.";
 	
 	@Override
-	public MypageVO selectEmployee(String empNo) {
-		return sqlsession.selectOne(namespace+"selectEmployee",empNo);
+	public MypageVO selectEmployee(String memNo) {
+		return sqlsession.selectOne(namespace+"selectEmployee",memNo);
 	}
 
 	@Override

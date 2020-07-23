@@ -7,9 +7,13 @@
 		<selectKey keyProperty="scheduleNo" resultType="int" order="BEFORE">
 			select schedule_seq.nextval from dual
 		</selectKey>
-		insert into SCHEDULE(title,content,scheduleStart,scheduleEnd,scheduleNo,empNo)
-		values(#{title},#{content},#{scheduleStart},#{scheduleEnd},#{scheduleNo},#{empNo})
+		insert into SCHEDULE(title,content,scheduleStart,scheduleEnd,scheduleNo,memNo,type)
+		values(#{title},#{content},#{scheduleStart},#{scheduleEnd},#{scheduleNo},#{memNo},#{type})
 	</insert>
+	
+	<select id="selectSchedule" parameterType="string" resultType="ScheduleVo">
+		select * from schedule where memNo=#{memNo}
+	</select>
 	
 </mapper>
 

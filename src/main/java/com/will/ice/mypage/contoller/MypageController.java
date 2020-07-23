@@ -43,7 +43,7 @@ public class MypageController {
 		int cnt = mypageService.updateEmployee(vo);
 		logger.info("수정결과 cnt={}",cnt);
 		
-		String msg = "수정실패", url = "/mypage/mypage.do?memNo="+vo.getMemNo();
+		String msg = "수정실패", url = "/mypage/mypage.do?empNo="+vo.getMemNo();
 		if(cnt > 0) {
 			msg = "수정성공";
 		}

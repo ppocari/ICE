@@ -5,8 +5,9 @@ public class ScheduleVo {
 	private String content;
 	private String scheduleStart;
 	private String scheduleEnd;
-	private String empNo;
+	private String memNo;
 	private int scheduleNo;
+	private String type;
 	
 	
 	public String getTitle() {
@@ -33,11 +34,11 @@ public class ScheduleVo {
 	public void setScheduleEnd(String scheduleEnd) {
 		this.scheduleEnd = scheduleEnd;
 	}
-	public String getEmpNo() {
-		return empNo;
+	public String getMemNo() {
+		return memNo;
 	}
-	public void setEmpNo(String empNo) {
-		this.empNo = empNo;
+	public void setMemNo(String memNo) {
+		this.memNo = memNo;
 	}
 	public int getScheduleNo() {
 		return scheduleNo;
@@ -45,14 +46,19 @@ public class ScheduleVo {
 	public void setScheduleNo(int scheduleNo) {
 		this.scheduleNo = scheduleNo;
 	}
-	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	@Override
 	public String toString() {
 		return "ScheduleVo [title=" + title + ", content=" + content + ", scheduleStart=" + scheduleStart
-				+ ", scheduleEnd=" + scheduleEnd + ", empNo=" + empNo + ", scheduleNo=" + scheduleNo + "]";
+				+ ", scheduleEnd=" + scheduleEnd + ", memNo=" + memNo + ", scheduleNo=" + scheduleNo + ", type=" + type
+				+ "]";
 	}
-	
 	
 	
 	

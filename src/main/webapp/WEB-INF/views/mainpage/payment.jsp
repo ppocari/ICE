@@ -36,6 +36,7 @@
 				<!-- 반복 시작 -->
 				<c:forEach var="vo" items="${list }">
 					<li>
+					<!-- 
 						<a href
 						="<c:url value='/board/detail.do?no=${vo.no}'/>">
 							<img src="${pageContext.request.contextPath }/resources/images/dot.JPG" >
@@ -46,6 +47,7 @@
 								${vo.title}
 							</c:if>
 						</a>
+						 -->
 					</li>		
 				</c:forEach>
 				<!-- 반복 끝 -->

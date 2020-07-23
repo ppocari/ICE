@@ -1,5 +1,7 @@
 package com.will.ice.schedule.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,8 +17,8 @@ public class ScheduleDAOMybatis implements ScheduleDAO{
 	}
 
 	@Override
-	public ScheduleVo selectSchedule() {
-		return sqlseeion.selectOne(namespace+"selectSchedule");
+	public List<ScheduleVo> selectSchedule(String memNo) {
+		return sqlseeion.selectList(namespace+"selectSchedule",memNo);
 	}
 	
 	

@@ -15,17 +15,106 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
+  $(function() {
+		var memNo = $("#memNo").val();
+		var startDay="";
+		var endDay="";
+		var content="";
+		var title="";
+		
+			$.ajax({
+				url:"<c:url value='/schedule/ajaxSelect.do'/>",
+				type:"get",
+				dataType:"text",
+				data:"memNo="+$("#memNo").val(),
+				success:function(res){					
+					startDay = res.scheduleStart;
+					endDay = res.scheduleEnd;
+					content = res.content;
+					title = res.title;
+					
+					
+				},
+				error: function(jqXHR, exception) {
+	                if (jqXHR.status === 0) {
+	                        alert('Not connect.\n Verify Network.');
+	                    } 
+	                    else if (jqXHR.status == 400) {
+	                        alert('Server understood the request, but request content was invalid. [400]');
+	                    } 
+	                    else if (jqXHR.status == 401) {
+	                        alert('Unauthorized access. [401]');
+	                    } 
+	                    else if (jqXHR.status == 403) {
+	                        alert('Forbidden resource can not be accessed. [403]');
+	                    } 
+	                    else if (jqXHR.status == 404) {
+	                        alert('Requested page not found. [404]');
+	                    } 
+	                    else if (jqXHR.status == 500) {
+	                        alert('Internal server error. [500]');
+	                    } 
+	                    else if (jqXHR.status == 503) {
+	                        alert('Service unavailable. [503]');
+	                    } 
+	                    else if (exception === 'parsererror') {
+	                        alert('Requested JSON parse failed. [Failed]');
+	                    } 
+	                    else if (exception === 'timeout') {
+	                        alert('Time out error. [Timeout]');
+	                    } 
+	                    else if (exception === 'abort') {
+	                        alert('Ajax request aborted. [Aborted]');
+	                    }
+	                    else {
+	                        alert('Uncaught Error.n' + jqXHR.responseText);
+                    	}
+           		}
+			});
+	  
+		$('.BtClose').click(function() {
+			$('#modal').hide();
+		});
+		
+		$('.writeClose').click(function() {
+			event.preventDefault();
+			$('#writeModal').hide();
+		});
+		
+		
+		$('form[name=frm]').submit(function() {
+			$('.infobox').each(function(idx,item) {
+				if($(this).text().length()<1 ){
+					alert($(this).prev().html()+"을(를) 입력하세요!");
+					event.preventDefault();
+					$(this).focus();
+					return false;
+				}
+			});
+		});
+	
 
-  document.addEventListener('DOMContentLoaded', function() {
+  $('DOMContentLoaded', function() {
+	  
     var calendarEl = document.getElementById('calendar');
+    /*
 	var startDay = $("#scheduleStart").val();
 	var endDay = $("#scheduleEnd").val();
-	//var showWrite = $('#writeModal').show();
+	var content = $("textarea#content").val();
+	var title = $("#title").val();
+	*/
+	
+	
+	
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
       defaultView: 'dayGridMonth',
       defaultDate: '2020-07-18',
       editable: true,
+      
+      
+      
+      
       selectable: true,
       nowIndicator : true,
       eventLimit: true, // allow "more" link when too many events
@@ -46,17 +135,29 @@
               click: function() {
             	  $('#writeModal').show();
             	  
-            	  var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                  var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-                  if (!isNaN(date.valueOf())) { // valid?
-                    calendar.addEvent({
-                      title: '이제 그만 테스트할래...',
-                      start: startDay,
-                      end: endDay,
-                      allDay: true
-                    });
-                    alert('일정이 추가되었습니다!');
-                  }
+            	  //var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                  //var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+                		  
+               	  $("#frm").submit(function() {
+               			$.ajax({
+               				url:"<c:url value='/schedule/ajaxWrite.do'/>",
+               				type:"post",
+               				datatype:"json",
+               				data: $(this).serializeArray(),
+               				success:function(res){
+               					calendar.addEvent({
+               	                      title: "테스트",
+               	                      start: startDay,
+               	                      end: endDay,
+               	                      allDay: true
+               	                    });
+               	                    alert('일정이 추가되었습니다!');
+               				},
+               				error:function(xhr, status, error){
+               					alert(status + ", " + error);
+               				}
+               			});
+               		});  
               }
           }
       },
@@ -88,11 +189,14 @@
       ],
       events:
     	  [
-   	        { id: '1', resourceId: 'a', start: startDay, end: endDay, title: $("textarea#content").val() },
+    		  { id: '1', resourceId: 'a', start: startDay, end: endDay, title: title } 
+    		  
+   	        /*
+   	        { id: '1', resourceId: 'a', start: startDay, end: endDay, title: content },
    	        { id: '2', resourceId: 'a', start: '2020-07-12T09:00:00', end: '2020-07-13T14:00:00', title: 'event 2' },
    	        { id: '3', resourceId: 'b', start: '2020-07-15T12:00:00', end: '2020-07-15T06:00:00', title: 'event 3' },
    	        { id: '4', resourceId: 'c', start: '2020-07-15T07:30:00', end: '2020-07-16T09:30:00', title: 'event 4' },
-   	        { id: '5', resourceId: 'd', start: '2020-07-20T10:00:00', end: '2020-07-21T15:00:00', title: 'event 5' } 
+   	        { id: '5', resourceId: 'd', start: '2020-07-20T10:00:00', end: '2020-07-21T15:00:00', title: 'event 5' } */
  	  ],
   	
  	  //드래그
@@ -106,7 +210,7 @@
         );
         
         calendar.addEvent({
-            title: 'title',
+            title: content,
             start: startDay,
             end: endDay,
             allDay: true
@@ -134,11 +238,12 @@
       eventClick: function(info) {
     	  	$('#modal').show();
     	  	
-    	  	$('#modal-title').text(info.event.title);
+    	  	//$("#modal-type"),text($("#type").on("selected","selected"));
+    	  	$('#modal-title').text(title);
     	  	$('#modal-contents').text($("textarea#content").val());
     	  	
     	  	
-    	    // change the border color just for fun
+    	    // borderColor 변경
     	    //info.el.style.borderColor = 'red';
    	  },
       
@@ -150,43 +255,7 @@
     
   });
   
-  $(function() {
-	$('.BtClose').click(function() {
-		$('#modal').hide();
-	});
-	
-	$('.writeClose').click(function() {
-		event.preventDefault();
-		$('#writeModal').hide();
-	});
-	
-	
-	$('form[name=frm]').submit(function() {
-		$('.infobox').each(function(idx,item) {
-			if($(this).text().length()<1 ){
-				alert($(this).prev().html()+"을(를) 입력하세요!");
-				event.preventDefault();
-				$(this).focus();
-				return false;
-			}
-		});
-	});
-	
-	$.ajax({
-		url:"<c:url value='/schedule/ajaxWrite.do'/>",
-		type:"get",
-		datatype:"json",
-		data:data,
-		success:function(res){
-			alert(res);
-		},
-		error:function(xhr, status, error){
-			alert(status + ", " + error);
-		},
-	});
-	
 });
- 
 </script>
 <style>
 
@@ -260,6 +329,7 @@
 	    color: black;
 	}
 </style>
+		<div id="div"></div>
 		<!-- 캘린더 -->
 		<div class="calendar_back">
 			<div id='calendar'></div>
@@ -269,6 +339,7 @@
 		<!-- 스케줄 글보기 모델 -->
 		<div id="modal" class="msgbox" style="display: none;">
 			<div class="head">
+				<div id="modal-type"></div>
 				<div id="modal-title"></div>
 		    </div>
 			<div class="body">
@@ -284,17 +355,18 @@
 		<!-- 스케줄등록모델 -->
 		<!-- style="display: none;" -->
 		<div id="writeModal" class="msgbox" style="display: none;">
-		<form action="<c:url value='scheduleWrite.do'/>" method="post" name="frm">
+		<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
+		<form id="frm">
 			<div class="head">
 				<span>등록 폼</span>
 		    </div>
 			<div class="body">
-				<input type="hidden" name="empNo" value="1">
+				<input type="hidden" name="memNo" id="memNo" value="1">
 				<input type="hidden" name="scheduleNo" value="1">
 				<table>
 					<tr>
 						<td>
-							<select title="타입선" id="type" style="height: 28px;">
+							<select title="타입선" id="type" name="type" style="height: 28px;">
 								<option value="1">업무관련</option>
 								<option value="2">기타</option>
 								<option value="3">휴가/연차</option>
