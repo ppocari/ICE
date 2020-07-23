@@ -3,7 +3,7 @@ package com.will.ice.mypage.model;
 import java.util.Date;
 
 public class MypageVO {
-	private int empno;
+	private int memNo;
 	private String name;
 	private String pwd;
 	private String hp1;
@@ -20,14 +20,13 @@ public class MypageVO {
 	private String proFileURL;
 	private String originalFileName;
 	private long fileSize;
-	private int deptNo;
-	private int pcode;
-	
-	public int getEmpno() {
-		return empno;
+	private int deptCode;
+	private int posCode;
+	public int getMemNo() {
+		return memNo;
 	}
-	public void setEmpno(int empno) {
-		this.empno = empno;
+	public void setMemNo(int memNo) {
+		this.memNo = memNo;
 	}
 	public String getName() {
 		return name;
@@ -125,27 +124,25 @@ public class MypageVO {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	public int getDeptNo() {
-		return deptNo;
+	public int getDeptCode() {
+		return deptCode;
 	}
-	public void setDeptNo(int deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptCode(int deptCode) {
+		this.deptCode = deptCode;
 	}
-	public int getPcode() {
-		return pcode;
+	public int getPosCode() {
+		return posCode;
 	}
-	public void setPcode(int pcode) {
-		this.pcode = pcode;
+	public void setPosCode(int posCode) {
+		this.posCode = posCode;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "MypageVO [empno=" + empno + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2=" + hp2
+		return "MypageVO [memNo=" + memNo + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2=" + hp2
 				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", zipcode=" + zipcode + ", addr="
 				+ addr + ", addrDetail=" + addrDetail + ", salary=" + salary + ", hireDate=" + hireDate + ", gender="
 				+ gender + ", proFileURL=" + proFileURL + ", originalFileName=" + originalFileName + ", fileSize="
-				+ fileSize + ", deptNo=" + deptNo + ", pcode=" + pcode + "]";
+				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + "]";
 	}
 	
 	
