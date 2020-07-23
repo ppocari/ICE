@@ -42,7 +42,8 @@
   </div>
 
   	<!-- Bootstrap core JavaScript-->
-  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+  	<!-- 제이쿼리...중.복..오류..주석...처리..-정은경 -->
+  <%-- <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script> --%>
   <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
   <!-- Core plugin JavaScript-->

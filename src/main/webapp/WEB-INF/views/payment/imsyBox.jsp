@@ -18,7 +18,6 @@
 	#payTable{width:100%;text-align: center;}
 	#payTable thead tr{background-color: gray;color:white;}
 	#div3 button,#div3 select{margin-left: 10px;}
-	#div3{position: relative;left: 82%;top: -40px;}
 	#upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 	#upperDiv p{padding-top: 5px;padding-left: 5px;}
 	#wholeDiv{padding-left: 20px;padding-right: 20px;}
@@ -41,25 +40,17 @@
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
 		
-		$('#writeFrm').submit(function(){
-			window.open('','viewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');
+		/* $('#writeFrm').submit(function(){
+			window.open('','viewer','width=1000,height=900,left=0,top=0,location=yes,resizable=no');
 			this.action='<c:url value="/payment/writePay.do"/>';
 			this.method='POST';
 			this.target='viewer';
-		});
-		
-		$('.docNoInfo').click(function(){
-			window.open('docView.do','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');
-		});
-		
-		$('#docForm').click(function(){
-			window.open('setForm.do','docform','width= 768,height=600,left=0,top=0,location=no,resizable=no,scroll=no');
-		});
+		}); */
 	});
 </script>
 <div id="wholeDiv">
 	<div id="upperDiv">
-		<p>기안 상신함</p>
+		<p>임시 보관함</p>
 	</div>
 	<div class="form-group" id="searchDateDiv">
 		<form name="searchDateFrm" method="post" class="form-inline"
@@ -122,7 +113,7 @@
 		<tbody>
 			<tr>
 				<td>
-					<a class="docNoInfo">
+					<a href="<c:url value='/payment/docView.do'/>">
 						ED20200721001
 					</a>
 				</td>
@@ -135,22 +126,6 @@
 		</tbody>
 		<!-- 반복 끝 -->
 	</table>
-</div>
-<div id="div2">
-	<button type="button" class="btn btn-primary" id="docForm">문서양식 설정</button>
-	<button type="button" class="btn btn-primary" id="sendEmail">전자결재 알림</button>
-</div>
-<div id="div3">
-	<form name="writeFrm" class="form-inline" id="writeFrm">
-		<div class="form-group">
-			<select class="form-control" id="docType" name="docType">
-				<!-- 반복 시작 -->
-				<option value="품의서">품의서</option>
-				<!-- 반복 끝 -->
-			</select>
-			<button type="submit" class="btn btn-primary" id="writeBt">문서작성</button>
-		</div>
-	</form>
 </div>
 </div><br>
 
