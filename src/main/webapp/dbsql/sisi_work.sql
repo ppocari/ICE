@@ -34,6 +34,7 @@ select * from mypage_mem;
   drop view mypage_mem;
   drop table position;
   drop table department;
+  drop table member;
   */
   
  
@@ -53,6 +54,6 @@ insert into member(memNo, name, pwd, deptcode, poscode)
 values('141930', '±è°úÀå', '123', '141','930');
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values('999999', '±è°úÀå', '123', '999','999');
+values('999999', '¹Ú°ü¸®', '123', '999','999');
 
 
