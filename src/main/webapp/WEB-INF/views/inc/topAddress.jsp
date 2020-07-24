@@ -34,11 +34,11 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div>
-         <img id="addressICEImg" alt="I.C.E로고" width="200px" 
-         	src="${pageContext.request.contextPath }/resources/img/ICEPurple.png">
+         <img id="addressICEImg" alt="I.C.E로고" width="50px" 
+         	src="${pageContext.request.contextPath }/resources/img/ICElogo3.png">
          <!--  <i class="fas fa-laugh-wink"></i> -->
         </div>
-        <!-- <div class="sidebar-brand-text mx-3">I.C.E</div> -->
+        <div class="sidebar-brand-text mx-3">I.C.E</div>
       </a>
 
       <!-- Divider -->
