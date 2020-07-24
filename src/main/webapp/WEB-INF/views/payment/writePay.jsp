@@ -4,29 +4,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ICE</title>
+<title>결재작성창</title>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/resources/js/jquery-ui.min.css' />">
 <script type="text/javascript"
 	src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
+	
 <style type="text/css">
-body{overflow: hidden;}
 form {width: 80%;position: relative;left: 150px;}
 input[type="text"], #keeping, #docForm {width: 200px;margin-top: 10px;margin-bottom: 10px;
 margin-right: 100px}
 div button {position: relative;text-align: right;}
 #title {width: 570px;}
 #confirmBt {position: relative;left: 180px;}
-form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
-#sendBt,#saveBt,#lookBt{background-color: #4e73df; color:white;}
 </style>
 
 </head>
 <body>
-<form class="form-inline" name="payInfoFrm" method="post" action="">
-	<h2>${param.docType } 작성</h2>
+<form class="form-inline">
+	<h2>문서 작성</h2>
 	<div class="form-group">
 			<label for="docNo">문서 번호</label> 
 				<input type="text" class="form-control" id="docNo" placeholder="">
@@ -74,9 +72,9 @@ form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
 		<button type="button" class="btn btn-default" id="setrefLine">참조선 지정</button>
 	</div>
 	<div class="form-group" id="confirmBt">
-		<button type="submit" class="btn btn-default" id="sendBt">결재상신</button>
-		<button type="button" class="btn btn-default" id="saveBt">임시저장</button>
-		<button type="button" class="btn btn-default" id="lookBt">미리보기</button>
+		<button type="submit" class="btn btn-primary">결재상신</button>
+		<button type="button" class="btn btn-primary" id="">임시저장</button>
+		<button type="button" class="btn btn-primary" id="">미리보기</button>
 	</div>
 </form>
 </body>
