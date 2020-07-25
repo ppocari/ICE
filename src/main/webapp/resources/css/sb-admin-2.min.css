@@ -590,7 +590,7 @@ pre code {
 	display: flex;
 	flex-wrap: wrap;
 	margin-right: -.75rem;
-	margin-left: -.75rem
+	margin-left: -.75rem;
 }
 
 .no-gutters {
@@ -10483,7 +10483,7 @@ opacity
 }
 
 .bg-login-image {
-	background: url();
+	background-image: url(../img/ICElogo2.png);
 	background-position: center;
 	background-size: cover
 }
