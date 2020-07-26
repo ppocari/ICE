@@ -1,5 +1,7 @@
 package com.will.ice.member.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,16 @@ public class MemberServiceImpl implements MemberService{
 	
 	public MemberVO_log selectMember(String memNo){
 		return memberDao.selectMember(memNo);
+	}
+
+	@Override
+	public int admin_regist_member(MemberVO memberVO) {
+		return memberDao.admin_regist_member(memberVO);
+	}
+
+	@Override
+	public List<MemberVO> searchAllmember(String searchKeyword) {
+		return memberDao.searchAllmember(searchKeyword);
 	}
 	
 	

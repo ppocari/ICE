@@ -1,5 +1,7 @@
 package com.will.ice.member.model;
 
+import java.util.List;
+
 public interface MemberService {
 	
 	//아이디 중복확인 관련 상수
@@ -15,4 +17,9 @@ public interface MemberService {
 		int logCheck(String memNo, String pwd);
 		
 		MemberVO_log selectMember(String userid);
+		
+		int admin_regist_member(MemberVO memberVO);
+		
+		List<MemberVO> searchAllmember(String searchKeyword);
+
 }
