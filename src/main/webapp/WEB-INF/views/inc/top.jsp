@@ -27,7 +27,23 @@
 <!-- Custom styles for this template-->
 <link href="<c:url value="/resources/css/sb-admin-2.min.css"/>"
 	rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+ 
+  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+  <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
+  <!-- Core plugin JavaScript-->
+  <script src="<c:url value = "/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="<c:url value = "/resources/js/sb-admin-2.min.js"/>"></script>
+
+ <%--  <!-- Page level plugins -->
+  <script src="<c:url value = "/resources/vendor/chart.js/Chart.min.js"/>"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="<c:url value = "/resources/js/demo/chart-area-demo.js"/>"></script>
+  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script> --%>
 
 </head>
 
@@ -44,7 +60,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="<c:url value='/mainpage/main.do'/>">
+				href="<c:url value='/main/main_admin.do'/>">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -78,9 +94,9 @@
 				<div id="collapseNine" class="collapse"
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">사원등록</a>
-						<a class="collapse-item" href="<c:url value="#" />">사원수정 / 삭제</a>
+						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
+						<a class="collapse-item" href="<c:url value="/member/register.do" />">사원등록</a>
+						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
 					</div>
 				</div>
 			</li>
