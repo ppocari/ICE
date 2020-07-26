@@ -230,12 +230,12 @@
 				<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="<c:url value='#'/>">법인카드 조회</a>
-						<a class="collapse-item" href="<c:url value='#'/>">법인카드 통계</a>
+						<a class="collapse-item" href="<c:url value='/companyCard/comCardList.do'/>">법인카드 조회</a>
+						<a class="collapse-item" href="<c:url value='/companyCard/comCardStatistic.do'/>">법인카드 통계</a>
 						<%
 						if(posCode.equals("920")){%> <!-- 경리 -->
-							<a class="collapse-item" href="<c:url value='#'/>">미등록/등록</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사용내역 업로드</a>
+							<a class="collapse-item" href="<c:url value='/companyCard/comCardUse.do'/>">미등록/등록</a>
+							<a class="collapse-item" href="<c:url value='/companyCard/comCardUpload.do'/>">사용내역 업로드</a>
 						<% }%>
 
 					</div>

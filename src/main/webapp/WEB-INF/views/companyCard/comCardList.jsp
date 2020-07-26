@@ -66,7 +66,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">사원조회</h1>
+		<h1 class="h3 mb-0 text-gray-800">법인카드 조회</h1>
 
 		<a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -84,7 +84,7 @@
 				<form name="memRegisterFrm" method="post"  
 				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
+						<h6 class="m-0 font-weight-bold text-primary">법인카드 조회</h6>
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
 							 >전체조회</button>
@@ -113,9 +113,9 @@
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<label for="hiredate1" style="margin-right: 20px;">금액별 조회</label>
+							<input type="text" name="hiredate1">
+							
 						</div>
 					</div>
 					<!-- Card Body -->
