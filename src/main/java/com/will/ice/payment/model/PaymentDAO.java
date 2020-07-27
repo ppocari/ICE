@@ -1,9 +1,8 @@
 package com.will.ice.payment.model;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 public interface PaymentDAO {
 	int insertPaydoc(PaymentVO paymentVo);
-	
-	List<PaymentviewVO> selectAll();
+	Timestamp calcKeeping(int keep);
 }

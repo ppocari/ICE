@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>ICE</title>
-<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <style type="text/css">
@@ -37,16 +38,14 @@ body{overflow: hidden;}
 				<td>양식이름</td>
 			</tr>
 			<!-- 반복 시작 -->
-			<c:forEach var="docformVo" items="${formlist }">
 			<tr>
 				<td>
 					<label class="checkbox-inline">
-						<input type="checkbox" id="inlineCheckbox1">${docformVo.formNo }
+						<input type="checkbox" id="inlineCheckbox1">dddd
 					</label>
 				</td>
-				<td>${docformVo.formName }</td>
+				<td>식대</td>
 			</tr>
-			</c:forEach>
 			<!-- 반복 끝 -->
 		</table>
 	</div>

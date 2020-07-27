@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ICE</title>
-<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <style type="text/css">
 body{overflow: hidden;}
 #formNo,#formName{width:200px;}
@@ -15,6 +17,7 @@ body{overflow: hidden;}
 #btwriteForm{background-color: #4e73df; color:white;}
 #summerDiv{padding-top: 10px;padding-bottom: 10px;}
 #formDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 8px;text-align: center;}
+#lastDiv{}
 </style>
 
 </head>
@@ -24,15 +27,14 @@ body{overflow: hidden;}
 			<p>문서 양식 등록</p>
 		</div>
 		<div id="formDiv">
-			<form class="form-inline" method="post" name="formInfoFrm"
-				action="<c:url value='/payment/write/insertForm.do'/>">
+			<form class="form-inline" method="post" action="">
 				<div class="form-group">
 					<label for="formNo">양식코드</label> 
-					<input type="text" class="form-control" id="formNo" readonly="readonly">
+					<input type="text" class="form-control" id="formNo">
 				</div>
 				<div class="form-group">
 					<label for="formName">양식이름</label> 
-					<input type="text" class="form-control" id="formName" name="formName">
+					<input type="text" class="form-control" id="formName">
 				</div><br>
 				<div class="form-group" id="summerDiv">
 					<%@include file="../summer.jsp" %>

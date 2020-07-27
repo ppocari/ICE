@@ -6,7 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>ICE</title>
-<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/js/jquery-ui.min.css' />">
+<script type="text/javascript"
+	src="<c:url value='/resources/js/jquery-ui.min.js'/>"></script>
 <style type="text/css">
 body{overflow: hidden;}
 form {width: 80%;position: relative;left: 150px;}
@@ -20,11 +25,8 @@ form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
 </style>
 <script type="text/javascript">
 	$(function(){
-		$('#formNo').change(function(){
-			
-		});
+		
 	});
-	
 </script>
 </head>
 <body>
@@ -32,28 +34,27 @@ form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
 	action="<c:url value='/payment/write/insertPaydoc.do'/>"
 	enctype="multipart/form-data">
 	<h2>${typeName } 작성</h2>
-	<input type="hidden" id="typeNo" name="typeNo" value="${param.typeNo }">
 	<div class="form-group">
 			<label for="docNo">문서 번호</label> 
 				<input type="text" class="form-control" id="docNo" readonly="readonly">
 			<label for="keep">보존 기간</label> 
 			<select class="form-control" id="keep" name="keep">
-				<option value="12">1년</option>
-				<option value="24">2년</option>
-				<option value="36">3년</option>
-				<option value="48">4년</option>
-				<option value="60">5년</option>
+				<option value="1">1년</option>
+				<option value="2">2년</option>
+				<option value="3">3년</option>
+				<option value="4">4년</option>
+				<option value="5">5년</option>
 			</select>
 	</div>
 	<div class="form-group">
 		<label for="department">기안 부서</label> 
 			<input type="text" class="form-control" id="department"
-				value="${memVo.deptName }" readonly="readonly">
+				value="개발팀" readonly="readonly">
 		<label for="name">기안자</label> &ensp;&ensp;
 			<input type="text" class="form-control" id="name"
-				value="${memVo.name }" readonly="readonly">
+				value="정그래" readonly="readonly">
 			<input type="hidden" id="memNo" name="memNo"
-				value="${memVo.memNo }">
+				value="202007262001">
 	</div><br>
 	<div class="form-group">
 		<label for="writeDay">기안 일자</label> 
@@ -65,13 +66,10 @@ form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
 			<input type="text" class="form-control" id="title" name="title">
 	</div>
 	<div>
-		<label for="formNo">기안 양식</label> 
+		<label for="docForm">기안 양식</label> 
 		<select class="form-control" id="formNo" name="formNo">
 			<!-- 반복시작 -->
-			<option></option>
-			<c:forEach var="docformVo" items="${formlist }">
-				<option value="${docformVo.formNo }">${docformVo.formName }</option>
-			</c:forEach>
+			<option value="0">선택</option>
 			<!-- 반복끝 -->
 		</select>
 	</div><br>

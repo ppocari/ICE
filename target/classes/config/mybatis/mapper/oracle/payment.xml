@@ -7,17 +7,14 @@
 		<selectKey keyProperty="docNo" resultType="int" order="BEFORE">
 			select doc_seq.nextval from dual
 		</selectKey>
-		insert into payment(docNo,memNo,formNo,typeNo,title,content
-			,progress,writedate,keep,expirydate)
-		values(#{docNo},#{memNo},#{formNo},#{typeNo},#{title},#{content},#{progress},default,#{keep},
-			add_months(sysdate,#{keep}))
+		insert into payment(docNo,memNo,formNo,title,content,progress,writedate,keep,expirydate)
+		values(#{docNo},#{memNo},1,#{title},#{content},#{progress},default,#{keep},
+		<if test="#{keep}==1">
+			select add_months(sysdate,12) from dual
+		</if>
+		)
 	</insert>
 	
-	<select id="selectAll" resultType="paymentviewVo">
-		select * from paymentView
-		<![CDATA[
-			where sysdate<=expirydate]]>
-	</select>
 </mapper>
 
 
