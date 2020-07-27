@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class MemberVO {
 	private String memNo;
-	private String  name;
+	private String name;
 	private String pwd;
 	private String hp1;
 	private String hp2;
