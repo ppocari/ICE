@@ -8,7 +8,7 @@
 		where memno = #{memNo} and firedate is null 
 		</select>
 
-	<select id="selectMember" parameterType="string" resultType="MemberVO_log">
+	<select id="selectMember" parameterType="string" resultType="MemberVO">
 		select * from log_mem
 		where memno = #{memNo} 
 	</select>
@@ -18,12 +18,10 @@
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
-	<insert id="admin_regist_member" parameterType="java.util.List">
-		<foreach collection="list" item="item" open ="INSERT ALL" close="SELECT * FROM SYS.DUAL"
-			separator=" ">
-			into member(memno, name, pwd, hp1, hp2, hp3, email1, email2, hiredate, deptCode, posCode, salary)
-			values(#{memNo}, #{name}, #{pwd}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
-		</foreach>	
+	<insert id="admin_regist_member" parameterType="memberVO">
+		into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
+		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
+			
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">
