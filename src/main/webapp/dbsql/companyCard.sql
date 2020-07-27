@@ -71,3 +71,5 @@ ALTER TABLE companyCard
 		);
 		
 		--drop table companyCard cascade constraints;
+		--drop table accountCode cascade constraints;
+		--drop table companyCardFile cascade constraints;
