@@ -57,3 +57,12 @@ insert into member(memNo, name, pwd, deptcode, poscode)
 values('999999', '박관리', '123', '999','999');
 
 
+select * from companyCard;
+
+insert into companyCard
+values('1111222233334444','111910','102036',9000,'서울시','2020-07-12');
+
+select * from accountCode;
+--102306
+--102307
+

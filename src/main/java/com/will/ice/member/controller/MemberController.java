@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.will.ice.member.model.MemberListVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
@@ -40,12 +41,17 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/register.do", method = RequestMethod.POST)
-	public String register_post(@ModelAttribute MemberVO vo, Model model) {
+	public String register_post(@ModelAttribute MemberListVO memListvo, Model model) {
 		logger.info("사원 등록 처리");
 		
 		//여러개의 사원 데이터를 받아서 insert 하기
-		int cnt = memberService.admin_regist_member(vo);
-		logger.info("사원 등록 결과, cnt={}", cnt);
+		logger.info("사원 등록 결과  vo={}",   memListvo);
+		
+		List<MemberVO> memList = memListvo.getMemList();
+			
+		int cnt = memberService.admin_regist_member(memList);
+		logger.info("사원 등록 결과  cnt={}",   cnt);
+		
 		
 		String msg = "사원등록 실패", url = "/member/register.do";
 		if(cnt > 0) {
