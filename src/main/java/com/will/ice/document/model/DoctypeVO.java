@@ -20,5 +20,6 @@ public class DoctypeVO {
 	@Override
 	public String toString() {
 		return "DoctypeVO [typeNo=" + typeNo + ", typeName=" + typeName + "]";
+	}
 	 
 }
