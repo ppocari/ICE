@@ -73,11 +73,10 @@ public class MypageController {
 	
 	
 	
-	@RequestMapping(value = "/mypage.do",method = RequestMethod.POST)
+	@RequestMapping(value = "/mypage.do", method = RequestMethod.POST)
 	public String mypage_post(@ModelAttribute MypageVO vo,
-			HttpServletRequest request, Model model) {
+			HttpServletRequest request, HttpSession session, Model model) {
 		
-		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
 		
 		logger.info("회원정보 수정하기, 아이디 memNo={},vo={}",memNo,vo);
@@ -95,7 +94,7 @@ public class MypageController {
 		//db작업
 		int cnt = mypageService.updateEmployee(vo);
 		logger.info("vo={}",vo);
-		String msg="회원 수정 실패", url = "/mypage/mypage.do?memNo="+memNo;
+		String msg="회원 수정 실패", url = "/mypage/mypage.do";
 		if(cnt>0) {
 			msg="회원 수정성공!";
 		}

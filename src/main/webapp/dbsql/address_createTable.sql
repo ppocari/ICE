@@ -1,15 +1,15 @@
-/* 林家 */
+/* 林家 
 DROP TABLE address 
-	CASCADE CONSTRAINTS;
+	CASCADE CONSTRAINTS;*/
 
-/* 林家废 */
+/* 林家废 
 DROP TABLE addressBook 
 	CASCADE CONSTRAINTS;
-
-/* 林家废弊缝 */
+*/
+/* 林家废弊缝 
 DROP TABLE addressGroup 
 	CASCADE CONSTRAINTS;
-
+*/
 
 /* 林家 */
 CREATE TABLE address (
