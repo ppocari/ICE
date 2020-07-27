@@ -56,6 +56,10 @@ values('141930', '김과장', '123', '141','930');
 insert into member(memNo, name, pwd, deptcode, poscode)
 values('999999', '박관리', '123', '999','999');
 
+update member
+set hiredate = '2020-01-13'
+where memno = '111910';
+
 
 select * from companyCard;
 

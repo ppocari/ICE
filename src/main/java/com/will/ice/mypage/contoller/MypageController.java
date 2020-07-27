@@ -38,22 +38,22 @@ public class MypageController {
 	
 	
 	@RequestMapping(value = "/mypage.do",method = RequestMethod.GET)
-	public void mypage_get(HttpServletRequest request,Model model) {
+	public void mypage_get(HttpSession session, Model model) {
 		
-		HttpSession session = request.getSession();
-		String memNo = (String) session.getAttribute("identNum");
-		
-		logger.info("마이페이지 보여주기 ,사원번호 memNo={}",memNo);
-		
-		
-		MypageVO vo = mypageService.selectEmployee(memNo);
-		logger.info("마이페이지 조회결과 ,파라미터 vo={}",vo);
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(vo.getHireDate());
-		
-		model.addAttribute("vo",vo);
-		model.addAttribute("date",date);
+		  String memNo = (String)session.getAttribute("identNum");
+		  
+		  logger.info("마이페이지 보여주기 ,사원번호 memNo={}",memNo);
+		  
+		  
+		  MypageVO vo = mypageService.selectEmployee(memNo);
+		  logger.info("마이페이지 조회결과 ,파라미터 vo={}",vo);
+		  
+		  //hiredate 비어있으면 nullPoint
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); String date =
+		  sdf.format(vo.getHireDate());
+		  
+		  model.addAttribute("vo",vo); model.addAttribute("date",date);
+		 
 		
 		
 	}
