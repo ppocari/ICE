@@ -1,0 +1,67 @@
+/* 공지사항 */
+CREATE TABLE notice (
+	NOTI_NO NUMBER NOT NULL, /* 공지사항게시글번호 */
+	NOTI_TITLE VARCHAR2(100) NOT NULL, /* 글제목 */
+	MEMNO VARCHAR2(50), /* 사원번호 */
+	NOTI_CONTENT CLOB NOT NULL, /* 글내용 */
+	NOTI_REGDATE DATE NOT NULL, /* 등록일 */
+	NOTI_FILENAME VARCHAR2(100), /* 업로드파일명 */
+	NOTI_FILESIZE NUMBER, /* 파일사이즈 */
+	NOTI_ORFILENAME VARCHAR2(100), /* 변경전 업로드 파일명 */
+	NOTI_DOWNCOUNT NUMBER, /* 다운수 */
+	NOTI_READCOUNT NUMBER, /* 조회수 */
+	NOTI_CATEGORY VARCHAR2(100) NOT NULL, /* 카테고리 */
+	NOTI_MAIN NUMBER, /* 메인여부 */
+	newImgTerm  NUMBER /* 24시간확인 */
+);
+
+COMMENT ON TABLE notice IS '공지사항';
+
+COMMENT ON COLUMN notice.NOTI_NO IS '공지사항게시글번호';
+
+COMMENT ON COLUMN notice.NOTI_TITLE IS '글제목';
+
+COMMENT ON COLUMN notice.MEMNO IS '사원번호';
+
+COMMENT ON COLUMN notice.NOTI_CONTENT IS '글내용';
+
+COMMENT ON COLUMN notice.NOTI_REGDATE IS '등록일';
+
+COMMENT ON COLUMN notice.NOTI_FILENAME IS '업로드파일명';
+
+COMMENT ON COLUMN notice.NOTI_FILESIZE IS '파일사이즈';
+
+COMMENT ON COLUMN notice.NOTI_ORFILENAME IS '변경전 업로드 파일명';
+
+COMMENT ON COLUMN notice.NOTI_DOWNCOUNT IS '다운수';
+
+COMMENT ON COLUMN notice.NOTI_READCOUNT IS '조회수';
+
+COMMENT ON COLUMN notice.NOTI_CATEGORY IS '카테고리';
+
+COMMENT ON COLUMN notice.NOTI_MAIN IS '메인여부';
+
+COMMENT ON COLUMN notice.newImgTerm  IS '24시간확인';
+
+CREATE UNIQUE INDEX PK_notice
+	ON notice (
+		NOTI_NO ASC
+	);
+
+ALTER TABLE notice
+	ADD
+		CONSTRAINT PK_notice
+		PRIMARY KEY (
+			NOTI_NO
+		);
+
+ALTER TABLE notice
+	ADD
+		CONSTRAINT FK_MEMBER_TO_notice
+		FOREIGN KEY (
+			MEMNO
+		)
+		REFERENCES MEMBER (
+			MEMNO
+		);
+		
