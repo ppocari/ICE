@@ -74,6 +74,15 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 		<div style="background-color: white;">
 			<div class="p-5">
 				<p style="font-size: larger">결제 확인</p>
+				
+					<div>
+						<input type="checkbox" name="chkAgree1" id="chkAgree1"> 
+						<label for="chkAgree1">구매 약관</label>
+					</div>
+					<p>
+						<iframe src="<c:url value='/inc2/text.html'/>" 
+			width="820" height="300"></iframe>
+					</p>
 					<label>주문시각 : "yyyy-MM-dd"</label><br>
 					<label>상품명 : "식권  장"</label><br>
 					<label>결제수단 : "카드"</label><br>

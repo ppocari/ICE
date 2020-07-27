@@ -18,14 +18,25 @@
 </form>
 <!-- 페이징 처리 form 끝 -->
 
+<style>
+	.table td {
+		width: 90px;
+	}
+	
+	.search input{
+		width:150px;
+	}
+	
+</style>
+
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
-            format: 'L',
-            date: moment()
+            format: 'YYYY-MM-DD',
+            date: moment().add(-7,"days")
         });
 		$('#datetimepicker2').datetimepicker({
-            format: 'L',
+            format: 'YYYY-MM-DD',
             date: moment()
         });
 		$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -65,7 +76,7 @@
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<label for="department">구매 일자</label>
+					<label for="department" style="margin-left: 10px;">구매 일자</label>
 						<div class="search" style="margin-left: auto;">
 							<div class="input-group date" id="datetimepicker1"
 								data-target-input="nearest">
