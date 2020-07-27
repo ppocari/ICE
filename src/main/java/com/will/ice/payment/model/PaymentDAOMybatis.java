@@ -1,6 +1,6 @@
 package com.will.ice.payment.model;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public Timestamp calcKeeping(int keep) {
-		return sqlSession.selectOne(namespace+"calcKeeping",keep);
+	public List<PaymentviewVO> selectAll() {
+		return sqlSession.selectList(namespace+"selectAll");
 	}
+
 }

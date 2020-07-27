@@ -21,6 +21,7 @@
 	#upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 	#upperDiv p{padding-top: 5px;padding-left: 5px;}
 	#wholeDiv{padding-left: 20px;padding-right: 20px;}
+	.docNoInfo{cursor: pointer;}
 </style>
 
 <script type="text/javascript">
@@ -119,22 +120,24 @@
 				<th width="10%;">첨부</th>
 			</tr>
 		</thead>
-		<!-- 반복 시작 -->
 		<tbody>
-			<tr>
-				<td>
-					<a class="docNoInfo">
-						ED20200721001
-					</a>
-				</td>
-				<td>품의서</td>
-				<td>2020-07-10</td>
-				<td>정은경</td>
-				<td>품의서기안</td>
-				<td>Y</td>
-			</tr>
-		</tbody>
+		<!-- 반복 시작 -->
+			<c:forEach var="vo" items="${list }">
+				<tr>
+					<td>
+						<a class="docNoInfo">
+							${vo.docNo }
+						</a>
+					</td>
+					<td>${vo.typeName }</td>
+					<td>${vo.writedate }</td>
+					<td>${vo.name }</td>
+					<td>${vo.title }</td>
+					<td>${vo.hasFile }</td>
+				</tr>
+			</c:forEach>
 		<!-- 반복 끝 -->
+		</tbody>
 	</table>
 </div>
 <div id="div2">
