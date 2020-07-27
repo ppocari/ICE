@@ -173,7 +173,8 @@
 			<div class="sidebar-heading">workspace</div>
 			
 			<!-- Nav Item - 근태관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"> 
+			<li class="nav-item"><a class="nav-link collapsed" 
+			href="<c:url value='/workRecord/workRecord.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>출퇴근</span>
 			</a>
 
@@ -298,7 +299,7 @@
 			</li>
 			
 			<!-- Nav Item -스케줄-->		
-			<li class="nav-item"><a class="nav-link collapsed" href="#"> 
+			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
 				</a>
 			</li>
@@ -500,7 +501,7 @@
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
+								<a class="dropdown-item" href="<c:url value='/mypage/mypage.do'/>"> <i
 									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> MyPage
 								</a> <a class="dropdown-item" href="#"> <i
 									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
