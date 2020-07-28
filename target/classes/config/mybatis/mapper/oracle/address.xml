@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.mapper.oracle.address">
+
+	<!-- 주소록 조회 -->
+	<select id="selectAddress" parameterType="String"
+		resultType="addressVo">
+		select ad.*, adg.groupname from address ad, addressGroup adg
+		where ad.ADGNO = adg.ADGNO
+		and memno=#{memNo}
+		order by adno
+	</select>
+	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
+		select m.*, d.deptname, p.posname from member m, department d, position p
+		where m.deptcode=d.deptcode
+		and m.poscode=p.poscode 
+	</select>
+	<select id="selectDepartment" resultType="departmentVo">
+		select * from department order by deptcode
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

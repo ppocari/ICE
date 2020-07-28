@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class MemberVO {
 	private String memNo;
-	private String  name;
+	private String name;
 	private String pwd;
 	private String hp1;
 	private String hp2;
@@ -23,8 +23,8 @@ public class MemberVO {
 	private String profileURL;
 	private String originalFileName;
 	private long fileSize;
-	private int deptCode;
-	private int posCode;
+	private String deptCode;
+	private String posCode;
 	private String posName;
 	private String deptName;
 	
@@ -147,21 +147,19 @@ public class MemberVO {
 	}
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
-	}
-	public int getDeptCode() {
+	}	
+	public String getDeptCode() {
 		return deptCode;
 	}
-	public void setDeptCode(int deptCode) {
+	public void setDeptCode(String deptCode) {
 		this.deptCode = deptCode;
 	}
-	public int getPosCode() {
+	public String getPosCode() {
 		return posCode;
 	}
-	public void setPosCode(int posCode) {
+	public void setPosCode(String posCode) {
 		this.posCode = posCode;
 	}
-	
-	
 	public String getPosName() {
 		return posName;
 	}
@@ -183,6 +181,8 @@ public class MemberVO {
 				+ profileURL + ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", deptCode="
 				+ deptCode + ", posCode=" + posCode + ", posName=" + posName + ", deptName=" + deptName + "]";
 	}
+
+	
 
 	
 	

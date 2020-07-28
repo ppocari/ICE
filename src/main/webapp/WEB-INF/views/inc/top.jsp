@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -44,6 +45,18 @@
   <!-- Page level custom scripts -->
   <script src="<c:url value = "/resources/js/demo/chart-area-demo.js"/>"></script>
   <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script> --%>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+
+
+
 
 </head>
 
@@ -172,7 +185,8 @@
 			<div class="sidebar-heading">workspace</div>
 			
 			<!-- Nav Item - 근태관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"> 
+			<li class="nav-item"><a class="nav-link collapsed" 
+			href="<c:url value='/workRecord/workRecord.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>출퇴근</span>
 			</a>
 
@@ -270,8 +284,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">결제</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사용내역</a>
+							<a class="collapse-item" href="<c:url value='/spay/sbuy.do'/>">결제</a>
+							<a class="collapse-item" href="<c:url value='/spay/sList.do'/>">사용내역</a>
 						</div>
 
 					</div>
@@ -297,7 +311,7 @@
 			</li>
 			
 			<!-- Nav Item -스케줄-->		
-			<li class="nav-item"><a class="nav-link collapsed" href="#"> 
+			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
 				</a>
 			</li>
@@ -499,7 +513,7 @@
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
+								<a class="dropdown-item" href="<c:url value='/mypage/mypage.do'/>"> <i
 									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> MyPage
 								</a> <a class="dropdown-item" href="#"> <i
 									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
