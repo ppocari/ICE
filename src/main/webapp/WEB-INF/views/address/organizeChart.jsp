@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>jQuery UI Accordion - Default functionality</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -14,6 +13,17 @@
 <script>
 	$(function() {
 		$("#accordion").accordion();
+
+		$('input[type=checkbox]').click(function(){
+			var result=""; //result 초기화
+			$('input[type=checkbox]:checked').each(function(idx, item){
+				result+="<span style='visibility:hidden'>"+$(this).attr('id')+"</span>";  //result="111910127420"
+			});
+			
+			alert(result);
+			$('#organ_inputs_div').html(result);
+		});
+		
 	});
 </script>
 <style type="text/css">
@@ -108,7 +118,7 @@ table {
 	text-align: center;
 }
 
-#organ_inputs>input {
+#organ_inputs input {
 	font-size: 1.0em;
 	margin-left: 5px;
 	background-color: #f3f3f3;
@@ -134,7 +144,7 @@ table {
 					<div id="accordionSubDiv">
 						<table class="organTable">
 							<tr>
-								<th class="organTable_narrow"><input type="checkbox"></th>
+								<th class="organTable_narrow"><input type="checkbox" class="organ_checkboxAll"></th>
 								<th class="organTable_normal">이름</th>
 								<th class="organTable_wide">전화번호</th>
 								<th class="organTable_wide">이메일</th>
@@ -145,7 +155,9 @@ table {
 							<c:if test="${dept.deptCode eq organ.deptCode }">
 								<table class="organTable">
 									<tr>
-										<th class="organTable_narrow"><input type="checkbox"></th>
+										<th class="organTable_narrow">
+											<input type="checkbox" id="${organ.memNo }_${organ.name}_${organ.deptName}" class="organ_checkboxOne">
+										</th>
 										<td class="organTable_normal">${organ.name }</td>
 										<c:if test="${empty organ.hp1 }">
 											<td class="organTable_wide"></td>
@@ -173,11 +185,15 @@ table {
 				</c:forEach>
 			</div>
 			<!-- 아코디언 끝 -->
-
-			<div id="organ_inputs">
-				<input type="submit" value="주소록에 추가"> <input type="reset"
-					value="취소">
-			</div>
+				<form id="frm">
+					<div id="organ_inputs_div">
+					<!-- result가 오는 곳 -->
+					</div>
+				<div id="organ_inputs">
+					<input type="submit" value="주소록에 추가"> 
+					<input type="reset" value="취소">
+					</div>
+				</form>
 		</article>
 	</section>
 </body>
