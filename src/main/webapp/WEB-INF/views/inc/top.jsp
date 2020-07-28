@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -270,8 +271,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">결제</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사용내역</a>
+							<a class="collapse-item" href="<c:url value='/spay/sbuy.do'/>">결제</a>
+							<a class="collapse-item" href="<c:url value='/spay/sList.do'/>">사용내역</a>
 						</div>
 
 					</div>
