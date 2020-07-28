@@ -15,48 +15,6 @@
 		padding: 10px;
 		width: 50%;
 	}
-	
-	.bt5 {
-		box-shadow: inset 0px 1px 0px 0px #bbdaf7;
-		background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-		background-color: #79bbff;
-		border-radius: 6px;
-		border: 1px solid #84bbf3;
-		display: inline-block;
-		cursor: pointer;
-		color: #ffffff;
-		font-family: Arial;
-		font-size: 15px;
-		font-weight: bold;
-		padding: 6px 24px;
-		text-decoration: none;
-		text-shadow: 0px 1px 0px #528ecc;
-		width: 20%
-	}
-	
-	.bt5:hover {
-		color: rgb(255, 255, 255);
-		background-color: rgb(46, 89, 217);
-		border-color: rgb(38, 83, 212);
-	}
-	
-	.bt5:active {
-		position: relative;
-		top: 1px;
-	}
-	
-	.p-5 {
-		padding: 2rem !important;
-		text-align: center;
-		border: solid;
-	}
-	
-	.pname{
-		background: #808080;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		color: white;
-	}
 
 </style>
 </head>
@@ -71,21 +29,39 @@
 		    pg : 'inicis', // version 1.1.0부터 지원.
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:결제테스트',
-		    amount : 14000,
+		    name : '주문명:식권 결제',
+		    amount : 1000,
 		    buyer_email : 'iamport@siot.do',
 		    buyer_name : '구매자이름',
 		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
-		    buyer_postcode : '123-456',
 		   
 		}, function(rsp) {
 		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        if ( rsp.success ) {
+		        	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+		        	jQuery.ajax({
+		        		url: "<c:url value='/spay/spay.do'/>", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+		        		type: 'POST',
+		        		dataType: 'json',
+		        		data: {
+		    	    		imp_uid : rsp.imp_uid
+		    	    		//기타 필요한 데이터가 있으면 추가 전달
+		        		}
+		        	}).done(function(data) {
+		        		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+		        		if ( everythings_fine ) {
+		        			var msg = '결제가 완료되었습니다.';
+		        			msg += '\n고유ID : ' + rsp.imp_uid;
+		        			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+		        			msg += '\결제 금액 : ' + rsp.paid_amount;
+		        			msg += '카드 승인번호 : ' + rsp.apply_num;
+
+		        			alert(msg);
+		        		} else {
+		        			//[3] 아직 제대로 결제가 되지 않았습니다.
+		        			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+		        		}
+		        	});
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
@@ -95,28 +71,53 @@
     }
 </script>
 <body>
+	<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">결제확인</h1>
+
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+	</div>
+
+	<!-- Content Row -->
+
 	<div class="center">
-		<p class="pname">식권 구매</p>
-		<div style="background-color: white;">
-			<div class="p-5">
-				<p style="font-size: larger">결제 확인</p>
-					<label>주문시각 : "yyyy-MM-dd"</label><br>
-					<label>상품명 : "식권  장"</label><br>
-					<label>결제수단 : "카드"</label><br>
-					<label>할인율 : 0%</label><br>
-				<hr>
-				<div class="p-3" style="text-align: center;">
-					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br>
-					<label>결제 금액 :	"결제 금액"</label><br>
+
+		<!-- Area Chart -->
+		<div class="col-xl-11 " style="left: 5%;">
+			<div class="card shadow mb-4" style="height: 100%">
+				<!-- Card Header - Dropdown -->
+				<div
+					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">결제정보</h6>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body">
+					<label>주문시각 : yyyy-MM-dd</label><br> 
+					<label>구매매수 :  장</label><br> 
+					<label>결제수단 : Card</label><br> 
+					<label>할인 : </label><br>
+					<hr>
+					<label>구매자	: ${vo.name }</label><br>
+					<label>전화번호 : ${vo.hp1 + vo.hp2 + vo.hp3 }</label><br>
+					<label>이메일 : ${vo.email1 + vo.email2 }</label><br>
+					<hr>
+					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
+					<label>결제 금액 : "결제 금액"</label><br>
+					<hr>
+					<div style="text-align: center;">
+						<button onclick="requestPay()" class="btn btn-primary btn-user btn-block">결제하기</button>
+						<button onclick="history.back()" 
+						class="btn btn-primary btn-user btn-block">돌아가기</button>
+					</div>
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div style="text-align: center;">
-			<button onclick="requestPay()" class="bt5">결제하기</button>
-			<button onclick="history.go(-1)" class="bt5">취소</button>
-		</div>
 	</div>
+</div>
 </body>
 </html>
 
