@@ -38,6 +38,7 @@ public class MypageController {
 	
 	
 	@RequestMapping(value = "/mypage.do",method = RequestMethod.GET)
+<<<<<<< HEAD
 	public void mypage_get(HttpServletRequest request,Model model) {
 		
 		HttpSession session = request.getSession();
@@ -54,6 +55,24 @@ public class MypageController {
 		
 		model.addAttribute("vo",vo);
 		model.addAttribute("date",date);
+=======
+	public void mypage_get(HttpSession session, Model model) {
+		
+		  String memNo = (String)session.getAttribute("identNum");
+		  
+		  logger.info("마이페이지 보여주기 ,사원번호 memNo={}",memNo);
+		  
+		  
+		  MypageVO vo = mypageService.selectEmployee(memNo);
+		  logger.info("마이페이지 조회결과 ,파라미터 vo={}",vo);
+		  
+		  //hiredate 비어있으면 nullPoint
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); String date =
+		  sdf.format(vo.getHireDate());
+		  
+		  model.addAttribute("vo",vo); model.addAttribute("date",date);
+		 
+>>>>>>> master
 		
 		
 	}
@@ -73,11 +92,18 @@ public class MypageController {
 	
 	
 	
+<<<<<<< HEAD
 	@RequestMapping(value = "/mypage.do",method = RequestMethod.POST)
 	public String mypage_post(@ModelAttribute MypageVO vo,
 			HttpServletRequest request, Model model) {
 		
 		HttpSession session = request.getSession();
+=======
+	@RequestMapping(value = "/mypage.do", method = RequestMethod.POST)
+	public String mypage_post(@ModelAttribute MypageVO vo,
+			HttpServletRequest request, HttpSession session, Model model) {
+		
+>>>>>>> master
 		String memNo = (String) session.getAttribute("identNum");
 		
 		logger.info("회원정보 수정하기, 아이디 memNo={},vo={}",memNo,vo);
@@ -95,7 +121,11 @@ public class MypageController {
 		//db작업
 		int cnt = mypageService.updateEmployee(vo);
 		logger.info("vo={}",vo);
+<<<<<<< HEAD
 		String msg="회원 수정 실패", url = "/mypage/mypage.do?memNo="+memNo;
+=======
+		String msg="회원 수정 실패", url = "/mypage/mypage.do";
+>>>>>>> master
 		if(cnt>0) {
 			msg="회원 수정성공!";
 		}
