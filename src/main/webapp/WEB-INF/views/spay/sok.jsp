@@ -81,7 +81,7 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 					</div>
 					<p>
 						<iframe src="<c:url value='/inc2/text.html'/>" 
-			width="820" height="300"></iframe>
+			width="400" height="300"></iframe>
 					</p>
 					<label>주문시각 : "yyyy-MM-dd"</label><br>
 					<label>상품명 : "식권  장"</label><br>
