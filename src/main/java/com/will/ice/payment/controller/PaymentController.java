@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.will.ice.document.model.DoctypeService;
 import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.member.model.MemberService;
-import com.will.ice.member.model.MemberVO;
+import com.will.ice.member.model.MemberVO_log;
 import com.will.ice.payment.model.PaymentService;
 import com.will.ice.payment.model.PaymentVO;
 
@@ -46,7 +46,7 @@ public class PaymentController {
 		logger.info("서류 작성 창 보여주기, 파라미터 docType={}",typeNo);
 		
 		String typeName = doctypeService.choosenType(typeNo);
-		MemberVO memVo = memService.selectMember("202007262001");
+		MemberVO_log memVo = memService.selectMember("202007262001");
 		
 		model.addAttribute("typeName",typeName);
 		model.addAttribute("memVo",memVo);

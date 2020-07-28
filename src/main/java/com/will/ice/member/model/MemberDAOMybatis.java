@@ -19,7 +19,7 @@ public class MemberDAOMybatis implements MemberDAO{
 	}
 
 	@Override
-	public MemberVO selectMember(String memNo) {
+	public MemberVO_log selectMember(String memNo) {
 		return sqlsession.selectOne(namespace+"selectMember", memNo);
 	}
 

@@ -113,45 +113,44 @@
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">금액별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<label for="hiredate1" style="margin-right: 20px;">금액별 조회</label>
+							<input type="text" name="hiredate1">
+							
 						</div>
-						
 					</div>
-					
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
+
+
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<thead>
 									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용금액</th>
-										<th>사용처</th>
-										<th>사용일</th>
-										<th>부서</th>
+										<th>사원번호</th>
+										<th>이름</th>
+										<th>비밀번호</th>
+										<th>전화번호</th>
+										<th>이메일</th>
+										<th>입사일</th>
+										<th>부서명</th>
 										<th>직급</th>
-										
+										<th>계약연봉</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
 										
 									<c:forEach var="vo" items="${list }">
-										
 										<tr>
-											<td>${vo.cardNo }</td>
-											<td>${memvo.name }</td>
-											<td>${vo.accCode }</td>
-											<td>${vo.price }</td>
-											<td>${vo.usePlace }</td>
-											<td>${vo.useDate }</td>
-											<td>${memvo.deptName }</td>
-											<td>${memvo.posName }</td>
-																				
+											<td>${vo.memNo }</td>
+											<td>${vo.name }</td>
+											<td>${vo.pwd }</td>
+											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
+											<td>${vo.email1 + vo.email2 }</td>
+											<td>${vo.hiredate }</td>
+											<td>${vo.deptName }</td>
+											<td>${vo.posName }</td>
+											<td>${vo.salary }</td>										
 										</tr>
 									</c:forEach>
 								</tbody>

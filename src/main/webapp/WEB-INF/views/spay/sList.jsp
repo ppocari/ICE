@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
-<<<<<<< HEAD
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -9,9 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
-=======
-
->>>>>>> master
 
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post" 
@@ -22,7 +18,6 @@
 </form>
 <!-- 페이징 처리 form 끝 -->
 
-<<<<<<< HEAD
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
@@ -31,27 +26,6 @@
         });
 		$('#datetimepicker2').datetimepicker({
             format: 'L',
-=======
-<style>
-	.table td {
-		width: 90px;
-	}
-	
-	.search input{
-		width:150px;
-	}
-	
-</style>
-
-<script type="text/javascript">
-	$(function() {
-		$('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD',
-            date: moment().add(-7,"days")
-        });
-		$('#datetimepicker2').datetimepicker({
-            format: 'YYYY-MM-DD',
->>>>>>> master
             date: moment()
         });
 		$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -91,11 +65,7 @@
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-<<<<<<< HEAD
 					<label for="department">구매 일자</label>
-=======
-					<label for="department" style="margin-left: 10px;">구매 일자</label>
->>>>>>> master
 						<div class="search" style="margin-left: auto;">
 							<div class="input-group date" id="datetimepicker1"
 								data-target-input="nearest">

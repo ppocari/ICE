@@ -5,7 +5,7 @@ import java.util.List;
 public interface MemberDAO {
 	
 	String selectPwd(String memNo);
-	MemberVO selectMember(String userid);
+	MemberVO_log selectMember(String userid);
 	
 	int admin_regist_member(MemberVO memberVO);
 	
