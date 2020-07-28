@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.ice.member.model.MemberService;
-import com.will.ice.member.model.MemberVO_log;
+import com.will.ice.member.model.MemberVO;
 
 @Controller
 @RequestMapping("/log")
@@ -46,7 +46,7 @@ public class LoginController {
 		String msg="로그인 처리 실패",url="/log/login.do";
 		if(result==MemberService.LOGIN_OK) {
 			//상세정보 조회
-			MemberVO_log memVo=memService.selectMember(identNum);
+			MemberVO memVo=memService.selectMember(identNum);
 			logger.info("회원정보 조회 결과vo={}", memVo);
 			
 			//session에 저장

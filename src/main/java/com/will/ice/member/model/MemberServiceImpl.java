@@ -30,19 +30,33 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 	
-	public MemberVO_log selectMember(String memNo){
+	public MemberVO selectMember(String memNo){
 		return memberDao.selectMember(memNo);
 	}
-
+	
 	@Override
-	public int admin_regist_member(MemberVO memberVO) {
-		return memberDao.admin_regist_member(memberVO);
+	public int admin_regist_member(List<MemberVO> list) {
+		int cnt = 0;
+		try {
+			for(MemberVO memvo : list) {
+				cnt = memberDao.admin_regist_member(memvo);
+			}
+		}catch (RuntimeException e) {
+			cnt = -1;
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return cnt;
 	}
+
 
 	@Override
 	public List<MemberVO> searchAllmember(String searchKeyword) {
 		return memberDao.searchAllmember(searchKeyword);
 	}
+
+	
 	
 	
 	
