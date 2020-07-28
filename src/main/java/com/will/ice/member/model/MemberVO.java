@@ -1,7 +1,5 @@
 package com.will.ice.member.model;
 
-import java.sql.Timestamp;
-
 public class MemberVO {
 	private String memNo;
 	private String name;
@@ -17,8 +15,8 @@ public class MemberVO {
 	private String addr;
 	private String addrDetail;
 	private int salary;
-	private Timestamp hiredate;
-	private Timestamp firedate;
+	private String hiredate;
+	private String firedate;
 	private String gender;
 	private String profileURL;
 	private String originalFileName;
@@ -112,16 +110,16 @@ public class MemberVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	public Timestamp getHiredate() {
+	public String getHiredate() {
 		return hiredate;
 	}
-	public void setHiredate(Timestamp hiredate) {
+	public void setHiredate(String hiredate) {
 		this.hiredate = hiredate;
 	}
-	public Timestamp getFiredate() {
+	public String getFiredate() {
 		return firedate;
 	}
-	public void setFiredate(Timestamp firedate) {
+	public void setFiredate(String firedate) {
 		this.firedate = firedate;
 	}
 	public String getGender() {

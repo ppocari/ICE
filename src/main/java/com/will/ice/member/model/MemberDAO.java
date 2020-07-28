@@ -7,7 +7,10 @@ public interface MemberDAO {
 	String selectPwd(String memNo);
 	MemberVO selectMember(String userid);
 	
-	int admin_regist_member(MemberVO memberVO);
+	
+	int registerMulti(MemberVO memberVO);
+	
+	
 	
 	List<MemberVO> searchAllmember(String searchKeyword);
 }

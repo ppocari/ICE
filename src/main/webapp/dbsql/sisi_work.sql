@@ -47,9 +47,12 @@ values('141910', '笛府', '010', '1234','5678','123', '141','930');
 insert into member(memNo, name, pwd, deptcode, poscode)
 values('999999', '冠包府', '123', '999','999');
 
+insert into member(memNo, name, pwd, deptcode, poscode, salary)
+values('141910', '笛府','123', '141','930', 4000000);
+
 update member
-set hiredate = '2020-01-13'
-where memno = '111910';
+set memNo = '141911'
+where salary = 4000000;
 
 --delete from member where memno = '141910'
 
@@ -87,5 +90,12 @@ from companyCard c join mypage_mem m
  
  select * from comcard_mem;
  
-
+ 
+ select * from member;
+ desc member;
+ 
+ commit;
+ 
+delete from member
+where memno = '141912';
  

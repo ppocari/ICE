@@ -108,7 +108,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
-						<a class="collapse-item" href="<c:url value="/member/register.do" />">사원등록</a>
+						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
 						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
 					</div>
 				</div>

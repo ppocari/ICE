@@ -8,12 +8,10 @@
 .table td {
 	width: 90px;
 }
-
 .table .registerTable {
 	width: 90px;
 	border: 1px solid white;
 }
-
 .register_text {
 	width: 100px;
 }
@@ -27,7 +25,8 @@
 				event.preventDefault();
 			}else{
 				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-										
+					
+					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
 					alert("check");
 					
 				}else{
@@ -55,35 +54,36 @@
 		$("#memHiredate").datepicker();
 	});
 	
-
 	function memberTableCreate(){
 		var tc = new Array();
 		var str = '';
 		
-		var memNo = $("#memNo").val();
-		var memName = $("#mamName").val();
-		var memPwd = $("#memPwd").val();
-		var memHiredate = $("#memHiredate").val();
-		var memDepart = $("#memDepart").val();
-		var memPosi = $("#memPosi").val();
-		var memSalary = $("#memSalary").val();
+		var NmemNo = $("#memNo").val();
+		var NmemName = $("#memName").val();
+		var NmemPwd = $("#memPwd").val();
+		var NmemHiredate = $("#memHiredate").val();
+		var NmemDepart = $("#memDepart").val();
+		var NmemPosi = $("#memPosi").val();
+		var NmemSalary = $("#memSalary").val();
 					
 		str += '<tr>';
 		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
-		str += '<td><input type=text name="memNo" class="registerTable" value="' + memNo + '"/></td>';
-		str += '<td><input type=text name="name" class="registerTable" value="' + memName + '"/></td>';
-		str += '<td><input type=text name="pwd" class="registerTable" value="' + memPwd + '"/></td>';
-		str += '<td><input type=text name="hiredate" class="registerTable" value="' + memHiredate + '"/></td>';
-		str += '<td><input type=text name="deptName" class="registerTable" value="' + memDepart + '"/></td>';
-		str += '<td><input type=text name="posName" class="registerTable" value="' + memPosi + '"/></td>';
-		str += '<td><input type=text name="salary" class="registerTable" value="' + memSalary + '"/></td>';
+		str += '<td><input type=text name="memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
+		str += '<td><input type=text name="name" class="registerTable" value="' +NmemName+ '"/></td>';
+		str += '<td><input type=text name="pwd" class="registerTable" value="' +NmemPwd+ '"/></td>';
+		str += '<td><input type=text name="hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
+		str += '<td><input type=text name="deptCode" class="registerTable" value="' +NmemDepart+ '"/></td>';
+		str += '<td><input type=text name="posCode" class="registerTable" value="' +NmemPosi+ '"/></td>';
+		str += '<td><input type=text name="salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
 		str += '</tr>';
 					
-		$("#dynamicTable").append(str);
 		
+		
+		
+		$("#dynamicTable").append(str);
 					
 		$("#memNo").val('');
-		$("#mamName").val('');
+		$("#memName").val('');
 		$("#memPwd").val('');
 		$("#memTel").val('');
 		$("#memEmail").val('');
@@ -114,12 +114,12 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post" action="<c:url value='/member/register.do' />">
+				<form name="memRegisterFrm" method="post" action="<c:url value='/member/memWrite.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
-							 	
+							 	<input type="button" id="btMultiRegist" value="등록" >
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
@@ -147,7 +147,7 @@
 						
 						<span style="font-weight: bold; font-size: 1.1em;">정보입력</span> 
 						<input type="text" placeholder="사원번호" id="memNo" class="register_text">
-						<input type="text" placeholder="이름" id="mamName" class="register_text"> 
+						<input type="text" placeholder="이름" id="memName" class="register_text"> 
 						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text"> 
 						<input type="text" placeholder="입사일" id="memHiredate" class="register_text"> 
 						<input type="text" placeholder="부서명" id="memDepart" class="register_text"> 
@@ -179,4 +179,5 @@
 <!-- End of Main Content -->
 
 <jsp:include page="../inc/bottom.jsp" />
+
 
