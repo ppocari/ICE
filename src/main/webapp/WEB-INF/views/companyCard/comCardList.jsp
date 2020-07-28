@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="../inc/top.jsp" />
 
@@ -148,7 +149,7 @@
 											<td>${vo.accCode }</td>
 											<td>${vo.price }</td>
 											<td>${vo.usePlace }</td>
-											<td>${vo.useDate }</td>
+											<td><fmt:formatDate value="${vo.useDate }" pattern="yyyy-MM-dd"/> </td>
 											<td>${memvo.deptName }</td>
 											<td>${memvo.posName }</td>
 																				

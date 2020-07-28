@@ -38,6 +38,20 @@
 			}
 			
 		});
+	
+		$('#btMultiRegist').click(function(){
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('이벤트로 등록하려는 상품을 먼저 체크하세요');
+				return;
+			}
+			
+			$('form[name=frmList]')
+	.prop("action","<c:url value='/member/registerList.do'/>");
+			$('form[name=frmList]').submit();
+		});	
+		
+		
 		
 		$("#memHiredate").datepicker();
 	});
@@ -57,6 +71,9 @@
 					
 		str += '<tr>';
 		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
+		str += '<td><input type="checkbox" 
+			name="memberList[${idx }].memNo"
+				value="${memNo }"></td>'
 		str += '<td><input type=text name="memNo" class="registerTable" value="' + memNo + '"/></td>';
 		str += '<td><input type=text name="name" class="registerTable" value="' + memName + '"/></td>';
 		str += '<td><input type=text name="pwd" class="registerTable" value="' + memPwd + '"/></td>';
@@ -105,6 +122,7 @@
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
+							 	<input type="button" id="btMultiRegist" value="등록" >
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">

@@ -48,7 +48,7 @@ public class MemberController {
 		logger.info("사원 등록 결과  vo={}",   memListvo);
 		
 		List<MemberVO> memList = memListvo.getMemList();
-			
+				
 		int cnt = memberService.admin_regist_member(memList);
 		logger.info("사원 등록 결과  cnt={}",   cnt);
 		
@@ -65,6 +65,7 @@ public class MemberController {
 		return "/common/message";
 		
 	}
+	
 	
 	
 	@RequestMapping(value = "/memList.do", method = RequestMethod.GET)
@@ -86,4 +87,6 @@ public class MemberController {
 		model.addAttribute("list", list);
 		
 	}
+	
+	
 }

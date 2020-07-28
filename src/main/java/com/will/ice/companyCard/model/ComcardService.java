@@ -5,4 +5,7 @@ import java.util.List;
 public interface ComcardService {
 
 	List<ComcardVO> selectAllComcard();
+	
+	
+	
 }

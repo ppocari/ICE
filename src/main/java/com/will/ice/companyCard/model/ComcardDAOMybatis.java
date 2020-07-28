@@ -18,4 +18,6 @@ public class ComcardDAOMybatis implements ComcardDAO{
 		return sqlsession.selectList(namespace+"selectAllComcard");
 	}
 
+	
+
 }
