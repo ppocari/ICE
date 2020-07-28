@@ -27,8 +27,7 @@
 				event.preventDefault();
 			}else{
 				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-					
-					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
+										
 					alert("check");
 					
 				}else{
@@ -71,9 +70,6 @@
 					
 		str += '<tr>';
 		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
-		str += '<td><input type="checkbox" 
-			name="memberList[${idx }].memNo"
-				value="${memNo }"></td>'
 		str += '<td><input type=text name="memNo" class="registerTable" value="' + memNo + '"/></td>';
 		str += '<td><input type=text name="name" class="registerTable" value="' + memName + '"/></td>';
 		str += '<td><input type=text name="pwd" class="registerTable" value="' + memPwd + '"/></td>';
@@ -84,6 +80,7 @@
 		str += '</tr>';
 					
 		$("#dynamicTable").append(str);
+		
 					
 		$("#memNo").val('');
 		$("#mamName").val('');
@@ -122,7 +119,7 @@
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
-							 	<input type="button" id="btMultiRegist" value="등록" >
+							 	
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">

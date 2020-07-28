@@ -41,15 +41,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/register.do", method = RequestMethod.POST)
-	public String register_post(@ModelAttribute MemberListVO memListvo, Model model) {
+	public String register_post(@ModelAttribute MemberVO vo, Model model) {
 		logger.info("사원 등록 처리");
 		
 		//여러개의 사원 데이터를 받아서 insert 하기
-		logger.info("사원 등록 결과  vo={}",   memListvo);
+		logger.info("사원 등록 결과  vo={}",   vo);
 		
-		List<MemberVO> memList = memListvo.getMemList();
+
 				
-		int cnt = memberService.admin_regist_member(memList);
+		int cnt = memberService.admin_regist_member(vo);
 		logger.info("사원 등록 결과  cnt={}",   cnt);
 		
 		
