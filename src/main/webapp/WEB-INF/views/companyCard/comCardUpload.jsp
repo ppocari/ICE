@@ -29,32 +29,26 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$("#excelUpForm").change(function(){
+		                var form = $("#excelUpForm")[0];
+		 
+		                var data = new FormData(form);
+		                $.ajax({
+		                   enctype:"multipart/form-data",
+		                   method:"POST",
+		                   url: './excelUp.do',
+		                   processData: false,   
+		                   contentType: false,
+		                   cache: false,
+		                   data: data,
+		                   success: function(result){  
+		                       alert("업로드 성공!!");
+		                   }
+		                });
+		            });
+
+
 		
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
-			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				},
-				error:function(xhr, status, error){
-					alert(status +", "+error);
-				}
-			
-			})
-			
-		});
 		
 		
 	});
@@ -81,84 +75,13 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
-						</div>
-						
-					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
-						</div>
-					</div>
-					<!-- Card Body -->
-					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
-							<table class="table table-bordered table-hover" id="dynamicTable">
-								<thead>
-									<tr>
-										<th>사원번호</th>
-										<th>이름</th>
-										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
-										<th>입사일</th>
-										<th>부서명</th>
-										<th>직급</th>
-										<th>계약연봉</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody">
-									<!-- 반복시작 -->
-										
-									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.memNo }</td>
-											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
-											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
-										</tr>
-									</c:forEach>
-								</tbody>
-						</table>
-										
-						</div>
-					</div>		
+				엑셀업로드 : <br/>
+				<form name="excelUpForm" id="excelUpForm" enctype="multipart/form-data" method="POST" action="./excelDown.do">
+				    <input type="file" id="excelFile" name="excleFile" value="엑셀 업로드" />
 				</form>
+
+
+
 				
 				
 			</div>
