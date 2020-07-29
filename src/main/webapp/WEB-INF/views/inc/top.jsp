@@ -208,7 +208,7 @@
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value="/payment/write/payList.do" />">기안상신함</a>
 						<a class="collapse-item" href="<c:url value="#" />">임시보관함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기안완료함</a>
 					</div>

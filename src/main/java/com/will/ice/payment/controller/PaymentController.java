@@ -2,6 +2,8 @@ package com.will.ice.payment.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.ice.document.model.DocformService;
+import com.will.ice.document.model.DocformVO;
 import com.will.ice.document.model.DoctypeService;
 import com.will.ice.document.model.DoctypeVO;
+import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.payline.model.PaylineService;
+import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaymentService;
 import com.will.ice.payment.model.PaymentVO;
+import com.will.ice.payment.model.PaymentviewVO;
 
 @Controller
 @RequestMapping("/payment")
@@ -24,102 +33,109 @@ public class PaymentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class); 
 	
-	@Autowired
-	private DoctypeService doctypeService;
-	@Autowired
-	private MemberService memService;
-	@Autowired
-	private PaymentService paymentService;
+	@Autowired private DoctypeService doctypeService;
+	@Autowired private MemberService memService;
+	@Autowired private PaymentService paymentService;
+	@Autowired private DocformService docformService;
+	@Autowired private PaylineService paylineService;
+	
+	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
+	public String insertPaydoc(@RequestParam(required = false) String memNo,@RequestParam int formNo,@RequestParam String title,
+			@RequestParam String content,@RequestParam String keep,
+			@RequestParam int typeNo, Model model,HttpSession session) {
+		String identNum = (String)session.getAttribute("identNum");
+		logger.info("기안 작성 처리, 파라미터 memNo={},formNo={}",memNo,formNo);
+		logger.info("title={},content={}",title,content);
+		logger.info("keep={}",keep);
+		logger.info("결재선, 사원번호={}",identNum);
+		
+		MemberVO memVo = memService.selectMember(identNum);
+		List<MemberVO> memlist = 
+				paylineService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
+		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
+		
+		model.addAttribute("memlist",memlist);
+		PaylinedocVO pldVo = new PaylinedocVO();
+		pldVo.setWritememNo(identNum);
+		pldVo.setFormNo(formNo);
+		pldVo.setTypeNo(typeNo);
+		pldVo.setTitle(title);
+		pldVo.setContent(content);
+		pldVo.setKeep(Integer.parseInt(keep));
+		
+		model.addAttribute("pldVo",pldVo);
 
+		return "payment/write/selectPayLine";
+	}
+	
 	@RequestMapping("/write/payList.do")
 	public void payList(Model model) {
-		logger.info("결재 목록 보여주기");
+		logger.info("기안 목록 보여주기");
 		
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();
 		
-		model.addAttribute("doctypelist",doctypelist);
+		List<PaymentviewVO> list = paymentService.selectAll();
 		
+		model.addAttribute("doctypelist",doctypelist);
+		model.addAttribute("list",list);
 	}
 	
 	@RequestMapping(value="/write/writePay.do",method=RequestMethod.POST)
-	public void writePayment(@RequestParam int typeNo,Model model) {
-		logger.info("서류 작성 창 보여주기, 파라미터 docType={}",typeNo);
+	public void writePayment(@RequestParam int typeNo,Model model,
+			HttpSession session) {
+		logger.info("기안 작성 창 보여주기, 파라미터 docType={}",typeNo);
+		String identNum = (String)session.getAttribute("identNum");
 		
 		String typeName = doctypeService.choosenType(typeNo);
-		MemberVO memVo = memService.selectMember("202007262001");
+		MemberVO memVo = memService.selectMember(identNum);
+		List<DocformVO> formlist = docformService.selectAllForm();
 		
 		model.addAttribute("typeName",typeName);
 		model.addAttribute("memVo",memVo);
-		
+		model.addAttribute("formlist",formlist);
 	}
 
-	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
-	public String insertPaydoc(@RequestParam String memNo,@RequestParam int formNo,@RequestParam String title,
-			@RequestParam String content,@RequestParam int keep,Model model) {
-		logger.info("작성하기, 파라미터 memNo={},formNo={}",memNo,formNo);
-		logger.info("title={},content={}",title,content);
-		logger.info("keep={}",keep);
+	@RequestMapping("/getForm.do")
+	@ResponseBody
+	public DocformVO getForm(@RequestParam int formNo) {
+		logger.info("폼내용 가져오기, 파라미터 formNo={}",formNo);
 		
-		PaymentVO paymentVo = new PaymentVO();
-		paymentVo.setContent(content);
-		paymentVo.setMemNo(memNo);
-		paymentVo.setFormNo(formNo);
-		paymentVo.setTitle(title);
-		paymentVo.setKeep(keep);
+		DocformVO formVo = docformService.getcontent(formNo);
+		logger.info("폼내용 조회 결과, formVo={}",formVo);
 		
-		int cnt = paymentService.insertPaydoc(paymentVo);
-		String msg="기안작성실패!",url="";
-		if(cnt>0) {
-			msg="기안 작성 완료!";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-
-		return "common/message";
+		return formVo;
 	}
 	
+	@RequestMapping("/checkDocView.do")
+	public void docView(@RequestParam int docNo, Model model) {
+		logger.info("문서 상세보기, 파라미터 docNo={}",docNo);
+		
+		PaymentviewVO payVo = paymentService.selectDocument(docNo);
+		List<DocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		
+		model.addAttribute("payVo",payVo);
+		model.addAttribute("plList",plList);
+	}
+	
+	@RequestMapping("/close.do")
+	public void close(){
+		logger.info("팝업 닫기");
+	}
 	/*
-	@RequestMapping("/write/imsyBox.do")
-	public void imsyBox() {
-		logger.info("임시보관 목록 보여주기");
-		
-	}
-	
-	@RequestMapping("/write/sentpayList.do")
-	public void sentpayList() {
-		logger.info("기안완료 목록 보여주기");
-		
-	}
-	
-	@RequestMapping("/write/setForm.do")
-	public void setForm() {
-		logger.info("기안양식 목록 보여주기");
-		
-	}
-	
-	@RequestMapping("/write/insertForm.do")
-	public void insertForm() {
-		logger.info("문서 양식 작성하기");
-		
-	}
-	
-	@RequestMapping("/write/selectPayLine.do")
-	public void selectPayLine() {
-		logger.info("결재선 지정하기");
-		
-	}
-	
-	@RequestMapping("/docView.do")
-	public void docView() {
-		logger.info("문서 상세보기");
-		
-	}
-	
-	@RequestMapping("/confirm/notcheckedList.do")
-	public void notcheckedList() {
-		logger.info("미결재 목록 보여주기");
-		
-	}
-	*/
+	 * @RequestMapping("/write/imsyBox.do") public void imsyBox() {
+	 * logger.info("임시보관 목록 보여주기");
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping("/write/sentpayList.do") public void sentpayList() {
+	 * logger.info("기안완료 목록 보여주기");
+	 * 
+	 * }
+	 * 
+	 * 
+	 * @RequestMapping("/confirm/notcheckedList.do") public void notcheckedList() {
+	 * logger.info("미결재 목록 보여주기");
+	 * 
+	 * }
+	 */
 }

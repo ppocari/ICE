@@ -1,28 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../../inc/top.jsp" %>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
-
- <style type="text/css">
-	input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
-	#datefrm{padding-top: 10px;text-align: center;height:120px;}
-	#datefrm label, 
-	#datefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}
-	#searchDateDiv,#paylist{background-color: white;}
-	#paylist{margin-top: 20px;}
-	#payTable{width:100%;text-align: center;}
-	#payTable thead tr{background-color: gray;color:white;}
-	#div3 button,#div3 select{margin-left: 10px;}
-	#upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-	#upperDiv p{padding-top: 5px;padding-left: 5px;}
-	#wholeDiv{padding-left: 20px;padding-right: 20px;}
+<style type="text/css">
+input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
+#datefrm{padding-top: 10px;text-align: center;height:120px;}
+#datefrm label, 
+#datefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}
+#searchDateDiv,#paylist{background-color: white;}
+#paylist{margin-top: 20px;}
+#payTable{width:100%;text-align: center;}
+#payTable thead tr{background-color: gray;color:white;}
+#div3 button,#div3 select{margin-left: 10px;}
+#div3{position: relative;left: 73%;top: -40px;}
+#upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#upperDiv p{padding-top: 5px;padding-left: 5px;}
+#wholeDiv{padding-left: 20px;padding-right: 20px;}
+.docNoInfo{cursor: pointer;}
 </style>
-
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
@@ -42,8 +41,8 @@
 		
 	});
 </script>
-<div id="wholeDiv">
-	<div id="upperDiv">
+<div id="sentwholeDiv">
+	<div id="sentupperDiv">
 		<p>기안 완료함</p>
 	</div>
 	<div class="form-group" id="searchDateDiv">

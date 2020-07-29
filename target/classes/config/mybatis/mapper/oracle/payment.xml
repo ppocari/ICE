@@ -3,17 +3,45 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.payment">
-	<insert id="insertPaydoc" parameterType="paymentVo">
+	<insert id="insertPaydoc" parameterType="paylinedocVo">
 		<selectKey keyProperty="docNo" resultType="int" order="BEFORE">
 			select doc_seq.nextval from dual
 		</selectKey>
-		insert into payment(docNo,memNo,formNo,title,content,progress,writedate,keep,expirydate)
-		values(#{docNo},#{memNo},1,#{title},#{content},#{progress},default,#{keep},
-		<if test="#{keep}==1">
-			select add_months(sysdate,12) from dual
-		</if>
-		)
+		insert into payment(docNo,memNo,formNo,typeNo,title,content
+			,progress,writedate,keep,expirydate)
+		values(#{docNo},#{writememNo},#{formNo},#{typeNo},#{title},#{content},#{progress},default,#{keep},
+			add_months(sysdate,#{keep}))
 	</insert>
+	
+	<update id="insertPayline" parameterType="paylinedocVo">
+		<selectKey keyProperty="payNo" resultType="int" order="BEFORE">
+			select payline_seq.nextval from dual
+		</selectKey>
+		insert into paymentline(payNo,docNo,memNo)
+		values(#{payNo},#{docNo},#{getmemNo})
+	</update>
+	
+	<select id="selectAll" resultType="paymentviewVo">
+		select * from paymentView
+		<![CDATA[
+			where sysdate<=expirydate]]>
+	</select>
+	
+	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
+		select * from mypage_mem
+		<![CDATA[
+			where poscode>#{poscode}]]>
+	</select>
+	
+	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">
+		select * from paymentView
+		where docNo=#{docNo}
+	</select>
+	
+	<select id="selectPayLine" parameterType="int" resultType="documentviewVo">
+		select * from docView
+		where docNo=#{docNo}
+	</select>
 	
 </mapper>
 

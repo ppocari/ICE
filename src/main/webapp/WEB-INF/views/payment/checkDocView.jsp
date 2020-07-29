@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,13 +31,13 @@ body{overflow: hidden;}
 	<div id="tableDiv">
 		<table id="docTable" class="table table-bordered">
 			<tr>
-				<td rowspan="2" colspan="6" id="docType">품의서</td>
+				<td rowspan="2" colspan="6" id="docType">${payVo.typeName }</td>
 				<td>문서번호</td>
-				<td>ED20200721001</td>
+				<td>${payVo.docNo }</td>
 			</tr>
 			<tr>
 				<td>보존연한</td>
-				<td>N년</td>
+				<td><fmt:formatNumber value="${payVo.keep/12 }" pattern="#"/>년</td>
 			</tr>
 			<tr height="10">
 				<td>기안부서</td>
@@ -47,54 +49,36 @@ body{overflow: hidden;}
 				<td>결재</td>
 				<td>결재</td>
 			</tr>
-			<tr height="80">
-				<td rowspan="2">기안자</td>
-				<td rowspan="2">정은경</td>
-				<td>완료 2020-07-21</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr height="10">
-				<td>대주주 정은경</td>
-				<td></td>
-				<td></td>
-				<td>대리 홍길동</td>
-				<td>차장 박길동</td>
-			</tr>
+			<c:forEach var="vo" items="${plList}">
+				<tr height="80">
+					<td rowspan="2">기안자</td>
+					<td rowspan="2">${payVo.name }</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr height="10">
+					<td>대주주 정은경</td>
+					<td></td>
+					<td></td>
+					<td>대리 홍길동</td>
+					<td>차장 박길동</td>
+				</tr>
+			</c:forEach>
 			<tr height="10">
 				<td>기안일자</td>
-				<td>2020-07-10</td>
-				<td rowspan="3" width="15">참고부서</td>
-				<td>참고인</td>
-				<td>참고인</td>
-				<td>참고인</td>
-				<td>참고인</td>
-				<td>참고인</td>
-			</tr>
-			<tr height="80">
-				<td rowspan="2">참고부서</td>
-				<td rowspan="2">개발팀</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr height="10">
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>${payVo.writedate }</td>
+				<td width="15">첨부파일</td>
+				<td colspan="5"></td>
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td colspan="7" id="title">품의서입니다</td>
+				<td colspan="7" id="title">${payVo.title }</td>
 			</tr>
 			<tr>
-				<td colspan="8" id="content">호왕</td>
+				<td colspan="8" id="content">${payVo.content }</td>
 			</tr>
 		</table>
 	</div>

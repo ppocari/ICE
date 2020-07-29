@@ -2,9 +2,9 @@ package com.will.ice.payment.model;
 
 import java.sql.Timestamp;
 
-public class PaymentVO {
+public class PaylinedocVO {
 	private int docNo;
-	private String memNo;
+	private String writememNo;
 	private int formNo;
 	private int typeNo;
 	private String title;
@@ -15,24 +15,21 @@ public class PaymentVO {
 	private int keep;
 	private Timestamp expirydate;
 	private String imsy;
+	private int payNo;
+	private String getmemNo;
+	private String payDate;
 	
-	public String getImsy() {
-		return imsy;
-	}
-	public void setImsy(String imsy) {
-		this.imsy = imsy;
-	}
 	public int getDocNo() {
 		return docNo;
 	}
 	public void setDocNo(int docNo) {
 		this.docNo = docNo;
 	}
-	public String getMemNo() {
-		return memNo;
+	public String getWritememNo() {
+		return writememNo;
 	}
-	public void setMemNo(String memNo) {
-		this.memNo = memNo;
+	public void setWritememNo(String writememNo) {
+		this.writememNo = writememNo;
 	}
 	public int getFormNo() {
 		return formNo;
@@ -88,10 +85,36 @@ public class PaymentVO {
 	public void setExpirydate(Timestamp expirydate) {
 		this.expirydate = expirydate;
 	}
+	public String getImsy() {
+		return imsy;
+	}
+	public void setImsy(String imsy) {
+		this.imsy = imsy;
+	}
+	public int getPayNo() {
+		return payNo;
+	}
+	public void setPayNo(int payNo) {
+		this.payNo = payNo;
+	}
+	public String getGetmemNo() {
+		return getmemNo;
+	}
+	public void setGetmemNo(String getmemNo) {
+		this.getmemNo = getmemNo;
+	}
+	public String getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
 	@Override
 	public String toString() {
-		return "PaymentVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", typeNo=" + typeNo
-				+ ", title=" + title + ", content=" + content + ", hasFile=" + hasFile + ", progress=" + progress
-				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", imsy=" + imsy + "]";
+		return "PaylinedocVO [docNo=" + docNo + ", writememNo=" + writememNo + ", formNo=" + formNo + ", typeNo="
+				+ typeNo + ", title=" + title + ", content=" + content + ", hasFile=" + hasFile + ", progress="
+				+ progress + ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", imsy="
+				+ imsy + ", payNo=" + payNo + ", getmemNo=" + getmemNo + ", payDate=" + payDate + "]";
 	}
+	
 }
