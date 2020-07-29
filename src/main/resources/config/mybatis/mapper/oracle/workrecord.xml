@@ -7,14 +7,18 @@
 		<selectKey keyProperty="cmtNo" resultType="int" order="BEFORE">
 			select workRecord_seq.nextval from dual
 		</selectKey>
-		insert into workRecord
-		values(cmtNo,#{memNo},#{cmpIn},#{cmpOut},#{cmpStatus})
+		insert into workRecord(cmt_no,memNo,cmp_status,cmp_in)
+		values(#{cmtNo},#{memNo},#{cmpStatus},#{cmpIn})
 	</insert>
 	
-	<select id="selectWork" parameterType="string" resultType="WorkRecordVO">
-		select * from workRecord where cmtNo = #{cmtNo}
+	<select id="selectWorkList" resultType="WorkRecordVO" parameterType="int">
+		select * from workRecord where memno=#{memNo}
 	</select>
 	
+	<update id="updateWork" parameterType="WorkRecordVO">
+		update workRecord set cmp_out=#{cmpOut}
+		where cmt_no=#{cmtNo}
+	</update>
 </mapper>
 
 

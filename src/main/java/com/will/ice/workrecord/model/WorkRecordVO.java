@@ -1,12 +1,10 @@
 package com.will.ice.workrecord.model;
 
-import java.util.Date;
-
 public class WorkRecordVO {
 	private int cmtNo;
 	private String memNo;
-	private Date cmpIn;
-	private Date cmpOut;
+	private String cmpIn;
+	private String cmpOut;
 	private String cmpStatus;
 	
 	
@@ -22,16 +20,16 @@ public class WorkRecordVO {
 	public void setMemNo(String memNo) {
 		this.memNo = memNo;
 	}
-	public Date getCmpIn() {
+	public String getCmpIn() {
 		return cmpIn;
 	}
-	public void setCmpIn(Date cmpIn) {
+	public void setCmpIn(String cmpIn) {
 		this.cmpIn = cmpIn;
 	}
-	public Date getCmpOut() {
+	public String getCmpOut() {
 		return cmpOut;
 	}
-	public void setCmpOut(Date cmpOut) {
+	public void setCmpOut(String cmpOut) {
 		this.cmpOut = cmpOut;
 	}
 	public String getCmpStatus() {
@@ -40,6 +38,7 @@ public class WorkRecordVO {
 	public void setCmpStatus(String cmpStatus) {
 		this.cmpStatus = cmpStatus;
 	}
+	
 	
 	@Override
 	public String toString() {
