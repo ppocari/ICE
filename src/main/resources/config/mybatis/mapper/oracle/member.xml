@@ -18,17 +18,12 @@
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
-<<<<<<< HEAD
-	<insert id="admin_regist_member" parameterType="memberVO">
-		insert into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
-		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
-			
-=======
+
 	<insert id="registerMulti" parameterType="memberVO">
 		insert into member(memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
 		values(#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
 		
->>>>>>> parent of d253f43... sisi
+
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">
