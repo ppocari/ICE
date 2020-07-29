@@ -35,6 +35,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public int admin_regist_member(MemberVO membervo ) {
 		int cnt = 0;
 		try {
@@ -48,6 +49,10 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		return cnt;
+=======
+	public int registerMulti(MemberVO memberVO) {
+		return memberDao.registerMulti(memberVO);
+>>>>>>> parent of d253f43... sisi
 	}
 
 
@@ -56,6 +61,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.searchAllmember(searchKeyword);
 	}
 
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> parent of d253f43... sisi
 	
 	
 	
