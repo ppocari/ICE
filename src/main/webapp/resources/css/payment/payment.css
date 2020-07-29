@@ -1,0 +1,23 @@
+@charset "UTF-8";
+/* selectPayLine */
+#formNo,#formName{width:200px;}
+#paylineheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#paylineheaderDiv p{padding-left: 8px;padding-top: 8px;}
+#btwriteForm{background-color: #4e73df; color:white;}
+#empList,#paylineList{width: 700px;}
+#empListDiv,#paylineListDiv,#controllDiv{padding-top: 10px;}
+#empList *,#paylineList *{text-align: center;}
+#paylineformDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 8px;text-align: center;}
+#empList tr:first-of-type,#paylineList tr:first-of-type{background-color: #808080;color:white;}
+#payline3{padding-top: 20px;}
+
+/* writePay */
+form[name=payInfoFrm] {width: 80%; position: relative; left: 150px;}
+form[name=payInfoFrm] input[type=text] {width:200px; margin-top: 10px;margin-bottom: 10px;margin-right: 100px}
+#keep, #formNo{width:200px; margin-top: 10px;margin-bottom: 10px;margin-right: 100px}
+#writepay1 #title {width: 570px;}
+#confirmBt {position: relative;left: 100px;}
+#confirmBt button{position: relative;text-align: right;}
+form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
+#sendBt,#saveBt,#lookBt{background-color: #4e73df; color:white;}
+

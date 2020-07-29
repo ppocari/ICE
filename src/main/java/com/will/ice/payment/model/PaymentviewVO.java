@@ -2,7 +2,7 @@ package com.will.ice.payment.model;
 
 import java.sql.Timestamp;
 
-public class PaymentVO {
+public class PaymentviewVO {
 	private int docNo;
 	private String memNo;
 	private int formNo;
@@ -14,14 +14,9 @@ public class PaymentVO {
 	private String writedate;
 	private int keep;
 	private Timestamp expirydate;
-	private String imsy;
+	private String typeName;
+	private String name;
 	
-	public String getImsy() {
-		return imsy;
-	}
-	public void setImsy(String imsy) {
-		this.imsy = imsy;
-	}
 	public int getDocNo() {
 		return docNo;
 	}
@@ -88,10 +83,23 @@ public class PaymentVO {
 	public void setExpirydate(Timestamp expirydate) {
 		this.expirydate = expirydate;
 	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	@Override
 	public String toString() {
-		return "PaymentVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", typeNo=" + typeNo
+		return "PaymentviewVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", typeNo=" + typeNo
 				+ ", title=" + title + ", content=" + content + ", hasFile=" + hasFile + ", progress=" + progress
-				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", imsy=" + imsy + "]";
+				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", typeName="
+				+ typeName + ", name=" + name + "]";
 	}
 }

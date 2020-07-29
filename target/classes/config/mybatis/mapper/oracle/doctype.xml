@@ -10,4 +10,20 @@
 	<select id="choosenType" parameterType="int" resultType="String">
 		select typeName from doctype where typeNo=#{typeNo}
 	</select>
+	
+	<insert id="insertForm" parameterType="docformVo">
+		<selectKey keyProperty="formNo" resultType="int" order="BEFORE">
+			select docform_seq.nextval from dual
+		</selectKey>
+		insert into docform
+		values(#{formNo}, #{formName}, #{content})
+	</insert>
+	
+	<select id="selectAllForm" resultType="docformVo">
+		select * from docform
+	</select>
+	
+	<select id="getcontent" parameterType="int" resultType="docformVo">
+		select * from docform where formNo=#{formNo}
+	</select>
 </mapper>
