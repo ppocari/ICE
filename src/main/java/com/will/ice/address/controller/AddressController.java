@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.will.ice.address.model.AddressGroupVO;
 import com.will.ice.address.model.AddressService;
 import com.will.ice.address.model.AddressVO;
 import com.will.ice.member.model.MemberVO;
@@ -70,43 +68,22 @@ public class AddressController {
 		
 	}
 	
+	@RequestMapping("/addressNav.do")
+	public void addressNav_get() {
+		logger.info("주소록 메뉴");
+	}
+	
 	/* 주소록 insert 관련 */
 	@RequestMapping(value="/addAddress.do", method=RequestMethod.GET)
-	public void addAddress_get(HttpServletRequest request, Model model) {
+	public void addAddress_get() {
 		
-		HttpSession session= request.getSession();
-		String memNo=(String)session.getAttribute("identNum");
-		
-		logger.info("주소록 등록 화면, memNo={}", memNo);
-		
-		List<AddressGroupVO> adgList= service.selectGroupName(memNo);
-		
-		logger.info("주소록 등록 화면 처리 결과, adgList.size={}", adgList.size());
-		
-		model.addAttribute("adgList", adgList);
+		logger.info("주소록 등록");
 	}
 
-	/*
-	 * @RequestMapping(value="/addAddress.do", method=RequestMethod.POST) public
-	 * String addAddress_post(@ModelAttribute AddressVO adVo, HttpServletRequest
-	 * request, Model model) {
-	 * 
-	 * HttpSession session= request.getSession(); String
-	 * memNo=(String)session.getAttribute("identNum");
-	 * 
-	 * logger.info("주소록 등록 addressVo={}", adVo);
-	 * 
-	 * 
-	 * int cnt=service.insertAddress(adVo, memNo); logger.info("주소록 등록 결과 cnt={}",
-	 * cnt);
-	 * 
-	 * String msg="", url=""; if(cnt>0) { msg="주소록 등록 완료!";
-	 * url="/address/addressMain.do"; }
-	 * 
-	 * model.addAttribute("msg", msg); model.addAttribute("url", url);
-	 * 
-	 * return "common/message.jsp"; }
-	 */
+	@RequestMapping(value="/addAddress.do", method=RequestMethod.POST)
+	public void addAddress_post() {
+		
+	}
 	
 	
 }
