@@ -32,22 +32,23 @@ select * from mypage_mem;
  --delete from member;
   
 
-insert into member(no, memNo, name, pwd, deptcode, poscode)
-values( member_seq.nextval ,'111910', '정그래', '123', '111','910');
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('111910', '정그래', '123', '111','910');
 
-insert into member(no,memNo, name, pwd, deptcode, poscode)
-values(member_seq.nextval ,'121920', '이경리', '123', '121','920');
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('121920', '이경리', '123', '121','920');
 
-insert into member(no,memNo, name, pwd, deptcode, poscode)
-values(member_seq.nextval ,'141930', '김과장', '123', '141','930');
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('141930', '김과장', '123', '141','930');
 
+insert into member(memNo, name, hp1, hp2, hp3, pwd, deptcode, poscode)
+values('141910', '둘리', '010', '1234','5678','123', '141','930');
 
+insert into member(memNo, name, pwd, deptcode, poscode)
+values('999999', '박관리', '123', '999','999');
 
-insert into member(no,memNo, name, pwd, deptcode, poscode)
-values(member_seq.nextval ,'999999', '박관리', '123', '999','999');
-
-insert into member(no,memNo, name, pwd, hiredate, deptcode, poscode, salary)
-values(member_seq.nextval ,'141910', '둘리','123', '2020-07-01','141','930', 4000000);
+insert into member(memNo, name, pwd, deptcode, poscode, salary)
+values('141910', '둘리','123', '141','930', 4000000);
 
 update member
 set memNo = '141911'
@@ -98,17 +99,3 @@ from companyCard c join mypage_mem m
 delete from member
 where memno = '141912';
  
-create table admin_register
-(
-    memNo VARCHAR2(50) NOT NULL, /* 사원번호 */
-	name VARCHAR2(50), /* 사원명 */
-	pwd VARCHAR2(50), /* 비밀번호 */
-	hiredate VARCHAR2(30), /* 입사일 */
-	deptCode NUMBER, /* 부서코드 */
-	posCode NUMBER, /* 직급코드 */
-	salary NUMBER /* 연봉 */
-);
-
-commit;
-
-select * from admin_register;

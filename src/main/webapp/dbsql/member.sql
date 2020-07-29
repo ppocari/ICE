@@ -1,15 +1,9 @@
 /* 사원 */
 /*DROP TABLE member 
 	CASCADE CONSTRAINTS;
-   
-   drop view mypage_mem
-	;
-*/
-/*DROP sequence member_seq ;
 */
 /* 사원 */
 CREATE TABLE member (
-    no number not null , /*사원테이블 관리번호*/
 	memNo VARCHAR2(50) NOT NULL, /* 사원번호 */
 	name VARCHAR2(50), /* 사원명 */
 	pwd VARCHAR2(50), /* 비밀번호 */
@@ -34,22 +28,20 @@ CREATE TABLE member (
 	posCode NUMBER /* 직급코드 */
 );
 
-
-
 create sequence member_seq
 start with 1
 increment by 1;
 
 CREATE UNIQUE INDEX PK_member
 	ON member (
-		no ASC
+		memNo ASC
 	);
 
 ALTER TABLE member
 	ADD
 		CONSTRAINT PK_member
 		PRIMARY KEY (
-			no
+			memNo
 		);
 
 ALTER TABLE member
@@ -84,5 +76,3 @@ from member m join position p
 
   
 select * from mypage_mem;		
-
-
