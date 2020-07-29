@@ -20,6 +20,17 @@
 	}
 
 </style>
+<script type="text/javascript">
+	$(function(){
+		$('form[name=fFrm]').submit(function(){
+			if(!$('#chkAgree').is(':checked')){
+				alert("구매에 동의하셔야 합니다!");
+				$('#chkAgree').focus();
+				event.preventDefault();
+			}
+		});
+	});
+</script>
 
 <div class="container-fluid">
 
@@ -60,18 +71,20 @@
 									<label>식권구매 수량 : </label> <select name="sg">
 										<option value="sg1">1장 구매</option>
 										<option value="sg2">10장 구매</option>
-										<option value="sg2">직접입력</option>
+										<option value="sg3">직접입력</option>
+										<c:if test="${sg3 }">
+											<input type="text" value="sg3"/>
+										</c:if>
 									</select>
 								</div>
 								<!-- 가격 -->
-								<c:set var="sum" value="0"/>
 								<c:set var="sale" value="0.1"/>
 								<c:set var="TICPRICE" value="7000"/>
-								
-								<c:forEach var="map" items="${list }">
-									<c:set var="sum" value ="${TICPRICE * TICQUANTITY}" />
-								
-								</c:forEach>
+								<c:set var="TICQUANTITY" value="1"/>
+									<c:if test="${!sg}">
+										
+									</c:if>
+								<c:set var="sum" value="${TICPRICE * TICQUANTITY}"/>
 								<hr>
 									<label>식권 가격 : <fmt:formatNumber value="${TICPRICE }" 
 										pattern="#,###"/>원</label><br> 
@@ -79,8 +92,8 @@
 										pattern="#,###"/>원</label><br>
 								<hr>
 								<div style="float: right;">
-									<input type="checkbox" id="chkAgree1"> 
-									<label for="chkAgree1">구매 동의</label>
+									<input type="checkbox" id="chkAgree"> 
+									<label for="chkAgree">구매 동의</label>
 								</div>
 
 								<div style="text-align: center;">
