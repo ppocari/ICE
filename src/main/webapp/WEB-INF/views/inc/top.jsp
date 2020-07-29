@@ -156,8 +156,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항 관리 </a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판 관리</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -288,8 +288,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -482,7 +482,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Read More Messages</a>
+									href="<c:url value='/note/noteList.do'/>">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
