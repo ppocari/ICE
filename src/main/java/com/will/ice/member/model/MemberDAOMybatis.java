@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.DateSearchVO;
+
 @Repository
 public class MemberDAOMybatis implements MemberDAO{
 	private String namespace = "com.mybatis.mapper.oracle.member.";
@@ -24,8 +26,8 @@ public class MemberDAOMybatis implements MemberDAO{
 	}
 
 	@Override
-	public int admin_regist_member(MemberVO memberVO) {
-		return sqlsession.insert(namespace+"admin_regist_member", memberVO);
+	public int registerMulti(MemberVO memberVO) {
+		return sqlsession.insert(namespace + "registerMulti", memberVO);
 	}
 
 	@Override
@@ -33,9 +35,11 @@ public class MemberDAOMybatis implements MemberDAO{
 		return sqlsession.selectList(namespace+"searchAllmember" , searchKeyword);
 	}
 
-<<<<<<< HEAD
-=======
+	@Override
+	public List<MemberVO> selectMemberList(DateSearchVO dateSearchVo) {
+		return sqlsession.selectList(namespace+"selectMemberList" , dateSearchVo);
+	}
+
 	
 
->>>>>>> parent of d253f43... sisi
 }
