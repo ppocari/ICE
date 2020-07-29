@@ -35,38 +35,16 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public int admin_regist_member(MemberVO membervo ) {
-		int cnt = 0;
-		try {
-			
-				cnt = memberDao.admin_regist_member(membervo);
-			
-		}catch (RuntimeException e) {
-			cnt = -1;
-			e.printStackTrace();
-			throw e;
-		}
-		
-		return cnt;
-=======
 	public int registerMulti(MemberVO memberVO) {
 		return memberDao.registerMulti(memberVO);
->>>>>>> parent of d253f43... sisi
-	}
 
+	}
 
 	@Override
 	public List<MemberVO> searchAllmember(String searchKeyword) {
 		return memberDao.searchAllmember(searchKeyword);
 	}
 
-<<<<<<< HEAD
-=======
-	
-
->>>>>>> parent of d253f43... sisi
-	
 	
 	
 	

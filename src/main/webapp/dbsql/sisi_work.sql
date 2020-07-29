@@ -33,25 +33,20 @@ select * from mypage_mem;
   
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values('111910', 'Á¤±×·¡', '123', '111','910');
+values('111910', 'ì •ê·¸ë˜', '123', '111','910');
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values('121920', 'ÀÌ°æ¸®', '123', '121','920');
+values('121920', 'ì´ê²½ë¦¬', '123', '121','920');
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values('141930', '±è°úÀå', '123', '141','930');
+values('141930', 'ê¹€ê³¼ì¥', '123', '141','930');
 
 insert into member(memNo, name, hp1, hp2, hp3, pwd, deptcode, poscode)
-values('141910', 'µÑ¸®', '010', '1234','5678','123', '141','930');
+values('141910', 'ë‘˜ë¦¬', '010', '1234','5678','123', '141','930');
 
 insert into member(memNo, name, pwd, deptcode, poscode)
-values('999999', '¹Ú°ü¸®', '123', '999','999');
-<<<<<<< HEAD
-=======
+values('999999', 'ë°•ê´€ë¦¬', '123', '999','999');
 
-insert into member(memNo, name, pwd, deptcode, poscode, salary)
-values('141910', 'µÑ¸®','123', '141','930', 4000000);
->>>>>>> parent of d253f43... sisi
 
 update member
 set hiredate = '2020-01-13'
@@ -62,19 +57,19 @@ where memno = '111910';
 select * from companyCard;
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334444','111910','102036',9000,'¼­¿ï½Ã','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334444','111910','102036',9000,'ì„œìš¸ì‹œ','2020-07-12' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334445','111910','102037',9000,'¼­¿ï½Ã','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334445','111910','102037',9000,'ì„œìš¸ì‹œ','2020-07-12' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334446','111910','102036',13000,'¼­¿ï½Ã','2020-07-13' ,1);
+values(companyCard_seq.nextval,'1111222233334446','111910','102036',13000,'ì„œìš¸ì‹œ','2020-07-13' ,1);
 
 insert into companyCard
-values(4,'1111222233334447','121920','102036',356000,'¼­¿ï½Ã','2020-07-14' ,1);
+values(4,'1111222233334447','121920','102036',356000,'ì„œìš¸ì‹œ','2020-07-14' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'¼­¿ï½Ã','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'ì„œìš¸ì‹œ','2020-07-12' ,1);
 
 select * from accountCode;
 --102306
@@ -94,9 +89,7 @@ from companyCard c join mypage_mem m
  select * from comcard_mem;
  
 
- 
-<<<<<<< HEAD
-=======
+
  select * from member;
  desc member;
  
@@ -105,4 +98,4 @@ from companyCard c join mypage_mem m
 delete from member
 where memno = '141912';
  
->>>>>>> parent of d253f43... sisi
+

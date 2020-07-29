@@ -18,11 +18,8 @@ public interface MemberService {
 		
 		MemberVO selectMember(String userid);
 		
-<<<<<<< HEAD
-		int admin_regist_member(MemberVO membervo );
-=======
+
 		int registerMulti(MemberVO memberVO);
->>>>>>> parent of d253f43... sisi
 		
 		List<MemberVO> searchAllmember(String searchKeyword);
 

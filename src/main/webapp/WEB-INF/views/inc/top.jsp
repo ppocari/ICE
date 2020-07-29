@@ -48,7 +48,6 @@
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
@@ -169,8 +168,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항 관리 </a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판 관리</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -208,7 +207,7 @@
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value="/payment/write/payList.do" />">기안상신함</a>
 						<a class="collapse-item" href="<c:url value="#" />">임시보관함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기안완료함</a>
 					</div>
@@ -302,8 +301,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -496,7 +495,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Read More Messages</a>
+									href="<c:url value='/note/noteList.do'/>">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
