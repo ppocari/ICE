@@ -31,15 +31,17 @@ public class AddressController {
 	
 	/* 주소록 조회 */
 	@RequestMapping("/addressMain.do")
-	public String address_get(HttpServletRequest request, Model model) {
+	public String address_get( @RequestParam(required = false, defaultValue = "1") int orderNo,  //address 첫화면 일 때 default로 대표 주소록을 보여줌. 
+			HttpServletRequest request, Model model) {
 		
 		logger.info("주소록 메인");
 		
-		 HttpSession session= request.getSession(); 
-		 String memNo=(String)session.getAttribute("identNum");
+		/*
+		 * HttpSession session= request.getSession(); 
+		 * String memNo=(String)session.getAttribute("memNo");
+		 */
 		
-		 logger.info("memNo={}", memNo);
-		/* String memNo="111910"; */
+		String memNo="111910";
 		
 		/*주소록 조회*/
 		
