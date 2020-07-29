@@ -15,12 +15,14 @@
 		$("#accordion").accordion();
 
 		$('input[type=checkbox]').click(function(){
-			var result=""; //result 초기화
+			
+		var result="";
 			$('input[type=checkbox]:checked').each(function(idx, item){
-				result+="<span style='visibility:hidden'>"+$(this).attr('id')+"</span>";  //result="111910127420"
+				id=$(this).attr('id').split('_');
+				result+="<span style='display:none'>"+id[0]+"</span>"; 
+				result+="<span style='background-color:lightgray;padding:2px;'>"+id[2]+":"+id[1]+"</span>";
 			});
 			
-			alert(result);
 			$('#organ_inputs_div').html(result);
 		});
 		
@@ -130,6 +132,15 @@ table {
 	text-align:center;
 	padding: 0px;
 }
+
+#frm{
+	margin-top: 4px;
+}
+
+#frm span {
+	margin:2px;
+}
+
 
 </style>
 </head>

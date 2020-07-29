@@ -20,6 +20,32 @@
 	<select id="selectDepartment" resultType="departmentVo">
 		select * from department order by deptcode
 	</select>
+	
+	
+	<!-- 주소록 등록 -->
+	<select id="selectCountAddressGroup" parameterType="string" resultType="int">
+		select count(*) from addressgroup
+		where memNo=#{memNo}
+	</select>
+	<select id="selectAddressGroup" parameterType="string" resultType="addressGroupVo">
+		select * from addressgroup
+		where memNo=#{memNo}
+	</select>
+	<insert id="insertDefaultAddressGroup" parameterType="string">
+		insert into addressgroup(adgno, groupname, memno)
+		values(adgNo_seq.nextval, '기본', #{memNo})
+	</insert>
+	<select id="selectAdgNo" parameterType="addressGroupVo">
+		select adgNo from addressGroup
+		where groupName=#{groupName}
+		and memno=#{memNo}
+	</select>
+	
+	
+	<insert id="insertAddress" parameterType="addressVo">
+		insert into address(adno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
+		values(adno_seq.nextval, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
+	</insert>
 </mapper>
 
 
