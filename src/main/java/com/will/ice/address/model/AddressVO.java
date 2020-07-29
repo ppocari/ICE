@@ -15,17 +15,13 @@ public class AddressVO {
 	private String isFavorite;
 	private String isDeleted;
 	private String groupName;
-	private String homeAddress;
-	private String homePage;
-	private String messenger;
-	private String SNS;
-	private String memo;
 	public int getAdNo() {
 		return adNo;
 	}
 	public void setAdNo(int adNo) {
 		this.adNo = adNo;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -104,44 +100,12 @@ public class AddressVO {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	public String getHomeAddress() {
-		return homeAddress;
-	}
-	public void setHomeAddress(String homeAddress) {
-		this.homeAddress = homeAddress;
-	}
-	public String getHomePage() {
-		return homePage;
-	}
-	public void setHomePage(String homePage) {
-		this.homePage = homePage;
-	}
-	public String getMessenger() {
-		return messenger;
-	}
-	public void setMessenger(String messenger) {
-		this.messenger = messenger;
-	}
-	public String getSNS() {
-		return SNS;
-	}
-	public void setSNS(String sNS) {
-		SNS = sNS;
-	}
-	public String getMemo() {
-		return memo;
-	}
-	public void setMemo(String memo) {
-		this.memo = memo;
-	}
-	
 	@Override
 	public String toString() {
-		return "AddressVO [adNo=" + adNo + ", name=" + name + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3
-				+ ", email1=" + email1 + ", email2=" + email2 + ", adgNo=" + adgNo + ", company=" + company
-				+ ", deptName=" + deptName + ", posName=" + posName + ", isFavorite=" + isFavorite + ", isDeleted="
-				+ isDeleted + ", groupName=" + groupName + ", homeAddress=" + homeAddress + ", homePage=" + homePage
-				+ ", messenger=" + messenger + ", SNS=" + SNS + ", memo=" + memo + "]";
+		return "AddressVO [adNo=" + adNo + ", name=" + name + ", hp1=" + hp1 + ", hp2=" + hp2
+				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", adgNo=" + adgNo + ", company="
+				+ company + ", deptName=" + deptName + ", posName=" + posName + ", isFavorite=" + isFavorite
+				+ ", isDeleted=" + isDeleted + ", groupName=" + groupName + "]";
 	}
 	
 }
