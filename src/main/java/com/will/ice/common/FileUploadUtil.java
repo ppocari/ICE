@@ -73,7 +73,6 @@ public class FileUploadUtil {
 				map.put("fileSize", fileSize);
 				map.put("fileName", fileName);
 				map.put("originalFileName", originalFName);
-				
 				resultList.add(map);
 			}
 		}//while
