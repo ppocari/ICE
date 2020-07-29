@@ -2,11 +2,17 @@ package com.will.ice.member.model;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.ice.common.DateSearchVO;
+
 @Service
 public class MemberServiceImpl implements MemberService{
+	private static final Logger logger
+	 = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
 	
 	@Autowired
@@ -35,8 +41,21 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int registerMulti(MemberVO memberVO) {
-		return memberDao.registerMulti(memberVO);
+	public int registerMulti(List<MemberVO> memList) {
+		
+		int cnt = 0;
+		
+		for( int i = 0; i<memList.size(); i++) {
+			MemberVO memvo = memList.get(i);
+			if(memvo.getMemNo() == null) {
+				cnt = 0;
+			}else {
+				cnt = memberDao.registerMulti(memvo);
+			}
+			logger.info("i={}, cnt ={}", i, cnt);
+		}
+		
+		return cnt;
 	}
 
 
@@ -44,6 +63,13 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> searchAllmember(String searchKeyword) {
 		return memberDao.searchAllmember(searchKeyword);
 	}
+
+	@Override
+	public List<MemberVO> selectMemberList(DateSearchVO dateSearchVo) {
+		return memberDao.selectMemberList(dateSearchVo);
+	}
+
+	
 
 	
 

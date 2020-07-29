@@ -1,6 +1,7 @@
 package com.will.ice.member.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,20 +32,28 @@ public class MemberController {
 	@Autowired private EtcService etcService;
 	
 	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.GET)
-	public void memWrite() {
+	public void memWrite(Model model) {
 		logger.info("사원 등록 화면 memWrite");
+		
+		List<DepartmentVO> deptList = etcService.DeptAll();
+		List<PositionVO> posList = etcService.PosAll();
+		
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("posList", posList);
 	}
 	
 	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.POST)
-	public String memWriteMulti(@ModelAttribute MemberVO memberVO,
+	public String memWriteMulti(@ModelAttribute MemberListVO memListVO,
 			Model model) {
-		logger.info("사원 등록 처리 memWriteMulti, memberVO={}",memberVO);
-		
-		int cnt = memberService.registerMulti(memberVO);
-		
+		logger.info("사원 등록 처리 memWriteMulti, memListVO={}",memListVO);
+			
+		List<MemberVO> memList = memListVO.getMemItems();
+		int cnt  = memberService.registerMulti(memList);
+			
 		String msg = "사원등록 실패", url = "/member/memWrite.do";
 		if(cnt > 0) {
 			msg = "사원등록 성공!";
+			url = "/member/memList.do";
 			
 		}
 		

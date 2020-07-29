@@ -19,12 +19,28 @@
 	</select>
 	
 	<insert id="registerMulti" parameterType="memberVO">
-		insert into member(memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
-		values(#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select member_seq.nextval from dual
+		</selectKey>
+		insert into member(no,memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
+		values(#{no} ,#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
 		
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">
 		select * from member
+	</select>
+	
+	<select id="selectMemberList" parameterType="dateSearchVo" 
+		resultType="int">
+		select count(*) from member
+		<where> 
+			<if test="customerId!=null and customerId!=''">
+				memNo=#{customerId}
+			</if>				
+			and hiredate >=#{startDay}
+			<![CDATA[
+			and hiredate < to_date(#{endDay})+1 ]]>
+		</where>
 	</select>
 </mapper>

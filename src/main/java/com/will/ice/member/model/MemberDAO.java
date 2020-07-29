@@ -2,6 +2,8 @@ package com.will.ice.member.model;
 
 import java.util.List;
 
+import com.will.ice.common.DateSearchVO;
+
 public interface MemberDAO {
 	
 	String selectPwd(String memNo);
@@ -13,4 +15,5 @@ public interface MemberDAO {
 	
 	
 	List<MemberVO> searchAllmember(String searchKeyword);
+	List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
 }

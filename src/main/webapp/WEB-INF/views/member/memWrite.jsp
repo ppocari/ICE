@@ -9,54 +9,42 @@
 	width: 90px;
 }
 .table .registerTable {
-	width: 90px;
+	width: 110px;
 	border: 1px solid white;
 }
 .register_text {
-	width: 100px;
+	width: 120px;
+	float: left;
 }
 </style>
 <script type="text/javascript">
 	$(function(){
-		
 		$("form[name=memRegisterFrm]").submit(function(){
-			if($("#dynamicTbody").text() == '' ) {
-				alert("정보를 입력해주세요");
+			if ($('#dynamicTable tr').length == 1) {
+				alert("사원 정보를 입력해주세요");
 				event.preventDefault();
-			}else{
-				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-					
-					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
-					alert("check");
-					
-				}else{
-					alert("uncheck");
-					event.preventDefault();
-				}
 			}
 			
 		});
+		
 	
-		$('#btMultiRegist').click(function(){
-			var len=$('tbody input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('이벤트로 등록하려는 상품을 먼저 체크하세요');
-				return;
-			}
-			
-			$('form[name=frmList]')
-	.prop("action","<c:url value='/member/registerList.do'/>");
-			$('form[name=frmList]').submit();
-		});	
+		$( "#memHiredate" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
 		
 		
 		
-		$("#memHiredate").datepicker();
 	});
 	
+	var idx = 1;
 	function memberTableCreate(){
 		var tc = new Array();
 		var str = '';
+		
 		
 		var NmemNo = $("#memNo").val();
 		var NmemName = $("#memName").val();
@@ -67,18 +55,16 @@
 		var NmemSalary = $("#memSalary").val();
 					
 		str += '<tr>';
-		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
-		str += '<td><input type=text name="memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
-		str += '<td><input type=text name="name" class="registerTable" value="' +NmemName+ '"/></td>';
-		str += '<td><input type=text name="pwd" class="registerTable" value="' +NmemPwd+ '"/></td>';
-		str += '<td><input type=text name="hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
-		str += '<td><input type=text name="deptCode" class="registerTable" value="' +NmemDepart+ '"/></td>';
-		str += '<td><input type=text name="posCode" class="registerTable" value="' +NmemPosi+ '"/></td>';
-		str += '<td><input type=text name="salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].name" class="registerTable" value="' +NmemName+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].pwd" class="registerTable" value="' +NmemPwd+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].deptCode" class="registerTable" value="' +NmemDepart+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].posCode" class="registerTable" value="' +NmemPosi+ '"/></td>';
+		str += '<td><input type=text name="memItems['+idx+'].salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
 		str += '</tr>';
 					
-		
-		
+		 
 		
 		$("#dynamicTable").append(str);
 					
@@ -91,7 +77,11 @@
 		$("#memDepart").val('');
 		$("#memPosi").val('');
 		$("#memSalary").val('');
+		
+		idx = idx + 1;
 		}
+	
+		
 </script>
 <!-- Begin Page Content -->
 
@@ -119,7 +109,6 @@
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
-							 	<input type="button" id="btMultiRegist" value="등록" >
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
@@ -129,7 +118,6 @@
 							<table class="table table-bordered" id="dynamicTable">
 								<thead>
 									<tr>
-										<th>db반영</th>
 										<th>사원번호</th>
 										<th>이름</th>
 										<th>비밀번호</th>
@@ -145,15 +133,28 @@
 						</table>
 						
 						
-						<span style="font-weight: bold; font-size: 1.1em;">정보입력</span> 
-						<input type="text" placeholder="사원번호" id="memNo" class="register_text">
-						<input type="text" placeholder="이름" id="memName" class="register_text"> 
-						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text"> 
-						<input type="text" placeholder="입사일" id="memHiredate" class="register_text"> 
-						<input type="text" placeholder="부서명" id="memDepart" class="register_text"> 
-						<input type="text" placeholder="직급" id="memPosi" class="register_text">
-						<input type="text" placeholder="계약연봉" id="memSalary" class="register_text">
-						<input type="button" class="btn btn-info" onclick="memberTableCreate()"
+						<span style="font-weight: bold; font-size: 1.1em;" class="register_text form-control">정보입력</span> 
+						<input type="text" placeholder="사원번호" id="memNo" class="register_text form-control">
+						<input type="text" placeholder="이름" id="memName" class="register_text form-control"> 
+						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text form-control"> 
+						<input type="text" placeholder="입사일" id="memHiredate" class="register_text form-control"> 
+						<select id="memDepart" class="register_text form-control" >
+							<option>부서명</option>
+							<c:forEach var = "deptVo" items="${deptList }" >
+								<option value="${deptVo.deptCode }">${deptVo.deptName } </option>
+							</c:forEach>
+						</select>
+						
+						
+						<select id="memPosi" class="register_text form-control" >
+							<option>직급</option>
+							<c:forEach var = "posVo" items="${posList }" >
+								<option value="${posVo.posCode }">${posVo.posName } </option>
+							</c:forEach>
+						</select>
+						
+						<input type="text" placeholder="계약연봉" id="memSalary" class="register_text form-control">
+						<input type="button" id="insertAdminRegister" class="btn btn-info" onclick="memberTableCreate()"
 						class="register_text" value="입력">
 						
 						</div>
