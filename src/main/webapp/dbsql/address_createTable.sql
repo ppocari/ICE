@@ -2,7 +2,7 @@
 DROP TABLE address 
 	CASCADE CONSTRAINTS;
 
-/* 林家废 */
+/* 林家废  */
 DROP TABLE addressBook 
 	CASCADE CONSTRAINTS;
 
