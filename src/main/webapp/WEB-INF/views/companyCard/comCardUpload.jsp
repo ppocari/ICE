@@ -29,32 +29,26 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$("#excelUpForm").change(function(){
+		                var form = $("#excelUpForm")[0];
+		 
+		                var data = new FormData(form);
+		                $.ajax({
+		                   enctype:"multipart/form-data",
+		                   method:"POST",
+		                   url: './excelUp.do',
+		                   processData: false,   
+		                   contentType: false,
+		                   cache: false,
+		                   data: data,
+		                   success: function(result){  
+		                       alert("업로드 성공!!");
+		                   }
+		                });
+		            });
+
+
 		
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
-			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				},
-				error:function(xhr, status, error){
-					alert(status +", "+error);
-				}
-			
-			})
-			
-		});
 		
 		
 	});
@@ -81,43 +75,17 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
+				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
 				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
+						<h6 class="m-0 font-weight-bold text-primary">미등록</h6>
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
 							 >전체조회</button>
 						</div>
 						
-					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
-						</div>
-					</div>
+					</div>		
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
@@ -159,6 +127,7 @@
 						</div>
 					</div>		
 				</form>
+
 				
 				
 			</div>

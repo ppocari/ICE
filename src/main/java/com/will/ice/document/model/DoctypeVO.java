@@ -27,5 +27,6 @@ public class DoctypeVO {
 	public String toString() {
 		return "DoctypeVO [typeNo=" + typeNo + ", typeName=" + typeName + ", poscode=" + poscode + "]";
 	}
+	//하이
 	 
 }

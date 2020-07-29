@@ -16,9 +16,9 @@ public interface MemberService {
 	
 		int logCheck(String memNo, String pwd);
 		
-		MemberVO_log selectMember(String userid);
+		MemberVO selectMember(String userid);
 		
-		int admin_regist_member(MemberVO memberVO);
+		int admin_regist_member(MemberVO membervo );
 		
 		List<MemberVO> searchAllmember(String searchKeyword);
 

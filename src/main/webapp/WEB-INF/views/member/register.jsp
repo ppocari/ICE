@@ -18,10 +18,6 @@
 	width: 100px;
 }
 </style>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
 		
@@ -31,8 +27,7 @@
 				event.preventDefault();
 			}else{
 				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-					
-					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
+										
 					alert("check");
 					
 				}else{
@@ -42,6 +37,20 @@
 			}
 			
 		});
+	
+		$('#btMultiRegist').click(function(){
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('이벤트로 등록하려는 상품을 먼저 체크하세요');
+				return;
+			}
+			
+			$('form[name=frmList]')
+	.prop("action","<c:url value='/member/registerList.do'/>");
+			$('form[name=frmList]').submit();
+		});	
+		
+		
 		
 		$("#memHiredate").datepicker();
 	});
@@ -54,8 +63,6 @@
 		var memNo = $("#memNo").val();
 		var memName = $("#mamName").val();
 		var memPwd = $("#memPwd").val();
-		var memTel = $("#memTel").val();
-		var memEmail = $("#memEmail").val();
 		var memHiredate = $("#memHiredate").val();
 		var memDepart = $("#memDepart").val();
 		var memPosi = $("#memPosi").val();
@@ -64,17 +71,16 @@
 		str += '<tr>';
 		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
 		str += '<td><input type=text name="memNo" class="registerTable" value="' + memNo + '"/></td>';
-		str += '<td><input type=text name="memName" class="registerTable" value="' + memName + '"/></td>';
-		str += '<td><input type=text name="memPwd" class="registerTable" value="' + memPwd + '"/></td>';
-		str += '<td><input type=text name="memTel" class="registerTable" value="' + memTel + '"/></td>';
-		str += '<td><input type=text name="memEmail" class="registerTable" value="' + memEmail + '"/></td>';
-		str += '<td><input type=text name="memHiredate" class="registerTable" value="' + memHiredate + '"/></td>';
-		str += '<td><input type=text name="memDepart" class="registerTable" value="' + memDepart + '"/></td>';
-		str += '<td><input type=text name="memPosi" class="registerTable" value="' + memPosi + '"/></td>';
-		str += '<td><input type=text name="memSalary" class="registerTable" value="' + memSalary + '"/></td>';
+		str += '<td><input type=text name="name" class="registerTable" value="' + memName + '"/></td>';
+		str += '<td><input type=text name="pwd" class="registerTable" value="' + memPwd + '"/></td>';
+		str += '<td><input type=text name="hiredate" class="registerTable" value="' + memHiredate + '"/></td>';
+		str += '<td><input type=text name="deptName" class="registerTable" value="' + memDepart + '"/></td>';
+		str += '<td><input type=text name="posName" class="registerTable" value="' + memPosi + '"/></td>';
+		str += '<td><input type=text name="salary" class="registerTable" value="' + memSalary + '"/></td>';
 		str += '</tr>';
 					
 		$("#dynamicTable").append(str);
+		
 					
 		$("#memNo").val('');
 		$("#mamName").val('');
@@ -108,11 +114,12 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post" action="/member/register.do">
+				<form name="memRegisterFrm" method="post" action="<c:url value='/member/register.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
+							 	
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
@@ -126,8 +133,6 @@
 										<th>사원번호</th>
 										<th>이름</th>
 										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
@@ -144,8 +149,6 @@
 						<input type="text" placeholder="사원번호" id="memNo" class="register_text">
 						<input type="text" placeholder="이름" id="mamName" class="register_text"> 
 						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text"> 
-						<input type="text" placeholder="전화번호" id="memTel" class="register_text">
-						<input type="text" placeholder="이메일" id="memEmail" class="register_text"> 
 						<input type="text" placeholder="입사일" id="memHiredate" class="register_text"> 
 						<input type="text" placeholder="부서명" id="memDepart" class="register_text"> 
 						<input type="text" placeholder="직급" id="memPosi" class="register_text">
