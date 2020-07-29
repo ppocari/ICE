@@ -33,4 +33,9 @@ public class MemberDAOMybatis implements MemberDAO{
 		return sqlsession.selectList(namespace+"searchAllmember" , searchKeyword);
 	}
 
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> parent of d253f43... sisi
 }

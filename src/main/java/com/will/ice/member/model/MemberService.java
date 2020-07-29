@@ -18,7 +18,8 @@ public interface MemberService {
 		
 		MemberVO selectMember(String userid);
 		
-		int admin_regist_member(MemberVO membervo );
+
+		int registerMulti(MemberVO memberVO);
 		
 		List<MemberVO> searchAllmember(String searchKeyword);
 

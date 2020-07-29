@@ -1,5 +1,9 @@
 package com.will.ice.member.controller;
 
+<<<<<<< HEAD
+=======
+import java.text.SimpleDateFormat;
+>>>>>>> parent of d253f43... sisi
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,6 +33,7 @@ public class MemberController {
 	@Autowired private MemberService memberService;
 	@Autowired private EtcService etcService;
 	
+<<<<<<< HEAD
 	
 	@RequestMapping("/management.do")
 	public void management_get() {
@@ -57,6 +62,24 @@ public class MemberController {
 		if(cnt > 0) {
 			msg = "사원등록 성공";
 			url = "/member/memeList.do";
+=======
+	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.GET)
+	public void memWrite() {
+		logger.info("사원 등록 화면 memWrite");
+	}
+	
+	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.POST)
+	public String memWriteMulti(@ModelAttribute MemberVO memberVO,
+			Model model) {
+		logger.info("사원 등록 처리 memWriteMulti, memberVO={}",memberVO);
+		
+		int cnt = memberService.registerMulti(memberVO);
+		
+		String msg = "사원등록 실패", url = "/member/memWrite.do";
+		if(cnt > 0) {
+			msg = "사원등록 성공!";
+			
+>>>>>>> parent of d253f43... sisi
 		}
 		
 		model.addAttribute("msg", msg);
