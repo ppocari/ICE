@@ -19,7 +19,7 @@
 	</select>
 	
 	<insert id="admin_regist_member" parameterType="memberVO">
-		into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
+		insert into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
 		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
 			
 	</insert>

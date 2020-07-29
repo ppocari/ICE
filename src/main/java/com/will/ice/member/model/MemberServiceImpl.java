@@ -35,12 +35,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int admin_regist_member(List<MemberVO> list) {
+	public int admin_regist_member(MemberVO membervo ) {
 		int cnt = 0;
 		try {
-			for(MemberVO memvo : list) {
-				cnt = memberDao.admin_regist_member(memvo);
-			}
+			
+				cnt = memberDao.admin_regist_member(membervo);
+			
 		}catch (RuntimeException e) {
 			cnt = -1;
 			e.printStackTrace();

@@ -26,7 +26,7 @@ public class CompanyCardController {
 		= LoggerFactory.getLogger(CompanyCardController.class);
 
 	@Autowired private ComcardService comcardService;
-	@Autowired private MemberService memberService;
+
 	@Autowired private EtcService etcService;
 	
 	@RequestMapping("/comCardList.do")
@@ -41,9 +41,7 @@ public class CompanyCardController {
 		MemberVO memvo = new MemberVO();
 		for(int i=0; i<list.size(); i++) {
 			ComcardVO comvo = list.get(i);
-			
-			memvo = memberService.selectMember(comvo.getMEMNO());
-			
+			logger.info("comvo.getMEMNO() ={}", comvo.getMEMNO());
 		}
 		
 		model.addAttribute("deptList", deptList);

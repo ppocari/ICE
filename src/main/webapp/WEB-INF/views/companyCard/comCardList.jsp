@@ -30,32 +30,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
-		
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
-			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				},
-				error:function(xhr, status, error){
-					alert(status +", "+error);
-				}
-			
-			})
-			
-		});
+		$("#hiredate1 input").datepicker();
 		
 		
 	});
@@ -114,7 +89,13 @@
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">금액별</label>
+							<label for="price1" style="margin-right: 20px;">금액별</label>
+							<input type="text" name="price1"> ~
+							<input type="text" name="price2">
+						</div>
+						
+						<div class="search" style="margin-right: 20px;">
+							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
 							<input type="text" name="hiredate1"> ~
 							<input type="text" name="hiredate2">
 						</div>
@@ -144,14 +125,14 @@
 									<c:forEach var="vo" items="${list }">
 										
 										<tr>
-											<td>${vo.cardNo }</td>
-											<td>${memvo.name }</td>
-											<td>${vo.accCode }</td>
-											<td>${vo.price }</td>
-											<td>${vo.usePlace }</td>
-											<td><fmt:formatDate value="${vo.useDate }" pattern="yyyy-MM-dd"/> </td>
-											<td>${memvo.deptName }</td>
-											<td>${memvo.posName }</td>
+											<td>${vo.CARDNO }</td>
+											<td>${vo.NAME }</td>
+											<td>${vo.ACCCODE }</td>
+											<td>${vo.PRICE }</td>
+											<td>${vo.USEPLACE }</td>
+											<td><fmt:formatDate value="${vo.USEDATE }" pattern="yyyy-MM-dd"/> </td>
+											<td>${vo.DEPTNAME }</td>
+											<td>${vo.POSNAME }</td>
 																				
 										</tr>
 									</c:forEach>
