@@ -24,15 +24,13 @@ public class MemberDAOMybatis implements MemberDAO{
 	}
 
 	@Override
-	public int registerMulti(MemberVO memberVO) {
-		return sqlsession.insert(namespace + "registerMulti", memberVO);
+	public int admin_regist_member(MemberVO memberVO) {
+		return sqlsession.insert(namespace+"admin_regist_member", memberVO);
 	}
 
 	@Override
 	public List<MemberVO> searchAllmember(String searchKeyword) {
 		return sqlsession.selectList(namespace+"searchAllmember" , searchKeyword);
 	}
-
-	
 
 }

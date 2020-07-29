@@ -18,8 +18,8 @@ CREATE TABLE member (
 	addr VARCHAR2(100), /* 주소 */
 	addrDetail VARCHAR2(100), /* 상세주소 */
 	salary NUMBER, /* 연봉 */
-	hiredate VARCHAR2(30), /* 입사일 */
-	firedate VARCHAR2(30), /* 퇴사일 */
+	hiredate DATE, /* 입사일 */
+	firedate DATE, /* 퇴사일 */
 	gender VARCHAR2(10), /* 성별 */
 	profileURL VARCHAR2(100), /* 사진 */
 	originalFileName VARCHAR2(100), /* 오리지날파일이름 */
@@ -64,6 +64,16 @@ ALTER TABLE member
 			deptCode
 		);
 		
+create view log_mem
+as
+select m.name , m.memno, m.pwd, m.FIREDATE, p.PosNAME
+from member m join position p
+ on m.POSCODE = p.POSCODE;
+ 
+  
+select * from log_mem;
+
+desc log_mem;
 
 create view mypage_mem
 as

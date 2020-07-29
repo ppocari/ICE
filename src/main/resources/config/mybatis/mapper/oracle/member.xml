@@ -4,24 +4,24 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.member">
 	<select id="selectPwd" parameterType="string"  resultType="string">
-		select pwd from mypage_mem
+		select pwd from log_mem
 		where memno = #{memNo} and firedate is null 
 		</select>
 
 	<select id="selectMember" parameterType="string" resultType="MemberVO">
-		select * from mypage_mem
+		select * from log_mem
 		where memno = #{memNo} 
 	</select>
 
-	<select id="logCheck" parameterType="MemberVO">
-		select * from mypage_mem
+	<select id="logCheck" parameterType="MemberVO_log">
+		select * from log_mem
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
-	<insert id="registerMulti" parameterType="memberVO">
-		insert into member(memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
-		values(#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
-		
+	<insert id="admin_regist_member" parameterType="memberVO">
+		insert into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
+		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
+			
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">

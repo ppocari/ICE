@@ -1,6 +1,5 @@
 package com.will.ice.member.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,35 +29,43 @@ public class MemberController {
 	@Autowired private MemberService memberService;
 	@Autowired private EtcService etcService;
 	
-	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.GET)
-	public void memWrite() {
-		logger.info("사원 등록 화면 memWrite");
+	
+	@RequestMapping("/management.do")
+	public void management_get() {
+		logger.info("사원 관리 화면");
 	}
 	
-	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.POST)
-	public String memWriteMulti(@ModelAttribute MemberVO memberVO,
-			Model model) {
-		logger.info("사원 등록 처리 memWriteMulti, memberVO={}",memberVO);
+	@RequestMapping(value = "/register.do" , method = RequestMethod.GET)
+	public void register_get() {
+		logger.info("사원 등록 화면");
+	}
+	
+	@RequestMapping(value="/register.do", method = RequestMethod.POST)
+	public String register_post(@ModelAttribute MemberVO vo, Model model) {
+		logger.info("사원 등록 처리");
 		
-		int cnt = memberService.registerMulti(memberVO);
+		//여러개의 사원 데이터를 받아서 insert 하기
+		logger.info("사원 등록 결과  vo={}",   vo);
 		
-		String msg = "사원등록 실패", url = "/member/memWrite.do";
+
+				
+		int cnt = memberService.admin_regist_member(vo);
+		logger.info("사원 등록 결과  cnt={}",   cnt);
+		
+		
+		String msg = "사원등록 실패", url = "/member/register.do";
 		if(cnt > 0) {
-			msg = "사원등록 성공!";
-			
+			msg = "사원등록 성공";
+			url = "/member/memeList.do";
 		}
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
 		return "/common/message";
+		
 	}
 	
-	
-	@RequestMapping("/management.do")
-	public void management_get() {
-		logger.info("사원 관리 화면");
-	}
 	
 	
 	@RequestMapping(value = "/memList.do", method = RequestMethod.GET)
