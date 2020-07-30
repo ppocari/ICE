@@ -1,7 +1,5 @@
 package com.will.ice.member.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -90,5 +88,9 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping(value = "/memEdit.do", method = RequestMethod.GET)
+	public void memEdit_get() {
+		logger.info("사원 수정");
+	}
 	
 }

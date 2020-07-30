@@ -185,11 +185,19 @@
 			<div class="sidebar-heading">workspace</div>
 			
 			<!-- Nav Item - 근태관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" 
-			href="<c:url value='/workRecord/workRecord.do'/>"> 
-				<i class="fas fa-fw fa-folder"></i> <span>출퇴근</span>
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+			data-toggle="collapse" data-target="#collapseOne"
+			aria-expanded="true" aria-controls="collapseThree"> 
+				<i class="fas fa-fw fa-folder"></i> <span>근태관리</span>
 			</a>
-
+				<div id="collapseOne" class="collapse"
+					aria-labelledby="headingThree" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" 
+			href="<c:url value='/workRecord/workRecord.do'/>">출퇴근</a>
+						<a class="collapse-item" href="<c:url value="#" />">통계보기</a>
+					</div>
+				</div>
 			</li>
 
 			<!-- Nav Item - 전자결재 Menu -->

@@ -24,5 +24,17 @@ public class DocformServiceImpl implements DocformService{
 	public DocformVO getcontent(int formNo) {
 		return docformDao.getcontent(formNo);
 	}
+
+	@Override
+	public int deleteFormMulti(List<DocformVO> formList) {
+		int cnt=0;
+		int formNo=0;
+		for(DocformVO vo : formList) {
+			formNo = vo.getFormNo();
+			cnt += docformDao.deleteForm(formNo);
+		}
+		
+		return cnt;
+	}
 	
 }
