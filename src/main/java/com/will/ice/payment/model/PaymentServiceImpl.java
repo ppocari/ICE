@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.ice.document.model.DocumentviewVO;
+import com.will.ice.member.model.MemberVO;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -40,6 +41,16 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public List<DocumentviewVO> selectPayLine(int docNo) {
 		return paymentDao.selectPayLine(docNo);
+	}
+
+	@Override
+	public int deletePayLine(int docNo) {
+		return paymentDao.deletePayLine(docNo);
+	}
+	
+	@Override
+	public List<MemberVO> selectAllMem(int poscode) {
+		return paymentDao.selectAllMem(poscode);
 	}
 	
 }

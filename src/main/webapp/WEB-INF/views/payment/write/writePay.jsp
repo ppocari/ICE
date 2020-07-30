@@ -86,7 +86,6 @@
 	<div class="form-group" id="confirmBt">
 		<button type="submit" class="btn btn-default" id="sendBt">결재상신</button>
 		<button type="button" class="btn btn-default" id="saveBt">임시저장</button>
-		<button type="button" class="btn btn-default" id="lookBt">미리보기</button>
 	</div>
 </form>
 </body>

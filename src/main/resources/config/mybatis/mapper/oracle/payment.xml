@@ -21,6 +21,11 @@
 		values(#{payNo},#{docNo},#{getmemNo})
 	</update>
 	
+	<delete id="deletePayLine" parameterType="int">
+		delete from paymentline
+		where docNo=#{docNo}
+	</delete>
+	
 	<select id="selectAll" resultType="paymentviewVo">
 		select * from paymentView
 		<![CDATA[
@@ -39,10 +44,8 @@
 	</select>
 	
 	<select id="selectPayLine" parameterType="int" resultType="documentviewVo">
-		select * from docView
-		where docNo=#{docNo}
+		select * from docview where docNo=#{docNo}
 	</select>
-	
 </mapper>
 
 

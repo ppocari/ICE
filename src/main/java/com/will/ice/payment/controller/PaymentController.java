@@ -21,10 +21,8 @@ import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
-import com.will.ice.payline.model.PaylineService;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaymentService;
-import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 
 @Controller
@@ -37,7 +35,6 @@ public class PaymentController {
 	@Autowired private MemberService memService;
 	@Autowired private PaymentService paymentService;
 	@Autowired private DocformService docformService;
-	@Autowired private PaylineService paylineService;
 	
 	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
 	public String insertPaydoc(@RequestParam(required = false) String memNo,@RequestParam int formNo,@RequestParam String title,
@@ -51,7 +48,7 @@ public class PaymentController {
 		
 		MemberVO memVo = memService.selectMember(identNum);
 		List<MemberVO> memlist = 
-				paylineService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
+				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
 		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
 		
 		model.addAttribute("memlist",memlist);
@@ -112,9 +109,27 @@ public class PaymentController {
 		
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
 		List<DocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		logger.info("결재선, 파라미터 plList={}",plList.size());
 		
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList",plList);
+	}
+	
+	@RequestMapping("/deletePayline.do")
+	public String deletePayline(@RequestParam int docNo,Model model) {
+		logger.info("결재상신 취소, 파라미터 docNo={}",docNo);
+		
+		int cnt = paymentService.deletePayLine(docNo);
+		String msg="결재상신 취소 실패!",url="/payment/write/checkDocView.do?docNo={}"+docNo;
+		if(cnt>0) {
+			msg="결재상신 취소되었습니다";
+			url="/payment/close.do";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
 	}
 	
 	@RequestMapping("/close.do")

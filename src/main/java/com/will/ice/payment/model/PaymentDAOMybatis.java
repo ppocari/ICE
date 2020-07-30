@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.will.ice.document.model.DocumentviewVO;
+import com.will.ice.member.model.MemberVO;
 
 @Repository
 public class PaymentDAOMybatis implements PaymentDAO{
@@ -40,6 +41,14 @@ public class PaymentDAOMybatis implements PaymentDAO{
 		return sqlSession.selectList(namespace+"selectPayLine",docNo);
 	}
 
-
+	@Override
+	public int deletePayLine(int docNo) {
+		return sqlSession.delete(namespace+"deletePayLine",docNo);
+	}
+	
+	@Override
+	public List<MemberVO> selectAllMem(int poscode) {
+		return sqlSession.selectList(namespace+"selectAllMem",poscode);
+	}
 
 }
