@@ -15,11 +15,11 @@
 }
 
 .register_text{
-	width:110px;
+	width:120px;
 	float: left;
 }
 .search input{
-	
+	width:120px;
 }
 </style>
 <script type="text/javascript">

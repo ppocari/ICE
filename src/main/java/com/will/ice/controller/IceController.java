@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IceController {
 	private static final Logger logger = LoggerFactory.getLogger(IceController.class);
 	
+	
+	
 	@RequestMapping("/main/main_admin.do")
 	public void main_admin() {
 		logger.info("관리자 메인 페이지 보여주기");
