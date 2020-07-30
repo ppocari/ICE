@@ -59,6 +59,12 @@
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
+					<!-- 가격 설정 -->
+						<c:set var="sale" value="0.1"/>
+						<c:set var="TICPRICE" value="7000"/>
+						<c:set var="TICQUANTITY" value="1"/>
+						<c:set var="sum" value="${TICPRICE * TICQUANTITY}"/>
+						<c:set var="sumPrice" value="${TICPRICE * TICQUANTITY * sale}"/>
 						<div>
 							<iframe src="<c:url value='/inc2/warring.html'/>" width="60%"
 								height="400"></iframe>
@@ -68,24 +74,15 @@
 								<label>점심 오후12시 ~ 2시 </label><br> <label>저녁 오후5시 ~
 									7시 </label><br> <label>식당위치 : 지하 1층</label><br>
 									<!-- 선택별로 할인율 보여주기 -->
-									<label>식권구매 수량 : </label> <select name="sg">
-										<option value="sg1">1장 구매</option>
-										<option value="sg2">10장 구매</option>
-										<option value="sg3">직접입력</option>
-										<c:if test="${sg3 }">
-											<input type="text" value="sg3"/>
+									<label>식권구매 수량 : </label> <select name="TICQUANTITY">
+										<option value="TICQUANTITY1">1장 구매</option>
+										<option value="TICQUANTITY2">10장 구매</option>
+										<option value="TICQUANTITY3">직접입력</option>
+										<c:if test="${select==TICQUANTITY3 }">
 										</c:if>
 									</select>
 								</div>
-								<!-- 가격 -->
-								<c:set var="sale" value="0.1"/>
-								<c:set var="TICPRICE" value="7000"/>
-								<c:set var="TICQUANTITY" value="1"/>
-									<c:if test="${!sg}">
-										
-									</c:if>
-								<c:set var="sum" value="${TICPRICE * TICQUANTITY}"/>
-								<hr>
+									<hr>
 									<label>식권 가격 : <fmt:formatNumber value="${TICPRICE }" 
 										pattern="#,###"/>원</label><br> 
 									<label>총 상품 가격 : <fmt:formatNumber value="${sum }" 

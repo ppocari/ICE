@@ -7,9 +7,15 @@
 		<selectKey keyProperty="TICNO" resultType="int" order="BEFORE">
 			select ticket_Seq.nextval from dual
 		</selectKey>
-		insert into orders(TICNO, TICQUANTITY, TICPRICE)
-		values(#{TICNO}, #{TICQUANTITY}, #{TICPRICE}}
+		insert into ticket(TICNO, MEMNO, TICQUANTITY, TICPRICE)
+		values(#{TICNO}, #{MEMNO} #{TICQUANTITY}, #{TICPRICE}}
 	</insert>
+	
+	<select id="selectSpayView" parameterType="int"
+		resultType="map">
+		select * from SpayView
+		where memno = #{MEMNO}
+	</select>
 		
 </mapper>
 

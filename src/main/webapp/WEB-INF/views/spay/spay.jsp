@@ -94,18 +94,36 @@
 					<h6 class="m-0 font-weight-bold text-primary">결제정보</h6>
 				</div>
 				<!-- Card Body -->
+				<!-- 가격설정 -->
+				<c:set var="sale" value="0.1"/>
+				<c:set var="TICPRICE" value="7000"/>
+				<c:set var="TICQUANTITY" value="1"/>
+				<c:set var="sum" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
+				<c:set var="sumPrice" value="${sVo.TICPRICE * sVo.TICQUANTITY * sale}"/>
+						
 				<div class="card-body">
-					<label>주문시각 : new Date().getTime(),</label><br> 
-					<label>구매매수 : ${TICQUANTITY }장</label><br> 
+					<fmt:parseDate value="new java.util.Date()"
+					    pattern = "yyyy-MM-dd HH:mm:ss" var = "TICREGDATE"/>
+					<label>주문시각 : <fmt:formatDate value="${sVo.TICREGDATE }"/></label><br> 
+					<label>구매매수 : ${sVo.TICQUANTITY }장</label><br> 
 					<label>결제수단 : Card</label><br> 
-					<label>할인 : </label><br>
+					
+					<!-- 10장이상이면 할인 -->
+					<c:if test="${sVo.TICQUANTITY >=10}">
+						<label>할인 : 10%</label><br>
+						<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}-${sVo.TICPRICE * sVo.TICQUANTITY * 0.1}"/>
+					</c:if>
+					<c:if test="${sVo.TICQUANTITY < 10}">
+						<label>할인 : 0%</label><br>
+					</c:if>
+					
 					<hr>
-					<label>구매자	: ${vo.name }</label><br>
-					<label>전화번호 : ${vo.hp1 + vo.hp2 + vo.hp3 }</label><br>
-					<label>이메일 : ${vo.email1 + vo.email2 }</label><br>
+					<label>구매자	: ${memVo.name }</label><br>
+					<label>전화번호 : ${memVo.tel + vo.hp2 + vo.hp3 }</label><br>
+					<label>이메일 : ${memVo.email1 + vo.email2 }</label><br>
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
-					<label>결제 금액 : ${sum }</label><br>
+					<label>결제 금액 : ${sumPrice }</label><br>
 					<hr>
 					<div style="text-align: center;">
 						<button onclick="requestPay()" class="btn btn-primary btn-user btn-block">결제하기</button>

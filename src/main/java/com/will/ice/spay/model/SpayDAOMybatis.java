@@ -1,5 +1,7 @@
 package com.will.ice.spay.model;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,11 @@ public class SpayDAOMybatis implements SpayDAO{
 	@Override
 	public int insertTic(SpayVO vo) {
 		return sqlSession.insert(namespace+"insertTic", vo);
+	}
+
+	@Override
+	public Map<String, Object> selectSpayView(int MEMNO) {
+		return sqlSession.selectOne(namespace+"selectSpayView",MEMNO);
 	}
 
 }
