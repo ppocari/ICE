@@ -44,6 +44,9 @@ $(function(){
 		}
 	});
 	
+	if($('NOTI_MAIN').is(":checked")==true){
+		console.log('체크된 상태');
+	}
 	
 });
 	
@@ -104,8 +107,8 @@ $(function(){
 									<option value="영업">영업</option>
 									<option value="경리">경리</option>
 								</select> 
-								<input type="checkbox" id="NOTI_MAIN" name="NOTI_MAIN" 
-								 	value="option1"> 
+								<input type="checkbox" name="NOTI_MAIN" 
+								 	value="1"> 
 								<span>메인 공지사항 등록</span>
 							</td>
 						</tr>

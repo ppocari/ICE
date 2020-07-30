@@ -26,13 +26,16 @@ public class NoteController {
 	
 	
 	@RequestMapping("/contact.do")
-	public void contact() {
+	public void contact_get(@RequestParam String memNo) {
 		logger.info("연락처 실행");
+		
+		
 	}
 	
 	@RequestMapping("/noteList.do")
 	public void noteList() {
 		logger.info("쪽지함 실행");
 	}
+	
 	
 }

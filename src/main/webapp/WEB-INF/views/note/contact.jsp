@@ -10,6 +10,9 @@
 	src="<c:url value='/resources/se2/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
 
+$(function(){
+	
+});
 </script>
 <style type="text/css">
 
@@ -17,13 +20,15 @@
 </head>
 <body>
 
-
+<div class="container-fluid">
 	<div id="main" style="font-size:13px;">
 		
 		
-		
+	<form name="frmContact" method="post"  
+				action="<c:url value='/note/contact.do'/> ">
 		<table  width="90%" cellpadding="5" cellspacing="0" border="1" align="center" 
-			style="width:700px; height: 500px; border-collapse:collapse; border:1px gray solid; table-layout: fixed;">
+			style="width:700px; height: 500px; border-collapse:collapse; 
+			border:1px gray solid; table-layout: fixed;" class="table table-bordered">
 			<tr>
 				<td colspan="3">쪽지 주소록
 				
@@ -57,15 +62,30 @@
 				<td>
 					<div id="centerBottom">
 						<h3>이름으로찾기</h3>
-						<div class="search_bar">
-							<form action="">
-								<fieldset>
-									<span class="search_box" style="layout: fixed; width:200px">
-										<input type="text" id="nameSearch" style="width:120px;">
-									</span>
-									<button>찾기</button>
-								</fieldset>
-							</form>
+						<div class="divSearch">
+						   	<form name="frmSearch" method="post" 
+						   		action='<c:url value="/note/contact.do"/>'>
+						        <select name="searchCondition">
+						            <option value="title" 
+						            	<c:if test="${param.searchCondition=='title' }">
+						            		selected="selected"
+						            	</c:if>
+						            >제목</option>
+						            <option value="content" 
+						            	<c:if test="${param.searchCondition=='content' }">
+						            		selected="selected"
+						            	</c:if>
+						            >내용</option>
+						            <option value="name" 
+						            	<c:if test="${param.searchCondition=='name' }">
+						            		selected="selected"
+						            	</c:if>
+						            >작성자</option>
+						        </select>   
+						        <input type="text" name="searchKeyword" title="검색어 입력"
+						        	value="${param.searchKeyword}">   
+								<input type="submit" value="검색">
+						    </form>
 						</div>
 					</div>
 				
@@ -86,22 +106,14 @@
 			<tr>
 				<td>
 					<ul>
-						<li>
-							<input type="checkbox" class="" value="">
-							<label>장준환</label><br>
-						</li>
-						<li>
-							<input type="checkbox" class="" value="">
-							<label>김동율</label><br>
-						</li>
-						<li>
-							<input type="checkbox" class="" value="">
-							<label>정시하</label><br>
-						</li>
-						<li>
-							<input type="checkbox" class="" value="">
-							<label>정은경</label>
-						</li>
+						
+							<li>
+								<input type="checkbox" name="searchResult"
+								 id="searchResult" value="option1" aria-label="..."
+								 >${param.memNo }
+									
+							</li>
+						
 					</ul>
 				</td>
 			</tr>
@@ -114,8 +126,9 @@
 			</tr>
 			<tr>
 				<td colspan="3" align="center">
-					<button>전송</button>
-					<button>취소</button>
+					<button type="submit" class="btn btn-primary btn-xs">확인</button>
+  					<button type="button" name="backBt"class="btn btn-default btn-xs"
+  						onClick="self.close();">취소</button>
 				</td>
 			</tr>
 		
@@ -123,8 +136,8 @@
 		
 		
 	
-	
-	
+	</form>
+</div>
 	
 	</div>
 </body>
