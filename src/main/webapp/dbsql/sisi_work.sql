@@ -5,6 +5,8 @@ select * from position;
 select * from department;
 
 
+select * from workRecord;
+
 create view mypage_mem
 as
 select m.*,  p.posname , d.DEPTNAME
@@ -26,7 +28,7 @@ select * from mypage_mem;
   
   delete from member;
   */
-  
+  desc department;
  
   
   commit;
