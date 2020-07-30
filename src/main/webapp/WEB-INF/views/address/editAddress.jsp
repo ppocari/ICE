@@ -108,29 +108,29 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px">
 				<div class="divForm">
-					<form method="post" action="<c:url value='/address/addAddress.do'/>">
+					<form method="post" action="<c:url value='/address/editAddress.do'/>">
 						<fieldset>
 							<legend>기본 정보</legend>
 							<div>
 								<label class="la_left">이름</label> 
-								<input class="etc" type="text" name="name"> 
+								<input class="etc" type="text" name="name" value="${adVo.name }"> 
 								<label class="la_right">전화번호</label> 
-								<input class="hp" type="text" name="hp1"> -  
-								<input class="hp" type="text" name="hp2"> -  
-								<input class="hp" type="text" name="hp3">
+								<input class="hp" type="text" name="hp1" value="${adVo.hp1 }"> -  
+								<input class="hp" type="text" name="hp2" value="${adVo.hp2 }"> -  
+								<input class="hp" type="text" name="hp3" value="${adVo.hp3 }">
 							</div>
 							<div>
 								<label class="la_left">이메일</label> 
-								<input class="email" type="text" name="email1"> @ 
-								<input class="email" type="text" name="email2"> 
+								<input class="email" type="text" name="email1" value="${adVo.email1 }"> @ 
+								<input class="email" type="text" name="email2" value="${adVo.email2 }"> 
 								<label class="la_right">회사명</label> 
-								<input class="etc" type="text" name="company">
+								<input class="etc" type="text" name="company" value="${adVo.company }">
 							</div>
 							<div>
 								<label class="la_left">부서</label> 
-								<input class="etc" type="text" name="deptName">
+								<input class="etc" type="text" name="deptName" value="${adVo.deptName }">
 								<label class="la_right">직책</label> 
-								<input class="etc" type="text" name="posName">
+								<input class="etc" type="text" name="posName" value="${adVo.posName }">
 							</div>
 							<div>
 								<label class="la_left">그룹 선택</label> 
