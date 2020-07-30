@@ -16,7 +16,7 @@
 	</select>
 	
 	<update id="updateWork" parameterType="WorkRecordVO">
-		update workRecord set cmp_out=#{cmpOut}
+		update workRecord set cmp_out=#{cmpOut}, cmp_status=#{cmpStatus}
 		where cmt_no=#{cmtNo}
 	</update>
 </mapper>
