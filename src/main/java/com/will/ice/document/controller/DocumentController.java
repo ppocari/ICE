@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.will.ice.document.model.DocformListVO;
 import com.will.ice.document.model.DocformService;
 import com.will.ice.document.model.DocformVO;
 
@@ -59,5 +61,23 @@ public class DocumentController {
 		logger.info("폼 목록 조회결과 formlist={}",formlist.size());
 		
 		model.addAttribute("formlist",formlist);
+	}
+	
+	@RequestMapping("/deleteForm.do")
+	public String deleteForm(@ModelAttribute DocformListVO formlistVo,Model model) {
+		logger.info("문서 양식 삭제, 파라미터  formlistVo={}",formlistVo);
+		
+		List<DocformVO> formList = formlistVo.getFormItems();
+		int cnt = docformService.deleteFormMulti(formList);
+		
+		String msg="문서 양식 삭제 실패!", url="/payment/close.do";
+		if(cnt>0) {
+			msg="문서 양식 삭제되었습니다.";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
 	}
 }

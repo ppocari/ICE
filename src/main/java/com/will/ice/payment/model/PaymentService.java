@@ -6,7 +6,7 @@ import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 
 public interface PaymentService {
-	List<PaymentviewVO> selectAll();
+	List<PaymentviewVO> selectSent(String identNum);
 	int insertPaymentM(String[] memList, PaylinedocVO pldVo);
 	PaymentviewVO selectDocument(int docNo);
 	List<DocumentviewVO> selectPayLine(int docNo);

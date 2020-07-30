@@ -22,8 +22,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public List<PaymentviewVO> selectAll() {
-		return sqlSession.selectList(namespace+"selectAll");
+	public List<PaymentviewVO> selectSent(String identNum) {
+		return sqlSession.selectList(namespace+"selectSent",identNum);
 	}
 
 	@Override

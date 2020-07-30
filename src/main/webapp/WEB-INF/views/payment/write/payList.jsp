@@ -16,11 +16,12 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 #payTable{width:100%;text-align: center;}
 #payTable thead tr{background-color: gray;color:white;}
 #div3 button,#div3 select{margin-left: 10px;}
-#div2{position: relative;top: 390px;}
-#div3{position: relative;left: 73%;top: 350px;}
+#div2{position: absolute;top: 740px;}
+#div3{position: absolute;top: 740px;right:1%;}
 #upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 #upperDiv p{padding-top: 5px;padding-left: 5px;}
 #wholeDiv{padding-left: 20px;padding-right: 20px;}
+#paylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
 .docNoInfo{cursor: pointer;}
 </style>
 

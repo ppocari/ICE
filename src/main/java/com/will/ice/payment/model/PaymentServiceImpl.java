@@ -15,8 +15,8 @@ public class PaymentServiceImpl implements PaymentService{
 	private PaymentDAO paymentDao;
 
 	@Override
-	public List<PaymentviewVO> selectAll() {
-		return paymentDao.selectAll();
+	public List<PaymentviewVO> selectSent(String identNum) {
+		return paymentDao.selectSent(identNum);
 	}
 
 	@Override

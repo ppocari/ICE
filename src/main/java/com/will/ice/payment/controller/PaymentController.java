@@ -66,15 +66,13 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/write/payList.do")
-	public void payList(Model model) {
-		logger.info("기안 목록 보여주기");
+	public void payList(Model model,HttpSession session) {
+		String identNum = (String)session.getAttribute("identNum");
+		logger.info("기안 목록 보여주기,사원번호={}",identNum);
 		
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();
 		
-		List<PaymentviewVO> list = paymentService.selectAll();
-		
 		model.addAttribute("doctypelist",doctypelist);
-		model.addAttribute("list",list);
 	}
 	
 	@RequestMapping(value="/write/writePay.do",method=RequestMethod.POST)
@@ -136,19 +134,25 @@ public class PaymentController {
 	public void close(){
 		logger.info("팝업 닫기");
 	}
-	/*
-	 * @RequestMapping("/write/imsyBox.do") public void imsyBox() {
-	 * logger.info("임시보관 목록 보여주기");
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping("/write/sentpayList.do") public void sentpayList() {
-	 * logger.info("기안완료 목록 보여주기");
-	 * 
-	 * }
-	 * 
-	 * 
-	 * @RequestMapping("/confirm/notcheckedList.do") public void notcheckedList() {
+	
+	@RequestMapping("/write/sentpayList.do") 
+	public void sentpayList(Model model,HttpSession session) {
+		String identNum = (String)session.getAttribute("identNum");
+		logger.info("기안완료 목록 보여주기,사원번호={}",identNum);
+		
+		List<PaymentviewVO> list = paymentService.selectSent(identNum);
+		List<DoctypeVO> doctypelist = doctypeService.selectAll();
+		
+		model.addAttribute("list",list);
+		model.addAttribute("doctypelist",doctypelist);
+	}
+	
+	@RequestMapping("/write/imsyBox.do") public void imsyBox() {
+		logger.info("임시보관 목록 보여주기");
+	
+	}
+	 
+	 /* @RequestMapping("/confirm/notcheckedList.do") public void notcheckedList() {
 	 * logger.info("미결재 목록 보여주기");
 	 * 
 	 * }
