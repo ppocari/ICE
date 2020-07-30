@@ -39,6 +39,7 @@ body{overflow: hidden;}
 				</div>
 				<div id="lastDiv">
 					<button type="submit" class="btn btn-default" id="btwriteForm">저장</button>
+					<button type="button" class="btn btn-default" id="btCancel" onclick="history.go(-1)">취소</button>
 				</div>
 			</form>
 		</div>

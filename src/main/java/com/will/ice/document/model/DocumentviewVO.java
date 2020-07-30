@@ -9,6 +9,7 @@ public class DocumentviewVO {
 	private String name;
 	private String posName;
 	private String deptName;
+	
 	public int getPayNo() {
 		return payNo;
 	}

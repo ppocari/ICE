@@ -26,5 +26,10 @@ public class DocformDAOMybatis implements DocformDAO{
 	public DocformVO getcontent(int formNo) {
 		return sqlSession.selectOne(namespace+"getcontent",formNo);
 	}
+
+	@Override
+	public int deleteForm(int formNo) {
+		return sqlSession.delete(namespace+"deleteForm",formNo);
+	}
 	
 }
