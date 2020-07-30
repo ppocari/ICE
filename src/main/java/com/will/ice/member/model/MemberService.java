@@ -2,6 +2,8 @@ package com.will.ice.member.model;
 
 import java.util.List;
 
+import com.will.ice.common.DateSearchVO;
+
 public interface MemberService {
 	
 	//아이디 중복확인 관련 상수
@@ -18,8 +20,12 @@ public interface MemberService {
 		
 		MemberVO selectMember(String userid);
 		
-		int admin_regist_member(List<MemberVO> list);
+		
 		
 		List<MemberVO> searchAllmember(String searchKeyword);
+
+		int registerMulti(List<MemberVO> memVO);
+
+		List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
 
 }

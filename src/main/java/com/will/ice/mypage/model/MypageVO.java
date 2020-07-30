@@ -19,11 +19,12 @@ public class MypageVO {
 	private String gender;
 	private String proFileURL;
 	private String originalFileName;
-	private int fileSize;
+	private long fileSize;
 	private int deptCode;
 	private int posCode;
 	private String pname;
 	private String dname;
+	
 	
 	public String getMemNo() {
 		return memNo;
@@ -48,18 +49,6 @@ public class MypageVO {
 	}
 	public void setHp1(String hp1) {
 		this.hp1 = hp1;
-	}
-	public String getPname() {
-		return pname;
-	}
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
-	public String getDname() {
-		return dname;
-	}
-	public void setDname(String dname) {
-		this.dname = dname;
 	}
 	public String getHp2() {
 		return hp2;
@@ -133,6 +122,12 @@ public class MypageVO {
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
 	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
 	public int getDeptCode() {
 		return deptCode;
 	}
@@ -145,11 +140,17 @@ public class MypageVO {
 	public void setPosCode(int posCode) {
 		this.posCode = posCode;
 	}
-	public int getFileSize() {
-		return fileSize;
+	public String getPname() {
+		return pname;
 	}
-	public void setFileSize(int fileSize) {
-		this.fileSize = fileSize;
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
 	}
 	
 	
@@ -162,6 +163,8 @@ public class MypageVO {
 				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + ", pname=" + pname + ", dname=" + dname
 				+ "]";
 	}
+	
+	
 	
 	
 }

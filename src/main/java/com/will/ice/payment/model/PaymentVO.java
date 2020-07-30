@@ -6,6 +6,7 @@ public class PaymentVO {
 	private int docNo;
 	private String memNo;
 	private int formNo;
+	private int typeNo;
 	private String title;
 	private String content;
 	private String hasFile;
@@ -13,7 +14,14 @@ public class PaymentVO {
 	private String writedate;
 	private int keep;
 	private Timestamp expirydate;
+	private String imsy;
 	
+	public String getImsy() {
+		return imsy;
+	}
+	public void setImsy(String imsy) {
+		this.imsy = imsy;
+	}
 	public int getDocNo() {
 		return docNo;
 	}
@@ -31,6 +39,12 @@ public class PaymentVO {
 	}
 	public void setFormNo(int formNo) {
 		this.formNo = formNo;
+	}
+	public int getTypeNo() {
+		return typeNo;
+	}
+	public void setTypeNo(int typeNo) {
+		this.typeNo = typeNo;
 	}
 	public String getTitle() {
 		return title;
@@ -76,9 +90,8 @@ public class PaymentVO {
 	}
 	@Override
 	public String toString() {
-		return "PaymentVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", title=" + title
-				+ ", content=" + content + ", hasFile=" + hasFile + ", progress=" + progress + ", writedate="
-				+ writedate + ", keep=" + keep + ", expirydate=" + expirydate + "]";
+		return "PaymentVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", typeNo=" + typeNo
+				+ ", title=" + title + ", content=" + content + ", hasFile=" + hasFile + ", progress=" + progress
+				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", imsy=" + imsy + "]";
 	}
-	
 }

@@ -1,18 +1,30 @@
 /* 법인카드 */
 CREATE TABLE companyCard (
+	no NUMBER NOT NULL, /* 법인카드 DB관리번호 */
 	cardNo VARCHAR2(100) NOT NULL, /* 법인카드 번호 */
-	MEMNO VARCHAR2(50), /* 사원번호 */
+	memNo VARCHAR2(50), /* 사원번호 */
 	accCode VARCHAR(20), /* 계정코드 */
 	price NUMBER, /* 금액 */
 	usePlace VARCHAR2(100), /* 사용처 */
-	useDate DATE DEFAULT sysdate /* 날짜 */
+	useDate DATE DEFAULT sysdate, /* 날짜 */
+	fileNo NUMBER /* 파일순서 */
 );
 
+CREATE UNIQUE INDEX PK_companyCard
+	ON companyCard (
+		no ASC
+	);
 
+ALTER TABLE companyCard
+	ADD
+		CONSTRAINT PK_companyCard
+		PRIMARY KEY (
+			no
+		);
 
 /* 파일내역 */
 CREATE TABLE companyCardFile (
-	no NUMBER NOT NULL, /* 파일순서 */
+	fileNo NUMBER NOT NULL, /* 파일순서 */
 	fileName VARCHAR2(100), /* 파일이름 */
 	uploadDate DATE DEFAULT sysdate, /* 파일업로드 날짜 */
 	isDelete VARCHAR2(10) /* 파일 삭제 여부 */
@@ -20,14 +32,14 @@ CREATE TABLE companyCardFile (
 
 CREATE UNIQUE INDEX PK_companyCardFile
 	ON companyCardFile (
-		no ASC
+		fileNo ASC
 	);
 
 ALTER TABLE companyCardFile
 	ADD
 		CONSTRAINT PK_companyCardFile
 		PRIMARY KEY (
-			no
+			fileNo
 		);
 
 /* 계정코드 */
@@ -54,7 +66,7 @@ ALTER TABLE companyCard
 	ADD
 		CONSTRAINT FK_MEMBER_TO_companyCard
 		FOREIGN KEY (
-			MEMNO
+			memNo
 		)
 		REFERENCES MEMBER (
 			MEMNO
@@ -69,7 +81,27 @@ ALTER TABLE companyCard
 		REFERENCES accountCode (
 			accCode
 		);
+
+ALTER TABLE companyCard
+	ADD
+		CONSTRAINT FK_companyCardFile_TO_companyCard
+		FOREIGN KEY (
+			fileNo
+		)
+		REFERENCES companyCardFile (
+			fileNo
+		);
 		
-		--drop table companyCard cascade constraints;
-		--drop table accountCode cascade constraints;
-		--drop table companyCardFile cascade constraints;
+		
+create sequence companyCard_seq
+start with 1
+increment by 1;
+
+
+ create view comcard_mem
+ as 
+ select c.*, m.NAME , m.POSNAME
+from companyCard c join mypage_mem m
+ on c.MEMNO = m.MEMNO ;
+ 
+ select * from comcard_mem;

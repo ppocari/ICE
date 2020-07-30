@@ -48,6 +48,7 @@
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
@@ -107,7 +108,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
-						<a class="collapse-item" href="<c:url value="/member/register.do" />">사원등록</a>
+						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
 						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
 					</div>
 				</div>

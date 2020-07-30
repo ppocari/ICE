@@ -4,27 +4,43 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.member">
 	<select id="selectPwd" parameterType="string"  resultType="string">
-		select pwd from log_mem
+		select pwd from mypage_mem
 		where memno = #{memNo} and firedate is null 
 		</select>
 
 	<select id="selectMember" parameterType="string" resultType="MemberVO">
-		select * from log_mem
+		select * from mypage_mem
 		where memno = #{memNo} 
 	</select>
 
-	<select id="logCheck" parameterType="MemberVO_log">
-		select * from log_mem
+	<select id="logCheck" parameterType="MemberVO">
+		select * from mypage_mem
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
-	<insert id="admin_regist_member" parameterType="memberVO">
-		into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
-		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
-			
+	<insert id="registerMulti" parameterType="memberVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select member_seq.nextval from dual
+		</selectKey>
+		insert into member(no,memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
+		values(#{no} ,#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
+		
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">
 		select * from member
+	</select>
+	
+	<select id="selectMemberList" parameterType="dateSearchVo" 
+		resultType="int">
+		select count(*) from member
+		<where> 
+			<if test="customerId!=null and customerId!=''">
+				memNo=#{customerId}
+			</if>				
+			and hiredate >=#{startDay}
+			<![CDATA[
+			and hiredate < to_date(#{endDay})+1 ]]>
+		</where>
 	</select>
 </mapper>

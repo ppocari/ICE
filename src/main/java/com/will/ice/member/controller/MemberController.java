@@ -1,5 +1,7 @@
 package com.will.ice.member.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,43 +31,43 @@ public class MemberController {
 	@Autowired private MemberService memberService;
 	@Autowired private EtcService etcService;
 	
-	
-	@RequestMapping("/management.do")
-	public void management_get() {
-		logger.info("사원 관리 화면");
+	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.GET)
+	public void memWrite(Model model) {
+		logger.info("사원 등록 화면 memWrite");
+		
+		List<DepartmentVO> deptList = etcService.DeptAll();
+		List<PositionVO> posList = etcService.PosAll();
+		
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("posList", posList);
 	}
 	
-	@RequestMapping(value = "/register.do" , method = RequestMethod.GET)
-	public void register_get() {
-		logger.info("사원 등록 화면");
-	}
-	
-	@RequestMapping(value="/register.do", method = RequestMethod.POST)
-	public String register_post(@ModelAttribute MemberListVO memListvo, Model model) {
-		logger.info("사원 등록 처리");
-		
-		//여러개의 사원 데이터를 받아서 insert 하기
-		logger.info("사원 등록 결과  vo={}",   memListvo);
-		
-		List<MemberVO> memList = memListvo.getMemList();
-				
-		int cnt = memberService.admin_regist_member(memList);
-		logger.info("사원 등록 결과  cnt={}",   cnt);
-		
-		
-		String msg = "사원등록 실패", url = "/member/register.do";
+	@RequestMapping(value ="/memWrite.do" , method = RequestMethod.POST)
+	public String memWriteMulti(@ModelAttribute MemberListVO memListVO,
+			Model model) {
+		logger.info("사원 등록 처리 memWriteMulti, memListVO={}",memListVO);
+			
+		List<MemberVO> memList = memListVO.getMemItems();
+		int cnt  = memberService.registerMulti(memList);
+			
+		String msg = "사원등록 실패", url = "/member/memWrite.do";
 		if(cnt > 0) {
-			msg = "사원등록 성공";
-			url = "/member/memeList.do";
+			msg = "사원등록 성공!";
+			url = "/member/memList.do";
+			
 		}
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		
 		return "/common/message";
-		
 	}
 	
+	
+	@RequestMapping("/management.do")
+	public void management_get() {
+		logger.info("사원 관리 화면");
+	}
 	
 	
 	@RequestMapping(value = "/memList.do", method = RequestMethod.GET)

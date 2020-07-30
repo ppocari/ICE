@@ -19,6 +19,7 @@
 }
 </style>
 <script type="text/javascript">
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
 	$(function(){
 		
 		$("form[name=memRegisterFrm]").submit(function(){
@@ -27,8 +28,7 @@
 				event.preventDefault();
 			}else{
 				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-					
-					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
+										
 					alert("check");
 					
 				}else{
@@ -71,9 +71,6 @@
 					
 		str += '<tr>';
 		str += '<td><input type="checkbox" id="memRegisterCheck"></td>'
-		str += '<td><input type="checkbox" 
-			name="memberList[${idx }].memNo"
-				value="${memNo }"></td>'
 		str += '<td><input type=text name="memNo" class="registerTable" value="' + memNo + '"/></td>';
 		str += '<td><input type=text name="name" class="registerTable" value="' + memName + '"/></td>';
 		str += '<td><input type=text name="pwd" class="registerTable" value="' + memPwd + '"/></td>';
@@ -84,6 +81,7 @@
 		str += '</tr>';
 					
 		$("#dynamicTable").append(str);
+		
 					
 		$("#memNo").val('');
 		$("#mamName").val('');
@@ -95,6 +93,9 @@
 		$("#memPosi").val('');
 		$("#memSalary").val('');
 		}
+=======
+	
+>>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
 </script>
 <!-- Begin Page Content -->
 
@@ -117,12 +118,13 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
 				<form name="memRegisterFrm" method="post" action="<c:url value='/member/register.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
-							 	<input type="button" id="btMultiRegist" value="등록" >
+							 	
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
@@ -162,6 +164,22 @@
 						</div>
 					</div>
 						
+=======
+				<form name="frm" action="<c:url value ='/member/memWrite.do'/>"
+					method="post">
+
+					<input type="text"  name="memNo"> 
+					<input type="text"  name="pwd"> 
+					<input type=text name="name" /> 
+					<input type=text name="deptCode"  />
+					<input type=text name="posCode" />
+					<input type=text name="hiredate"  />
+					<input type=text name="salary"  /> 
+					
+
+
+					<input type="submit" value="전송"> 
+>>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
 				</form>
 
 

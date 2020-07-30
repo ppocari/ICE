@@ -3,17 +3,28 @@ package com.will.ice.companyCard.model;
 import java.sql.Timestamp;
 
 public class ComcardVO {
-	private String cardNo;
+	private int NO;
+	private String CARDNO;
 	private String MEMNO;
-	private String accCode;
-	private int price;
-	private String usePlace;
-	private Timestamp useDate;
-	public String getCardNo() {
-		return cardNo;
+	private String ACCCODE;
+	private int PRICE;
+	private String USEPLACE;
+	private Timestamp USEDATE;
+	private String FILENO;
+	private String NAME;
+	private String DEPTNAME;
+	private String POSNAME;
+	public int getNO() {
+		return NO;
 	}
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
+	public void setNO(int nO) {
+		NO = nO;
+	}
+	public String getCARDNO() {
+		return CARDNO;
+	}
+	public void setCARDNO(String cARDNO) {
+		CARDNO = cARDNO;
 	}
 	public String getMEMNO() {
 		return MEMNO;
@@ -21,34 +32,61 @@ public class ComcardVO {
 	public void setMEMNO(String mEMNO) {
 		MEMNO = mEMNO;
 	}
-	public String getAccCode() {
-		return accCode;
+	public String getACCCODE() {
+		return ACCCODE;
 	}
-	public void setAccCode(String accCode) {
-		this.accCode = accCode;
+	public void setACCCODE(String aCCCODE) {
+		ACCCODE = aCCCODE;
 	}
-	public int getPrice() {
-		return price;
+	public int getPRICE() {
+		return PRICE;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setPRICE(int pRICE) {
+		PRICE = pRICE;
 	}
-	public String getUsePlace() {
-		return usePlace;
+	public String getUSEPLACE() {
+		return USEPLACE;
 	}
-	public void setUsePlace(String usePlace) {
-		this.usePlace = usePlace;
+	public void setUSEPLACE(String uSEPLACE) {
+		USEPLACE = uSEPLACE;
 	}
-	public Timestamp getUseDate() {
-		return useDate;
+	public Timestamp getUSEDATE() {
+		return USEDATE;
 	}
-	public void setUseDate(Timestamp useDate) {
-		this.useDate = useDate;
+	public void setUSEDATE(Timestamp uSEDATE) {
+		USEDATE = uSEDATE;
+	}
+	public String getFILENO() {
+		return FILENO;
+	}
+	public void setFILENO(String fILENO) {
+		FILENO = fILENO;
+	}
+	public String getNAME() {
+		return NAME;
+	}
+	public void setNAME(String nAME) {
+		NAME = nAME;
+	}
+	public String getPOSNAME() {
+		return POSNAME;
+	}
+	public void setPOSNAME(String pOSNAME) {
+		POSNAME = pOSNAME;
+	}
+	
+	
+	public String getDEPTNAME() {
+		return DEPTNAME;
+	}
+	public void setDEPTNAME(String dEPTNAME) {
+		DEPTNAME = dEPTNAME;
 	}
 	@Override
 	public String toString() {
-		return "ComcardVO [cardNo=" + cardNo + ", MEMNO=" + MEMNO + ", accCode=" + accCode + ", price=" + price
-				+ ", usePlace=" + usePlace + ", useDate=" + useDate + "]";
+		return "ComcardVO [NO=" + NO + ", CARDNO=" + CARDNO + ", MEMNO=" + MEMNO + ", ACCCODE=" + ACCCODE + ", PRICE="
+				+ PRICE + ", USEPLACE=" + USEPLACE + ", USEDATE=" + USEDATE + ", FILENO=" + FILENO + ", NAME=" + NAME
+				+ ", DEPTNAME=" + DEPTNAME + ", POSNAME=" + POSNAME + "]";
 	}
 	
 	
