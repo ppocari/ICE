@@ -101,11 +101,17 @@
 
 #add_inputs {
 	border:none;
+	text-align: center;
 }
 </style>
 <section>
 	<article>
 		<div class="col-xl-12 ">
+			<header>
+				<h3>
+					주소록<span> > 추가하기 </span>
+				</h3>
+			</header>
 			<div class="card shadow mb-4" style="height: 500px">
 				<div class="divForm">
 					<form method="post" action="<c:url value='/address/addAddress.do'/>">

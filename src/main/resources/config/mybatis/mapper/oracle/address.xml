@@ -44,9 +44,24 @@
 	
 	<!-- 주소록 수정 -->
 	<select id="selectOneAdderss" resultType="addressVo">
-		select * from address
-		where adno=#{adNo}
+		select ad.*, adg.groupname from address ad, addressGroup adg
+		where ad.ADGNO = adg.ADGNO
+		and adno=#{adNo}
 	</select>
+	
+	<update id="updateAddress" parameterType="addressVo">
+		update address 
+		set name=#{name}, hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3}, email1=#{email1}, email2=#{email2}, 
+    	adgno=#{adgNo}, company=#{company}, deptname=#{deptName}, posname=#{posName}, 
+    	homeaddress=#{homeAddress}, homepage=#{homePage}, messenger=#{messenger}, sns=#{SNS}, memo=#{memo}
+		where adNo=#{adNo}
+	</update>
+	
+	<!-- 주소록 삭제 -->
+	<delete id="deleteAddress" parameterType="int">
+		delete from address
+		where adno=#{adNo}
+	</delete>
 </mapper>
 
 

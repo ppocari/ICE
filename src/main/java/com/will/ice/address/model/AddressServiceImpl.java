@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
@@ -44,13 +46,36 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public int insertAddress(AddressVO vo) {
-		
 		return dao.insertAddress(vo);
 	}
 
 	@Override
 	public AddressVO selectOneAdderss(int adNo) {
 		return dao.selectOneAdderss(adNo);
+	}
+
+	@Override
+	public int updateAddress(AddressVO adVo) {
+		return dao.updateAddress(adVo);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteMulti(List<AddressVO> list) {
+		int cnt=0;
+		try {
+			for(AddressVO vo : list) {
+				if(vo.getAdNo()!=0) { //체크한 상품만 삭제
+					cnt=dao.deleteAddress(vo.getAdNo());
+				}
+			}
+		}catch(RuntimeException e) {
+			cnt=-1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+
+		return cnt;
 	}
 	
 }

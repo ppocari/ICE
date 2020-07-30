@@ -58,6 +58,16 @@ public class AddressDAOMybatis implements AddressDAO {
 	public AddressVO selectOneAdderss(int adNo) {
 		return sqlSession.selectOne(namespaces+"selectOneAdderss", adNo);
 	}
+
+	@Override
+	public int updateAddress(AddressVO adVo) {
+		return sqlSession.update(namespaces+"updateAddress", adVo);
+	}
+
+	@Override
+	public int deleteAddress(int adNo) {
+		return sqlSession.delete(namespaces+"deleteAddress", adNo);
+	}
 	
 	
 

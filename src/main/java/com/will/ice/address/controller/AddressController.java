@@ -1,5 +1,6 @@
 package com.will.ice.address.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.ice.address.model.AddressGroupVO;
+import com.will.ice.address.model.AddressListVO;
 import com.will.ice.address.model.AddressService;
 import com.will.ice.address.model.AddressVO;
 import com.will.ice.member.model.MemberVO;
@@ -41,6 +43,14 @@ public class AddressController {
 		 String memNo=(String)session.getAttribute("identNum");
 		
 		 logger.info("memNo={}", memNo);
+		 
+		 String url="/log/login.do", msg="먼저 로그인 해주세요!";
+		 if(memNo==null) {
+			 model.addAttribute("msg", msg);
+			 model.addAttribute("url", url);
+			 
+			 return "common/message";
+		 }
 		/* String memNo="111910"; */
 		
 		List<AddressVO> adList=service.selectAddress(memNo);
@@ -65,6 +75,19 @@ public class AddressController {
 		
 		model.addAttribute("organList", organList);
 		model.addAttribute("deptList", deptList);
+		
+	}
+	
+	/* 주소록 상세보기 */
+	@RequestMapping("/detailAddress.do")
+	public void editAddress_get(@RequestParam (defaultValue="0") int adNo, Model model) {
+		
+		logger.info("주소록 상세보기 화면, 파라미터 adNo={}", adNo);
+		
+		AddressVO adVo=service.selectOneAdderss(adNo);
+		logger.info("주소록 상세보기 화면 보여주기, adVo={},", adVo);
+		
+		model.addAttribute("adVo", adVo);
 		
 	}
 	
@@ -105,20 +128,71 @@ public class AddressController {
 	/* 주소록 수정 */
 	@RequestMapping(value="/editAddress.do", method=RequestMethod.GET)
 	public void editAddress_get(@RequestParam (defaultValue="0") int adNo,
-			Model model) {
+			HttpServletRequest request, Model model) {
 		
-		logger.info("주소록 수정 화면, 파라미터 adNo={}", adNo);
+		HttpSession session= request.getSession();
+		String memNo=(String)session.getAttribute("identNum");
+		
+		/* 주소 정보 뿌려주기 */
+		logger.info("주소록 수정 화면, 파라미터 adNo={}, memNo={}", adNo, memNo);
 		
 		AddressVO adVo=service.selectOneAdderss(adNo);
-		logger.info("주소록 수정 화면 보여주기 결과, adVo={}", adVo);
 		
+		/* 그룹 리스트 보여주기 */
+		List<AddressGroupVO> adgList= service.selectAddressGroup(memNo);
+		logger.info("주소록 수정 화면 보여주기, adVo={}, adgList.size={}", adVo, adgList.size());
+		
+		model.addAttribute("adgList", adgList);
 		model.addAttribute("adVo", adVo);
 		
 	}
 	
 	@RequestMapping(value="/editAddress.do", method=RequestMethod.POST)
-	public void editAddress_post() {
+	public String editAddress_post(@ModelAttribute AddressVO adVo, Model model) {
 		
+		logger.info("주소록 수정, 파라미터 adVo={}", adVo);
+		
+		int cnt=service.updateAddress(adVo);
+		logger.info("주소록 수정 결과, cnt={}", cnt);
+		
+		String url="", msg="";
+		if(cnt>0) {
+			url="/address/addressMain.do";
+			msg="주소록이 수정되었습니다.";
+			
+		}
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/deleteMulti.do")
+	public String delMult(@ModelAttribute AddressListVO adListVo
+			, HttpServletRequest request, Model model) {
+
+		//1.
+		logger.info("선택한 상품 삭제, 파라미터 pdListVo={}", adListVo);
+		
+		List<AddressVO> adList=adListVo.getAdItems();
+		
+		//2.
+		int cnt=service.deleteMulti(adList);
+		
+		logger.info("선택한 주소 삭제 결과, cnt={})", cnt);
+		String msg="", url="/address/addressMain.do";
+		
+		if(cnt>0) {
+			msg="선택한 주소를 삭제하였습니다.";
+		}else {
+			msg="선택한 상품들 삭제시 에러 발생!!";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
 	}
 	
 }

@@ -29,6 +29,30 @@
 			location.href="<c:url value='/address/editAddress.do'/>";
 		});
 		
+		/* 삭제 여러개 */
+		$('#btDel').click(function(){
+			var len=$('input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('삭제하려는 주소를 먼저 체크하세요');
+				return;
+			}
+			$('form[name=addressList]')
+				.prop("action","<c:url value='/address/deleteMulti.do'/>");
+			$('form[name=addressList]').submit();
+		});	
+	
+		/* 수정 여러개 */
+		/* $('#btMultiAdd').click(function(){
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('변경하려는 상품을 먼저 체크하세요');
+				return;
+			}
+			$('form[name=frmList]')
+	.prop("action","<c:url value='/admin/product/addEventMulti.do'/>");
+			$('form[name=frmList]').submit();
+		});	 */
+		
 	});
 </script>
 
@@ -117,8 +141,8 @@
 			</h3>
 		</header>
 		<div class="card shadow mb-4" style="height: 500px">
-
 			<article>
+				<form name="addressList" method="post" action="">
 				<div id="addressTableDiv">
 					<table id="addressTable">
 						<tr class="card-header">
@@ -133,10 +157,12 @@
 						</tr>
 
 						<!-- 반복 시작 -->
+						<c:set var="idx" value="0"/>
 						<c:forEach var="address" items="${adList }">
 							<tr>
-								<td><input type="checkbox" class="addressCB"></td>
-								<td><a href="<c:url value='/address/editAddress.do?adNo=${address.adNo }'/>" class="addressName">${address.name}</a></td>
+								<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
+								<td><a href="<c:url value='/address/detailAddress.do?adNo=${address.adNo }'/>" class="addressName">${address.name}</a></td>
+								<c:set var="idx" value="${idx +1 }"/>
 								<c:if test="${empty address.hp1 }">
 									<td></td>
 								</c:if>
@@ -198,6 +224,7 @@
 						<a href="<c:url value='/address/addAddress.do'/>">>직접추가</a>
 					</div>
 				</div>
+				</form>
 			</article>
 		</div>
 	</div>
