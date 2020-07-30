@@ -1,6 +1,9 @@
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <jsp:include page="../inc/top.jsp" />
 
@@ -10,13 +13,12 @@
 }
 
 .table .registerTable {
-	width: 90px;
+	
+	width: 110px;
 	border: 1px solid white;
 }
 
-.register_text {
-	width: 110px;
-}
+
 .search input{
 	width:150px;
 }
@@ -24,8 +26,8 @@
 
 </style>
 <script type="text/javascript">
+	
 	$(function(){
-		
 		$("form[name=memRegisterFrm]").submit(function(){
 			var strAll = "";
 			
@@ -52,6 +54,7 @@
 		$( "input[name=hiredate1]" ).datepicker({
 			dateFormat:'yy-mm-dd',
 	         changeYear:true,
+	         changeMonth:true,
 	         dayNamesMin:['일','월','화','수','목','금','토'],
 	         monthNames:['1월','2월','3월','4월','5월','6월',
 	            '7월','8월','9월','10월','11월','12월']
@@ -60,11 +63,18 @@
 		$( "input[name=hiredate2]" ).datepicker({
 			dateFormat:'yy-mm-dd',
 	         changeYear:true,
+	         changeMonth:true,
 	         dayNamesMin:['일','월','화','수','목','금','토'],
 	         monthNames:['1월','2월','3월','4월','5월','6월',
 	            '7월','8월','9월','10월','11월','12월']
 		} );
 		
+		
+		$(".registerTableTR").click(function() {
+			var edit_memNo = $(this).$("#edit_memNo").text();
+			window.open('/ice/member/memEdit.do?memeNo='+edit_memNo,'mem',
+			'width=1800,height=300,left=50,top=50,location=yes,resizable=yes');
+	      });
 		
 	});
 	
@@ -94,6 +104,14 @@
 				<form name="frmPage" method="post" 
 					action="<c:url value='/member/memList.do'/>">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">검색하기</h6>
+						
+						<div style="float: right">
+							<button type="submit" class="btn btn-info"
+							 >전체조회</button>
+						</div>
+					</div>
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-left: 10px;">
 							<label for="department" style="margin-right: 20px;">부서별 조회</label>
 							<select name="department">
@@ -119,21 +137,13 @@
 							<input type="text" name="hiredate1" value="${param.startDay }"> ~
 							<input type="text" name="hiredate2" value="${param.endDay }">
 						</div>
+					
 					</div>
 				</form>
 				<!-- 페이징 처리 form 끝 -->
 				
 				<form name="memRegisterFrm" method="post"  
 				action="<c:url value='/member/memList.do'/> ">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
-						</div>
-						
-					</div>
-					
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
@@ -145,8 +155,6 @@
 										<th>사원번호</th>
 										<th>이름</th>
 										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
@@ -157,20 +165,17 @@
 									<!-- 반복시작 -->
 										
 									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.memNo }</td>
+										<tr class="registerTableTR">
+											<td id = "edit_memNo">${vo.memNo }</td>
 											<td>${vo.name }</td>
 											<td>${vo.pwd }</td>
 											<td>
-												<c:if test="${ !empty vo.hp1 }">
-													${vo.hp1 } - ${vo.hp2} - ${ vo.hp3 }
-												</c:if>
+												 <c:set var = "hiredate" value = "${fn:substring(vo.hiredate,0,10)}" />
+												${ hiredate }
 											</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
 											<td>${vo.deptName }</td>
 											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
+											<td><fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원</td>										
 										</tr>
 									</c:forEach>
 								</tbody>

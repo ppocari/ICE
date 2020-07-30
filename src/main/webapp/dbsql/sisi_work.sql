@@ -23,6 +23,8 @@ select * from mypage_mem;
   drop table position;
   drop table department;
   drop table member;
+  
+  delete from member;
   */
   
  
@@ -44,8 +46,8 @@ values('141930', '김과장', '123', '141','930');
 insert into member(memNo, name, hp1, hp2, hp3, pwd, deptcode, poscode)
 values('141910', '둘리', '010', '1234','5678','123', '141','930');
 
-insert into member(memNo, name, pwd, deptcode, poscode)
-values('999999', '박관리', '123', '999','999');
+insert into member(memNo, name, pwd, hiredate, deptcode, poscode, salary)
+values('999999', '박관리', '123', '2009-01-02','999','999' , '4000');
 
 
 update member
@@ -69,7 +71,7 @@ insert into companyCard
 values(4,'1111222233334447','121920','102036',356000,'서울시','2020-07-14' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-07-12' ,1 , );
 
 select * from accountCode;
 --102306
@@ -96,6 +98,6 @@ from companyCard c join mypage_mem m
  commit;
  
 delete from member
-where memno = '141912';
+where memno = '999999';
  
 
