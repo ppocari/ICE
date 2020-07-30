@@ -32,33 +32,50 @@ public class SpayController {
 	
 	@RequestMapping("/sbuy.do")
 	public void sbuy() {
+		logger.info("구입 페이지 보여주기");
 	
 	}
-	
+
+	@RequestMapping("/sList.do")
+	public String sList(HttpSession session, Model model) {
+		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
+		
+		List<Map<String, Object>> sVo=spayService.selectSpayView(MemNo);
+		logger.info("구매 내역 결과 vo={}", sVo);
+		
+		model.addAttribute("sVo", sVo);
+		
+		return "/spay/sList";
+	}
+
 	@RequestMapping(value="/spay.do", method=RequestMethod.GET)
-	public String sbuy_get(HttpSession session, Model model,
-			@RequestParam(defaultValue = "0")int MEMNO) {
-		String userName=(String) session.getAttribute("userName");
+	public String spay_get(HttpSession session, Model model,
+			int TICPRICE, int TICQUANTITY) {
+		String userid=(String) session.getAttribute("userid");
 		
-		logger.info("주문하기 - 조회, 파라미터 userName={}", userName);
+		logger.info("주문하기 - 조회, 파라미터 userid={}", userid);
 		
-		MemberVO memVo=memberService.selectMember(userName);
+		MemberVO memVo=memberService.selectMember(userid);
 		logger.info("주문하기 - 회원조회 결과 vo={}", memVo);
 
-		Map<String, Object> sVo=spayService.selectSpayView(MEMNO);
-		logger.info("주문하기 - 결제내역 결과 vo={}", sVo);
+		SpayVO sVo = new SpayVO();
+		sVo.setTICPRICE(TICPRICE);
+		sVo.setTICQUANTITY(TICQUANTITY);
+		int cnt=spayService.insertTic(sVo);
+		logger.info("주문하기 - 데이터 결과 cnt={}", cnt);
 
 		model.addAttribute("memVo", memVo);
 		model.addAttribute("sVo", sVo);
 		
-		return "spay/spay";		
+		return "spay/spay";	
 	}
 	
 	@RequestMapping(value="/spay.do", method=RequestMethod.POST)
-	public String sbuy_post(@ModelAttribute SpayVO sVo,	HttpSession session) {
+	public String sbuy_post(HttpSession session, Model model, SpayVO sVo,
+			int TICPRICE, int TICQUANTITY) {
 		String userName=(String) session.getAttribute("userName");
 		
-		logger.info("주문하기, 파라미터 sVo={}", sVo);
+		logger.info("주문하기, 파라미터 TICPRICE={}, TICQUANTITY={}", TICPRICE, TICQUANTITY );
 		
 		int cnt=spayService.insertTic(sVo);
 		logger.info("주문하기 결과, cnt={}", cnt);
@@ -66,17 +83,12 @@ public class SpayController {
 		return "redirect:/spay/sok.do?userName=" + sVo.getTICNO();
 	}
 		
-		@RequestMapping("/spay/sList.do")
-		public void sList() {
-
-	}
-
 	@RequestMapping("/spay/sok.do")
 	public void sok(@RequestParam(defaultValue = "0") 
 		int MEMNO, Model model) {
 		logger.info("주문완료 페이지, 파라미터 orderNo={}", MEMNO);
 		
-		Map<String, Object> map=spayService.selectSpayView(MEMNO);
+		List<Map<String, Object>> map=spayService.selectSpayView(MEMNO);
 		logger.info("주문완료 - 상세주문 내역 조회 결과, map={}", map);
 		
 		model.addAttribute("orderMap", map);

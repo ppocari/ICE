@@ -7,14 +7,20 @@
 		<selectKey keyProperty="TICNO" resultType="int" order="BEFORE">
 			select ticket_Seq.nextval from dual
 		</selectKey>
-		insert into ticket(TICNO, MEMNO, TICQUANTITY, TICPRICE)
-		values(#{TICNO}, #{MEMNO} #{TICQUANTITY}, #{TICPRICE}}
+		insert into ticket(TICNO, MemNo, TICQUANTITY, TICPRICE)
+		values(#{TICNO}, #{MemNo} #{TICQUANTITY}, #{TICPRICE}}
 	</insert>
 	
 	<select id="selectSpayView" parameterType="int"
 		resultType="map">
 		select * from SpayView
-		where memno = #{MEMNO}
+		where memno = #{MemNo}
+	</select>
+	
+	<select id="selectAll" resultType="SpayVo">
+		select * from SpayView
+		<![CDATA[
+			where sysdate<=TICREGDATE]]>
 	</select>
 		
 </mapper>

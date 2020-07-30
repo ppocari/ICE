@@ -22,7 +22,7 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		$('form[name=fFrm]').submit(function(){
+		$('form[name=form]').submit(function(){
 			if(!$('#chkAgree').is(':checked')){
 				alert("구매에 동의하셔야 합니다!");
 				$('#chkAgree').focus();
@@ -30,10 +30,46 @@
 			}
 		});
 	});
+
+	var TICPRICE;
+	var TICQUANTITY;
+
+	function init () {
+		TICPRICE = document.form.TICPRICE.value;
+		TICQUANTITY = document.form.TICQUANTITY.value;
+		document.form.sum.value = TICPRICE;
+		change();
+	}
+
+	function add () {
+		hm = document.form.TICQUANTITY;
+		sum = document.form.sum;
+		hm.value ++ ;
+
+		sum.value = parseInt(hm.value) * TICPRICE;
+	}
+
+	function del () {
+		hm = document.form.TICQUANTITY;
+		sum = document.form.sum;
+			if (hm.value > 1) {
+				hm.value -- ;
+				sum.value = parseInt(hm.value) * TICPRICE;
+			}
+	}
+
+	function change () {
+		hm = document.form.TICQUANTITY;
+		sum = document.form.sum;
+
+			if (hm.value < 0) {
+				hm.value = 0;
+			}
+		sum.value = parseInt(hm.value) * TICPRICE;
+	}  
 </script>
-
+<body onload="init();">
 <div class="container-fluid">
-
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">식권구매</h1>
@@ -44,27 +80,21 @@
 	</div>
 
 	<!-- Content Row -->
-
 	<div class="row">
 
 		<!-- Area Chart -->
 		<div class="col-xl-7 " style="left: 20%;">
 			<div class="card shadow mb-4" style="height: 100%">
 				<!-- Card Header - Dropdown -->
-				<form name="fFrm" method="post"
-					action="<c:url value='/spay/spay.do'/> ">
+				<form name="form" method="post" action="<c:url value='/spay/spay.do'/> ">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">식권구매</h6>
 					</div>
 					<!-- Card Body -->
+					
 					<div class="card-body">
 					<!-- 가격 설정 -->
-						<c:set var="sale" value="0.1"/>
-						<c:set var="TICPRICE" value="7000"/>
-						<c:set var="TICQUANTITY" value="1"/>
-						<c:set var="sum" value="${TICPRICE * TICQUANTITY}"/>
-						<c:set var="sumPrice" value="${TICPRICE * TICQUANTITY * sale}"/>
 						<div>
 							<iframe src="<c:url value='/inc2/warring.html'/>" width="60%"
 								height="400"></iframe>
@@ -74,19 +104,17 @@
 								<label>점심 오후12시 ~ 2시 </label><br> <label>저녁 오후5시 ~
 									7시 </label><br> <label>식당위치 : 지하 1층</label><br>
 									<!-- 선택별로 할인율 보여주기 -->
-									<label>식권구매 수량 : </label> <select name="TICQUANTITY">
-										<option value="TICQUANTITY1">1장 구매</option>
-										<option value="TICQUANTITY2">10장 구매</option>
-										<option value="TICQUANTITY3">직접입력</option>
-										<c:if test="${select==TICQUANTITY3 }">
-										</c:if>
-									</select>
 								</div>
 									<hr>
-									<label>식권 가격 : <fmt:formatNumber value="${TICPRICE }" 
-										pattern="#,###"/>원</label><br> 
-									<label>총 상품 가격 : <fmt:formatNumber value="${sum }" 
-										pattern="#,###"/>원</label><br>
+									<div style="text-align:center;">
+								    	<label>식권구매 수량 : </label><br>
+								    	<input type=hidden name="TICPRICE" value="7000">
+										<input type="button" value=" - " onclick="del();">
+										<input type="text" name="TICQUANTITY" value="1" size="3" onchange="change();">
+										<input type="button" value=" + " onclick="add();" style="margin-right: 7px;">
+										<br>
+										총 금액 : <input type="text" name="sum" size="10" readonly>원
+									</div>
 								<hr>
 								<div style="float: right;">
 									<input type="checkbox" id="chkAgree"> 
@@ -105,5 +133,5 @@
 	</div>
 	<hr>
 </div>
-
+</body>
 <%@ include file="../inc/bottom.jsp"%>

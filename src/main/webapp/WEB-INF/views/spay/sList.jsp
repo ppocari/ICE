@@ -58,7 +58,7 @@
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/spay/sList.do?searchKeyWord=all'/> ">
+				action="<c:url value='/spay/sList.do?selectAll='/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">식권구매</h6>
 						<div style="float: right">
@@ -96,9 +96,7 @@
 					</div>					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
+						<div class="chart-area" style="overflow: auto;">
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<thead>
 									<tr>
@@ -111,24 +109,29 @@
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-										
-									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.sdate }</td>
-											<td>${vo.sjang }</td>
-											<td>${vo.name }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
-											<td>${vo.email1 + vo.email2 }</td>
+									<c:if test="${empty sVo }">
+										<tr style="text-align: center;">
+											<td colspan="5">주문 내역이 존재하지 않습니다.</td>
 										</tr>
-									</c:forEach>
+									</c:if>
+									<c:if test="${!empty sVo }">
+										<c:forEach var="map" items="${sVo }">
+											<tr>
+												<td>
+												<fmt:formatDate value="${map['TICREGDATE'] }"
+													pattern="yyyy-MM-dd hh:mm:ss"/></td>
+												<td>${map['TICQUANTITY'] }</td>
+												<td>${map['NAME'] }</td>
+												<td>${map['TEL']}-${map['HP2']}-${map['HP3'] }</td>
+												<td>${map['EMAIL1']}${map['EMAIL2'] }</td>
+											</tr>
+										</c:forEach>
+									</c:if>
 								</tbody>
 						</table>
-										
 						</div>
 					</div>		
 				</form>
-				
-				
 			</div>
 		</div>
 	</div>

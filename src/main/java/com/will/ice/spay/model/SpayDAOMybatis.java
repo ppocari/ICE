@@ -1,5 +1,6 @@
 package com.will.ice.spay.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,8 +21,13 @@ public class SpayDAOMybatis implements SpayDAO{
 	}
 
 	@Override
-	public Map<String, Object> selectSpayView(int MEMNO) {
-		return sqlSession.selectOne(namespace+"selectSpayView",MEMNO);
+	public List<Map<String, Object>> selectSpayView(int MEMNO) {
+		return sqlSession.selectList(namespace+"selectSpayView",MEMNO);
+	}
+
+	@Override
+	public List<SpayVO> selectAll() {
+		return sqlSession.selectList(namespace+"selectAll");
 	}
 
 }
