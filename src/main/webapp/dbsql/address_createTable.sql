@@ -1,32 +1,34 @@
-/* ÁÖ¼Ò 
+
+/* ï¿½Ö¼ï¿½ 
 DROP TABLE address 
 	CASCADE CONSTRAINTS;*/
 
-/* ÁÖ¼Ò·Ï 
+/* ï¿½Ö¼Ò·ï¿½ 
 DROP TABLE addressBook 
 	CASCADE CONSTRAINTS;
 */
-/* ÁÖ¼Ò·Ï±×·ì 
+/* ï¿½Ö¼Ò·Ï±×·ï¿½ 
 DROP TABLE addressGroup 
 	CASCADE CONSTRAINTS;
 */
 
-/* ÁÖ¼Ò */
+
+/* ï¿½Ö¼ï¿½ */
 CREATE TABLE address (
-	adNo NUMBER NOT NULL, /* ÁÖ¼Ò·Ï¹øÈ£ */
-	adbNo NUMBER NOT NULL, /* ÁÖ¼Ò·Ï¸í¹øÈ£ */
-	name VARCHAR2(50) NOT NULL, /* »ç¿ø¸í */
-	hp1 VARCHAR2(20), /* ÀüÈ­¹øÈ£1 */
-	hp2 VARCHAR2(20), /* ÀüÈ­¹øÈ£2 */
-	hp3 VARCHAR2(20), /* ÀüÈ­¹øÈ£3 */
-	email1 VARCHAR2(50), /* ÀÌ¸ÞÀÏ1 */
-	email2 VARCHAR2(50), /* ÀÌ¸ÞÀÏ2 */
-	adgNo NUMBER, /* ±×·ì¹øÈ£ */
-	company VARCHAR2(100), /* È¸»ç¸í/°Å·¡Ã³¸í */
-	deptName VARCHAR2(100), /* ºÎ¼­ */
-	posName VARCHAR2(100), /* Á÷±Þ */
-	isFavorite VARCHAR2(10), /* Áñ°ÜÃ£±â À¯¹« */
-	isDeleted VARCHAR2(10) /* »èÁ¦(ÈÞÁöÅë) */
+	adNo NUMBER NOT NULL, /* ï¿½Ö¼Ò·Ï¹ï¿½È£ */
+	adbNo NUMBER NOT NULL, /* ï¿½Ö¼Ò·Ï¸ï¿½ï¿½È£ */
+	name VARCHAR2(50) NOT NULL, /* ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	hp1 VARCHAR2(20), /* ï¿½ï¿½È­ï¿½ï¿½È£1 */
+	hp2 VARCHAR2(20), /* ï¿½ï¿½È­ï¿½ï¿½È£2 */
+	hp3 VARCHAR2(20), /* ï¿½ï¿½È­ï¿½ï¿½È£3 */
+	email1 VARCHAR2(50), /* ï¿½Ì¸ï¿½ï¿½ï¿½1 */
+	email2 VARCHAR2(50), /* ï¿½Ì¸ï¿½ï¿½ï¿½2 */
+	adgNo NUMBER, /* ï¿½×·ï¿½ï¿½È£ */
+	company VARCHAR2(100), /* È¸ï¿½ï¿½ï¿½/ï¿½Å·ï¿½Ã³ï¿½ï¿½ */
+	deptName VARCHAR2(100), /* ï¿½Î¼ï¿½ */
+	posName VARCHAR2(100), /* ï¿½ï¿½ï¿½ï¿½ */
+	isFavorite VARCHAR2(10), /* ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+	isDeleted VARCHAR2(10) /* ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) */
 );
 
 ALTER TABLE address
@@ -36,12 +38,12 @@ ALTER TABLE address
 			adNo
 		);
 
-/* ÁÖ¼Ò·Ï */
+/* ï¿½Ö¼Ò·ï¿½ */
 CREATE TABLE addressBook (
-	adbNo NUMBER NOT NULL, /* ÁÖ¼Ò·Ï¸í¹øÈ£ */
-	adbName VARCHAR2(100) NOT NULL, /* ÁÖ¼Ò·Ï¸í */
-	orderNo NUMBER NOT NULL, /* ÁÖ¼Ò·Ï¼ø¼­ */
-	memNo VARCHAR2(50) /* »ç¿ø¹øÈ£ */
+	adbNo NUMBER NOT NULL, /* ï¿½Ö¼Ò·Ï¸ï¿½ï¿½È£ */
+	adbName VARCHAR2(100) NOT NULL, /* ï¿½Ö¼Ò·Ï¸ï¿½ */
+	orderNo NUMBER NOT NULL, /* ï¿½Ö¼Ò·Ï¼ï¿½ï¿½ï¿½ */
+	memNo VARCHAR2(50) /* ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
 );
 
 ALTER TABLE addressBook
@@ -51,11 +53,11 @@ ALTER TABLE addressBook
 			adbNo
 		);
 
-/* ÁÖ¼Ò·Ï±×·ì */
+/* ï¿½Ö¼Ò·Ï±×·ï¿½ */
 CREATE TABLE addressGroup (
-	adgNo NUMBER NOT NULL, /* ±×·ì¹øÈ£ */
-	addressGroupName VARCHAR2(30), /* ±×·ì¸í */
-	memNo VARCHAR2(50) /* »ç¿ø¹øÈ£ */
+	adgNo NUMBER NOT NULL, /* ï¿½×·ï¿½ï¿½È£ */
+	addressGroupName VARCHAR2(30), /* ï¿½×·ï¿½ï¿½ */
+	memNo VARCHAR2(50) /* ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
 );
 
 ALTER TABLE addressGroup

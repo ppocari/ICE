@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>zipcode/zipcode.jsp</title>
+<title>우편번호 찾기</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/mypage/mainstyle.css'/>"/>
-<script type="text/javascript" src="<c:url value='/resources/js/mypage/jquery-3.5.1.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/mypage/paging.js'/>"></script>
 
 <script type="text/javascript">
@@ -127,8 +127,8 @@
 	}
 	
 	function setZipcode(zipcode, address){
-		$(opener.document).find("#zipcode").val(zipcode);
-		$(opener.document).find("input[name=address]").val(address);
+		$(opener.document).find("#zipInput").val(zipcode);
+		$(opener.document).find("input[name=addr]").val(address);
 		
 		self.close();
 	}

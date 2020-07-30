@@ -1,5 +1,6 @@
 package com.will.ice.spay.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,27 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SpayController {
 	
 	@RequestMapping("/spay/spay.do")
-	public String spay() {
-		
-		return "spay/spay";
+	public void spay() {
+	
 	}
 	
 	@RequestMapping("/spay/sbuy.do")
-	public String sbuy() {
-		
-		return "spay/sbuy";
+	public void sbuy() {
+
 	}
 	
 	@RequestMapping("/spay/sok.do")
-	public String sok() {
-		
-		return "spay/sok";
+	public void sok() {
+
 	}
 	
 	@RequestMapping("/spay/sList.do")
-	public String sList() {
-		
-		return "spay/sList";
+	public void sList() {
+
 	}
 	
 	

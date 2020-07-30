@@ -4,39 +4,47 @@ import java.sql.Timestamp;
 
 public class SpayVO {
 
-	private String memNo; 
-	private int sjang;
-	private int sprice;
-	private Timestamp sdate;
+	private int TICNO;
+	private String MEMNO; 
+	private int TICQUANTITY;
+	private int TICPRICE;
+	private Timestamp TICREGDATE;
 	
-	public String getMemNo() {
-		return memNo;
+	public int getTICNO() {
+		return TICNO;
 	}
-	public void setMemNo(String memNo) {
-		this.memNo = memNo;
+	public void setTICNO(int tICNO) {
+		TICNO = tICNO;
 	}
-	public int getSjang() {
-		return sjang;
+	public String getMEMNO() {
+		return MEMNO;
 	}
-	public void setSjang(int sjang) {
-		this.sjang = sjang;
+	public void setMEMNO(String mEMNO) {
+		MEMNO = mEMNO;
 	}
-	public int getSprice() {
-		return sprice;
+	public int getTICQUANTITY() {
+		return TICQUANTITY;
 	}
-	public void setSprice(int sprice) {
-		this.sprice = sprice;
+	public void setTICQUANTITY(int tICQUANTITY) {
+		TICQUANTITY = tICQUANTITY;
 	}
-	public Timestamp getSdate() {
-		return sdate;
+	public int getTICPRICE() {
+		return TICPRICE;
 	}
-	public void setSdate(Timestamp sdate) {
-		this.sdate = sdate;
+	public void setTICPRICE(int tICPRICE) {
+		TICPRICE = tICPRICE;
+	}
+	public Timestamp getTICREGDATE() {
+		return TICREGDATE;
+	}
+	public void setTICREGDATE(Timestamp tICREGDATE) {
+		TICREGDATE = tICREGDATE;
 	}
 	
 	@Override
 	public String toString() {
-		return "SpayVO [memNo=" + memNo + ", sjang=" + sjang + ", sprice=" + sprice + ", sdate=" + sdate + "]";
-	} 
+		return "SpayVO [TICNO=" + TICNO + ", MEMNO=" + MEMNO + ", TICQUANTITY=" + TICQUANTITY + ", TICPRICE=" + TICPRICE
+				+ ", TICREGDATE=" + TICREGDATE + "]";
+	}
 	
 }

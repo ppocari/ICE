@@ -23,10 +23,6 @@
 
 
 </style>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
 		
@@ -47,14 +43,27 @@
 					strAll += "</tr>"
 					
 					$("#dynamicTable").append(strAll);
-				},
-				error:function(xhr, status, error){
-					alert(status +", "+error);
 				}
 			
 			})
 			
 		});
+		
+		$( "input[name=hiredate1]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
+		
+		$( "input[name=hiredate2]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
 		
 		
 	});
@@ -81,16 +90,9 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
-						</div>
-						
-					</div>
+				<!-- 페이징 처리를 위한 form 시작-->
+				<form name="frmPage" method="post" 
+					action="<c:url value='/member/memList.do'/>">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-left: 10px;">
 							<label for="department" style="margin-right: 20px;">부서별 조회</label>
@@ -114,10 +116,24 @@
 						</div>
 						<div class="search" style="margin-right: 20px;">
 							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<input type="text" name="hiredate1" value="${param.startDay }"> ~
+							<input type="text" name="hiredate2" value="${param.endDay }">
 						</div>
 					</div>
+				</form>
+				<!-- 페이징 처리 form 끝 -->
+				
+				<form name="memRegisterFrm" method="post"  
+				action="<c:url value='/member/memList.do'/> ">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
+						<div style="float: right">
+							<button type="submit" class="btn btn-info"
+							 >전체조회</button>
+						</div>
+						
+					</div>
+					
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
@@ -145,7 +161,11 @@
 											<td>${vo.memNo }</td>
 											<td>${vo.name }</td>
 											<td>${vo.pwd }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
+											<td>
+												<c:if test="${ !empty vo.hp1 }">
+													${vo.hp1 } - ${vo.hp2} - ${ vo.hp3 }
+												</c:if>
+											</td>
 											<td>${vo.email1 + vo.email2 }</td>
 											<td>${vo.hiredate }</td>
 											<td>${vo.deptName }</td>

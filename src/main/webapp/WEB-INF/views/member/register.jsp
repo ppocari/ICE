@@ -19,6 +19,7 @@
 }
 </style>
 <script type="text/javascript">
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
 	$(function(){
 		
 		$("form[name=memRegisterFrm]").submit(function(){
@@ -27,8 +28,7 @@
 				event.preventDefault();
 			}else{
 				if($("#dynamicTbody tr #memRegisterCheck").is(":checked")) {
-					
-					console.log($("#dynamicTbody tr #memRegisterCheck").next().text());
+										
 					alert("check");
 					
 				}else{
@@ -38,6 +38,20 @@
 			}
 			
 		});
+	
+		$('#btMultiRegist').click(function(){
+			var len=$('tbody input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('이벤트로 등록하려는 상품을 먼저 체크하세요');
+				return;
+			}
+			
+			$('form[name=frmList]')
+	.prop("action","<c:url value='/member/registerList.do'/>");
+			$('form[name=frmList]').submit();
+		});	
+		
+		
 		
 		$("#memHiredate").datepicker();
 	});
@@ -67,6 +81,7 @@
 		str += '</tr>';
 					
 		$("#dynamicTable").append(str);
+		
 					
 		$("#memNo").val('');
 		$("#mamName").val('');
@@ -78,6 +93,9 @@
 		$("#memPosi").val('');
 		$("#memSalary").val('');
 		}
+=======
+	
+>>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
 </script>
 <!-- Begin Page Content -->
 
@@ -100,11 +118,13 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
+<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
 				<form name="memRegisterFrm" method="post" action="<c:url value='/member/register.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
+							 	
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
@@ -144,6 +164,22 @@
 						</div>
 					</div>
 						
+=======
+				<form name="frm" action="<c:url value ='/member/memWrite.do'/>"
+					method="post">
+
+					<input type="text"  name="memNo"> 
+					<input type="text"  name="pwd"> 
+					<input type=text name="name" /> 
+					<input type=text name="deptCode"  />
+					<input type=text name="posCode" />
+					<input type=text name="hiredate"  />
+					<input type=text name="salary"  /> 
+					
+
+
+					<input type="submit" value="전송"> 
+>>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
 				</form>
 
 

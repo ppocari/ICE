@@ -108,7 +108,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
-						<a class="collapse-item" href="<c:url value="/member/register.do" />">사원등록</a>
+						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
 						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
 					</div>
 				</div>
@@ -208,7 +208,7 @@
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value="/payment/write/payList.do" />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value="#" />">기안상신함</a>
 						<a class="collapse-item" href="<c:url value="#" />">임시보관함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기안완료함</a>
 					</div>

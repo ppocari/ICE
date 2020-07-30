@@ -3,6 +3,7 @@ package com.will.ice.workrecord.model;
 import java.util.List;
 
 public interface WorkRecordService {
-	int insertWork(WorkRecordVO vo);
-	List<WorkRecordVO> selectWork(String cmtNo);
+	int insertWork_status(WorkRecordVO vo);
+	List<WorkRecordVO> selectWorkList(int memNo);
+	int updateWork(WorkRecordVO vo);
 }
