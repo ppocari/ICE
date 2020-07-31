@@ -29,8 +29,13 @@ public class WorkRecordServiceImpl implements WorkRecordService{
 	}
 
 	@Override
-	public List<WorkRecordVO> selectWorkList(int memNo) {
-		return workdao.selectWorkList(memNo);
+	public List<WorkRecordVO> selectWorkList(WorkRecordVO vo) {
+		return workdao.selectWorkList(vo);
+	}
+
+	@Override
+	public WorkRecordVO selectToday(int memNo) {
+		return workdao.selectToday(memNo);
 	}
 	
 	

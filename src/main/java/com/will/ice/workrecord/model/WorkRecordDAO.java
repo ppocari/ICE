@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface WorkRecordDAO {
 	int insertWork(WorkRecordVO vo);
-	List<WorkRecordVO> selectWorkList(int memNo);
+	List<WorkRecordVO> selectWorkList(WorkRecordVO vo);
 	int updateWork(WorkRecordVO vo);
+	WorkRecordVO selectToday(int memNo);
 }
