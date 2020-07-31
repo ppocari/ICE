@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>ICE</title>
 <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <style type="text/css">
 body{overflow: hidden;}
 #formNo,#formName{width:200px;}
@@ -16,7 +17,11 @@ body{overflow: hidden;}
 #summerDiv{padding-top: 10px;padding-bottom: 10px;}
 #formDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 8px;text-align: center;}
 </style>
-
+<script type="text/javascript">
+window.onload = function() {
+	window.resizeTo(790, 700);
+}
+</script>
 </head>
 <body>
 	<div id="bigDiv">
@@ -39,7 +44,6 @@ body{overflow: hidden;}
 				</div>
 				<div id="lastDiv">
 					<button type="submit" class="btn btn-default" id="btwriteForm">저장</button>
-					<button type="button" class="btn btn-default" id="btCancel" onclick="history.go(-1)">취소</button>
 				</div>
 			</form>
 		</div>

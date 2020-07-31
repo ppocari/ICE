@@ -254,7 +254,9 @@ insert into doctype(typeNo,typeName)
 values(3,'업무협조전');
 insert into doctype(typeNo,typeName)
 values(4,'보고서');
-
+insert into doctype(typeNo,typeName)
+values(5,'결근보고서');
+select * from doctype;
 ------------------------뷰
 create or replace view paymentView
 as
@@ -270,7 +272,41 @@ select p.*,m.NAME,m.posName,m.deptName
 from paymentline p join mypage_mem m
 on p.MEMNO = m.MEMNO;
 
-commit;
+create or replace view paylistView
+as
+select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ
+from payment p join paymentline l
+on p.DOCNO = l.DOCNO;
+
+select * from paylistview
+where sysdate<=expirydate
+and memNo='111910'
+and gmemNo is null;
+
+select * from paylistview;
 
 select * from payment;
 select * from paymentline;
+
+create or replace view paylistView
+as
+select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ,d.TYPENAME,m.NAME
+from ((payment p join paymentline l
+on p.DOCNO = l.DOCNO)join doctype d
+on p.TYPENO = d.TYPENO)join member m
+on p.MEMNO = m.MEMNO;
+
+create or replace view test1
+as
+select * from paylistView
+where sysdate<=expirydate
+and memNo='111910'
+and gmemNo is null
+union
+select * from paymentview
+where sysdate<=expirydate
+and memNo='111910'
+and imsy='Y';
+
+
+commit;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../../inc/top.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
@@ -112,18 +113,18 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 			</thead>
 			<tbody>
 			<!-- 반복 시작 -->
-				<c:forEach var="vo" items="${list }">
+				<c:forEach var="i" begin="0" end="${fn:length(list) }">
 					<tr>
 						<td>
-							<a class="docNoInfo" onclick="window.open('../checkDocView.do?docNo=${vo.docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
-								${vo.docNo }
+							<a class="docNoInfo" onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+								${list[i].docNo}
 							</a>
 						</td>
-						<td>${vo.typeName }</td>
-						<td>${vo.writedate }</td>
-						<td>${vo.name }</td>
-						<td>${vo.title }</td>
-						<td>${vo.hasFile }</td>
+						<td>${list[i].typeName}</td>
+						<td>${list[i].writedate}</td>
+						<td>${list[i].name}</td>
+						<td>${list[i].title}</td>
+						<td>${list[i].hasFile}</td>
 					</tr>
 				</c:forEach>
 			<!-- 반복 끝 -->

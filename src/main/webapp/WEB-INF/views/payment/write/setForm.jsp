@@ -16,7 +16,7 @@ body{overflow: hidden; font-size: 1.3em;}
 #headerDiv p{padding-left: 8px;padding-top: 8px;}
 #formTable thead tr{background-color: #858796; color:white;}
 #formlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;}
-#btForm{background-color: #4e73df; color:white;position: absolute;right: -680px;font-size: 1.0em;}
+#btForm{background-color: #4e73df; color:white;position: absolute;left: 450px;font-size: 1.0em;}
 #btDel{font-size:1.0em;}
 #lastDiv{padding-left: 8px;position:absolute;bottom: 4%;}
 </style>
@@ -42,7 +42,7 @@ body{overflow: hidden; font-size: 1.3em;}
 	<div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:500px;width: 99%;padding: 10px 10px 10px 10px;">
+	<div class="card shadow mb-4" style="height:400px;width: 99%;padding: 10px 10px 10px 10px;">
 	<div id="formlistDiv">
 		<table class="table" id="formTable">
 			<thead>
