@@ -1,5 +1,7 @@
 package com.will.ice.spay.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.will.ice.common.Utility;
+import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.PaginationInfo;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.spay.model.SpayService;
@@ -37,31 +42,59 @@ public class SpayController {
 	}
 
 	@RequestMapping("/sList.do")
-	public String sList(HttpSession session, Model model) {
+	public void sList(@ModelAttribute DateSearchVO dateSearchVo,
+			HttpSession session, Model model) {
 		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
+		String identNum = (String)session.getAttribute("identNum");
+		dateSearchVo.setMemNo(identNum);
+		logger.info("구매 내역 파라미터 dateSearchVo={}", dateSearchVo);
 		
-		List<Map<String, Object>> sVo=spayService.selectSpayView(MemNo);
-		logger.info("구매 내역 결과 vo={}", sVo);
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setCurrentPage(dateSearchVo.getCurrentPage());
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		
-		model.addAttribute("sVo", sVo);
+		dateSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		dateSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		
-		return "/spay/sList";
+		String startDay=dateSearchVo.getStartDay();
+		if(startDay==null || startDay.isEmpty()) {
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String str=sdf.format(today);
+			dateSearchVo.setStartDay(str);
+			dateSearchVo.setEndDay(str);			
+		}
+		
+		int totalRecord=spayService.selectDay(dateSearchVo);
+			logger.info("구매내역 개수 조회 결과, totalRecord={}", totalRecord);
+			
+			pagingInfo.setTotalRecord(totalRecord);
+		
+		
+		List<Map<String, Object>> list=spayService.selectSpayView(MemNo);
+		logger.info("구매 내역 결과 vo={}", list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pagingInfo", pagingInfo);	
+
 	}
 
 	@RequestMapping(value="/spay.do", method=RequestMethod.GET)
 	public String spay_get(HttpSession session, Model model,
 			int TICPRICE, int TICQUANTITY) {
-		String userid=(String) session.getAttribute("userid");
+		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
+		String identNum=(String) session.getAttribute("identNum");
 		
-		logger.info("주문하기 - 조회, 파라미터 userid={}", userid);
+		logger.info("주문하기 - 조회, 파라미터 identNum={}", MemNo);
 		
-		MemberVO memVo=memberService.selectMember(userid);
+		MemberVO memVo=memberService.selectMember(identNum);
 		logger.info("주문하기 - 회원조회 결과 vo={}", memVo);
 
 		SpayVO sVo = new SpayVO();
 		sVo.setTICPRICE(TICPRICE);
 		sVo.setTICQUANTITY(TICQUANTITY);
-		int cnt=spayService.insertTic(sVo);
+		List<Map<String, Object>> cnt=spayService.selectSpayView(MemNo);
 		logger.info("주문하기 - 데이터 결과 cnt={}", cnt);
 
 		model.addAttribute("memVo", memVo);
@@ -71,16 +104,24 @@ public class SpayController {
 	}
 	
 	@RequestMapping(value="/spay.do", method=RequestMethod.POST)
-	public String sbuy_post(HttpSession session, Model model, SpayVO sVo,
-			int TICPRICE, int TICQUANTITY) {
-		String userName=(String) session.getAttribute("userName");
-		
-		logger.info("주문하기, 파라미터 TICPRICE={}, TICQUANTITY={}", TICPRICE, TICQUANTITY );
+	public String spay_post(HttpSession session, Model model,
+			SpayVO sVo) {
+		String MemNo=(String) session.getAttribute("MemNo");
+		String identNum=(String) session.getAttribute("identNum");
+		sVo.setMEMNO(MemNo);
+		logger.info("주문하기, 파라미터 sVo={}", sVo);
 		
 		int cnt=spayService.insertTic(sVo);
 		logger.info("주문하기 결과, cnt={}", cnt);
 		
-		return "redirect:/spay/sok.do?userName=" + sVo.getTICNO();
+		MemberVO memVo=memberService.selectMember(identNum);
+		logger.info("주문하기 - 회원조회 결과 vo={}", memVo);
+		
+		model.addAttribute("sVo", sVo);
+		model.addAttribute("memVo", memVo);
+		
+		return "spay/spay";
+		
 	}
 		
 	@RequestMapping("/spay/sok.do")

@@ -102,7 +102,7 @@
 				<c:set var="sumPrice" value="${sVo.TICPRICE * sVo.TICQUANTITY * sale}"/>
 						
 				<div class="card-body">
-					<fmt:parseDate value="new java.util.Date()"
+					<fmt:parseDate value="${sVo.TICREGDATE }"
 					    pattern = "yyyy-MM-dd HH:mm:ss" var = "TICREGDATE"/>
 					<label>주문시각 : <fmt:formatDate value="${sVo.TICREGDATE }"/></label><br> 
 					<label>구매매수 : ${sVo.TICQUANTITY }장</label><br> 
@@ -115,15 +115,17 @@
 					</c:if>
 					<c:if test="${sVo.TICQUANTITY < 10}">
 						<label>할인 : 0%</label><br>
+						<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
 					</c:if>
 					
 					<hr>
 					<label>구매자	: ${memVo.name }</label><br>
-					<label>전화번호 : ${memVo.tel + vo.hp2 + vo.hp3 }</label><br>
-					<label>이메일 : ${memVo.email1 + vo.email2 }</label><br>
+					<label>전화번호 : ${memVo.hp1 + memVo.hp2 + memVo.hp3 }</label><br>
+					<label>이메일 : ${memVo.email1 + memVo.email2 }</label><br>
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
-					<label>결제 금액 : ${sumPrice }</label><br>
+					<label>결제 금액 : <fmt:formatNumber value="${sum }" 
+        				pattern="#,###"/>원</label><br>
 					<hr>
 					<div style="text-align: center;">
 						<button onclick="requestPay()" class="btn btn-primary btn-user btn-block">결제하기</button>

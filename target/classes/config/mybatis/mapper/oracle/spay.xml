@@ -8,7 +8,7 @@
 			select ticket_Seq.nextval from dual
 		</selectKey>
 		insert into ticket(TICNO, MemNo, TICQUANTITY, TICPRICE)
-		values(#{TICNO}, #{MemNo} #{TICQUANTITY}, #{TICPRICE}}
+		values(#{TICNO}, #{MEMNO}, #{TICQUANTITY}, #{TICPRICE})
 	</insert>
 	
 	<select id="selectSpayView" parameterType="int"
@@ -17,10 +17,23 @@
 		where memno = #{MemNo}
 	</select>
 	
-	<select id="selectAll" resultType="SpayVo">
+	<select id="searchday" resultType="SpayVo">
 		select * from SpayView
 		<![CDATA[
 			where sysdate<=TICREGDATE]]>
+	</select>
+	
+	<select id="selectDay" parameterType="dateSearchVo" 
+		resultType="int">
+		select count(*) from SpayView
+		<where> 
+			<if test="MemNo!=null and MemNo!=''">
+				memno=#{MemNo}
+			</if>				
+			and ticRegDate>=#{startDay}
+			<![CDATA[
+			and ticRegDate < to_date(#{endDay})+1 ]]>
+		</where>
 	</select>
 		
 </mapper>

@@ -36,6 +36,21 @@
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
 	});
+	
+	$('#startDay').datepicker({
+		dateFormat:'yy-mm-dd',
+		changeYear:true,
+		dayNamesMin:['일','월','화','수','목','금','토'],
+		monthNames:['1월','2월','3월','4월','5월','6월',
+			'7월','8월','9월','10월','11월','12월']
+	});
+	$('#endDay').datepicker({
+		dateFormat:'yy-mm-dd',
+		changeYear:true,
+		dayNamesMin:['일','월','화','수','목','금','토'],
+		monthNames:['1월','2월','3월','4월','5월','6월',
+			'7월','8월','9월','10월','11월','12월']
+	});
 </script>
 
 <div class="container-fluid">
@@ -109,13 +124,13 @@
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-									<c:if test="${empty sVo }">
+									<c:if test="${empty list }">
 										<tr style="text-align: center;">
 											<td colspan="5">주문 내역이 존재하지 않습니다.</td>
 										</tr>
 									</c:if>
-									<c:if test="${!empty sVo }">
-										<c:forEach var="map" items="${sVo }">
+									<c:if test="${!empty list }">
+										<c:forEach var="map" items="${list }">
 											<tr>
 												<td>
 												<fmt:formatDate value="${map['TICREGDATE'] }"
@@ -128,7 +143,7 @@
 										</c:forEach>
 									</c:if>
 								</tbody>
-						</table>
+							</table>
 						</div>
 					</div>		
 				</form>

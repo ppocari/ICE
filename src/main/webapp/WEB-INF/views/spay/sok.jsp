@@ -68,7 +68,6 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 </script>
 
 <body>
-	<form name="frmok" method="post" action="<c:url value='/spay/sList.do'/>">
 	<div class="center">
 		<p class="pname">결제 확인</p>
 		<div style="background-color: white;">
@@ -83,9 +82,9 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 						<iframe src="<c:url value='/inc2/text.html'/>" 
 			width="400" height="300"></iframe>
 					</p>
-					<label>주문시각 : "yyyy-MM-dd"</label><br>
-					<label>상품명 : "식권  장"</label><br>
-					<label>결제수단 : "카드"</label><br>
+					<label>주문시각 : ${map['TICREGDATE'] }</label><br>
+					<label>상품명 : ${map['TICQUANTITY'] }</label><br>
+					<label>결제수단 : Card</label><br>
 					<label>할인율 : 0%</label><br>
 				<hr>
 				<div class="p-3" style="text-align: center;">
@@ -100,7 +99,6 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 			<button class="btn btn-primary btn-user btn-block">목록</button>
 		</div>
 	</div>
-	</form>
 </body>
 </html>
 

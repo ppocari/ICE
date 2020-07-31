@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.DateSearchVO;
+
 @Repository
 public class SpayDAOMybatis implements SpayDAO{
 
@@ -28,6 +30,11 @@ public class SpayDAOMybatis implements SpayDAO{
 	@Override
 	public List<SpayVO> selectAll() {
 		return sqlSession.selectList(namespace+"selectAll");
+	}
+
+	@Override
+	public int selectDay(DateSearchVO dateSearchVo) {
+		return sqlSession.selectOne(namespace+"selectDay",dateSearchVo);
 	}
 
 }

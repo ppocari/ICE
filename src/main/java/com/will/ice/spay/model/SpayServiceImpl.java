@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.ice.common.DateSearchVO;
+
 @Service
 public class SpayServiceImpl implements SpayService{
 
@@ -24,6 +26,11 @@ public class SpayServiceImpl implements SpayService{
 	@Override
 	public List<SpayVO> selectAll() {
 		return spayDao.selectAll();
+	}
+
+	@Override
+	public int selectDay(DateSearchVO dateSearchVo) {
+		return spayDao.selectDay(dateSearchVo);
 	}
 	
 
