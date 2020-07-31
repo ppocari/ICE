@@ -78,9 +78,16 @@ body{overflow: hidden;}
 		</table>
 	</div>
 	<div id="lastDiv">
-		<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'">
-			결재상신 취소
-		</button>
+		<c:if test="${param.flag=='imsy'}">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write.do?docNo=${payVo.docNo }"/>'">
+				결재선 지정
+			</button>
+		</c:if>
+		<c:if test="${param.flag!='imsy'}">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'">
+				결재상신 취소
+			</button>
+		</c:if>
 	</div>
 </div>
 </body>
