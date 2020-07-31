@@ -68,39 +68,59 @@ $("#bcTarget1").barcode("1234567890128", "code128");
 </script>
 
 <body>
-	<form name="frmok" method="post" action="<c:url value='/spay/sList.do'/>">
+	<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">결제완료</h1>
+
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+	</div>
+
+	<!-- Content Row -->
+
 	<div class="center">
-		<p class="pname">결제 확인</p>
-		<div style="background-color: white;">
-			<div class="p-5">
-				<p style="font-size: larger">결제 확인</p>
-				
-					<div>
-						<input type="checkbox" name="chkAgree1" id="chkAgree1"> 
-						<label for="chkAgree1">구매 약관</label>
+
+		<!-- Area Chart -->
+		<div class="col-xl-11 " style="left: 5%;">
+			<div class="card shadow mb-4" style="height: 100%">
+				<!-- Card Header - Dropdown -->
+				<div
+					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">영수증</h6>
+				</div>
+				<div class="card-body">
+					<c:set var="now" value="<%=new java.util.Date()%>" />
+						<label>주문시각 : <fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></label><br>
+						<label>상품명 : 식권 ${sVo.TICQUANTITY }장</label><br>
+						<label>결제수단 : Card</label><br>
+						<c:if test="${sVo.TICQUANTITY >=10}">
+							<label>할인 : 10%</label><br>
+						</c:if>
+						<c:if test="${sVo.TICQUANTITY < 10}">
+							<label>할인 : 0%</label><br>
+						</c:if>
+					<hr>
+					<div class="p-3" style="text-align: center;">
+						<label>상점 거래ID : "상점 거래ID"</label><br>
+						<label>결제 금액 :	<fmt:formatNumber value="${sale }" 
+	        				pattern="#,###"/>원</label><br>
+						<label>카드 승인번호 : "카드 승인번호"</label><br>
+						<hr>
+						<label>결제가 완료되었습니다.</label><br>
+						<label>감사합니다.</label>
 					</div>
-					<p>
-						<iframe src="<c:url value='/inc2/text.html'/>" 
-			width="400" height="300"></iframe>
-					</p>
-					<label>주문시각 : "yyyy-MM-dd"</label><br>
-					<label>상품명 : "식권  장"</label><br>
-					<label>결제수단 : "카드"</label><br>
-					<label>할인율 : 0%</label><br>
-				<hr>
-				<div class="p-3" style="text-align: center;">
-					<label>상점 거래ID : "상점 거래ID"</label><br>
-					<label>결제 금액 :	"결제 금액"</label><br>
-					<label>카드 승인번호 : "카드 승인번호"</label><br>
+					<hr>
+					<div style=" text-align: center;">
+						<a href="<c:url value='/spay/sList.do'/>"><button class="btn btn-primary btn-user btn-block">구매목록</button></a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div style=" text-align: center;">
-			<button class="btn btn-primary btn-user btn-block">목록</button>
-		</div>
 	</div>
-	</form>
+	</div>
 </body>
 </html>
 
