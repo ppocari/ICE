@@ -12,4 +12,9 @@ public interface AddressService {
 	int insertAddress(AddressVO vo);
 	List<AddressGroupVO> selectAddressGroup(String memNo);
 	AddressVO selectOneAdderss(int adNo);
+
+	int updateAddress(AddressVO adVo);
+	
+	int deleteMulti(List<AddressVO> list);
+
 }
