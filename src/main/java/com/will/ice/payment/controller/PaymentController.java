@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocformService;
 import com.will.ice.document.model.DocformVO;
 import com.will.ice.document.model.DoctypeService;
@@ -156,23 +158,29 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/write/sentpayList.do") 
-	public void sentpayList(Model model,HttpSession session) {
+	public void sentpayList_get(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("기안완료 목록 보여주기,사원번호={}",identNum);
+		paysearchVo.setCustomerId(identNum);
+		logger.info("PaymentSearchVO={}",paysearchVo);
 		
-		List<PaylistViewVO> list = paymentService.selectSent(identNum);
+		List<PaylistViewVO> list = paymentService.selectSent(paysearchVo);
+		logger.info("list.size()={}",list.size());
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();
 		
 		model.addAttribute("list",list);
 		model.addAttribute("doctypelist",doctypelist);
+		model.addAttribute("paysearchVo",paysearchVo);
 	}
 	
 	@RequestMapping("/write/imsyBox.do") 
-	public void imsyBox(Model model,HttpSession session) {
+	public void imsyBox(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("임시보관 목록 보여주기,사원번호={}",identNum);
+		paysearchVo.setCustomerId(identNum);
+		logger.info("PaymentSearchVO={}",paysearchVo);
 		
-		List<PaymentviewVO> list = paymentService.selectImsy(identNum);
+		List<PaymentviewVO> list = paymentService.selectImsy(paysearchVo);
 		logger.info("임시보관 목록 조회결과,list.size()={}",list.size());
 		
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();

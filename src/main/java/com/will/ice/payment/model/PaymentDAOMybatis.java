@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.payline.model.PaylineVO;
@@ -23,13 +24,13 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public List<PaylistViewVO> selectSent(String identNum) {
-		return sqlSession.selectList(namespace+"selectSent",identNum);
+	public List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectSent",paysearchVo);
 	}
 
 	@Override
-	public List<PaymentviewVO> selectImsy(String identNum) {
-		return sqlSession.selectList(namespace+"selectImsy",identNum);
+	public List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectImsy",paysearchVo);
 	}
 
 	@Override

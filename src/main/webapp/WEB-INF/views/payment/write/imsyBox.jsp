@@ -25,11 +25,9 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
             format: 'YYYY-MM-DD',
-            date: moment().add(-7,"days")
         });
 		$('#datetimepicker2').datetimepicker({
             format: 'YYYY-MM-DD',
-            date: moment()
         });
 		$("#datetimepicker1").on("change.datetimepicker", function(e) {
 			$('#datetimepicker2').datetimepicker('minDate', e.date);
@@ -49,47 +47,53 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 	</div>
 	<div class="form-group" id="searchDateDiv">
 		<form name="searchDateFrm" method="post" class="form-inline"
-			id="datefrm" action="<c:url value='/payment/write/payList.do' />">
-			<div class="form-group">
-				<label for="startDay">작성일</label>
-				<div class="input-group date" id="datetimepicker1"
-					data-target-input="nearest">
-					<input type="text" class="form-control datetimepicker-input"
-						data-target="datetimepicker1" id="datetimepicker1" value="">
-					<div class="input-group-append" data-target="#datetimepicker1"
-						data-toggle="datetimepicker">
-						<div class="input-group-text">
-							<i class="fa fa-calendar"></i>
+				id="datefrm" action="<c:url value='/payment/write/sentpayList.do' />">
+				<div class="form-group">
+					<label for="startDay">작성일</label>
+					<div class="input-group date" id="datetimepicker1"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input"
+							data-target="datetimepicker1" id="datetimepicker1" name="startDay" value="${paysearchVo.startDay }">
+						<div class="input-group-append" data-target="#datetimepicker1"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group date" id="datetimepicker2"
-					data-target-input="nearest">
-					<input type="text" class="form-control datetimepicker-input"
-						data-target="datetimepicker2" id="datetimepicker2" value="">
-					<div class="input-group-append" data-target="#datetimepicker2"
-						data-toggle="datetimepicker">
-						<div class="input-group-text">
-							<i class="fa fa-calendar"></i>
+				<div class="form-group">
+					<div class="input-group date" id="datetimepicker2"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input"
+							data-target="datetimepicker2" id="datetimepicker2" name="endDay" value="${paysearchVo.endDay }">
+						<div class="input-group-append" data-target="#datetimepicker2"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<label for="docType">문서종류</label> 
-				<select class="form-control" id="docType" name="docType">
-					<!-- 반복 시작 -->
-					<option value="품의서">품의서</option>
-					<!-- 반복 끝 -->
-				</select> 
-				<label for="title">제목</label> 
-				<input type="text" class="form-control" id="title" name="title"> 
-				<input class="btn btn-primary" type="submit" value="검색">
-			</div>
-		</form>
+				<br>
+				<div class="form-group">
+					<label for="docType">문서종류</label> 
+					<select class="form-control" id="docType" name="searchCondition">
+						<!-- 반복 시작 -->
+						<c:forEach var="doctypeVo" items="${doctypelist }">
+							<option value="${doctypeVo.typeNo }"
+								<c:if test="${paysearchVo.searchCondition==doctypeVo.typeNo }">
+									selected="selected"
+								</c:if>
+							>${doctypeVo.typeName}</option>
+						</c:forEach>
+						<!-- 반복 끝 -->
+					</select> 
+					<label for="title">제목</label> 
+					<input type="text" class="form-control" id="title" name="searchKeyword" value="${paysearchVo.searchKeyword }"> 
+					<input class="btn btn-primary" type="submit" value="검색">
+				</div>
+			</form>
 	</div>
 
 	<div class="form-group" id="paylist">

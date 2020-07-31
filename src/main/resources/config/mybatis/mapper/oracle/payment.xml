@@ -47,14 +47,26 @@
 		select read from paymentline where docNo=#{docNo}
 	</select>
 	
-	<select id="selectSent" parameterType="String" resultType="paylistViewVo">
+	<select id="selectSent" parameterType="paymentSearchVo" resultType="paylistViewVo">
 		select distinct docNo,memNo,formNo,typeNo,title,hasFile,
 			writedate,expirydate,typeName,name,imsy from paylistView
-		<![CDATA[
-			where sysdate<=expirydate
-			and memNo=#{identNum}
-			and imsy='N']]>
+			<where>
+				imsy='N'
+				and memNo=#{customerId}
+				<if test="searchKeyword!=null and searchKeyword!=''">
+					and title=#{searchKeyword}
+				</if>
+				<if test="searchCondition!=null and searchCondition!=''">
+					and typeNo=#{searchCondition}
+				</if>
+				<![CDATA[
+					and sysdate < expirydate+1
+					and to_date(writedate)>=to_date(#{startDay})
+					and to_date(writedate) < to_date(#{endDay})+1
+				]]>
+			</where>
 	</select>
+
 
 	<select id="selectImsy" parameterType="String" resultType="paymentViewVo">
 		select * from paymentview

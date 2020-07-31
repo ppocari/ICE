@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.payline.model.PaylineVO;
@@ -16,13 +17,13 @@ public class PaymentServiceImpl implements PaymentService{
 	private PaymentDAO paymentDao;
 
 	@Override
-	public List<PaylistViewVO> selectSent(String identNum) {
-		return paymentDao.selectSent(identNum);
+	public List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo) {
+		return paymentDao.selectSent(paysearchVo);
 	}
 
 	@Override
-	public List<PaymentviewVO> selectImsy(String identNum) {
-		return paymentDao.selectImsy(identNum);
+	public List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo) {
+		return paymentDao.selectImsy(paysearchVo);
 	}
 
 	@Override

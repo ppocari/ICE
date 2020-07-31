@@ -2,12 +2,13 @@ package com.will.ice.payment.model;
 
 import java.util.List;
 
+import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 
 public interface PaymentService {
-	List<PaylistViewVO> selectSent(String identNum);
-	List<PaymentviewVO> selectImsy(String identNum);
+	List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo);
+	List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo);
 	int insertPaymentM(String[] memList, PaylinedocVO pldVo);
 	PaymentviewVO selectDocument(int docNo);
 	List<DocumentviewVO> selectPayLine(int docNo);
