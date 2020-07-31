@@ -1,6 +1,6 @@
 package com.will.ice.workrecord.controller;
 
-import java.text.ParseException;
+import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
 import java.util.Date;
 import java.util.List;
@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.ice.workrecord.model.WorkRecordService;
 import com.will.ice.workrecord.model.WorkRecordVO;
@@ -30,40 +30,88 @@ public class WorkRecordController {
 	@Autowired WorkRecordService workService;
 	
 	@RequestMapping(value = "/workRecord.do",method = RequestMethod.GET)		
-	public String workRecord(HttpServletRequest request,Model model) {
+	public String workRecord_get(HttpServletRequest request,Model model) {
+		//사원번호,이름 셋팅
 		HttpSession session = request.getSession();
 		String userName = (String)session.getAttribute("userName");
 		String memNo = (String) session.getAttribute("identNum");
-		WorkRecordVO vo = new WorkRecordVO();
 		
-		List<WorkRecordVO>list = workService.selectWorkList(Integer.parseInt(memNo));
-		for (int i = 0; i < list.size(); i++) {
-			vo = list.get(i);
-		}
+		WorkRecordVO vo = workService.selectToday(Integer.parseInt(memNo));
 		
 		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
 		model.addAttribute("vo",vo);
-		//model.addAttribute("list",list);
 		model.addAttribute("userName",userName);
 		
 		return "workRecord/workRecord";
 	}
+	
+	/*
+	@RequestMapping(value = "/workRecord.do",method = RequestMethod.POST)		
+	public String workRecord_post(HttpServletRequest request,Model model) {
+		//사원번호,이름 셋팅
+		HttpSession session = request.getSession();
+		String userName = (String)session.getAttribute("userName");
+		String memNo = (String) session.getAttribute("identNum");
+		WorkRecordVO vo = new WorkRecordVO();
+		vo.setMemNo(memNo);
+		
+		List<WorkRecordVO>list = workService.selectWorkList(vo);
+		
+		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
+		model.addAttribute("vo",vo);
+		model.addAttribute("list",list);
+		model.addAttribute("userName",userName);
+		
+		return "workRecord/workRecord";
+	}
+	*/
 	
 	
 	//출근
 	@RequestMapping("/start.do")
 	public String start(@ModelAttribute WorkRecordVO Svo,HttpServletRequest request,
 			Model model) {
+		//사원번호 셋팅
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
 		Svo.setMemNo(memNo);
 		logger.info("출근!! , 파라미터 memNo={},Svo={}"+Svo,memNo);
 		
+		//출근
 		//현재 시간으로 출근시간 셋팅
 		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		String Sdate = sdf.format(d);
-		Svo.setCmpIn(Sdate); Svo.setCmpStatus("출근");
+		Svo.setCmpIn(Sdate); 
+		
+		//9시 셋팅
+		Date er = new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("09:00");
+		String error = sdf2.format(d);
+		
+		//CmpRegdate 현재날짜로 셋팅
+		Svo.setCmpRegdate(d);
+		
+		// cmp_month 셋팅
+		SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy-MM");
+		String date = sdf4.format(Svo.getCmpRegdate());
+		Svo.setCmpMonth(date);
+		
+		
+		//6~9시 아닌 시간에 출근시 결근
+		try {
+			d = sdf.parse(Sdate); //출근버튼 클릭
+			er = sdf2.parse(error); // 오늘날짜 9시 정각
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		} 
+		if(er.after(d)){//결근
+			Svo.setCmpStatus("결근");
+		}else {
+			Svo.setCmpStatus("출근");
+		}
+		logger.info("status={}"+Svo.getCmpStatus());
+		
 		
 		int cnt = workService.insertWork_status(Svo);
 		logger.info("출근 결과 cnt={}"+cnt);
@@ -78,13 +126,19 @@ public class WorkRecordController {
 	@RequestMapping("/end.do")
 	public String end(@ModelAttribute WorkRecordVO Evo,HttpServletRequest request,
 			Model model) {
+		//사원번호 셋팅
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
 		Evo.setMemNo(memNo);
 		logger.info("퇴근!! , 파라미터 memNo={},Evo={}"+Evo,memNo);
 		
+		// cmp_month 셋팅
+		SimpleDateFormat sdf3 = new SimpleDateFormat("MM");
+		String date = sdf3.format(Evo.getCmpRegdate());
+		Evo.setCmpMonth(date);
+		
 		//조회
-		List<WorkRecordVO>list = workService.selectWorkList(Integer.parseInt(memNo));
+		List<WorkRecordVO>list = workService.selectWorkList(Evo);
 		logger.info("조회결과 list.size={}"+list.size());
 		for (int i = 0; i < list.size(); i++) {
 			Evo = list.get(i);
@@ -92,14 +146,21 @@ public class WorkRecordController {
 		
 		//현재 시간으로 퇴근시간 셋팅
 		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
-		String Edate = sdf.format(d);
-		Evo.setCmpStatus("퇴근"); Evo.setCmpOut(Edate);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+		String Edate = sdf2.format(d);
+		Evo.setCmpOut(Edate);
+		
+		//결근시 결근으로 저장
+		if(Evo.getCmpStatus().equals("결근")) {
+			Evo.setCmpStatus("결근");
+		}else {
+			Evo.setCmpStatus("퇴근");
+		}
 		logger.info("퇴근 후 vo={}"+Evo);
+		
 		
 		int cnt = workService.updateWork(Evo);
 		logger.info("퇴근 결과 cnt={}",cnt);
-		
 		
 		
 		model.addAttribute("Sdate",Evo.getCmpIn());
@@ -109,33 +170,33 @@ public class WorkRecordController {
 		return "redirect:/workRecord/workRecord.do";
 	}
 	
+	//조회
 	@RequestMapping("/searchWork.do")
-	public String searchWork(@DateTimeFormat (pattern = "yyyy-MM-dd") Date searchInput, HttpServletRequest request
+	public String searchWork(@RequestParam String selectDate, HttpServletRequest request
 			, Model model) {
+		//사원번호 셋팅
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
 		WorkRecordVO searchVo = new WorkRecordVO();
-		logger.info("searchInput={}"+searchInput);
+		searchVo.setMemNo(memNo);
+		logger.info("selectDate={}"+selectDate);
 		
-		List<WorkRecordVO>Slist = workService.selectWorkList(Integer.parseInt(memNo));
+		// cmp_month 셋팅
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM");
+		String date = sdf2.format(searchVo.getCmpRegdate());
+		searchVo.setCmpMonth(date);
+		
+		//조회
+		List<WorkRecordVO>Slist = workService.selectWorkList(searchVo);
 		for (int i = 0; i < Slist.size(); i++) {
 			searchVo = Slist.get(i);
 		}
-		logger.info("==================================searchVo={}"+searchVo);
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		String newDate = sdf.format(searchInput);
-		String dbDate = searchVo.getCmpIn();
-		Date d = new Date();
-		try {
-			d = sdf.parse(dbDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		String dbDateFormat = sdf.format(d);
-		logger.info("===========================newDate={}"+newDate);
-		logger.info("==========================dbDateFormat={}"+dbDateFormat);
+		logger.info("=================================searchVo={}",searchVo);
+		logger.info("=================================Slist.size={}",Slist.size());
 		
-		if(!newDate.equals(dbDateFormat)) {
+		logger.info("================searchVo.getCmpMonth={}"+searchVo.getCmpMonth());
+		//조회결과 없을시
+		if(!selectDate.equals(searchVo.getCmpMonth())) {
 			String msg = "조회결과가 없습니다.";
 			String url = "/workRecord/workRecord.do";
 			
@@ -144,24 +205,38 @@ public class WorkRecordController {
 			
 			return "common/message";
 		}
+		
 		model.addAttribute("searchVo",searchVo);
 		model.addAttribute("Slist",Slist);
+		
 		return "workRecord/workRecord";
 	}
 	
 	
 	@RequestMapping("/detail.do")
 	public void detail(HttpServletRequest request,Model model) {
+		//사원번호 셋팅
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
+		WorkRecordVO Dvo = new WorkRecordVO();
+		Dvo.setMemNo(memNo);
 		logger.info("출퇴근 상세보기 memNo={}",memNo);
 		
-		List<WorkRecordVO>list = workService.selectWorkList(Integer.parseInt(memNo));
-		WorkRecordVO Dvo = new WorkRecordVO();
+		//CmpRegdate 현재날짜로 셋팅
+		Date d = new Date();
+		Dvo.setCmpRegdate(d);
+		
+		
+		// cmp_month 셋팅
+		SimpleDateFormat sdf3 = new SimpleDateFormat("MM");
+		String date = sdf3.format(Dvo.getCmpRegdate());
+		Dvo.setCmpMonth(date);
+		
+		//조회
+		List<WorkRecordVO>list = workService.selectWorkList(Dvo);
 		for (int i = 0; i < list.size(); i++) {
 			Dvo = list.get(i);
 		}
-		
 		
 		model.addAttribute("Dvo",Dvo);
 		

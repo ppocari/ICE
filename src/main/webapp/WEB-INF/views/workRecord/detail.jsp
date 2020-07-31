@@ -69,9 +69,11 @@
 			<label>출근상태 :</label>
 			<span id="model_status">${Dvo.cmpStatus}</span>
 		</div>
-		<div>			
-			<a href="#">결근 사유서 작성하기</a>
-		</div>
+		<c:if test="${Dvo.cmpStatus eq'결근'}">
+			<div>			
+				<a href="#">결근 사유서 작성하기</a>
+			</div>
+		</c:if>
 		<button id="btClose">닫기</button>
 	</div>
 </body>

@@ -23,8 +23,13 @@ public class WorkRecordDAOMybatis implements WorkRecordDAO{
 	}
 
 	@Override
-	public List<WorkRecordVO> selectWorkList(int memNo) {
-		return session.selectList(namespace+"selectWorkList",memNo);
+	public List<WorkRecordVO> selectWorkList(WorkRecordVO vo) {
+		return session.selectList(namespace+"selectWorkList",vo);
+	}
+
+	@Override
+	public WorkRecordVO selectToday(int memNo) {
+		return session.selectOne(namespace+"selectToday",memNo);
 	}
 
 	
