@@ -39,12 +39,12 @@
   <!-- Custom scripts for all pages-->
   <script src="<c:url value = "/resources/js/sb-admin-2.min.js"/>"></script>
 
- <!-- Page level plugins -->
+<%--  <!-- Page level plugins -->
   <script src="<c:url value = "/resources/vendor/chart.js/Chart.min.js"/>"></script>
 
   <!-- Page level custom scripts -->
   <script src="<c:url value = "/resources/js/demo/chart-area-demo.js"/>"></script>
-  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script> 
+  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script>  --%>
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -107,9 +107,9 @@
 				<div id="collapseNine" class="collapse"
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
+						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회 및 관리</a>
 						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
-						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
+						
 					</div>
 				</div>
 			</li>

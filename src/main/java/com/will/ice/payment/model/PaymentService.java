@@ -7,9 +7,15 @@ import com.will.ice.member.model.MemberVO;
 
 public interface PaymentService {
 	List<PaymentviewVO> selectSent(String identNum);
+	
 	int insertPaymentM(String[] memList, PaylinedocVO pldVo);
+	
 	PaymentviewVO selectDocument(int docNo);
+	
 	List<DocumentviewVO> selectPayLine(int docNo);
+	
 	int deletePayLine(int docNo);
+	
 	List<MemberVO> selectAllMem(int poscode);
+	
 }

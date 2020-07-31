@@ -53,10 +53,14 @@ values('999999', '박관리', '123', '2009-01-02','999','999' , '4000');
 
 
 update member
-set hiredate = '2020-01-13'
+set name = '장그래', hiredate = '2020-03-13', 
+			deptcode = '111', poscode = '910', salary = '2850'
 where memno = '111910';
 
---delete from member where memno = '141910'
+
+--delete from member where memno = '181910'
+
+commit;
 
 select * from companyCard;
 

@@ -72,13 +72,25 @@ public class LoginController {
 			if(memVo.getPosCode().equals("999")) {	//관리자
 				url = "/main/main_admin.do";
 				
-			}else if(memVo.getPosCode().equals("910")){	//사원
-				url = "/main/main_user.do";
-			}else if(memVo.getPosCode().equals("920")){ //경리
-				url = "/main/main_account.do";
-			}else if(Integer.parseInt(memVo.getPosCode()) > 940){	//과장 이상
-				url = "/main/main_manager.do";
+			}else {	//과장 이상, 경리, 사원
+				if(pwd.equals(memVo.getSsn1())) {
+					 
+				}
+				
 			}
+			
+			/*
+				 * else if(memVo.getPosCode().equals("910")){ //사원
+				 * if(pwd.equals(memVo.getSsn1())){ msg= memVo.getName()+
+				 * "님 입사를 축하드립니다. 비밀번호 변경을 위해 마이페이지로 이동합니다"; url = "/mypage/mypage.do"; }else {
+				 * msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다."; url =
+				 * "/main/main_user.do"; } }else if(memVo.getPosCode().equals("920")){ //경리
+				 * if(pwd.equals(memVo.getSsn1())){ msg= memVo.getName()+" "+memVo.getPosName()
+				 * + "님 로그인되었습니다."; url = "/mypage/mypage.do"; }else { url =
+				 * "/main/main_account.do"; } }else if(Integer.parseInt(memVo.getPosCode()) >
+				 * 940){ //과장 이상 if(pwd.equals(memVo.getSsn1())){ url = "/mypage/mypage.do";
+				 * }else { url = "/main/main_manager.do"; } }
+				 */
 			
 		}else if(result==MemberService.PWD_DISAGREE){
 			msg="비밀번호가 일치하지 않습니다.";			

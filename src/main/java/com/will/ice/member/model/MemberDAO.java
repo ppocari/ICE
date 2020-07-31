@@ -12,7 +12,9 @@ public interface MemberDAO {
 	
 	int registerMulti(MemberVO memberVO);
 	
+	int updateSelectMember(MemberVO memberVO);
 	
+	int deleteSelectMember(MemberVO memberVO);
 	
 	List<MemberVO> searchAllmember(String searchKeyword);
 	List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
