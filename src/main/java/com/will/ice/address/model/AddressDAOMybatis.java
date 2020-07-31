@@ -33,6 +33,43 @@ public class AddressDAOMybatis implements AddressDAO {
 	public List<DepartmentVO> selectDepartment() {
 		return sqlSession.selectList(namespaces+"selectDepartment");
 	}
+
+	@Override
+	public int insertAddress(AddressVO vo) {
+		return sqlSession.insert(namespaces+"insertAddress", vo);
+	}
+
+	@Override
+	public List<AddressGroupVO> selectAddressGroup(String memNo) {
+		return sqlSession.selectList(namespaces+"selectAddressGroup", memNo);
+	}
+
+	@Override
+	public int insertDefaultAddressGroup(String memNo) {
+		return sqlSession.insert(namespaces+"insertDefaultAddressGroup", memNo);
+	}
+
+	@Override
+	public int selectCountAddressGroup(String memNo) {
+		return sqlSession.selectOne(namespaces+"selectCountAddressGroup", memNo);
+	}
+
+	@Override
+	public AddressVO selectOneAdderss(int adNo) {
+		return sqlSession.selectOne(namespaces+"selectOneAdderss", adNo);
+	}
+
+
+	@Override
+	public int updateAddress(AddressVO adVo) {
+		return sqlSession.update(namespaces+"updateAddress", adVo);
+	}
+
+	@Override
+	public int deleteAddress(int adNo) {
+		return sqlSession.delete(namespaces+"deleteAddress", adNo);
+	}
+
 	
 	
 

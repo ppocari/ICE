@@ -75,7 +75,6 @@
 }
 
 .divForm textarea {
-	text-align: center;
 	border: 1px solid #DCDDE3;
 }
 
@@ -102,7 +101,6 @@
 #add_inputs {
 	border:none;
 	text-align: center;
-
 }
 </style>
 <section>
@@ -110,63 +108,70 @@
 		<div class="col-xl-12 ">
 			<header>
 				<h3>
-					주소록<span> > 추가하기 </span>
+					주소록<span> > 수정하기 </span>
 				</h3>
 			</header>
 			<div class="card shadow mb-4" style="height: 500px">
 				<div class="divForm">
-					<form method="post" action="<c:url value='/address/addAddress.do'/>">
+					<form method="post" action="<c:url value='/address/editAddress.do'/>">
 						<fieldset>
 							<legend>기본 정보</legend>
 							<div>
 								<label class="la_left">이름</label> 
-								<input class="etc" type="text" name="name"> 
+								<input class="etc" type="text" name="name" value="${adVo.name }"> 
 								<label class="la_right">전화번호</label> 
-								<input class="hp" type="text" name="hp1"> -  
-								<input class="hp" type="text" name="hp2"> -  
-								<input class="hp" type="text" name="hp3">
+								<input class="hp" type="text" name="hp1" value="${adVo.hp1 }"> -  
+								<input class="hp" type="text" name="hp2" value="${adVo.hp2 }"> -  
+								<input class="hp" type="text" name="hp3" value="${adVo.hp3 }">
 							</div>
 							<div>
 								<label class="la_left">이메일</label> 
-								<input class="email" type="text" name="email1"> @ 
-								<input class="email" type="text" name="email2"> 
+								<input class="email" type="text" name="email1" value="${adVo.email1 }"> @ 
+								<input class="email" type="text" name="email2" value="${adVo.email2 }"> 
 								<label class="la_right">회사명</label> 
-								<input class="etc" type="text" name="company">
+								<input class="etc" type="text" name="company" value="${adVo.company }">
 							</div>
 							<div>
 								<label class="la_left">부서</label> 
-								<input class="etc" type="text" name="deptName">
+								<input class="etc" type="text" name="deptName" value="${adVo.deptName }">
 								<label class="la_right">직책</label> 
-								<input class="etc" type="text" name="posName">
+								<input class="etc" type="text" name="posName" value="${adVo.posName }">
 							</div>
 							<div>
-								<label class="la_left">그룹 선택</label> 
+								<label class="la_left">그룹 선택</label>
 								<select name="adgNo">
+									<!-- adVo.groupName: 수정하려는 주소의 그룹 이름,
+										 adg.groupName: 해당 회원의 그룹 이름 전체 중 1개씩 -->
 									<c:forEach var="adg" items="${adgList }">
-										<option value="${adg.adgNo }">${adg.groupName }</option>
+										<option value="${adg.adgNo }" 
+											<c:if test="${adVo.groupName eq adg.groupName }">
+												selected="selected" 
+											</c:if>
+										> ${adg.groupName }</option>
 									</c:forEach>
 								</select>
+								<input type="hidden" value="${adVo.adNo }" name="adNo">
 							</div>
 
 							<legend>추가 정보</legend>
 							<div>
 								<label class="la_left">주소</label> 
-								<input class="etc" type="text" name="homeAddress">
+								<input class="etc" type="text" name="homeAddress" value="${adVo.homeAddress }">
 								<label class="la_right">홈페이지</label> 
-								<input class="etc" type="text" name="homePage">
+								<input class="etc" type="text" name="homePage" value="${adVo.homePage }">
 							</div>
 							<div>
 								<label class="la_left">메신저</label> 
-								<input class="etc" type="text" name="messenger"> 
+								<input class="etc" type="text" name="messenger" value="${adVo.messenger }"> 
 								<label class="la_right">SNS</label> 
-								<input class="etc" type="text" name="SNS">
+								<input class="etc" type="text" name="SNS" value="${adVo.SNS }">
 							</div>
 							<div>
 								<label class="la_left">메모</label><br>
-								<textarea rows="3" cols="109" name="memo"></textarea>
+								<textarea rows="3" cols="109" name="memo" >${adVo.memo }</textarea>
 							</div>
 							<div id="add_inputs">
-								<input type="submit" value="등록"> 
+								<input type="submit" value="수정"> 
 								<input type="reset"	value="취소">
 							</div>
 						</fieldset>
