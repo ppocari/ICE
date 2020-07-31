@@ -31,16 +31,15 @@
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '주문명:식권 결제',
 		    amount : 1000,
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
+		    buyer_email : 'test@naver.com',
+		    buyer_name : '테스터',
 		    buyer_tel : '010-1234-5678',
 		   
 		}, function(rsp) {
 		    if ( rsp.success ) {
-		        if ( rsp.success ) {
 		        	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 		        	jQuery.ajax({
-		        		url: "<c:url value='/spay/spay.do'/>", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+		        		url: "<c:url value='/spay/sok.do'/>", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 		        		type: 'POST',
 		        		dataType: 'json',
 		        		data: {
@@ -95,18 +94,42 @@
 					<h6 class="m-0 font-weight-bold text-primary">결제정보</h6>
 				</div>
 				<!-- Card Body -->
+				<!-- 가격설정 -->
+				<c:set var="now" value="<%=new java.util.Date()%>" />
+				<c:set var="TICPRICE" value="7000"/>
+				<c:set var="date" value="sysdate"/>
+				<c:set var="TICQUANTITY" value="1"/>
+				<c:set var="sum" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
+				<c:set var="sumPrice" value="${sVo.TICPRICE * sVo.TICQUANTITY * sale}"/>
+
+				<c:if test="${sum >= 70000}">
+					<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY*0.9}"/>
+				</c:if>
+				<c:if test="${sum < 70000}">
+					<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
+				</c:if>
+						
 				<div class="card-body">
-					<label>주문시각 : yyyy-MM-dd</label><br> 
-					<label>구매매수 :  장</label><br> 
+					<label>현재시각 : <fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></label><br> 
+					<label>구매매수 : ${sVo.TICQUANTITY }장</label><br> 
 					<label>결제수단 : Card</label><br> 
-					<label>할인 : </label><br>
+					
+					<!-- 10장이상이면 할인 -->
+					<c:if test="${sVo.TICQUANTITY >=10}">
+						<label>할인 : 10%</label><br>
+					</c:if>
+					<c:if test="${sVo.TICQUANTITY < 10}">
+						<label>할인 : 0%</label><br>
+					</c:if>
+					
 					<hr>
-					<label>구매자	: ${vo.name }</label><br>
-					<label>전화번호 : ${vo.hp1 + vo.hp2 + vo.hp3 }</label><br>
-					<label>이메일 : ${vo.email1 + vo.email2 }</label><br>
+					<label>구매자	: ${memVo.name }</label><br>
+					<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
+					<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
-					<label>결제 금액 : "결제 금액"</label><br>
+					<label>결제 금액 : <fmt:formatNumber value="${sale }" 
+        				pattern="#,###"/>원</label><br>
 					<hr>
 					<div style="text-align: center;">
 						<button onclick="requestPay()" class="btn btn-primary btn-user btn-block">결제하기</button>

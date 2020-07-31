@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class NoticeVO {
 	private int NOTI_NO; 
 	private String NOTI_TITLE;  
-	private String MEMNo; 
+	private String MEMNO; 
 	private String NOTI_CONTENT;
 	private Timestamp NOTI_REGDATE;
 	private String NOTI_FILENAME; 
@@ -16,6 +16,7 @@ public class NoticeVO {
 	private String NOTI_CATEGORY; 
 	private int NOTI_MAIN;
 	private int newImgTerm;
+	
 	public int getNOTI_NO() {
 		return NOTI_NO;
 	}
@@ -28,11 +29,11 @@ public class NoticeVO {
 	public void setNOTI_TITLE(String nOTI_TITLE) {
 		NOTI_TITLE = nOTI_TITLE;
 	}
-	public String getMEMNo() {
-		return MEMNo;
+	public String getMEMNO() {
+		return MEMNO;
 	}
-	public void setMEMNo(String mEMNo) {
-		MEMNo = mEMNo;
+	public void setMEMNO(String mEMNO) {
+		MEMNO = mEMNO;
 	}
 	public String getNOTI_CONTENT() {
 		return NOTI_CONTENT;
@@ -96,7 +97,7 @@ public class NoticeVO {
 	}
 	@Override
 	public String toString() {
-		return "NoticeVO [NOTI_NO=" + NOTI_NO + ", NOTI_TITLE=" + NOTI_TITLE + ", MEMNo=" + MEMNo + ", NOTI_CONTENT="
+		return "NoticeVO [NOTI_NO=" + NOTI_NO + ", NOTI_TITLE=" + NOTI_TITLE + ", MEMNO=" + MEMNO + ", NOTI_CONTENT="
 				+ NOTI_CONTENT + ", NOTI_REGDATE=" + NOTI_REGDATE + ", NOTI_FILENAME=" + NOTI_FILENAME
 				+ ", NOTI_FILESIZE=" + NOTI_FILESIZE + ", NOTI_ORFILENAME=" + NOTI_ORFILENAME + ", NOTI_DOWNCOUNT="
 				+ NOTI_DOWNCOUNT + ", NOTI_READCOUNT=" + NOTI_READCOUNT + ", NOTI_CATEGORY=" + NOTI_CATEGORY

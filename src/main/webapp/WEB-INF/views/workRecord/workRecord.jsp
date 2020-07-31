@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
 	
 	/*top*/
@@ -27,24 +28,21 @@
 	}
 	
 	
-	
 	/*SearchForm*/
 	form#workSearchFrm {
-	    width: 75%;
+	    width: 80%;
 	}
 	
 	#btSearch{
 		float: right;
-		width: 7%;
+		width: 10%;
     	margin-right: 3%;
 	}	
 	
 	span#spanDate {
-	    margin-right: 10%;
     	margin-top: 1%;
     	margin-left: 55%;
 	}
-	
 	
 	
 	/*table*/
@@ -59,9 +57,9 @@
 	
 </style>
 <link type="text/css" href="<c:url value='/resources/css/sb-admin-2.min.css'/>">
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
 	$(function() {
+		var choiceDate;
 		
 		$("#btDetail").click(function() {
 			event.preventDefault();
@@ -69,13 +67,28 @@
 		'width=600,height=500,left=0,top=0,location=yes,resizable=yes');
 		});
 		
-		$("#workSearchFrm").submit(function() {
-			if($("input[name=searchInput]").val() == ""){
+		
+		$("#selectDate").datepicker({
+	         dateFormat:'yy-mm',
+	            changeYear:true,
+	            changeMonth:true,
+	            dayNamesMin:['일','월','화','수','목','금','토'],
+	            monthNamesShort: ['1월', '2월', '3월', '4월', '5월',
+	            	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	      });
+		
+		$("form[name=workSearchFrm]").submit(function(){
+			if($("#selectDate").val() == ""){
 				event.preventDefault();
-				$('#searchInput').focus();
-				alert("날짜를 입력해주세요!");
+				$('#selectDate').focus();
+				alert("날짜를 선택해주세요!");
 			}
+			var choiceDate = $("#selectDate").val();
+			$(this).attr("action","searchWork.do?selectDate="+choiceDate);
+			
 		});
+		
+		
 	});//doc
 	
 	function start() {
@@ -102,79 +115,117 @@
 	<div class="row">
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4" style="height: 300px">
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h5 class="m-0 font-weight-bold text-primary">근태관리 조회</h5>
-					<form id="workSearchFrm" method="post"
-						action="<c:url value='/workRecord/searchWork.do'/>">
-						<span id="spanDate">
-							<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
-							<label>근무일자</label>&nbsp;&nbsp;&nbsp;
-							<input type="date" name="searchInput" id="searchInput">
-						</span>
-						<button id="btSearch" class="btn btn-primary">조회</button>
-					</form>
+					<h5 class="m-0 font-weight-bold text-primary">출퇴근</h5>
+					<!-- 출퇴근 등록 -->
+					<button class="btn btn-primary" id="btStart" onclick="start()">출근</button>
+					<button class="btn btn-primary" id="btEnd" onclick="end()">퇴근</button>
+					
 				</div>
 				<!-- Card Header - Dropdown -->
-				<form name="workFrm" method="post"
-					action="<c:url value='/workRecord/workRecord.do'/>">
-					<table class="table table-hover">
-						<!-- 출퇴근 찍을 화면 -->
-						<tr>
-							<th>출근시간</th>
-							<th>퇴근시간</th>
-							<th>근태상태</th>
-							<th></th>
+				<table class="table table-hover">
+					<!-- 출퇴근 찍을 화면 -->
+					<tr>
+						<th>현재시간</th>
+						<th>출근시간</th>
+						<th>퇴근시간</th>
+						<th>근무상태</th>
+						<th>월 조회test</th>
+						<th></th>
+					</tr>
+					<c:if test="${empty vo}">
+						<tr id="workList">
+							<td>출근 전입니다</td>
 						</tr>
-						<c:if test="${!empty vo}">
-							<tr id="workList">
-								<td id="start">${vo.cmpIn}</td>
-								<td id="end">${vo.cmpOut}</td>
-								<td id="status">${vo.cmpStatus}</td>
-								<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
-							</tr>
-						</c:if>
-						
-						<!-- 출퇴근 기록 없을시 -->
-						<%-- 
-						<c:if test="${empty searchVo}">
-							<tr>
-								<p>출퇴근 기록이 없습니다.</p>
-							</tr>
-						</c:if> 
-						 --%>
-						<!-- 출퇴근 기록 있을시 -->
-						<c:if test="${!empty searchVo}">
-							<c:forEach begin="1" end="${Slist.size() }">
-								<tr id="workList">
-									<td id="start">${searchVo.cmpIn}</td>
-									<td id="end">${searchVo.cmpOut}</td>
-									<td id="status">${searchVo.cmpStatus}</td>
-									<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
-								</tr>
-							</c:forEach>
-						</c:if>
-						
-					</table>
-				</form>
-				<c:if test="${!empty vo}">
-				<!-- 출퇴근 등록 -->
-				<div id="divName">
-					<c:if test="${empty vo.cmpIn}">
-						<button class="btn btn-primary" id="btStart" onclick="start()">출근</button>
 					</c:if>
-					<c:if test="${empty vo.cmpOut}">
-						<button class="btn btn-primary" id="btEnd" onclick="end()">퇴근</button>
+					
+					<c:if test="${!empty vo}">
+						<tr id="workList">
+							<fmt:formatDate value="${vo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
+							<td id="regdate">${regdate}</td>
+							<td id="start">${vo.cmpIn}</td>
+							<td id="end">${vo.cmpOut}</td>
+							<td id="status">${vo.cmpStatus}</td>
+							<td id="status">${vo.cmpMonth}</td>
+							<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
+						</tr>
 					</c:if>
-					<c:if test="${!empty vo.cmpIn}">
-					</c:if>
-					<c:if test="${!empty vo.cmpOut}">
-					</c:if>
-				</div>
-				</c:if>
+				</table>
+				
 			</div>
 		</div>
+		<div class="col-xl-12 " >
+			<div class="card shadow mb-4" style="height: 300px">
+				<!-- 근태관리 조회 -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">출퇴근 내역</h5>
+					<!-- 출퇴근 등록 -->
+					<form action="//search.do">
+						<input type="text" >	<!-- 여기에 달력 2020-07, 2020-06 하는거 -->
+						<button type="button">조회하기</button> <!-- 버튼 누르면 jquery로 위에 있는 text의 val 읽어서 조회 -->
+					</form>
+	
+				</div>
+				<!-- Card Header - Dropdown -->
+				<table class="table table-hover">
+					<!-- 출퇴근 찍을 화면 -->
+					<tr>
+						<th>현재시간</th>
+						<th>출근시간</th>
+						<th>퇴근시간</th>
+						<th>근무상태</th>
+						<th>월 조회test</th>
+						<th></th>
+					</tr>
+					<!-- db에서 조회해서 foreach -->
+					<!-- list<vo> 형태로 넘어 올텐데 c:foreach전에 c:if로 empty 일때 아닐때 구분  -->
+				</table>
+				
+			</div>
+		</div>
+	</div>	
+</div>
+
+
+<c:if test="${!empty searchVo.cmpStatus}">
+<!-- Area Chart -->
+<div class="col-xl-12 " >
+	<div class="card shadow mb-4" style="height: 500px">
+		<!-- 근태관리 조회 -->
+		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+			<h5 class="m-0 font-weight-bold text-primary">근태관리 조회</h5>
+			<form name="workSearchFrm" id="workSearchFrm" method="post"
+				action="<c:url value='/workRecord/searchWork.do'/>">
+				<span id="spanDate">
+					<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
+					<label>근무일자</label>&nbsp;&nbsp;&nbsp;
+					<input id="selectDate"></input>
+				</span>
+				<input type="submit" id="btSearch" value="조회" class="btn btn-primary">
+			</form>
+		</div>
+		<!-- Card Header - Dropdown -->
+		<table class="table table-hover">
+			<!-- 출퇴근 조회 -->
+			<c:if test="${!empty searchVo}">
+				<c:forEach var="Svo" items="${Slist}">
+					<tr>
+						<fmt:formatDate value="${searchVo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
+						<td id="regdate">${regdate}</td>
+						<td id="start">${searchVo.cmpIn}</td>
+						<td id="end">${searchVo.cmpOut}</td>
+						<td id="status">${searchVo.cmpStatus}</td>
+						<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
 	</div>
 </div>
+</c:if>
+
+
+
 <%@include file="../inc/bottom.jsp"%>

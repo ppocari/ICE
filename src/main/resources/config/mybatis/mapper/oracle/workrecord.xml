@@ -4,21 +4,29 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.workrecord">
 	<insert id="insertWork" parameterType="WorkRecordVO">
-		<selectKey keyProperty="cmtNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="cmpNo" resultType="int" order="BEFORE">
 			select workRecord_seq.nextval from dual
 		</selectKey>
-		insert into workRecord(cmt_no,memNo,cmp_status,cmp_in)
-		values(#{cmtNo},#{memNo},#{cmpStatus},#{cmpIn})
+		insert into workRecord(cmp_no,memNo,cmp_status,cmp_in,cmp_month)
+		values(#{cmpNo},#{memNo},#{cmpStatus},#{cmpIn},#{cmpMonth})
 	</insert>
 	
-	<select id="selectWorkList" resultType="WorkRecordVO" parameterType="int">
-		select * from workRecord where memno=#{memNo}
+	<select id="selectWorkList" resultType="WorkRecordVO" parameterType="WorkRecordVO">
+		select * from workRecord 
+		where memNo=#{memNo} and cmp_month=#{cmpMonth}
+		order by cmp_regdate desc
 	</select>
 	
 	<update id="updateWork" parameterType="WorkRecordVO">
 		update workRecord set cmp_out=#{cmpOut}, cmp_status=#{cmpStatus}
-		where cmt_no=#{cmtNo}
+		where cmp_no=#{cmpNo} 
 	</update>
+	
+	<select id="selectToday" resultType="WorkRecordVO" parameterType="String">
+		select * from workRecord 
+        where memno=#{memNo} and cmp_in is not null
+	</select>
+	
 </mapper>
 
 

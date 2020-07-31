@@ -69,6 +69,16 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMemberList(dateSearchVo);
 	}
 
+	@Override
+	public int updateSelectMember(MemberVO memberVO) {
+		return memberDao.updateSelectMember(memberVO);
+	}
+
+	@Override
+	public int deleteSelectMember(MemberVO memberVO) {
+		return memberDao.deleteSelectMember(memberVO);
+	}
+
 	
 
 	
