@@ -27,6 +27,8 @@ public class WorkRecordController {
 	private static final Logger logger
 		= LoggerFactory.getLogger(WorkRecordController.class);
 	
+	
+	
 	@Autowired WorkRecordService workService;
 	
 	@RequestMapping(value = "/workRecord.do",method = RequestMethod.GET)		
@@ -36,7 +38,17 @@ public class WorkRecordController {
 		String userName = (String)session.getAttribute("userName");
 		String memNo = (String) session.getAttribute("identNum");
 		
-		WorkRecordVO vo = workService.selectToday(Integer.parseInt(memNo));
+		WorkRecordVO vo = workService.selectToday(memNo);
+		/*
+		 <select id="selectToday" resultType="WorkRecordVO" parameterType="String">
+		select * from workRecord 
+        where memno=#{memNo} and cmp_out is not null
+		</select>
+		  
+		  내 포스트잇 왜 무시해 ....
+		  
+		 
+		 */
 		
 		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
 		model.addAttribute("vo",vo);
@@ -92,6 +104,13 @@ public class WorkRecordController {
 		//CmpRegdate 현재날짜로 셋팅
 		Svo.setCmpRegdate(d);
 		
+		/*
+		 * 
+		 * cmp_regdate yyyy-mm-dd 형식으로 저장으로 바꿔줘....
+		 * 
+		 * 그리고 date랑 sdf를 너무 많이 써서 헷갈리니까  맨위에 private 밑에다가 모아두고 가져다가 쓰는걸로 바꿨으면 좋겠어
+		 */
+		
 		// cmp_month 셋팅
 		SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy-MM");
 		String date = sdf4.format(Svo.getCmpRegdate());
@@ -130,19 +149,21 @@ public class WorkRecordController {
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
 		Evo.setMemNo(memNo);
-		logger.info("퇴근!! , 파라미터 memNo={},Evo={}"+Evo,memNo);
+		logger.info("퇴근!! , 파라미터 memNo={}, Evo={}", memNo, Evo);
 		
 		// cmp_month 셋팅
 		SimpleDateFormat sdf3 = new SimpleDateFormat("MM");
 		String date = sdf3.format(Evo.getCmpRegdate());
 		Evo.setCmpMonth(date);
 		
+		/* 조회 이거 영역 나누기로 했잖아... 당신 내말 이해 못했지....
 		//조회
 		List<WorkRecordVO>list = workService.selectWorkList(Evo);
 		logger.info("조회결과 list.size={}"+list.size());
 		for (int i = 0; i < list.size(); i++) {
 			Evo = list.get(i);
 		}
+		*/
 		
 		//현재 시간으로 퇴근시간 셋팅
 		Date d = new Date();
@@ -158,6 +179,27 @@ public class WorkRecordController {
 		}
 		logger.info("퇴근 후 vo={}"+Evo);
 		
+		
+/**
+ 	<update id="updateWork" parameterType="WorkRecordVO">
+		update workRecord 
+		set cmp_out=#{cmpOut}, cmp_status=#{cmpStatus}
+		where memno=#{memNo} 
+	</update>
+	
+	cmp_status 이거를 출근 퇴근 , 결근 , 이걸로 상태 표시 하기에는 시간 계산으로 판단 할 수 없잖아
+	cmp_status 는 시간 계산 할걸로 바꿩 제발
+	18:00 - 9:00 -> 9시간
+	그리고 나중에 조회 에서 숫자를 불러서 거기서  
+	if( (cmp_status-1, 점심시간 제외) > 8){
+		야근
+	}else if ((cmp_status-1, 점심시간 제외) < 8){
+		이상(반차)
+		관리자에게 결재를 보낼 수 있도록 결재하기로 이동할 수 있는 버튼 활성화
+	}else{
+		정상(??출근??)
+	}
+ */
 		
 		int cnt = workService.updateWork(Evo);
 		logger.info("퇴근 결과 cnt={}",cnt);

@@ -34,7 +34,7 @@ public class WorkRecordServiceImpl implements WorkRecordService{
 	}
 
 	@Override
-	public WorkRecordVO selectToday(int memNo) {
+	public WorkRecordVO selectToday(String memNo) {
 		return workdao.selectToday(memNo);
 	}
 	
