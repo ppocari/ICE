@@ -1,4 +1,4 @@
-package com.will.ice.note.controller;
+package com.will.ice.message.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/note")
-public class NoteController {
+@RequestMapping("/message")
+public class MessageController {
 
 	private static final Logger logger 
-		= LoggerFactory.getLogger(NoteController.class);
+		= LoggerFactory.getLogger(MessageController.class);
 	
 	
-	@RequestMapping("/write.do")
-	public void notice() {
+	@RequestMapping("/messageWrite.do")
+	public void messageWrite() {
 		logger.info("쪽지보내기 실행");
 	}
 	
 	
-	@RequestMapping("/contact.do")
-	public void contact_get(@RequestParam String memNo) {
+	@RequestMapping("/messageContact.do")
+	public void messageContact(@RequestParam String memNo) {
 		logger.info("연락처 실행");
 		
 		
 	}
 	
-	@RequestMapping("/noteList.do")
-	public void noteList() {
+	@RequestMapping("/messageList.do")
+	public void messageList() {
 		logger.info("쪽지함 실행");
 	}
 	

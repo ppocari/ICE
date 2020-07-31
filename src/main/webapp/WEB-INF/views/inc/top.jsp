@@ -495,7 +495,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="<c:url value='/note/noteList.do'/>">Read More Messages</a>
+									href="<c:url value='/message/messageList.do'/>">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>

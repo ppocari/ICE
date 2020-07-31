@@ -54,7 +54,7 @@
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
+				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">
 					
 					<!-- 검색기능 -->
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -95,7 +95,7 @@
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">삭제</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">보관</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">답장</button>
-						<a href="<c:url value='/note/write.do'/>">
+						<a href="<c:url value='/message/messageWrite.do'/>">
 							<div>
 								<button type="button"  style="float: right;" class="btn btn-info"
 								 >쪽지작성</button>
