@@ -13,17 +13,6 @@
 			$(this).removeClass("highlight");
 		});
 		
-		/* 등록누르면 toggle */
-		$('#btAdd').click(function(){
-			$('#addOption').toggleClass('addOption_hidden');
-		});
-		
-		/* 조직도에서 추가 */
-		$('#addFromOrgan').click(function(){
-			window.open('<c:url value="/address/organizeChart.do"/>', 'organ', 
-					'width=500, height=400, left=0, top=0, location=yes, resizable=yes');
-		});
-		
 		/* 수정 */
 		$('#btEdit').click(function(){
 			location.href="<c:url value='/address/editAddress.do'/>";
@@ -140,7 +129,7 @@
 				주소록<span> > 내 주소록 </span>
 			</h3>
 		</header>
-		<div class="card shadow mb-4" style="height: 500px">
+		<div class="card shadow mb-4">
 			<article>
 				<form name="addressList" method="post" action="">
 				<div id="addressTableDiv">
@@ -219,10 +208,6 @@
 					<input type="button" id="btDup" value="중복 연락처 정리하기">
 					<input type="button" id="btTrash" value="휴지통">
 					<br>
-					<div id="addOption" class="addOption_hidden">
-						<a href="#" id="addFromOrgan">>조직도에서 추가</a><br>
-						<a href="<c:url value='/address/addAddress.do'/>">>직접추가</a>
-					</div>
 				</div>
 				</form>
 			</article>
