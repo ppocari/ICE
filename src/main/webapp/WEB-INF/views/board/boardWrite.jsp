@@ -33,7 +33,7 @@
 $(function(){
 	$('#nList').click(function(){
 		location.href
-			= "<c:url value='/notice/noticeList.do'/>"
+			= "<c:url value='/board/boardList.do'/>"
 	});
 	
 	$('form[name=frmWrite]').submit(function(){
@@ -72,14 +72,14 @@ $(function(){
 			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"  
-				action="<c:url value='/companyBoard/companyBoardWrite.do'/> ">
+				action="<c:url value='/board/boardWrite.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<tr>
 							<th>
-								<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+								<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
 							</th>
 							<td>
-								<a href="<c:url value='/companyBoard/companyBoardList.do'/>">
+								<a href="<c:url value='/board/boardList.do'/>">
 									<div>
 										<button type="button" class="btn btn-info"
 										 >사내게시판 목록</button>

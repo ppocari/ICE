@@ -4,12 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
-	function popup(){
-		var url="<c:url value='/note/contact.do?memNo=${sessionScope.identNum}' />";
-		var name="주소록";
-		var option="width=500, height=500, top=100, left=200, location=no"
-		window.open(url,name,option);
-	}
+
+function popup(){
+	var url="<c:url value='/message/messageContact.do?memNo=${sessionScope.identNum}' />";
+	var name="주소록";
+	var option="width=500, height=500, top=100, left=200, location=no"
+	window.open(url,name,option);
+}
+
 
 </script>
 
