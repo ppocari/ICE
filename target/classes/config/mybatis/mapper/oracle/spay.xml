@@ -11,16 +11,28 @@
 		values(#{TICNO}, #{MEMNO}, #{TICQUANTITY}, #{TICPRICE})
 	</insert>
 	
-	<select id="selectSpayView" parameterType="int"
+	<select id="selectSpayView" parameterType="dateSearchVo"
 		resultType="map">
-		select * from SpayView
-		where memno = #{MemNo}
-	</select>
-	
-	<select id="searchday" resultType="SpayVo">
-		select * from SpayView
-		<![CDATA[
-			where sysdate<=TICREGDATE]]>
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		        select * from SpayViewVO
+				<where> 
+					<if test="MemNo!=null and MemNo!=''">
+						MemNo=#{MemNo}
+					</if>				
+					and TICREGDATE>=#{startDay}
+					<![CDATA[
+					and TICREGDATE < to_date(#{endDay})+1 ]]>
+				</where>
+				order by TICNO desc
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
 	
 	<select id="selectDay" parameterType="dateSearchVo" 
@@ -28,12 +40,13 @@
 		select count(*) from SpayView
 		<where> 
 			<if test="MemNo!=null and MemNo!=''">
-				memno=#{MemNo}
+				MemNo=#{MemNo}
 			</if>				
 			and ticRegDate>=#{startDay}
 			<![CDATA[
 			and ticRegDate < to_date(#{endDay})+1 ]]>
 		</where>
+		order by ticno desc
 	</select>
 		
 </mapper>

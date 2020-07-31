@@ -95,36 +95,40 @@
 				</div>
 				<!-- Card Body -->
 				<!-- 가격설정 -->
-				<c:set var="sale" value="0.1"/>
+				<c:set var="now" value="<%=new java.util.Date()%>" />
 				<c:set var="TICPRICE" value="7000"/>
+				<c:set var="date" value="sysdate"/>
 				<c:set var="TICQUANTITY" value="1"/>
 				<c:set var="sum" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
 				<c:set var="sumPrice" value="${sVo.TICPRICE * sVo.TICQUANTITY * sale}"/>
+
+				<c:if test="${sum >= 70000}">
+					<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY*0.9}"/>
+				</c:if>
+				<c:if test="${sum < 70000}">
+					<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
+				</c:if>
 						
 				<div class="card-body">
-					<fmt:parseDate value="${sVo.TICREGDATE }"
-					    pattern = "yyyy-MM-dd HH:mm:ss" var = "TICREGDATE"/>
-					<label>주문시각 : <fmt:formatDate value="${sVo.TICREGDATE }"/></label><br> 
+					<label>현재시각 : <fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></label><br> 
 					<label>구매매수 : ${sVo.TICQUANTITY }장</label><br> 
 					<label>결제수단 : Card</label><br> 
 					
 					<!-- 10장이상이면 할인 -->
 					<c:if test="${sVo.TICQUANTITY >=10}">
 						<label>할인 : 10%</label><br>
-						<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}-${sVo.TICPRICE * sVo.TICQUANTITY * 0.1}"/>
 					</c:if>
 					<c:if test="${sVo.TICQUANTITY < 10}">
 						<label>할인 : 0%</label><br>
-						<c:set var="sale" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
 					</c:if>
 					
 					<hr>
 					<label>구매자	: ${memVo.name }</label><br>
-					<label>전화번호 : ${memVo.hp1 + memVo.hp2 + memVo.hp3 }</label><br>
-					<label>이메일 : ${memVo.email1 + memVo.email2 }</label><br>
+					<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
+					<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
-					<label>결제 금액 : <fmt:formatNumber value="${sum }" 
+					<label>결제 금액 : <fmt:formatNumber value="${sale }" 
         				pattern="#,###"/>원</label><br>
 					<hr>
 					<div style="text-align: center;">
