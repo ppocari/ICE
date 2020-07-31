@@ -95,7 +95,9 @@
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">삭제</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">보관</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">답장</button>
-						<a href="<c:url value='/notice/noticeWrite.do'/>">
+
+						<a href="<c:url value='/note/write.do'/>">
+
 							<div>
 								<button type="button"  style="float: right;" class="btn btn-info"
 								 >쪽지작성</button>

@@ -2,14 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../inc/top.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript"
-	src="<c:url value='/resources/se2/js/jquery-3.5.1.min.js'/>"></script>
+
 <script type="text/javascript">
+	function popup(){
+		var url="<c:url value='/note/contact.do?memNo=${sessionScope.identNum}' />";
+		var name="주소록";
+		var option="width=500, height=500, top=100, left=200, location=no"
+		window.open(url,name,option);
+	}
 
 </script>
-<style type="text/css">
 
-</style>
 
 
 <div class="container-fluid">
@@ -35,10 +38,12 @@
 			</span>
 			<span>
 				<span id="receive">
-					<input type="text" id="receiver" 
-						style="ime-mode:disabled; width:300px;, height:150px;" >
+
+					<input type="text" id="receiver" name="receiver" class="form-control"
+						style="ime-mode:disabled; font-size:40%; width:300px;, height:150px;" >
 				</span>
-				<a href="<c:url value='/note/contact.do'/>">
+				<a href="javascript:popup()" >
+
 					<button>주소록</button>
 				</a>
 			</span>
@@ -47,6 +52,7 @@
 
 	<div class="writing_area" style="height:620px ">
 		<textarea id="contents" rows="5" cols="55" title="쪽지 내용을 입력해 주세요."
+
 			style="font-size:12px; width:410px; height:250px;">쪽지 내용을 입력해 주세요.</textarea>
 	</div>
 </div>

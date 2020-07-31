@@ -15,11 +15,10 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 #paylist{margin-top: 20px;}
 #payTable{width:100%;text-align: center;}
 #payTable thead tr{background-color: gray;color:white;}
-#div3 button,#div3 select{margin-left: 10px;}
-#div3{position: relative;left: 73%;top: -40px;}
 #upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 #upperDiv p{padding-top: 5px;padding-left: 5px;}
 #wholeDiv{padding-left: 20px;padding-right: 20px;}
+#paylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
 .docNoInfo{cursor: pointer;}
 </style>
 <script type="text/javascript">
@@ -38,17 +37,14 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 		$("#datetimepicker2").on("change.datetimepicker", function(e) {
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
-		
-		/* $('#writeFrm').submit(function(){
-			window.open('','viewer','width=1000,height=900,left=0,top=0,location=yes,resizable=no');
-			this.action='<c:url value="/payment/writePay.do"/>';
-			this.method='POST';
-			this.target='viewer';
-		}); */
 	});
 </script>
-<div id="wholeDiv">
-	<div id="upperDiv">
+<div class="row" style="padding-left: 15px;">
+	<!-- Area Chart -->
+	<div class="col-xl-12 ">
+	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 10px 0px 10px 0px;">
+	<div id="wholeDiv">
+		<div id="upperDiv">
 		<p>임시 보관함</p>
 	</div>
 	<div class="form-group" id="searchDateDiv">
@@ -108,24 +104,29 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 				<th width="10%;">첨부</th>
 			</tr>
 		</thead>
-		<!-- 반복 시작 -->
 		<tbody>
-			<tr>
-				<td>
-					<a href="<c:url value='/payment/write/docView.do'/>">
-						ED20200721001
-					</a>
-				</td>
-				<td>품의서</td>
-				<td>2020-07-10</td>
-				<td>정은경</td>
-				<td>품의서기안</td>
-				<td>Y</td>
-			</tr>
+		<!-- 반복 시작 -->
+				<c:forEach var="vo" items="${list }">
+					<tr>
+						<td>
+							<a class="docNoInfo" onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+								${vo.docNo }
+							</a>
+						</td>
+						<td>${vo.typeName }</td>
+						<td>${vo.writedate }</td>
+						<td>${vo.name }</td>
+						<td>${vo.title }</td>
+						<td>${vo.hasFile }</td>
+					</tr>
+				</c:forEach>
+			<!-- 반복 끝 -->
 		</tbody>
-		<!-- 반복 끝 -->
 	</table>
 </div>
 </div><br>
+</div>
+</div>
+</div>
 
 <%@include file="../../inc/bottom.jsp"%>
