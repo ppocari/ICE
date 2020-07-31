@@ -19,15 +19,15 @@
 
 <!-- Custom fonts for this template-->
 <link
-	href="<c:url value="/resources/vendor/fontawesome-free/css/all.min.css"/>"
-	rel="stylesheet" type="text/css">
+   href="<c:url value="/resources/vendor/fontawesome-free/css/all.min.css"/>"
+   rel="stylesheet" type="text/css">
 <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+   rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="<c:url value="/resources/css/sb-admin-2.min.css"/>"
-	rel="stylesheet">
+   rel="stylesheet">
 <!-- Bootstrap core JavaScript-->
  
   <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
@@ -54,6 +54,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+
 
 
 
