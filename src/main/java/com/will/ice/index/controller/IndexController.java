@@ -10,7 +10,12 @@ public class IndexController {
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
 	@RequestMapping("/index.do")
-	public void index_get() {
-		logger.info("되나?");
+	public void index() {
+		logger.info("index");
+	}
+	
+	@RequestMapping("/main.do")
+	public void main() {
+		logger.info("main");
 	}
 }

@@ -26,4 +26,8 @@
 	<select id="getcontent" parameterType="int" resultType="docformVo">
 		select * from docform where formNo=#{formNo}
 	</select>
+	
+	<delete id="deleteForm" parameterType="docformVo">
+		delete from docform where formNo=#{formNo}
+	</delete>
 </mapper>

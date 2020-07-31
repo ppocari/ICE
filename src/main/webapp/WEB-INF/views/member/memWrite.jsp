@@ -11,10 +11,15 @@
 .table .registerTable {
 	width: 110px;
 	border: 1px solid white;
+	
 }
-.register_text {
-	width: 120px;
+
+.register_text{
+	width:120px;
 	float: left;
+}
+.search input{
+	width:120px;
 }
 </style>
 <script type="text/javascript">

@@ -21,10 +21,16 @@
 		values(#{payNo},#{docNo},#{getmemNo})
 	</update>
 	
-	<select id="selectAll" resultType="paymentviewVo">
+	<delete id="deletePayLine" parameterType="int">
+		delete from paymentline
+		where docNo=#{docNo}
+	</delete>
+	
+	<select id="selectSent" parameterType="String" resultType="paymentviewVo">
 		select * from paymentView
 		<![CDATA[
-			where sysdate<=expirydate]]>
+			where sysdate<=expirydate
+			and memNo=#{identNum}]]>
 	</select>
 	
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
@@ -39,8 +45,7 @@
 	</select>
 	
 	<select id="selectPayLine" parameterType="int" resultType="documentviewVo">
-		select * from docView
-		where docNo=#{docNo}
+		select * from docview where docNo=#{docNo}
 	</select>
 	
 </mapper>
