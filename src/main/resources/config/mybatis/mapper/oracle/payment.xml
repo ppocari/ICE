@@ -8,9 +8,19 @@
 			select doc_seq.nextval from dual
 		</selectKey>
 		insert into payment(docNo,memNo,formNo,typeNo,title,content
-			,progress,writedate,keep,expirydate)
+			,progress,writedate,keep,expirydate,imsy)
 		values(#{docNo},#{writememNo},#{formNo},#{typeNo},#{title},#{content},#{progress},default,#{keep},
-			add_months(sysdate,#{keep}))
+			add_months(sysdate,#{keep}),#{imsy})
+	</insert>
+	
+	<insert id="insertOnePay" parameterType="paylinedocVo">
+		<selectKey keyProperty="docNo" resultType="int" order="BEFORE">
+			select doc_seq.nextval from dual
+		</selectKey>
+		insert into payment(docNo,memNo,formNo,typeNo,title,content
+			,progress,writedate,keep,expirydate,imsy)
+		values(#{docNo},#{writememNo},#{formNo},#{typeNo},#{title},#{content},#{progress},default,#{keep},
+			add_months(sysdate,#{keep}),#{imsy})
 	</insert>
 	
 	<update id="insertPayline" parameterType="paylinedocVo">
@@ -21,16 +31,44 @@
 		values(#{payNo},#{docNo},#{getmemNo})
 	</update>
 	
-	<select id="selectAll" resultType="paymentviewVo">
-		select * from paymentView
+	<update id="deletePayLine" parameterType="int">
+		update paylistView
+		set gmemNo=NULL
+		where docNo=#{docNo}
+	</update>
+	
+	<update id="updateImsy" parameterType="int">
+		update payment
+		set imsy='Y'
+		where docNo=#{docNo}
+	</update>
+	
+	<select id="isRead" parameterType="int" resultType="paylineVo">
+		select read from paymentline where docNo=#{docNo}
+	</select>
+	
+	<select id="selectSent" parameterType="String" resultType="paylistViewVo">
+		select distinct docNo,memNo,formNo,typeNo,title,hasFile,
+			writedate,expirydate,typeName,name,imsy from paylistView
 		<![CDATA[
-			where sysdate<=expirydate]]>
+			where sysdate<=expirydate
+			and memNo=#{identNum}
+			and imsy='N']]>
+	</select>
+
+	<select id="selectImsy" parameterType="String" resultType="paymentViewVo">
+		select * from paymentview
+		<![CDATA[
+			where sysdate<=expirydate
+			and memNo=#{identNum}
+			and imsy='Y']]>
 	</select>
 	
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
 		select * from mypage_mem
 		<![CDATA[
-			where poscode>#{poscode}]]>
+			where poscode>#{poscode}
+			and poscode!='999']]>
 	</select>
 	
 	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">
@@ -39,8 +77,7 @@
 	</select>
 	
 	<select id="selectPayLine" parameterType="int" resultType="documentviewVo">
-		select * from docView
-		where docNo=#{docNo}
+		select * from docview where docNo=#{docNo}
 	</select>
 	
 </mapper>

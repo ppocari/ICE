@@ -13,7 +13,7 @@ public class NoticeDAOMybatis implements NoticeDAO{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	private String namespace="config.mybatis.mapper.oracle.notice.";
+	private String namespace="com.mybatis.mapper.oracle.notice.";
 
 	@Override
 	public int insertNotice(NoticeVO vo) {

@@ -1,7 +1,6 @@
 package com.will.ice.member.model;
 
 public class MemberVO {
-	private int no;
 	private String memNo;
 	private String name;
 	private String pwd;
@@ -10,7 +9,7 @@ public class MemberVO {
 	private String hp3;
 	private String email1;
 	private String email2;
-	private String ssn1;
+	private String ssn1;	//주민번호 앞자리
 	private String ssn2;
 	private String zipcode;
 	private String addr;
@@ -28,13 +27,6 @@ public class MemberVO {
 	private String deptName;
 	
 	
-	
-	public int getNo() {
-		return no;
-	}
-	public void setNo(int no) {
-		this.no = no;
-	}
 	public String getMemNo() {
 		return memNo;
 	}
@@ -181,7 +173,7 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [no=" + no + ", memNo=" + memNo + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2="
+		return "MemberVO [ memNo=" + memNo + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2="
 				+ hp2 + ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", ssn1=" + ssn1 + ", ssn2="
 				+ ssn2 + ", zipcode=" + zipcode + ", addr=" + addr + ", addrDetail=" + addrDetail + ", salary=" + salary
 				+ ", hiredate=" + hiredate + ", firedate=" + firedate + ", gender=" + gender + ", profileURL="

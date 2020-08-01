@@ -5,6 +5,8 @@ select * from position;
 select * from department;
 
 
+select * from workRecord;
+
 create view mypage_mem
 as
 select m.*,  p.posname , d.DEPTNAME
@@ -23,8 +25,10 @@ select * from mypage_mem;
   drop table position;
   drop table department;
   drop table member;
-  */
   
+  delete from member;
+  */
+  desc department;
  
   
   commit;
@@ -44,15 +48,19 @@ values('141930', '김과장', '123', '141','930');
 insert into member(memNo, name, hp1, hp2, hp3, pwd, deptcode, poscode)
 values('141910', '둘리', '010', '1234','5678','123', '141','930');
 
-insert into member(memNo, name, pwd, deptcode, poscode)
-values('999999', '박관리', '123', '999','999');
+insert into member(memNo, name, pwd, hiredate, deptcode, poscode, salary)
+values('999999', '박관리', '123', '2009-01-02','999','999' , '4000');
 
 
 update member
-set hiredate = '2020-01-13'
+set name = '장그래', hiredate = '2020-03-13', 
+			deptcode = '111', poscode = '910', salary = '2850'
 where memno = '111910';
 
---delete from member where memno = '141910'
+
+--delete from member where memno = '181910'
+
+commit;
 
 select * from companyCard;
 
@@ -69,7 +77,7 @@ insert into companyCard
 values(4,'1111222233334447','121920','102036',356000,'서울시','2020-07-14' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-07-12' ,1 , );
 
 select * from accountCode;
 --102306
@@ -96,6 +104,6 @@ from companyCard c join mypage_mem m
  commit;
  
 delete from member
-where memno = '141912';
+where memno = '999999';
  
 

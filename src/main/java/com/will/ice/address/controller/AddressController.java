@@ -1,6 +1,5 @@
 package com.will.ice.address.controller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +42,7 @@ public class AddressController {
 		 String memNo=(String)session.getAttribute("identNum");
 		
 		 logger.info("memNo={}", memNo);
+
 		 
 		 String url="/log/login.do", msg="먼저 로그인 해주세요!";
 		 if(memNo==null) {
@@ -51,6 +51,7 @@ public class AddressController {
 			 
 			 return "common/message";
 		 }
+
 		/* String memNo="111910"; */
 		
 		List<AddressVO> adList=service.selectAddress(memNo);
@@ -78,6 +79,7 @@ public class AddressController {
 		
 	}
 	
+
 	/* 주소록 상세보기 */
 	@RequestMapping("/detailAddress.do")
 	public void editAddress_get(@RequestParam (defaultValue="0") int adNo, Model model) {
@@ -102,6 +104,7 @@ public class AddressController {
 		List<AddressGroupVO> adgList= service.selectAddressGroup(memNo);
 		logger.info("주소록 등록 화면 처리 결과, adgList.size={}", adgList.size());
 		
+
 		model.addAttribute("adgList", adgList);
 	}
 
@@ -128,6 +131,7 @@ public class AddressController {
 	/* 주소록 수정 */
 	@RequestMapping(value="/editAddress.do", method=RequestMethod.GET)
 	public void editAddress_get(@RequestParam (defaultValue="0") int adNo,
+
 			HttpServletRequest request, Model model) {
 		
 		HttpSession session= request.getSession();
@@ -143,6 +147,7 @@ public class AddressController {
 		logger.info("주소록 수정 화면 보여주기, adVo={}, adgList.size={}", adVo, adgList.size());
 		
 		model.addAttribute("adgList", adgList);
+
 		model.addAttribute("adVo", adVo);
 		
 	}
@@ -193,6 +198,7 @@ public class AddressController {
 		model.addAttribute("url", url);
 		
 		return "common/message";
+
 	}
 	
 }

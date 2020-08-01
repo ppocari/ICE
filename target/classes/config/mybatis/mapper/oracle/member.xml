@@ -19,17 +19,22 @@
 	</select>
 	
 	<insert id="registerMulti" parameterType="memberVO">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE">
-			select member_seq.nextval from dual
-		</selectKey>
-		insert into member(no,memNo, pwd, name, HIREDATE ,deptcode, POSCODE , salary)
-		values(#{no} ,#{memNo}, #{pwd} ,#{name},#{hiredate}, #{deptCode}, #{posCode}, #{salary})
+		insert into member(memNo, pwd, name, ssn1, ssn2, HIREDATE ,deptcode, POSCODE , salary)
+		values(#{memNo}, #{pwd} ,#{name}, #{ssn1}, #{ssn2}, #{hiredate}, #{deptCode}, #{posCode}, #{salary})
 		
 	</insert>
 	
 	<select id="searchAllmember" resultType="memberVo">
-		select * from member
+		select * from mypage_mem
+		where memno != 999999 and firedate is null
 	</select>
+	
+	<update id="updateSelectMember" parameterType="memberVO">
+		update member
+		set name = #{name}, HIREDATE = #{hiredate}, 
+			deptcode = #{deptCode}, POSCODE = #{posCode},  salary = #{salary}
+		where memno = #{memNo}
+	</update>
 	
 	<select id="selectMemberList" parameterType="dateSearchVo" 
 		resultType="int">
@@ -43,4 +48,11 @@
 			and hiredate < to_date(#{endDay})+1 ]]>
 		</where>
 	</select>
+	
+	<update id="deleteSelectMember" parameterType="memberVO">
+		update member
+		set firedate = #{firedate}
+		where memno = #{memNo}
+	
+	</update>
 </mapper>

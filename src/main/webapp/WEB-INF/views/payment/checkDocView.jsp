@@ -43,35 +43,30 @@ body{overflow: hidden;}
 				<td>기안부서</td>
 				<td>영업팀</td>
 				<td rowspan="3" width="15">기안부서</td>
-				<td>결재</td>
-				<td>결재</td>
-				<td>결재</td>
-				<td>결재</td>
-				<td>결재</td>
+				<c:forEach var="vo" items="${plList }">
+					<td>결재</td>
+				</c:forEach>
 			</tr>
-			<c:forEach var="vo" items="${plList}">
-				<tr height="80">
-					<td rowspan="2">기안자</td>
+			
+			<tr height="80">
+				<td rowspan="2">기안자</td>
 					<td rowspan="2">${payVo.name }</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr height="10">
-					<td>대주주 정은경</td>
-					<td></td>
-					<td></td>
-					<td>대리 홍길동</td>
-					<td>차장 박길동</td>
-				</tr>
-			</c:forEach>
+				<c:forEach var="vo" items="${plList }">
+					<td>${vo.payDate }</td>
+				</c:forEach>
+			</tr>
 			<tr height="10">
-				<td>기안일자</td>
-				<td>${payVo.writedate }</td>
-				<td width="15">첨부파일</td>
-				<td colspan="5"></td>
+				<c:forEach var="vo" items="${plList }">
+					<td>${vo.deptName } ${vo.posName } ${vo.name }</td>
+				</c:forEach>
+			</tr>
+			<tr height="10">
+				<td rowspan="2">기안일자</td>
+				<td rowspan="2">${payVo.writedate }</td>
+				<td rowspan="2" width="15">첨부파일</td>
+				<td rowspan="2" colspan="5"></td>
+			</tr>
+			<tr height="10">
 			</tr>
 			<tr>
 				<td>제목</td>
@@ -83,7 +78,16 @@ body{overflow: hidden;}
 		</table>
 	</div>
 	<div id="lastDiv">
-		<button type="submit" class="btn btn-default" id="cancelBt">결재상신 취소</button>
+		<c:if test="${param.flag=='imsy'}">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write.do?docNo=${payVo.docNo }"/>'">
+				결재선 지정
+			</button>
+		</c:if>
+		<c:if test="${param.flag!='imsy'}">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'">
+				결재상신 취소
+			</button>
+		</c:if>
 	</div>
 </div>
 </body>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../../inc/top.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
@@ -16,12 +17,15 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 #payTable{width:100%;text-align: center;}
 #payTable thead tr{background-color: gray;color:white;}
 #div3 button,#div3 select{margin-left: 10px;}
-#div3{position: relative;left: 73%;top: -40px;}
+#div2{position: absolute;top: 740px;}
+#div3{position: absolute;top: 740px;right:1%;}
 #upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 #upperDiv p{padding-top: 5px;padding-left: 5px;}
 #wholeDiv{padding-left: 20px;padding-right: 20px;}
+#paylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
 .docNoInfo{cursor: pointer;}
 </style>
+
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
@@ -38,88 +42,97 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 		$("#datetimepicker2").on("change.datetimepicker", function(e) {
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
-		
 	});
 </script>
-<div id="sentwholeDiv">
-	<div id="sentupperDiv">
-		<p>기안 완료함</p>
-	</div>
-	<div class="form-group" id="searchDateDiv">
-		<form name="searchDateFrm" class="form-inline" id="datefrm" method="post"
-			 action="<c:url value='/payment/write/payList.do' />">
-			<div class="form-group">
-				<label for="startDay">작성일</label>
-				<div class="input-group date" id="datetimepicker1"
-					data-target-input="nearest">
-					<input type="text" class="form-control datetimepicker-input"
-						data-target="datetimepicker1" id="datetimepicker1" value="">
-					<div class="input-group-append" data-target="#datetimepicker1"
-						data-toggle="datetimepicker">
-						<div class="input-group-text">
-							<i class="fa fa-calendar"></i>
+<!-- Content Row -->
+<div class="row" style="padding-left: 15px;">
+	<!-- Area Chart -->
+	<div class="col-xl-12 ">
+	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 10px 0px 10px 0px;">
+	<div id="wholeDiv">
+		<div id="upperDiv">
+			<p>기안완료함</p>
+		</div>
+		<div class="form-group" id="searchDateDiv">
+			<form name="searchDateFrm" method="post" class="form-inline"
+				id="datefrm" action="<c:url value='/payment/write/payList.do' />">
+				<div class="form-group">
+					<label for="startDay">작성일</label>
+					<div class="input-group date" id="datetimepicker1"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input"
+							data-target="datetimepicker1" id="datetimepicker1" value="">
+						<div class="input-group-append" data-target="#datetimepicker1"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group date" id="datetimepicker2"
-					data-target-input="nearest">
-					<input type="text" class="form-control datetimepicker-input"
-						data-target="datetimepicker2" id="datetimepicker2" value="">
-					<div class="input-group-append" data-target="#datetimepicker2"
-						data-toggle="datetimepicker">
-						<div class="input-group-text">
-							<i class="fa fa-calendar"></i>
+				<div class="form-group">
+					<div class="input-group date" id="datetimepicker2"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input"
+							data-target="datetimepicker2" id="datetimepicker2" value="">
+						<div class="input-group-append" data-target="#datetimepicker2"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<label for="docType">문서종류</label> 
-				<select class="form-control" id="docType" name="docType">
-					<!-- 반복 시작 -->
-					<option value="품의서">품의서</option>
-					<!-- 반복 끝 -->
-				</select> 
-				<label for="title">제목</label> 
-				<input type="text" class="form-control" id="title" name="title"> 
-				<input class="btn btn-primary" type="submit" value="검색">
-			</div>
-		</form>
+				<br>
+				<div class="form-group">
+					<label for="docType">문서종류</label> 
+					<select class="form-control" id="docType" name="docType">
+						<!-- 반복 시작 -->
+						<c:forEach var="doctypeVo" items="${doctypelist }">
+							<option value="${doctypeVo.typeNo }">${doctypeVo.typeName}</option>
+						</c:forEach>
+						<!-- 반복 끝 -->
+					</select> 
+					<label for="title">제목</label> 
+					<input type="text" class="form-control" id="title" name="title"> 
+					<input class="btn btn-primary" type="submit" value="검색">
+				</div>
+			</form>
+		</div>
+		<div class="form-group" id="paylist">
+		<table id="payTable" class="table table-hover">
+			<thead>
+				<tr>
+					<th width="15%;">문서번호</th>
+					<th width="10%;">문서종류</th>
+					<th width="15%;">신청일</th>
+					<th width="10%;">작성자</th>
+					<th>제목</th>
+					<th width="10%;">첨부</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- 반복 시작 -->
+				<c:forEach var="i" begin="0" end="${fn:length(list) }">
+					<tr>
+						<td>
+							<a class="docNoInfo" onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+								${list[i].docNo}
+							</a>
+						</td>
+						<td>${list[i].typeName}</td>
+						<td>${list[i].writedate}</td>
+						<td>${list[i].name}</td>
+						<td>${list[i].title}</td>
+						<td>${list[i].hasFile}</td>
+					</tr>
+				</c:forEach>
+			<!-- 반복 끝 -->
+			</tbody>
+		</table>
 	</div>
-
-	<div class="form-group" id="paylist">
-	<table id="payTable" class="table table-hover">
-		<thead>
-			<tr>
-				<th width="15%;">문서번호</th>
-				<th width="10%;">문서종류</th>
-				<th width="15%;">신청일</th>
-				<th width="10%;">작성자</th>
-				<th>제목</th>
-				<th width="10%;">첨부</th>
-			</tr>
-		</thead>
-		<!-- 반복 시작 -->
-		<tbody>
-			<tr>
-				<td>
-					<a href="<c:url value='/payment/write/docView.do'/>">
-						ED20200721001
-					</a>
-				</td>
-				<td>품의서</td>
-				<td>2020-07-10</td>
-				<td>정은경</td>
-				<td>품의서기안</td>
-				<td>Y</td>
-			</tr>
-		</tbody>
-		<!-- 반복 끝 -->
-	</table>
+	</div><br>
 </div>
-</div><br>
-
+</div>
+</div>
 <%@include file="../../inc/bottom.jsp"%>

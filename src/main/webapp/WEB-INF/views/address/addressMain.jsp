@@ -28,7 +28,7 @@
 			$('form[name=addressList]')
 				.prop("action","<c:url value='/address/deleteMulti.do'/>");
 			$('form[name=addressList]').submit();
-		});	
+		});	 
 	
 		/* 수정 여러개 */
 		/* $('#btMultiAdd').click(function(){
@@ -42,6 +42,7 @@
 			$('form[name=frmList]').submit();
 		});	 */
 		
+
 	});
 </script>
 
@@ -152,6 +153,7 @@
 								<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
 								<td><a href="<c:url value='/address/detailAddress.do?adNo=${address.adNo }'/>" class="addressName">${address.name}</a></td>
 								<c:set var="idx" value="${idx +1 }"/>
+
 								<c:if test="${empty address.hp1 }">
 									<td></td>
 								</c:if>
@@ -210,6 +212,7 @@
 					<br>
 				</div>
 				</form>
+
 			</article>
 		</div>
 	</div>

@@ -11,10 +11,15 @@
 .table .registerTable {
 	width: 110px;
 	border: 1px solid white;
+	
 }
-.register_text {
-	width: 120px;
+
+.register_text{
+	width:120px;
 	float: left;
+}
+.search input{
+	width:120px;
 }
 </style>
 <script type="text/javascript">
@@ -48,20 +53,25 @@
 		
 		var NmemNo = $("#memNo").val();
 		var NmemName = $("#memName").val();
-		var NmemPwd = $("#memPwd").val();
+		var NmemSsn1 = $("#memSsn1").val();
+		var NmemSsn2 = $("#memSsn2").val();
 		var NmemHiredate = $("#memHiredate").val();
 		var NmemDepart = $("#memDepart").val();
 		var NmemPosi = $("#memPosi").val();
 		var NmemSalary = $("#memSalary").val();
+		
 					
 		str += '<tr>';
-		str += '<td><input type=text name="memItems['+idx+'].memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].name" class="registerTable" value="' +NmemName+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].pwd" class="registerTable" value="' +NmemPwd+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].deptCode" class="registerTable" value="' +NmemDepart+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].posCode" class="registerTable" value="' +NmemPosi+ '"/></td>';
-		str += '<td><input type=text name="memItems['+idx+'].salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].name" class="registerTable" value="' +NmemName+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].ssn1" class="registerTable" value="' +NmemSsn1+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].deptCode" class="registerTable" value="' +NmemDepart+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].posCode" class="registerTable" value="' +NmemPosi+ '"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
+		
+		str += '<input type="hidden" name="memItems['+idx+'].pwd" class="registerTable" value="' +NmemSsn1+ '"/>';
+		str += '<input type="hidden" name="memItems['+idx+'].ssn2" class="registerTable" value="' +NmemSsn2+ '"/>';
 		str += '</tr>';
 					
 		 
@@ -81,6 +91,8 @@
 		idx = idx + 1;
 		}
 	
+		
+		
 		
 </script>
 <!-- Begin Page Content -->
@@ -120,7 +132,7 @@
 									<tr>
 										<th>사원번호</th>
 										<th>이름</th>
-										<th>비밀번호</th>
+										<th>주민번호</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
@@ -136,7 +148,9 @@
 						<span style="font-weight: bold; font-size: 1.1em;" class="register_text form-control">정보입력</span> 
 						<input type="text" placeholder="사원번호" id="memNo" class="register_text form-control">
 						<input type="text" placeholder="이름" id="memName" class="register_text form-control"> 
-						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text form-control"> 
+						<input type="text" placeholder="주민번호 앞" id="memSsn1" class="register_text form-control"> 
+						<input type="text" placeholder="주민번호 뒤" id="memSsn2" class="register_text form-control"> 
+						<!-- <input type="text" placeholder="비밀번호" id="memPwd" class="register_text form-control">  -->
 						<input type="text" placeholder="입사일" id="memHiredate" class="register_text form-control"> 
 						<select id="memDepart" class="register_text form-control" >
 							<option>부서명</option>

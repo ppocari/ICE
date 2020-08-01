@@ -15,6 +15,12 @@
 	$(function(){
 		$('form[name=lineFrm]').submit(function(){
 			$('.chk:checked').parent().next().next().next().find('input[name=getmemNo]').attr("disabled", false);
+			
+			if(!$('.chk').is(':checked')){
+				alert("결재선을 선택해주세요!");
+				event.preventDefault();
+				$('#emplist').focus();
+			}
 		});
 	});
 	
@@ -71,6 +77,8 @@
 				</div><br>
 				<div id="payline3">
 					<button type="submit" class="btn btn-default" id="btSavePayLine">저장</button>
+					<button type="button" class="btn btn-default" id="btCancel"
+						onclick="history.go(-1)">취소</button>
 				</div>
 			</form>
 		</div>

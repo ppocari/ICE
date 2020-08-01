@@ -31,6 +31,13 @@
 <script type="text/javascript">
 	
 $(function(){
+	$('#NOTI_MAIN').click(function(){
+		alert('체크됨!');
+		
+	});
+
+	
+	/*
 	$('#nList').click(function(){
 		location.href
 			= "<c:url value='/notice/noticeList.do'/>"
@@ -43,8 +50,8 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-	
-	
+
+
 });
 	
 	
@@ -104,8 +111,9 @@ $(function(){
 									<option value="영업">영업</option>
 									<option value="경리">경리</option>
 								</select> 
-								<input type="checkbox" id="NOTI_MAIN" name="NOTI_MAIN" 
-								 	value="option1"> 
+
+								<input type="checkbox" name="NOTI_MAIN" id="NOTI_MAIN" value="1"> 
+
 								<span>메인 공지사항 등록</span>
 							</td>
 						</tr>
@@ -160,7 +168,7 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록"/>
+						<input type = "submit" class="form-control btList" value="등록"/>
             			<a href="<c:url value='/notice/noticeList.do'/>">
             				<input type = "Button" class="form-control btList" id="nList"value="글목록"  />
             			</a>

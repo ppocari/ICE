@@ -17,7 +17,9 @@ public interface AddressDAO {
 	int insertDefaultAddressGroup(String memNo);
 	int insertAddress(AddressVO vo);
 	AddressVO selectOneAdderss(int adNo);
+
 	int updateAddress(AddressVO adVo);
 	
 	int deleteAddress(int adNo);
+
 }

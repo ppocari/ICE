@@ -59,6 +59,7 @@ public class AddressDAOMybatis implements AddressDAO {
 		return sqlSession.selectOne(namespaces+"selectOneAdderss", adNo);
 	}
 
+
 	@Override
 	public int updateAddress(AddressVO adVo) {
 		return sqlSession.update(namespaces+"updateAddress", adVo);
@@ -68,6 +69,7 @@ public class AddressDAOMybatis implements AddressDAO {
 	public int deleteAddress(int adNo) {
 		return sqlSession.delete(namespaces+"deleteAddress", adNo);
 	}
+
 	
 	
 

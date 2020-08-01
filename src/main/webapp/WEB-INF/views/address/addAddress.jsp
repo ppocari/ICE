@@ -190,6 +190,20 @@
 #add_inputs {
 	border:none;
 	text-align: center;
+
+}
+
+#addFromOrgan_span{
+	float:right;
+	display:inline-block;
+}
+
+#addFromOrgan{
+	margin-right: 20px;
+	font-size: 12px;
+	background-color: #fdfdfd;
+	border-radius: 3px 3px 3px 3px;
+	border: 1px solid lightgray;
 }
 
 #addFromOrgan_span{

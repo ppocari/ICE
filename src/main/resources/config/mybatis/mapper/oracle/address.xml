@@ -62,6 +62,7 @@
 		delete from address
 		where adno=#{adNo}
 	</delete>
+
 </mapper>
 
 

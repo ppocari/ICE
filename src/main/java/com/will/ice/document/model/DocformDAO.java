@@ -6,4 +6,5 @@ public interface DocformDAO {
 	int insertForm(DocformVO docformVo);
 	List<DocformVO> selectAllForm();
 	DocformVO getcontent(int formNo);
+	int deleteForm(int formNo);
 }

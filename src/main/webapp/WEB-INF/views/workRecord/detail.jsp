@@ -59,24 +59,21 @@
 	<div id="modal" class="" >
 		<div>
 			<label>출근시간 : </label>
-			<span id="modal_Start"> 8</span>
+			<span id="modal_Start"> ${Dvo.cmpIn}</span>
 		</div>
 		<div>			
-			<label>퇴근시간 :</label>
-			<span id="modal_End"> 8</span>
+			<label>퇴근시간 : </label>
+			<span id="modal_End"> ${Dvo.cmpOut}</span>
 		</div>
 		<div>			
-			<label>지각시간 :</label>
-			<span id=""> 0</span>
+			<label>출근상태 :</label>
+			<span id="model_status">${Dvo.cmpStatus}</span>
 		</div>
-		<div>			
-			<label>결근 :</label>
-			<span id=""> X</span>
-		</div>
-		<div>			
-			<label>결근사유 :</label>
-			<span id=""> 결근하지않았습니다.</span>
-		</div>
+		<c:if test="${Dvo.cmpStatus eq'결근'}">
+			<div>			
+				<a href="#">결근 사유서 작성하기</a>
+			</div>
+		</c:if>
 		<button id="btClose">닫기</button>
 	</div>
 </body>

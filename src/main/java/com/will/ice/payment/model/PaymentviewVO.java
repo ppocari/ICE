@@ -16,7 +16,7 @@ public class PaymentviewVO {
 	private Timestamp expirydate;
 	private String typeName;
 	private String name;
-	
+
 	public int getDocNo() {
 		return docNo;
 	}
@@ -102,4 +102,5 @@ public class PaymentviewVO {
 				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", typeName="
 				+ typeName + ", name=" + name + "]";
 	}
+
 }

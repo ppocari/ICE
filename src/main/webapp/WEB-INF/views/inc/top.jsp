@@ -19,15 +19,15 @@
 
 <!-- Custom fonts for this template-->
 <link
-	href="<c:url value="/resources/vendor/fontawesome-free/css/all.min.css"/>"
-	rel="stylesheet" type="text/css">
+   href="<c:url value="/resources/vendor/fontawesome-free/css/all.min.css"/>"
+   rel="stylesheet" type="text/css">
 <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+   rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="<c:url value="/resources/css/sb-admin-2.min.css"/>"
-	rel="stylesheet">
+   rel="stylesheet">
 <!-- Bootstrap core JavaScript-->
  
   <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
@@ -39,21 +39,22 @@
   <!-- Custom scripts for all pages-->
   <script src="<c:url value = "/resources/js/sb-admin-2.min.js"/>"></script>
 
- <%--  <!-- Page level plugins -->
+<%--  <!-- Page level plugins -->
   <script src="<c:url value = "/resources/vendor/chart.js/Chart.min.js"/>"></script>
 
   <!-- Page level custom scripts -->
   <script src="<c:url value = "/resources/js/demo/chart-area-demo.js"/>"></script>
-  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script> --%>
+  <script src="<c:url value = "/resources/js/demo/chart-pie-demo.js"/>"></script>  --%>
 
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet" href="/resources/demos/style.css"/>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
+
 
 
 
@@ -107,9 +108,9 @@
 				<div id="collapseNine" class="collapse"
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
+						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회 및 관리</a>
 						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
-						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
+						
 					</div>
 				</div>
 			</li>
@@ -128,11 +129,11 @@
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
-						<div class="collapse-divider"></div>
+						<%-- <div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">기안상신함</a>
-						<a class="collapse-item" href="<c:url value="#" />">임시보관함</a>
-						<a class="collapse-item" href="<c:url value="#" />">기안완료함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a> --%>
 					</div>
 				</div>
 			</li>
@@ -169,8 +170,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항 관리 </a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판 관리</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -185,11 +186,19 @@
 			<div class="sidebar-heading">workspace</div>
 			
 			<!-- Nav Item - 근태관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" 
-			href="<c:url value='/workRecord/workRecord.do'/>"> 
-				<i class="fas fa-fw fa-folder"></i> <span>출퇴근</span>
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+			data-toggle="collapse" data-target="#collapseOne"
+			aria-expanded="true" aria-controls="collapseThree"> 
+				<i class="fas fa-fw fa-folder"></i> <span>근태관리</span>
 			</a>
-
+				<div id="collapseOne" class="collapse"
+					aria-labelledby="headingThree" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" 
+			href="<c:url value='/workRecord/workRecord.do'/>">출퇴근</a>
+						<a class="collapse-item" href="<c:url value="#" />">통계보기</a>
+					</div>
+				</div>
 			</li>
 
 			<!-- Nav Item - 전자결재 Menu -->
@@ -208,9 +217,9 @@
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">기안상신함</a>
-						<a class="collapse-item" href="<c:url value="#" />">임시보관함</a>
-						<a class="collapse-item" href="<c:url value="#" />">기안완료함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a>
 					</div>
 				</div>
 			</li>
@@ -268,6 +277,7 @@
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/address/addressMain.do'/>">주소록</a>
 							<a class="collapse-item" href="<c:url value='#'/>">주소록 다운</a>
+
 						</div>
 
 					</div>
@@ -302,8 +312,8 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='#'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='#'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -496,7 +506,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Read More Messages</a>
+									href="<c:url value='/message/messageList.do'/>">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
