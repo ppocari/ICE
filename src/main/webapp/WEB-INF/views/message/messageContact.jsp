@@ -15,7 +15,7 @@
 	<div id="main" style="font-size:13px;">
 				
 	<form name="frmContact" method="post"  
-				action="<c:url value='/note/contact.do'/> ">
+				action="<c:url value='/message/messageContact.do'/> ">
 		<table  width="90%" cellpadding="5" cellspacing="0" border="1" align="center" 
 			style="width:700px; height: 500px; border-collapse:collapse; 
 			border:1px gray solid; table-layout: fixed;" class="table table-bordered">
@@ -65,8 +65,8 @@
 							</form>
 
 						<div class="divSearch">
-						   	<%-- <form name="frmSearch" method="post" 
-						   		action='<c:url value="/note/contact.do"/>'>
+						   	<form name="frmSearch" method="post" 
+						   		action='<c:url value="/message/messageContact.do"/>'>
 						        <select name="searchCondition">
 						            <option value="title" 
 						            	<c:if test="${param.searchCondition=='title' }">
@@ -87,7 +87,7 @@
 						        <input type="text" name="searchKeyword" title="검색어 입력"
 						        	value="${param.searchKeyword}">   
 								<input type="submit" value="검색">
-						    </form> --%>
+						    </form> 
 
 						</div>
 					</div>
@@ -129,9 +129,9 @@
 
 						
 							<li>
-								<input type="checkbox" name="searchResult"
+								<%-- <input type="checkbox" name="searchResult"
 								 id="searchResult" value="option1" aria-label="..."
-								 >${param.memNo }
+								 >${param.memNo } --%>
 									
 							</li>
 						

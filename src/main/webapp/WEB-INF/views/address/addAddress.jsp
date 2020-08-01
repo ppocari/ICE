@@ -1,6 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
+
+<script type="text/javascript">
+	$(function(){
+
+			/* 조직도에서 추가 */
+		$('#addFromOrgan').click(function(){
+			window.open('<c:url value="/address/organizeChart.do"/>', 'organ', 
+					'width=450, height=350, left=1200, top=200, location=yes, resizable=yes');
+		});
+		
+		$('input[type=submit]').click(function(){
+			
+			var name=$('input[name=name]').val();
+			var hp1=$('input[name=hp1]').val();
+			var hp2=$('input[name=hp2]').val();
+			var hp3=$('input[name=hp3]').val();
+			var em1=$('input[name=email1]').val();
+			var em2=$('input[name=email2]').val();
+			
+			if(name.length==0) {
+				alert('이름은 필수입니다!');
+				$('input[name=name]').focus();
+				return false;
+			}else if(!validate_phone(hp1) || !validate_phone(hp2) || !validate_phone(hp3)) {
+				alert('validate_phone');
+				
+				hp_alert();
+				event.preventDefault();
+			}else if(hp1.length>0) {
+				if(hp2.length==0 || hp3.length==0) {
+					hp_alert();
+					return false;
+				}
+			} else if(hp2.length>0) {
+				if(hp1.length==0 || hp3.length==0) {
+					hp_alert();
+					return false;
+				}
+			} else if(hp3.length>0) {
+				if(hp1.length==0 || hp2.length==0) {
+					hp_alert();
+					return false;
+				}
+			}
+			
+			if(em1.length>0) {
+				if(em2.length==0 || !email_check(em2)) {
+					email_alert();
+					$('input[name=email2]').focus();
+					event.preventDefault();
+				}
+			} else if(em2.length>0) {
+				if(em1.length==0) {
+					email_alert();
+					$('input[name=email1]').focus();
+					event.preventDefault();
+				}
+			}
+			
+		});
+		
+		function hp_alert(){
+			alert('전화번호 형식이 올바르지 않습니다.');
+		}
+		
+		function validate_phone(hp) {
+			var pattern = new RegExp(/^[0-9]*$/g);
+			return pattern.test(hp); 
+		}
+		
+		function email_alert(){
+			alert('이메일 형식이 올바르지 않습니다.');
+		}
+		
+		function email_check(em2) {
+			var isPoint=em2.indexOf(".");
+			var isLen=em2.length;
+			if(isPoint==-1 || isPoint==0){
+				return false;
+			}else if(isPoint>=1 && isPoint+1!=isLen){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	});
+</script>
+
 <style type="text/css">
 .divForm div, .divForm label, .divForm {
 	font-size: 0.9em;
@@ -104,6 +192,19 @@
 	text-align: center;
 
 }
+
+#addFromOrgan_span{
+	float:right;
+	display:inline-block;
+}
+
+#addFromOrgan{
+	margin-right: 20px;
+	font-size: 12px;
+	background-color: #fdfdfd;
+	border-radius: 3px 3px 3px 3px;
+	border: 1px solid lightgray;
+}
 </style>
 <section>
 	<article>
@@ -111,6 +212,7 @@
 			<header>
 				<h3>
 					주소록<span> > 추가하기 </span>
+					<span id="addFromOrgan_span"><input type="button" id="addFromOrgan" value="조직도에서 추가하기"></span>
 				</h3>
 			</header>
 			<div class="card shadow mb-4" style="height: 500px">
