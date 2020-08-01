@@ -4,16 +4,16 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.notice">
 	<insert id="insertNotice" parameterType="NoticeVO">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		<selectKey keyProperty="NOTI_NO" resultType="int" order="BEFORE">
 			select notice_seq.nextval from dual
 		</selectKey>
 		
-		insert into notice(NOTI_NO, NOTI_TITLE, MEMNo, NOTI_CONTENT, 
-			NOTI_REGDATE, NOTI_FILENAME, NOTI_FILESIZE, NOTI_ORFILENAME, 
+		insert into notice(NOTI_NO, NOTI_TITLE, MEMNO, NOTI_CONTENT, 
+			NOTI_FILENAME, NOTI_FILESIZE, NOTI_ORFILENAME, 
 			NOTI_CATEGORY, NOTI_MAIN)
-		values(#{NOTI_NO}, #{NOTI_TITLE}, #{MEMNo}, #{NOTI_CONTENT}, 
-			#{NOTI_REGDATE} ,#{NOTI_FILENAME}, #{NOTI_FILESIZE}, #{NOTI_ORFILENAME}, 
-			#{NOTI_CATEGORY}, #{NOTI_MAIN}
+		values(#{NOTI_NO}, #{NOTI_TITLE}, #{MEMNO}, #{NOTI_CONTENT}, 
+			#{NOTI_FILENAME}, #{NOTI_FILESIZE}, #{NOTI_ORFILENAME}, 
+			#{NOTI_CATEGORY}, #{NOTI_MAIN})
 	</insert>
 	
 	<select id="selectAll" resultType="NoticeVO" parameterType="searchVo">
@@ -26,10 +26,10 @@
 			    NOTI_READCOUNT, NOTI_CONTENT,
 			    (sysdate-NOTI_REGDATE)*24 as newImgTerm 
 			    from notice
-		        <if test="searchKeyword!=null and searchKeyword !=''">
+		       <!--  <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
-		        </if>
+		        </if> -->
 		        order by NOTI_NO desc
 		    )A    
 		)

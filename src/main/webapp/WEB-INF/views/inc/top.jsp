@@ -108,9 +108,9 @@
 				<div id="collapseNine" class="collapse"
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회</a>
+						<a class="collapse-item" href="<c:url value="/member/memList.do" />">사원조회 및 관리</a>
 						<a class="collapse-item" href="<c:url value="/member/memWrite.do" />">사원등록</a>
-						<a class="collapse-item" href="<c:url value="/member/management.do" />">사원관리</a>
+						
 					</div>
 				</div>
 			</li>
@@ -506,7 +506,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="<c:url value='/note/noteList.do'/>">Read More Messages</a>
+									href="<c:url value='/message/messageList.do'/>">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>

@@ -13,23 +13,35 @@
 <script>
 	$(function() {
 		$("#accordion").accordion();
+		
+		$('form[name=organForm]').submit(function(){
+			var idList=$('input[type=radio]:checked').attr('id').split('_');
+//${organ.memNo }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}
+			
+			var memNo= idList[0];
+			var hp1= idList[1];
+			var hp2= idList[2];
+			var hp3= idList[3];
+			var em1= idList[4];
+			var em2= idList[5];
+			var deptN= idList[6];
+			var posN= idList[7];
 
-		$('input[type=checkbox]').click(function(){
+			if(hp1.length==0 && hp2.length)
 			
-		var result="";
-			$('input[type=checkbox]:checked').each(function(idx, item){
-				id=$(this).attr('id').split('_');
-				result+="<span style='display:none'>"+id[0]+"</span>"; 
-				result+="<span style='background-color:lightgray;padding:2px;'>"+id[2]+":"+id[1]+"</span>";
-			});
-			
-			$('#organ_inputs_div').html(result);
+		/* 	$(opener.document).find("#zipcode").val(zipcode);
+			$(opener.document).find("input[name=address]").val(address); */
+			event.preventDefault();
 		});
+		
 		
 	});
 </script>
 <style type="text/css">
 
+.highlight{
+	background-color: #ececec;
+}
 /* 	.ui-accordion{
   		color:yellow;
   	} */
@@ -51,7 +63,7 @@
 
 /*통일된 메뉴 색*/
 .ui-accordion-icons {
-	background-color: lightgray;
+	background-color: #d2d2d2;
 }
 
 /* 	.ui-accordion-header-icon{ 
@@ -84,7 +96,7 @@ table {
 }
 
 #selectMenu {
-	width: 350px;
+	width: 370px;
 	font-size: 0.6em;
 	
 }
@@ -93,8 +105,10 @@ table {
 	text-decoration: underline;
 }
 
-#selectMenu input[type=checkbox] {
+#selectMenu input[type=radio] {
 	width: 0.8em;
+	margin-left: 15px;
+	margin-bottom: 3px;
 }
 
 .organTable {
@@ -155,7 +169,7 @@ table {
 					<div id="accordionSubDiv">
 						<table class="organTable">
 							<tr>
-								<th class="organTable_narrow"><input type="checkbox" class="organ_checkboxAll"></th>
+								<th></th>
 								<th class="organTable_normal">이름</th>
 								<th class="organTable_wide">전화번호</th>
 								<th class="organTable_wide">이메일</th>
@@ -165,9 +179,11 @@ table {
 						<c:forEach var="organ" items="${organList }">
 							<c:if test="${dept.deptCode eq organ.deptCode }">
 								<table class="organTable">
-									<tr>
+									<tr id="${organ.memNo }">
 										<th class="organTable_narrow">
-											<input type="checkbox" id="${organ.memNo }_${organ.name}_${organ.deptName}" class="organ_checkboxOne">
+											<input type="radio" name="addressOrganRadio" 
+												id="${organ.memNo }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}" 
+												class="organ_checkboxOne">
 										</th>
 										<td class="organTable_normal">${organ.name }</td>
 										<c:if test="${empty organ.hp1 }">
@@ -196,13 +212,10 @@ table {
 				</c:forEach>
 			</div>
 			<!-- 아코디언 끝 -->
-				<form id="frm">
-					<div id="organ_inputs_div">
-					<!-- result가 오는 곳 -->
-					</div>
-				<div id="organ_inputs">
-					<input type="submit" value="주소록에 추가"> 
-					<input type="reset" value="취소">
+				<form name="organForm">
+					<div id="organ_inputs">
+						<input type="submit" value="주소록에 추가"> 
+						<input type="reset" value="취소">
 					</div>
 				</form>
 		</article>

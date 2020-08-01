@@ -25,6 +25,10 @@ public interface MemberService {
 		List<MemberVO> searchAllmember(String searchKeyword);
 
 		int registerMulti(List<MemberVO> memVO);
+		
+		int updateSelectMember(MemberVO memberVO);
+		
+		int deleteSelectMember(MemberVO memberVO);
 
 		List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
 

@@ -9,7 +9,7 @@ public class MemberVO {
 	private String hp3;
 	private String email1;
 	private String email2;
-	private String ssn1;
+	private String ssn1;	//주민번호 앞자리
 	private String ssn2;
 	private String zipcode;
 	private String addr;

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.companyCard.model.ComcardVO;
-import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
-import com.will.ice.member.model.MemberVO_log;
 import com.will.ice.model.DepartmentVO;
 import com.will.ice.model.EtcService;
 import com.will.ice.model.PositionVO;

@@ -28,28 +28,7 @@
 <script type="text/javascript">
 	
 	$(function(){
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
-			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				}
-			
-			})
-			
-		});
+		
 		
 		$( "input[name=hiredate1]" ).datepicker({
 			dateFormat:'yy-mm-dd',
@@ -70,11 +49,12 @@
 		} );
 		
 		
-		$(".registerTableTR").click(function() {
-			var edit_memNo = $(this).$("#edit_memNo").text();
+		$("#dynamicTbody tr").click(function(){
+			var edit_memNo = $(this).children().eq(0).text();
 			window.open('/ice/member/memEdit.do?memeNo='+edit_memNo,'mem',
-			'width=1800,height=300,left=50,top=50,location=yes,resizable=yes');
-	      });
+			'width=1400,height=300,left=50,top=50,location=yes,resizable=yes');
+		});
+		 
 		
 	});
 	
@@ -159,24 +139,27 @@
 										<th>부서명</th>
 										<th>직급</th>
 										<th>계약연봉</th>
+										
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-										
+									
+									<c:set var="i" value="${1 }" />	
 									<c:forEach var="vo" items="${list }">
-										<tr class="registerTableTR">
-											<td id = "edit_memNo">${vo.memNo }</td>
+										<tr id = "edit_tr${i}">
+											<td id = "edit_td${i}">${vo.memNo }</td>
 											<td>${vo.name }</td>
 											<td>${vo.pwd }</td>
 											<td>
-												 <c:set var = "hiredate" value = "${fn:substring(vo.hiredate,0,10)}" />
+												 <c:set var = "hiredate"  value = "${fn:substring(vo.hiredate,0,10)}" />
 												${ hiredate }
 											</td>
 											<td>${vo.deptName }</td>
 											<td>${vo.posName }</td>
-											<td><fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원</td>										
+											<td><fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원</td>											
 										</tr>
+										<c:set var="i" value="${i+1 }" />	
 									</c:forEach>
 								</tbody>
 						</table>

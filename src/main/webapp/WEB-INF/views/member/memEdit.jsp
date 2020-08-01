@@ -42,9 +42,35 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 
+<style type="text/css">
+	#registerTableTR td{
+		width: 120px;
+	}
+	
+	.registerTableTR input {
+	
+	width: 110px;
+	
+}
+</style>
 
-
-
+<script>
+	$(function(){
+		$( "input[name=hiredate]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
+		
+		$("#del_mem").click(function(){
+			var del_memeNo = $(this).val();
+			alert("정말로 삭제하시겠습니까?");
+			location.href = "/ice/member/memDelete.do?memNo="+del_memeNo;
+		});
+	});
+</script>
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
@@ -58,26 +84,22 @@
 			<div class="card shadow mb-4" style="height: 300px">
 				<!-- Card Header - Dropdown -->
 				<!-- 페이징 처리를 위한 form 시작-->
-				<form name="frmPage" method="post" 
-					action="<c:url value='/member/memList.do'/>">
+				<!-- 페이징 처리 form 끝 -->
+				
+				<form name="memEditFrm" method="post"  
+					action="<c:url value='/member/memEdit.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">수정하기</h6>
 						
 						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >수정완료</button>
+							<button type="submit" class="btn btn-info">수정하기</button>
+							<button type="button" id = "del_mem" value="${vo.memNo }" class="btn btn-danger">삭제하기</button>
+							
 						</div>
 					</div>
-				</form>
-				<!-- 페이징 처리 form 끝 -->
-				
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do'/> ">
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" >
-
-
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<thead>
 									<tr>
@@ -92,19 +114,43 @@
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-										
-									
 										<tr class="registerTableTR">
-											<td><input value="${vo.memNo }" name ="memNo" ></td>
+											<td><input value="${vo.memNo }" name ="memNo" readonly="readonly"></td>
 											<td><input value="${vo.name }" name ="name" ></td>
-											<td><input value="${vo.pwd }" name ="pwd" c></td>
+											<td><input value="${vo.pwd }" name ="pwd" readonly="readonly"></td>
 											<td>
 												 <c:set var = "hiredate" value = "${fn:substring(vo.hiredate,0,10)}" />
-												<input value="${ hiredate }" name ="hiredate">
+												<input value="${ hiredate }" name="hiredate">
+												
 											</td>
-											<td><input value="${vo.deptName }" name ="deptName" ></td>
-											<td><input value="${vo.posName }" name ="posName"  ></td>
-											<td><input value="<fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원" name ="salary" ></td>										
+											<td>
+												<select name="deptCode">
+													<!-- option 반복 -->
+													<option>전체</option>
+													<c:forEach var="deptvo" items="${deptList }">
+														<option value="${deptvo.deptCode }"
+															<c:if test="${ vo.deptName == deptvo.deptName}">
+																selected="selected"
+															</c:if>
+														>${deptvo.deptName }</option>
+													</c:forEach>
+												</select>
+											</td>
+											<td>
+												<select name="posCode">
+													<!-- option 반복 -->
+													<option>전체</option>
+													<c:forEach var="posvo" items="${posList }">
+														<option value="${posvo.posCode }"
+															<c:if test="${ vo.posName == posvo.posName}">
+																selected="selected"
+															</c:if>
+														>${posvo.posName }
+														 </option>
+													</c:forEach>
+												</select>
+											</td>
+											<td><input value="<fmt:formatNumber value="${vo.salary }"  pattern="" />" name ="salary" >만원</td>										
 										</tr>
 									
 								</tbody>
