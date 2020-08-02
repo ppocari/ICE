@@ -1,4 +1,4 @@
-package com.will.ice.acccode.model;
+package com.will.ice.accode.model;
 
 import java.util.List;
 
@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AccodeDAOMybatis implements AccodeDAO{
-	private String namespace = "com.mybatis.mapper.oracle.address.";
+	private String namespace = "com.mybatis.mapper.oracle.accode.";
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
 	
 	@Override
-	public List<AccodeVO> selectAccode() {
-		return sqlsession.selectList(namespace+"selectAccode");
+	public List<AccodeVO> selectAccode(String useplace) {
+		return sqlsession.selectList(namespace+"selectAccode", useplace);
 	}
 
 }

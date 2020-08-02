@@ -1,4 +1,4 @@
-package com.will.ice.acccode.model;
+package com.will.ice.accode.model;
 
 public class AccodeVO {
 	private String accCode;

@@ -29,28 +29,8 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$("#excelUpForm").change(function(){
-		                var form = $("#excelUpForm")[0];
-		 
-		                var data = new FormData(form);
-		                $.ajax({
-		                   enctype:"multipart/form-data",
-		                   method:"POST",
-		                   url: './excelUp.do',
-		                   processData: false,   
-		                   contentType: false,
-		                   cache: false,
-		                   data: data,
-		                   success: function(result){  
-		                       alert("업로드 성공!!");
-		                   }
-		                });
-		            });
+		
 
-
-		
-		
-		
 	});
 	
 </script>
@@ -76,13 +56,20 @@
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
 				<!-- Card Header - Dropdown -->
+				<form id="massiveForm" name="massiveForm" enctype="multipart/form-data" method="post" action="<c:url value="/board/massiveWrite"/>" >
+        <input type="file" name="excelFile"/>
+        <input type="submit" value="업로드"/> 
+    </form>
+
+
+				
 				<form name="memRegisterFrm" method="post"  
 				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">미등록</h6>
+						<h6 class="m-0 font-weight-bold text-primary">파일 목록</h6>
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							 >파일 업로드</button>
 						</div>
 						
 					</div>		
@@ -90,39 +77,6 @@
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
 
-
-							<table class="table table-bordered table-hover" id="dynamicTable">
-								<thead>
-									<tr>
-										<th>사원번호</th>
-										<th>이름</th>
-										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
-										<th>입사일</th>
-										<th>부서명</th>
-										<th>직급</th>
-										<th>계약연봉</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody">
-									<!-- 반복시작 -->
-										
-									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.memNo }</td>
-											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
-											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
-										</tr>
-									</c:forEach>
-								</tbody>
-						</table>
 										
 						</div>
 					</div>		

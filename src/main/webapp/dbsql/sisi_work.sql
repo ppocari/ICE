@@ -29,7 +29,8 @@ from member m join position p
   on m.DEPTCODE = d.DEPTCODE;
   
 
-  
+desc mypage_mem;
+
 select * from mypage_mem;
   
  /* 
@@ -94,6 +95,9 @@ values(companyCard_seq.nextval,'3777222233331234','111910',9000,'서울시','202
 --drop sequence companyCard_seq
 
 select * from accountCode;
+
+select * from accountCode
+where acctitle like '%통신%';
 --102306
 --102307
 

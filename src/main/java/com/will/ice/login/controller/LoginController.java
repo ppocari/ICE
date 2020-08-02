@@ -68,7 +68,7 @@ public class LoginController {
 				ck.setPath("/");
 				response.addCookie(ck);
 			}
-
+			
 			msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
 			if(memVo.getPosCode().equals("999")) {	//관리자
 				url = "/main/main_admin.do";

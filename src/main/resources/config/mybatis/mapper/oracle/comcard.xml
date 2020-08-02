@@ -18,4 +18,8 @@
 		where acccode is null
 		  and no = #{comcard_no}
 	</select>
+	
+	<select id="selectAllComcard" resultType="ComcardVO">
+		select * from comcard_mem
+	</select>
 </mapper>

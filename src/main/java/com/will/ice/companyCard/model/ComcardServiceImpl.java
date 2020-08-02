@@ -21,8 +21,7 @@ public class ComcardServiceImpl implements ComcardService{
 	public ComcardVO selectNoComcard(int comcard_no) {
 		return comcardDAO.selectNoComcard(comcard_no);
 	}
-
-	
-	
-	
+	public List<ComcardVO> selectAllComcard() {
+		return comcardDAO.selectAllComcard();
+	}
 }

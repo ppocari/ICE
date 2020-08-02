@@ -20,11 +20,13 @@ public class ComcardDAOMybatis implements ComcardDAO{
 		return sqlsession.selectList(namespace+"selectUnUseComcard", ymvo);
 	}
 
+	
 	@Override
 	public ComcardVO selectNoComcard(int comcard_no) {
 		return sqlsession.selectOne(namespace+"selectNoComcard", comcard_no);
 	}
-
 	
-
+	public List<ComcardVO> selectAllComcard() {
+		return sqlsession.selectList(namespace+"selectAllComcard");
+	}
 }
