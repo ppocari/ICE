@@ -118,9 +118,8 @@
 											<td><input value="${vo.memNo }" name ="memNo" readonly="readonly"></td>
 											<td><input value="${vo.name }" name ="name" ></td>
 											<td><input value="${vo.pwd }" name ="pwd" readonly="readonly"></td>
-											<td>
-												 <c:set var = "hiredate" value = "${fn:substring(vo.hiredate,0,10)}" />
-												<input value="${ hiredate }" name="hiredate">
+											<td>		 
+												<input value="${ vo.hiredate }" name="hiredate">
 												
 											</td>
 											<td>

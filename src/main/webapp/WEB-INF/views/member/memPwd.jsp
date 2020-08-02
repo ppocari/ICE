@@ -117,7 +117,7 @@
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post" action="<c:url value='/member/memWrite.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
+						<h6 class="m-0 font-weight-bold text-primary">비밀번호 변경</h6>
 						<button type="submit" class="btn btn-info"
 							 style="float: right">사원정보 반영하기</button>
 					</div>
