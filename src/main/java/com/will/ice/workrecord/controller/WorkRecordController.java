@@ -42,7 +42,7 @@ public class WorkRecordController {
 		String userName = (String)session.getAttribute("userName");
 		String memNo = (String) session.getAttribute("identNum");
 		
-		WorkRecordVO vo = workService.selectToday(Integer.parseInt(memNo));
+		WorkRecordVO vo = workService.selectToday(memNo);
 		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -180,7 +180,7 @@ public class WorkRecordController {
 		Evo.setMemNo(memNo);
 		logger.info("퇴근!! , 파라미터 memNo={}, Evo={}", memNo, Evo);
 		
-		Evo = workService.selectToday(Integer.parseInt(memNo));
+		Evo = workService.selectToday(memNo);
 		
 		// cmp_month 셋팅
 		String date = mm.format(Evo.getCmpRegdate());
@@ -249,7 +249,7 @@ public class WorkRecordController {
 		searchVo.setMemNo(memNo);
 		logger.info("selectDate={}"+selectDate);
 		
-		searchVo = workService.selectToday(Integer.parseInt(memNo));
+		searchVo = workService.selectToday(memNo);
 		
 		if(searchVo == null) {
 			String msg = "조회결과가 없습니다.";

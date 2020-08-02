@@ -6,5 +6,5 @@ public interface WorkRecordService {
 	int insertWork_status(WorkRecordVO vo);
 	List<WorkRecordVO> selectWorkList(WorkRecordVO vo);
 	int updateWork(WorkRecordVO vo);
-	WorkRecordVO selectToday(int memNo);
+	WorkRecordVO selectToday(String memNo);
 }

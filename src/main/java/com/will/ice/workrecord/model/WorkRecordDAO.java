@@ -6,5 +6,5 @@ public interface WorkRecordDAO {
 	int insertWork(WorkRecordVO vo);
 	List<WorkRecordVO> selectWorkList(WorkRecordVO vo);
 	int updateWork(WorkRecordVO vo);
-	WorkRecordVO selectToday(int memNo);
+	WorkRecordVO selectToday(String memNo);
 }
