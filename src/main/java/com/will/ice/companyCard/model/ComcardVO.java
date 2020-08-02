@@ -1,5 +1,6 @@
 package com.will.ice.companyCard.model;
 
+import java.sql.Timestamp;
 
 public class ComcardVO {
 	private int NO;
@@ -8,7 +9,7 @@ public class ComcardVO {
 	private String ACCCODE;
 	private int PRICE;
 	private String USEPLACE;
-	private String USEDATE;
+	private Timestamp USEDATE;
 	private String FILENO;
 	private String NAME;
 	private String DEPTNAME;
@@ -49,10 +50,10 @@ public class ComcardVO {
 	public void setUSEPLACE(String uSEPLACE) {
 		USEPLACE = uSEPLACE;
 	}
-	public String getUSEDATE() {
+	public Timestamp getUSEDATE() {
 		return USEDATE;
 	}
-	public void setUSEDATE(String uSEDATE) {
+	public void setUSEDATE(Timestamp uSEDATE) {
 		USEDATE = uSEDATE;
 	}
 	public String getFILENO() {

@@ -6,7 +6,7 @@ CREATE TABLE companyCard (
 	accCode VARCHAR(20), /* 계정코드 */
 	price NUMBER, /* 금액 */
 	usePlace VARCHAR2(100), /* 사용처 */
-	useDate varchar2(30) , /* 날짜 */
+	useDate DATE DEFAULT sysdate, /* 날짜 */
 	fileNo NUMBER /* 파일순서 */
 );
 

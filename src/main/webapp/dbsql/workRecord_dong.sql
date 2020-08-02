@@ -41,7 +41,7 @@ select * from WORKRECORD;
 commit;
 
 delete from WORKRECORD
-where cmp_no = 1;
+where cmp_no = 118;
 
 delete from WORKRECORD
 where memno = 111910;

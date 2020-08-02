@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.address">
-	 <select id="selectAddress" parameterType="String" resultType="addressVo">
+	<select id="selectAddress" parameterType="String" resultType="addressVo">
 		select ad.*, adg.groupname from address ad, addressGroup adg
 		where ad.ADGNO = adg.ADGNO
 		and memno=#{memNo}
@@ -18,7 +18,7 @@
 		select * from department order by deptcode
 	</select>
 	
-
+	<!-- 주소록 등록 -->
 	<select id="selectCountAddressGroup" parameterType="string" resultType="int">
 		select count(*) from addressgroup
 		where memNo=#{memNo}
@@ -42,7 +42,7 @@
 		values(adno_seq.nextval, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
 	</insert>
 	
-	
+	<!-- 주소록 수정 -->
 	<select id="selectOneAdderss" resultType="addressVo">
 		select ad.*, adg.groupname from address ad, addressGroup adg
 		where ad.ADGNO = adg.ADGNO
@@ -57,7 +57,7 @@
 		where adNo=#{adNo}
 	</update>
 	
-	
+	<!-- 주소록 삭제 -->
 	<delete id="deleteAddress" parameterType="int">
 		delete from address
 		where adno=#{adNo}
