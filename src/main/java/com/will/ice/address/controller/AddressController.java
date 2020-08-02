@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.address.model.AddressGroupVO;
 import com.will.ice.address.model.AddressListVO;
@@ -90,7 +92,6 @@ public class AddressController {
 		logger.info("주소록 상세보기 화면 보여주기, adVo={},", adVo);
 		
 		model.addAttribute("adVo", adVo);
-		
 	}
 	
 	/* 주소록 insert 관련 */
@@ -173,32 +174,20 @@ public class AddressController {
 		return "common/message";
 	}
 	
-	@RequestMapping("/deleteMulti.do")
-	public String delMult(@ModelAttribute AddressListVO adListVo
-			, HttpServletRequest request, Model model) {
-
-		//1.
-		logger.info("선택한 상품 삭제, 파라미터 pdListVo={}", adListVo);
+	/* 좋아요 처리 */
+	@RequestMapping("/isFavorite.do")
+	@ResponseBody
+	public String search(@RequestParam int adNo) {
+		logger.info("ajax - isFavorite.do 실행, adNo={}", adNo);
 		
-		List<AddressVO> adList=adListVo.getAdItems();
-		
-		//2.
-		int cnt=service.deleteMulti(adList);
-		
-		logger.info("선택한 주소 삭제 결과, cnt={})", cnt);
-		String msg="", url="/address/addressMain.do";
-		
+		int cnt=service.updateIsFavorite(adNo);
 		if(cnt>0) {
-			msg="선택한 주소를 삭제하였습니다.";
+			logger.info("좋아요 처리 완료!");
 		}else {
-			msg="선택한 상품들 삭제시 에러 발생!!";
+			logger.info("좋아요 처리 실패!");
 		}
 		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/message";
-
+		return "";
 	}
 	
 }

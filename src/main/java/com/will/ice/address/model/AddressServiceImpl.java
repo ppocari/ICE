@@ -67,7 +67,7 @@ public class AddressServiceImpl implements AddressService{
 		int cnt=0;
 		try {
 			for(AddressVO vo : list) {
-				if(vo.getAdNo()!=0) { //체크한 상품만 삭제
+				if(vo.getAdNo()!=0) { //체크한 주소만 삭제
 					cnt=dao.deleteAddress(vo.getAdNo());
 				}
 			}
@@ -78,6 +78,54 @@ public class AddressServiceImpl implements AddressService{
 		}
 
 		return cnt;
+	}
+	
+	@Override
+	@Transactional
+	public int updateTrashMulti(List<AddressVO> list) {
+		int cnt=0;
+		try {
+			for(AddressVO vo : list) {
+				if(vo.getAdNo()!=0) { //체크한 주소만 휴지통으로 이동!
+					cnt=dao.updateTrashAddress(vo.getAdNo());
+				}
+			}
+		}catch(RuntimeException e) {
+			cnt=-1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public List<AddressVO> selectTrashAddress(String memNo) {
+		return dao.selectTrashAddress(memNo);
+	}
+
+	@Override
+	@Transactional
+	public int updateBackMulti(List<AddressVO> list) {
+		int cnt=0;
+		try {
+			for(AddressVO vo : list) {
+				if(vo.getAdNo()!=0) { //체크한 주소만 Main으로 Back!
+					cnt=dao.updateBackAddress(vo.getAdNo());
+				}
+			}
+		}catch(RuntimeException e) {
+			cnt=-1;
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public int updateIsFavorite(int adNo) {
+		return dao.updateIsFavorite(adNo);
 	}
 
 	

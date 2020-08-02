@@ -70,6 +70,27 @@ public class AddressDAOMybatis implements AddressDAO {
 		return sqlSession.delete(namespaces+"deleteAddress", adNo);
 	}
 
+	@Override
+	public int updateTrashAddress(int adNo) {
+		return sqlSession.update(namespaces+"updateTrashAddress", adNo);
+	}
+
+	@Override
+	public List<AddressVO> selectTrashAddress(String memNo) {
+		return sqlSession.selectList(namespaces+"selectTrashAddress", memNo);
+	}
+
+	@Override
+	public int updateBackAddress(int adNo) {
+		return sqlSession.update(namespaces+"updateBackAddress", adNo);
+	}
+
+	@Override
+	public int updateIsFavorite(int adNo) {
+		return sqlSession.update(namespaces+"updateIsFavorite", adNo);
+	}
+
+	
 	
 	
 

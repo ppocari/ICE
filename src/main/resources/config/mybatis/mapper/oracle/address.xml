@@ -3,10 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.address">
+	<!-- 주소록 메인화면 -->
 	<select id="selectAddress" parameterType="String" resultType="addressVo">
 		select ad.*, adg.groupname from address ad, addressGroup adg
 		where ad.ADGNO = adg.ADGNO
 		and memno=#{memNo}
+		and isDeleted is null
 		order by name
 	</select>
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
@@ -62,7 +64,30 @@
 		delete from address
 		where adno=#{adNo}
 	</delete>
-
+	<update id="updateTrashAddress" parameterType="int">
+		update address
+		set isDeleted=sysdate
+		where adno=#{adNo}
+	</update>
+	<select id="selectTrashAddress" parameterType="String" resultType="addressVo">
+		select ad.*, adg.groupname from address ad, addressGroup adg
+		where ad.ADGNO = adg.ADGNO
+		and memno=#{memNo}
+		and isDeleted is not null
+		order by name
+	</select>
+	<update id="updateBackAddress" parameterType="int">
+		update address
+		set isDeleted = null
+		where adno=#{adNo}
+	</update>
+	
+	<!-- 좋아요 -->
+	<update id="updateIsFavorite" parameterType="int">
+		update address 
+		set isfavorite='yes'
+		where adno=#{adNo}
+	</update>
 </mapper>
 
 
