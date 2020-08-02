@@ -3,11 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.comcard">
-	<select id="selectAllComcard"  resultType="comcardVO">
-		select * from comcard_mem		
+	<select id="selectUnUseComcard" parameterType="SearchYearMonthVO" resultType="ComcardVO">
+		select * from comcard_mem
+		where acccode is null 
+		<![CDATA[ 
+		and usedate >= #{begin_ym} 
+		and usedate < #{end_ym}
+		]]>
+		  
 	</select>
 	
-	
-
-
+	<select id="selectNoComcard" parameterType="int" resultType="ComcardVO">
+		select * from comcard_mem
+		where acccode is null
+		  and no = #{comcard_no}
+	</select>
 </mapper>

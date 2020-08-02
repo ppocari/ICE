@@ -47,7 +47,6 @@
 	
 	var idx = 1;
 	function memberTableCreate(){
-		var tc = new Array();
 		var str = '';
 		
 		

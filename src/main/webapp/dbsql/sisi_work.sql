@@ -7,6 +7,19 @@ select * from department;
 
 select * from workRecord;
 
+insert into workRecord(cmp_no, memno, cmp_in, cmp_out, cmp_status, cmp_regdate, cmp_month)
+values(3, '111910', '9:00', '17:00', '퇴근', '2020-08-02', '2020-08');
+
+insert into workRecord(cmp_no, memno, cmp_in,  cmp_status, cmp_regdate, cmp_month)
+values(5, '111910', '9:00',  '퇴근', '2020-07-30', '2020-07');
+
+
+select * from workRecord 
+    where memno='111910' and cmp_in is not null
+    and cmp_regdate = '2020-07-30'
+;
+
+
 create view mypage_mem
 as
 select m.*,  p.posname , d.DEPTNAME
@@ -20,7 +33,7 @@ from member m join position p
 select * from mypage_mem;
   
  /* 
-  drop view log_mem;
+  
   drop view mypage_mem;
   drop table position;
   drop table department;
@@ -64,25 +77,27 @@ commit;
 
 select * from companyCard;
 
-insert into companyCard
-values(companyCard_seq.nextval,'1111222233334444','111910','102036',9000,'서울시','2020-07-12' ,1);
 
 insert into companyCard
-values(companyCard_seq.nextval,'1111222233334445','111910','102037',9000,'서울시','2020-07-12' ,1);
+values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-06-31' ,1  );
 
-insert into companyCard
-values(companyCard_seq.nextval,'1111222233334446','111910','102036',13000,'서울시','2020-07-13' ,1);
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'3243222233334321','111910',9000,'서울시','2020-07-01' ,1  );
 
-insert into companyCard
-values(4,'1111222233334447','121920','102036',356000,'서울시','2020-07-14' ,1);
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'4321222233331234','111910',9000,'서울시','2020-07-31' ,1  );
 
-insert into companyCard
-values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-07-12' ,1 , );
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'3777222233331234','111910',9000,'서울시','2020-06-01' ,1  );
+
+--drop table companyCard
+--drop sequence companyCard_seq
 
 select * from accountCode;
 --102306
 --102307
 
+--drop view  comcard_mem;
 
 select c.*, m.NAME , m.POSNAME
 from companyCard c join mypage_mem m
@@ -96,7 +111,12 @@ from companyCard c join mypage_mem m
  
  select * from comcard_mem;
  
-
+ desc comcard_mem
+ 
+select * from comcard_mem
+		where acccode is null 
+		  and usedate between '2020-06-01' and '2020-07-01';
+		 
 
  select * from member;
  desc member;
