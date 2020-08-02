@@ -21,9 +21,10 @@
 		where cmp_no=#{cmpNo}
 	</update>
 	
-	<select id="selectToday" resultType="WorkRecordVO" parameterType="int">
+	<select id="selectToday" resultType="WorkRecordVO" parameterType="String">
 		select * from (select * from workRecord 
-                where memno=#{memNo} order by cmp_regdate desc) where rownum = 1
+            where memno=#{memNo} order by cmp_regdate desc) 
+		where rownum = 1
 	</select>
 	
 </mapper>

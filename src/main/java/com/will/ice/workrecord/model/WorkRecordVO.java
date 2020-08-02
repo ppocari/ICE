@@ -11,6 +11,7 @@ public class WorkRecordVO {
 	private Date cmpRegdate;
 	private String cmpMonth;
 	
+	
 	public int getCmpNo() {
 		return cmpNo;
 	}
@@ -59,6 +60,7 @@ public class WorkRecordVO {
 		return "WorkRecordVO [cmpNo=" + cmpNo + ", memNo=" + memNo + ", cmpIn=" + cmpIn + ", cmpOut=" + cmpOut
 				+ ", cmpStatus=" + cmpStatus + ", cmpRegdate=" + cmpRegdate + ", cmpMonth=" + cmpMonth + "]";
 	}
+	
 	
 	
 }
