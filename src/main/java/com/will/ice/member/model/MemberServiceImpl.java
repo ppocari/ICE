@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -60,13 +61,8 @@ public class MemberServiceImpl implements MemberService{
 
 
 	@Override
-	public List<MemberVO> searchAllmember(String searchKeyword) {
-		return memberDao.searchAllmember(searchKeyword);
-	}
-
-	@Override
-	public List<MemberVO> selectMemberList(DateSearchVO dateSearchVo) {
-		return memberDao.selectMemberList(dateSearchVo);
+	public List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo) {
+		return memberDao.selectMemberList(dpdvo);
 	}
 
 	@Override
@@ -78,6 +74,13 @@ public class MemberServiceImpl implements MemberService{
 	public int deleteSelectMember(MemberVO memberVO) {
 		return memberDao.deleteSelectMember(memberVO);
 	}
+
+	@Override
+	public int newPwd(MemberVO memVo) {
+		return memberDao.newPwd(memVo);
+	}
+
+	
 
 	
 
