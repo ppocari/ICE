@@ -47,20 +47,25 @@ public class MemberController {
 	public String memWriteMulti(@ModelAttribute MemberListVO memListVO,
 			Model model) {
 		logger.info("사원 등록 처리 memWriteMulti, memListVO={}",memListVO);
+		
+		int cnt = 0;
+		try {
+			List<MemberVO> memList = memListVO.getMemItems();
+			cnt = memberService.registerMulti(memList);
+		
+			String msg = "사원번호 중복!", url = "/member/memWrite.do";
+			if(cnt > 0) {
+				msg = "사원등록 성공!";
+				url = "/member/memList.do";
+				
+			}
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
 			
-		List<MemberVO> memList = memListVO.getMemItems();
-		int cnt  = memberService.registerMulti(memList);
-			
-		String msg = "사원등록 실패", url = "/member/memWrite.do";
-		if(cnt > 0) {
-			msg = "사원등록 성공!";
-			url = "/member/memList.do";
-			
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
+	
 		return "/common/message";
 	}
 	

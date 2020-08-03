@@ -8,7 +8,7 @@
 
 /* 流鞭 */
 CREATE TABLE position (
-	posCode NUMBER NOT NULL, /* 流鞭内靛 */
+	posCode VARCHAR2(10) NOT NULL, /* 流鞭内靛 */
 	posName VARCHAR2(100) /* 流鞭疙 */
 );
 
@@ -53,7 +53,7 @@ values('999', '包府磊');
 
 /* 何辑 */
 CREATE TABLE department (
-	deptCode NUMBER NOT NULL, /* 何辑内靛 */
+	deptCode VARCHAR2(10) NOT NULL, /* 何辑内靛 */
 	deptName VARCHAR2(100) /* 何辑疙 */
 );
 
