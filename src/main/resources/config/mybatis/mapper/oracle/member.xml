@@ -31,9 +31,9 @@
 	
 	<update id="updateSelectMember" parameterType="memberVO">
 		update member
-		set name = #{name}, HIREDATE = #{hiredate}, 
+		set name = #{name},  HIREDATE = #{hiredate},
 			deptcode = #{deptCode}, POSCODE = #{posCode},  salary = #{salary}
-		where memno = #{memNo}
+		where memno = #{memNo} 
 	</update>
 	
 	<select id="selectMemberList" parameterType="dateSearchVo" 

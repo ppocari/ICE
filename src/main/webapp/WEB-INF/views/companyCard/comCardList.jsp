@@ -19,18 +19,15 @@
 	width: 110px;
 }
 .search input{
-	width:150px;
+	width:120px;
 }
 
 
 </style>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$("#hiredate1 input").datepicker();
+		$("#usedate1").datepicker();
+		$("#usedate2").datepicker();
 		
 		
 	});
@@ -93,12 +90,13 @@
 							<input type="text" name="price1"> ~
 							<input type="text" name="price2">
 						</div>
-						
 						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<label for="usedate1" style="margin-right: 20px;">사용일별</label>
+							<input type="text" name="usedate1" id="usedate1"> ~
+							<input type="text" name="usedate2" id="usedate2">
 						</div>
+						
+						
 						
 					</div>
 					
@@ -130,7 +128,7 @@
 											<td>${vo.ACCCODE }</td>
 											<td>${vo.PRICE }</td>
 											<td>${vo.USEPLACE }</td>
-											<td><fmt:formatDate value="${vo.USEDATE }" pattern="yyyy-MM-dd"/> </td>
+											<td>${vo.USEDATE } </td>
 											<td>${vo.DEPTNAME }</td>
 											<td>${vo.POSNAME }</td>
 																				
