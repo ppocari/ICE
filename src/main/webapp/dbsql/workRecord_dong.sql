@@ -9,7 +9,7 @@ CREATE TABLE workRecord (
 	CMP_IN VARCHAR2(30), /* 출근시간 */
 	CMP_OUT VARCHAR(30), /* 퇴근시간 */
 	CMP_STATUS VARCHAR2(50), /* 근태상태 */
-	CMP_REGDATE DATE DEFAULT sysdate, /* 현재날짜 */
+	CMP_REGDATE VARCHAR(30) DEFAULT sysdate, /* 현재날짜 */
 	CMP_MONTH VARCHAR2(30) /* 현재 월 */
 );
 
@@ -38,7 +38,6 @@ start with 1;
 
 /*
 select * from WORKRECORD;
-commit;
 
 delete from WORKRECORD
 where cmp_no = 1;
@@ -46,8 +45,8 @@ where cmp_no = 1;
 delete from WORKRECORD
 where memno = 111910;
 
-insert into workRecord
-values(workRecord_seq.nextval,111910,'2020-07-29 09:00','2020-07-29 17:00','출근');
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_status,cmp_regdate,cmp_month)
+values(workrecord_seq.nextval,111910,'09:00','0','2020-06-01','2020-06');
 
 
 select * from workRecord where memno = 111910 and cmp_regdate = '20-07' order by cmp_in desc;
@@ -55,4 +54,6 @@ select * from workRecord where memno = 111910 and cmp_regdate = '20-07' order by
 select * from (select * from workRecord 
             where memno=111910 order by cmp_regdate desc) 
 where rownum = 1
+
+commit;
 */

@@ -7,9 +7,9 @@
 		<selectKey keyProperty="schNo" resultType="int" order="BEFORE">
 			select schedule_seq.nextval from dual
 		</selectKey>
-		insert into SCHEDULE(schNo,memNo,title,startDay,endDay,place,content)
-		values(schedule_seq.nextval,#{memNo},#{title},#{startDay},#{dayEnd},
-		#{place},#{content})
+		insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content)
+		values(schedule_seq.nextval,#{memNo},#{title},#{startDay},#{endDay},
+			#{place},#{content})
 	</insert>
 	
 	<select id="selectSchedule" parameterType="string" resultType="ScheduleVo">

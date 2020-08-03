@@ -1,12 +1,12 @@
 package com.will.ice.schedule.model;
 
 public class ScheduleVo {
+	private int schNo;
 	private String title;
 	private String content;
 	private String startDay;
 	private String endDay;
 	private String memNo;
-	private int schNo;
 	private String place;
 	
 	
