@@ -9,6 +9,7 @@ public interface SpayService {
 
 	public int insertTic(SpayVO vo);
 	List<Map<String, Object>> selectSpayView(int MEMNO);
-	List<SpayVO> selectAll();
 	int selectDay(DateSearchVO dateSearchVo);
+	SpayVO searchAll(int ticno);
+	int searchNum(int MEMNO);
 }

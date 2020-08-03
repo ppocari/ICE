@@ -10,33 +10,16 @@
 		insert into ticket(TICNO, MemNo, TICQUANTITY, TICPRICE)
 		values(#{TICNO}, #{MEMNO}, #{TICQUANTITY}, #{TICPRICE})
 	</insert>
-	
+		
 	<select id="selectSpayView" parameterType="dateSearchVo"
 		resultType="map">
-		select *
-		from
-		(
-		    select rownum as RNUM, A.*
-		    from(
-		        select * from SpayViewVO
-				<where> 
-					<if test="MemNo!=null and MemNo!=''">
-						MemNo=#{MemNo}
-					</if>				
-					and TICREGDATE>=#{startDay}
-					<![CDATA[
-					and TICREGDATE < to_date(#{endDay})+1 ]]>
-				</where>
-				order by TICNO desc
-		    )A    
-		)
-		<![CDATA[ 
-		where RNUM>#{firstRecordIndex}
-		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+			select * from SpayView
+			where MemNo=#{value}
+			order by ticno desc
 	</select>
 	
 	<select id="selectDay" parameterType="dateSearchVo" 
-		resultType="int">
+		resultType="int"> 
 		select count(*) from SpayView
 		<where> 
 			<if test="MemNo!=null and MemNo!=''">
@@ -48,6 +31,23 @@
 		</where>
 		order by ticno desc
 	</select>
+	
+	<select id="searchNum" parameterType="int" resultType="int">
+		select ticno from
+		(
+		select * from SpayView
+		where memno=#{value}
+		order by ticno desc
+		)
+		where rownum=1
+	</select>
+
+	<select id="searchAll" parameterType="int" resultType="spayvo">
+		select * from SpayView
+		where ticno=#{value}
+		order by ticno desc
+	</select>
+	
 		
 </mapper>
 

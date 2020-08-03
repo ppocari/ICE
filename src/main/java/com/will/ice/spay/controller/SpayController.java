@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.common.Utility;
 import com.will.ice.common.DateSearchVO;
@@ -81,7 +83,6 @@ public class SpayController {
 
 	}
 
-	
 	@RequestMapping(value="/spay.do")
 	public void spay_post(HttpSession session, Model model,
 			int TICPRICE, int TICQUANTITY) {
@@ -99,17 +100,42 @@ public class SpayController {
 		
 	}
 		
-	@RequestMapping("/sok.do")
-	public String sok(HttpSession session, Model model,
-			SpayVO sVo) {
+	@RequestMapping(value = "/sok.do", method = RequestMethod.GET)
+	public void sok_get(@ModelAttribute SpayVO sVo,
+			HttpSession session, Model model) {
+		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
+		String userid=(String) session.getAttribute("MemNo");
+		
+		int ticno = spayService.searchNum(MemNo);
+		logger.info("가장최근구매내역, 파라미터 tinco={}", ticno);
+		
+		SpayVO vo = spayService.searchAll(ticno);
+		logger.info("구매확인, 파라미터 vo={}", vo);
+
+		MemberVO memVo = memberService.selectMember(userid);
+		logger.info("구매자, 파라미터 memVo={}", memVo);
+		
+		model.addAttribute("memVo", memVo);
+		model.addAttribute("vo", vo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/sok.do", method = RequestMethod.POST)
+	public String sok_post(@ModelAttribute SpayVO sVo,
+			HttpSession session, Model model,
+			@RequestParam int TICPRICE, @RequestParam int TICQUANTITY) {
 		String MemNo=(String) session.getAttribute("MemNo");
+		
 		sVo.setMEMNO(MemNo);
+		sVo.setTICPRICE(TICPRICE);
+		sVo.setTICQUANTITY(TICQUANTITY);
 		
 		logger.info("구매, 파라미터 sVo={}", sVo);
 		
 		int cnt=spayService.insertTic(sVo);
 		logger.info("주문하기 결과, cnt={}", cnt);
 		
+		model.addAttribute("sVo", sVo);
 		
 		return "spay/sok";
 	}

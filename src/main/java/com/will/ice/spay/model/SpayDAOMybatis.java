@@ -28,13 +28,18 @@ public class SpayDAOMybatis implements SpayDAO{
 	}
 
 	@Override
-	public List<SpayVO> selectAll() {
-		return sqlSession.selectList(namespace+"selectAll");
+	public int selectDay(DateSearchVO dateSearchVo) {
+		return sqlSession.selectOne(namespace+"selectDay",dateSearchVo);
 	}
 
 	@Override
-	public int selectDay(DateSearchVO dateSearchVo) {
-		return sqlSession.selectOne(namespace+"selectDay",dateSearchVo);
+	public SpayVO searchAll(int ticno) {
+		return sqlSession.selectOne(namespace+"searchAll", ticno);
+	}
+
+	@Override
+	public int searchNum(int MEMNO) {
+		return sqlSession.selectOne(namespace+"searchNum", MEMNO);
 	}
 
 }

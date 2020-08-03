@@ -24,14 +24,20 @@ public class SpayServiceImpl implements SpayService{
 	}
 
 	@Override
-	public List<SpayVO> selectAll() {
-		return spayDao.selectAll();
-	}
-
-	@Override
 	public int selectDay(DateSearchVO dateSearchVo) {
 		return spayDao.selectDay(dateSearchVo);
 	}
+
+	@Override
+	public SpayVO searchAll(int ticno) {
+		return spayDao.searchAll(ticno);
+	}
+
+	@Override
+	public int searchNum(int MEMNO) {
+		return spayDao.searchNum(MEMNO);
+	}
+
 	
 
 }

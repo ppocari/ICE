@@ -40,6 +40,16 @@ public class MemberDAOMybatis implements MemberDAO{
 		return sqlsession.selectList(namespace+"selectMemberList" , dateSearchVo);
 	}
 
+	@Override
+	public int updateSelectMember(MemberVO memberVO) {
+		return sqlsession.update(namespace+"updateSelectMember", memberVO);
+	}
+
+	@Override
+	public int deleteSelectMember(MemberVO memberVO) {
+		return sqlsession.update(namespace+"deleteSelectMember", memberVO);
+	}
+
 	
 
 }
