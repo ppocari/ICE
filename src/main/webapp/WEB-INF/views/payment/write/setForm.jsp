@@ -10,16 +10,6 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="<c:url value="/resources/css/sb-admin-2.min.css"/>" rel="stylesheet"> 
-<style type="text/css">
-body{overflow: hidden; font-size: 1.3em;}
-#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#headerDiv p{padding-left: 8px;padding-top: 8px;}
-#formTable thead tr{background-color: #858796; color:white;}
-#formlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;}
-#btForm{background-color: #4e73df; color:white;position: absolute;left: 450px;font-size: 1.0em;}
-#btDel{font-size:1.0em;}
-#lastDiv{padding-left: 8px;position:absolute;bottom: 4%;}
-</style>
 <script type="text/javascript">
 	$(function(){
 		$('#btForm').click(function(){
@@ -31,10 +21,10 @@ body{overflow: hidden; font-size: 1.3em;}
 	});
 </script>
 </head>
-<body>
+<body id="SF">
 <!-- Content Row -->
 <div id="bigDiv">
-	<div id="headerDiv">
+	<div id="SFheaderDiv">
 		<p>문서 양식 등록</p>
 	</div>
 	<form name="formFrm" method="post" 
@@ -43,8 +33,8 @@ body{overflow: hidden; font-size: 1.3em;}
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
 	<div class="card shadow mb-4" style="height:400px;width: 99%;padding: 10px 10px 10px 10px;">
-	<div id="formlistDiv">
-		<table class="table" id="formTable">
+	<div id="SFformlistDiv">
+		<table class="table" id="SFformTable">
 			<thead>
 				<tr>
 					<td>양식코드</td>
@@ -73,9 +63,9 @@ body{overflow: hidden; font-size: 1.3em;}
 	</div>
 	</div>
 	</div>
-	<div id="lastDiv">
-		<button type="submit" class="btn btn-default" id="btDel">선택삭제</button>
-		<button type="button" class="btn btn-default" id="btForm">등록</button>
+	<div id="SFlastDiv">
+		<button type="submit" class="btn btn-default" id="SFbtDel">선택삭제</button>
+		<button type="button" class="btn btn-default" id="SFbtForm">등록</button>
 	</div>
 	</form>
 </div>

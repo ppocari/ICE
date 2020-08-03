@@ -3,6 +3,7 @@ package com.will.ice.member.model;
 import java.util.List;
 
 import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 
 public interface MemberDAO {
 	
@@ -16,6 +17,7 @@ public interface MemberDAO {
 	
 	int deleteSelectMember(MemberVO memberVO);
 	
-	List<MemberVO> searchAllmember(String searchKeyword);
-	List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
+	List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo);
+	
+	int newPwd(MemberVO memVo);
 }

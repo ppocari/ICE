@@ -93,6 +93,7 @@ ALTER TABLE companyCard
 		);
 		
 		
+--drop sequence companyCard_seq
 create sequence companyCard_seq
 start with 1
 increment by 1;

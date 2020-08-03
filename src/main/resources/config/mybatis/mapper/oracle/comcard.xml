@@ -3,12 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.comcard">
-	<select id="selectUnUseComcard" parameterType="SearchYearMonthVO" resultType="ComcardVO">
+	<select id="selectUnUseComcard" parameterType="DateSearchVO" resultType="ComcardVO">
 		select * from comcard_mem
 		where acccode is null 
 		<![CDATA[ 
-		and usedate >= #{begin_ym} 
-		and usedate < #{end_ym}
+		and usedate >= #{startDay} 
+		and usedate < #{endDay}
 		]]>
 		  
 	</select>
@@ -19,7 +19,28 @@
 		  and no = #{comcard_no}
 	</select>
 	
-	<select id="selectAllComcard" resultType="ComcardVO">
+	<select id="selectListComcard" parameterType="Depart_posi_dateVO" resultType="ComcardVO">
 		select * from comcard_mem
+		where memno is not null
+		<if test="deptCode!=null and deptCode!=''">
+		      and deptcode = #{deptCode}
+		</if>
+		<if test="posCode!=null and posCode!=''">
+		      and poscode = #{posCode }
+		</if>
+		<if test="usedate1 !=null and usedate1 != ''">
+			and usedate >= #{usedate1}
+		</if>
+		<if test="usedate2 !=null and usedate2 != ''">
+			<![CDATA[
+			and usedate < #{usedate2} ]]>
+		</if>
+		<if test="price1 !=null and price1 != ''">
+			and price >= #{price1}
+		</if>
+		<if test="price2 !=null and price2 != ''">
+			<![CDATA[
+			and price < #{price2} ]]>
+		</if>
 	</select>
 </mapper>
