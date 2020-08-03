@@ -19,11 +19,6 @@ public class AddressDAOMybatis implements AddressDAO {
 
 
 	@Override
-	public List<AddressVO> selectAddress(String memNo) {
-		return sqlSession.selectList(namespaces+"selectAddress", memNo);
-	}
-
-	@Override
 	public List<MemberVO> selectMemDeptPosForOrgan() {
 		return sqlSession.selectList(namespaces+"selectMemDeptPosForOrgan");
 	}
@@ -89,7 +84,25 @@ public class AddressDAOMybatis implements AddressDAO {
 	public int updateIsFavorite(int adNo) {
 		return sqlSession.update(namespaces+"updateIsFavorite", adNo);
 	}
+	
+	@Override
+	public int updateNotFavorite(int adNo) {
+		return sqlSession.update(namespaces+"updateNotFavorite", adNo);
+	}
+		
 
+	@Override
+	public List<AddressVO> selectAddress(AddressSearchVO searchVo) {
+		return sqlSession.selectList(namespaces+"selectAddress", searchVo);
+	}
+
+
+	@Override
+	public int getTotalRecord(AddressSearchVO searchVo) {
+		return sqlSession.selectOne(namespaces+"getTotalRecord", searchVo);
+	}
+
+	
 	
 	
 	

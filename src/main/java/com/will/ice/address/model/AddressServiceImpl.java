@@ -17,10 +17,10 @@ public class AddressServiceImpl implements AddressService{
 	private AddressDAO dao;
 
 	@Override
-	public List<AddressVO> selectAddress(String memNo) {
-		return dao.selectAddress(memNo);
+	public List<AddressVO> selectAddress(AddressSearchVO searchVo) {
+		return dao.selectAddress(searchVo);
 	}
-
+	
 	@Override
 	public List<MemberVO> selectMemDeptPosForOrgan() {
 		return dao.selectMemDeptPosForOrgan();
@@ -127,6 +127,16 @@ public class AddressServiceImpl implements AddressService{
 	public int updateIsFavorite(int adNo) {
 		return dao.updateIsFavorite(adNo);
 	}
-
 	
+	@Override
+	public int updateNotFavorite(int adNo) {
+		return dao.updateNotFavorite(adNo);
+	}
+
+	@Override
+	public int selectTotalRecord(AddressSearchVO searchVo) {
+		return dao.getTotalRecord(searchVo);
+	}
+
+
 }

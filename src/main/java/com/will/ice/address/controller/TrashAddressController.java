@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.will.ice.address.model.AddressListVO;
+import com.will.ice.address.model.AddressSearchVO;
 import com.will.ice.address.model.AddressService;
+import com.will.ice.address.model.AddressUtility;
 import com.will.ice.address.model.AddressVO;
+import com.will.ice.common.PaginationInfo;
 
 @Controller
 @RequestMapping("/address")
@@ -59,15 +62,13 @@ public class TrashAddressController {
 	
 	/* 휴지통 - 조회 */
 	@RequestMapping("/trashAddress.do")
-	public String trash_get(HttpServletRequest request, Model model) {
-		
-		logger.info("주소록(휴지통) 조회");
+	public String address_get(@ModelAttribute AddressSearchVO adSearchVo, HttpServletRequest request, Model model) {
 		
 		 HttpSession session= request.getSession(); 
 		 String memNo=(String)session.getAttribute("identNum");
 		
-		 logger.info("memNo={}", memNo);
-
+		 logger.info("주소록 휴지통 보기, memNo={}, AddressSearchVo={}", memNo, adSearchVo);
+		 
 		 String url="/log/login.do", msg="먼저 로그인 해주세요!";
 		 if(memNo==null) {
 			 model.addAttribute("msg", msg);
@@ -77,11 +78,33 @@ public class TrashAddressController {
 		 }
 		/* String memNo="111910"; */
 		
-		List<AddressVO> adList=service.selectTrashAddress(memNo);
-		logger.info("주소록(휴지통) 조회 결과, list.size={}", adList.size());
+		//[1] PaginationInfo
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(adSearchVo.getCurrentPage());
 		
+		//[2] SearchVo
+		adSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		adSearchVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		
+		//2
+		adSearchVo.setMemNo(memNo);
+		adSearchVo.setIsTrash("yes");
+		
+		List<AddressVO> adList=service.selectAddress(adSearchVo);
+		logger.info("주소록 휴지통 조회 결과, list.size={}", adList.size());
+
+		int totalRecord=service.selectTotalRecord(adSearchVo);
+		logger.info("전체 레코드={} " + totalRecord);
+		
+		pagingInfo.setTotalRecord(totalRecord);
+				
+		//3
 		model.addAttribute("adList", adList);
+		model.addAttribute("pagingInfo", pagingInfo);
 		
+		//4
 		return "address/trashAddress";
 		
 	}

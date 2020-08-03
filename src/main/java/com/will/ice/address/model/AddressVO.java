@@ -1,6 +1,6 @@
 package com.will.ice.address.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class AddressVO {
 	private int adNo;

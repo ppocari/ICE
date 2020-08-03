@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
+function pageProc(curPage){
+	$('input[name=currentPage]').val(curPage);
+	$('form[name=frmPage]').submit();
+}
+
 	$(function() {
 		var selected = $(this).hasClass("highlight");
 
@@ -110,17 +115,31 @@
 	text-decoration: none;
 }
 
+.divPage{
+	text-align: center;
+	margin: 10px;
+}
+
 </style>
 
 <section id="addressMain_section">
+	<form action="<c:url value='/address/trashAddress.do'/>" 
+		name="frmPage" method="post">
+		<input type="hidden" name="currentPage">
+		<%-- input type="text" name="searchCondition" 
+			value="${param.searchCondition}">
+		<input type="text" name="searchKeyword" 
+			value="${param.searchKeyword}">	 --%>
+	</form>
 	<header>
-		<h3>
-			주소록<span> > 휴지통 </span>
-		</h3>
+
 	</header>
 	<article>
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">휴지통</h6>
+				</div>
 				<form name="addressList" method="post" action="">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div id="buttonsDiv">
@@ -134,14 +153,14 @@
 						<table id="addressTable">
 							<tr class="card-header">
 								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
-								<th>이름</th>
-								<th>전화번호</th>
-								<th>이메일</th>
-								<th>그룹</th>
-								<th>회사명</th>
-								<th>부서</th>
-								<th>직책</th>
-								<th>삭제일</th>
+								<th  style="width:10%">이름</th>
+								<th  style="width:15%">전화번호</th>
+								<th  style="width:22%">이메일</th>
+								<th  style="width:10%">그룹</th>
+								<th  style="width:13%">회사명</th>
+								<th  style="width:13%">부서</th>
+								<th  style="width:10%">직책</th>
+								<th style="width:10%">삭제일</th>
 							</tr>
 							<!-- 반복 시작 -->
 							<c:set var="idx" value="0"/>
@@ -188,13 +207,46 @@
 									<c:if test="${!empty address.posName }">
 										<td class="posName">${address.posName}</td>
 									</c:if>
-									<td class="isDeleted">${address.isDeleted}</td>
+									<td class="isDeleted">
+										<fmt:formatDate  value="${address.isDeleted}"
+										pattern="yyyy-MM-dd"/>
+									</td>
 								</tr>
 							</c:forEach>
 							<!-- 반복 끝 -->
 						</table>
 					</div>
 				</form>
+				<!-- 페이지 번호 추가 -->		
+				<!-- 이전 블럭으로 이동 ◀ -->
+				<div class="divPage">
+					<c:if test="${pagingInfo.firstPage>1 }">
+						<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})">
+						<%-- 	<img src="<c:url value='/resources/images/first.JPG'/>" alt="이전 블럭으로 이동"> --%>
+						◀
+						</a>
+					</c:if> 
+					
+					<!-- [1][2][3][4][5][6][7][8][9][10] -->
+					<c:forEach var="i" begin="${pagingInfo.firstPage }" 
+						end="${pagingInfo.lastPage }">		
+						<c:if test="${i!=pagingInfo.currentPage }">
+							<a href="#" onclick="pageProc(${i})">[${i}]</a>			
+						</c:if>
+						<c:if test="${i==pagingInfo.currentPage }">
+							<span style="color:blue;font-weight:bold">${i}</span>			
+						</c:if>		
+					</c:forEach>
+						
+					<!-- 다음 블럭으로 이동 ▶ -->
+					<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+						<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})">
+							<%-- <img src="<c:url value='/resources/images/last.JPG'/>" alt="다음 블럭으로 이동"> --%>
+							▶
+						</a>
+					</c:if>
+					<!--  페이지 번호 끝 -->
+				</div>
 			</div>
 		</div>
 	</article>
