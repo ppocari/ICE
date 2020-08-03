@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../../inc/top.jsp" %>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+ <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
-input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
-#title{width:100%}
-#div3 button,#div3 select{margin-left: 10px;}
-#div2{position: absolute;top: 740px;}
-#div3{position: absolute;top: 740px;right:1%;}
-#upperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#upperDiv p{padding-top: 5px;padding-left: 5px;}
-#wholeDiv{padding-left: 20px;padding-right: 20px;}
-#keep,#formNo{width: 200px;}
+#writeupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#writeupperDiv p{padding-top: 5px;padding-left: 5px;}
+#writewholeDiv{padding-left: 20px;padding-right: 20px;height:fit-content;}
+#writelabel1 {position: relative;top: 40px;}#writedocNo {position: relative;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel2 {top: -40px;left: 310px;position: relative;}#writekeep {position: relative;top: -80px;left: 400px;width: 200px;}
+#writelabel3 {position: relative;top: -60px;}#writedepartment {position: relative;top: -100px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel4 {position: relative;top: -140px;left: 310px;}#writename {position: relative;top: -180px;left: 390px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel5 {position: relative;top: -170px;}#writewriteDay {position: relative;top: -210px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel6 {position: relative;top: -182px;}#writetitle {width: 92%;position: relative;top: -220px;left: 75px;}
+#writelabel7 {position: relative;top: -200px;}#writeformNo {width: 200px;position: relative;top: -237px;left: 80px;}
+.note-editor.note-frame.card {position: relative;top: -216px;}.note-editable.card-block {height: 600px;}
+#writelabel8 {position: relative;top: -193px;}#writeupfile {position: relative;top: -231px;left: 75px;width: 93%;}
+#writedocForm {position: relative;top:-213px;}#writesendBt {position: absolute;top: 80%;right: 1%;}
+#writesaveBt {position: absolute;top: 80%;right: 10%;}#writetypeNo {position: absolute;top: 80%;right: 19%;width:200px;}
 </style>
 <script type="text/javascript">
 	$(function() {
-		$('#formNo').change(function(){
+		$('#writeformNo').change(function(){
 			$.ajax({
 				url:"<c:url value='/payment/getForm.do'/>",
 				type:"get",
@@ -33,60 +35,50 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 			});
 		});
 		
-		$('#docForm').click(function(){
+		$('#writedocForm').click(function(){
 			window.open('setForm.do','docform','width= 500,height=500,left=0,top=0,location=no,resizable=no,scroll=no');
 		});
 	});
 	function imsy(){
-		$('form[name=payInfoFrm]').attr("action","<c:url value='/payment/write/imsyInsert.do?imsy=Y'/>")
+		$('form[name=writepayInfoFrm]').attr("action","<c:url value='/payment/write/imsyInsert.do?imsy=Y'/>")
 	}
 </script>
 <!-- Content Row -->
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 10px 0px 10px 0px;">
-	<div id="wholeDiv">
-		<div id="upperDiv">
+	<div class="card shadow mb-4" style="height:fit-content;width: 99%;padding: 10px 0px 10px 0px;">
+	<div id="writewholeDiv">
+		<div id="writeupperDiv">
 			<p>기안 작성하기</p>
 		</div>
-		<form name="payInfoFrm" method="post" enctype="multipart/form-data"
-			action="<c:url value='/payment/write/insertPaydoc.do'/>">
-		<input type="hidden" id="typeNo" name="typeNo" value="${param.typeNo }">
-		<div class="form-group">
-			<label for="docNo">문서 번호</label> 
-				<input type="text" class="form-control" id="docNo" readonly="readonly">
-			<label for="keep">보존 기간</label> 
-			<select class="form-control" id="keep" name="keep">
+		<form name="writepayInfoFrm" method="post" enctype="multipart/form-data"
+			action="<c:url value='/payment/write/insertPaydoc.do'/>" style="color: black;">
+			<label for="docNo" id="writelabel1">문서 번호</label> 
+				<input type="text" class="form-control" id="writedocNo" readonly="readonly">
+			<label for="keep" id="writelabel2">보존 기간</label> 
+			<select class="form-control" id="writekeep" name="keep">
 				<option value="12">1년</option>
 				<option value="24">2년</option>
 				<option value="36">3년</option>
 				<option value="48">4년</option>
 				<option value="60">5년</option>
 			</select>
-		</div>
-		<div class="form-group">
-			<label for="department">기안 부서</label> 
-				<input type="text" class="form-control" id="department"
+			<label for="department" id="writelabel3">기안 부서</label> 
+				<input type="text" class="form-control" id="writedepartment"
 					value="${memVo.deptName }" readonly="readonly">
-			<label for="name">기안자</label> &ensp;&ensp;
-				<input type="text" class="form-control" id="name"
+			<label for="name" id="writelabel4">기안자</label>
+				<input type="text" class="form-control" id="writename"
 					value="${memVo.name }" readonly="readonly">
-				<input type="hidden" id="memNo" name="memNo"
+				<input type="hidden" id="writememNo" name="memNo"
 					value="${memVo.memNo }">
-		</div><br>
-		<div class="form-group" id="writepay2">
-			<label for="writeDay">기안 일자</label> 
-				<input type="text" class="form-control" id="writeDay"
+			<label for="writeDay" id="writelabel5">기안 일자</label> 
+				<input type="text" class="form-control" id="writewriteDay"
 					value="" readonly="readonly">
-		</div><br>
-		<div id="writepay1">
-			<label for="title">제목</label> &ensp;&ensp;&ensp;&ensp;
-				<input type="text" class="form-control" id="title" name="title">
-		</div>
-		<div>
-			<label for="formNo">기안 양식</label> 
-			<select class="form-control" id="formNo" name="formNo">
+			<label for="title" id="writelabel6">제목</label>
+				<input type="text" class="form-control" id="writetitle" name="title">
+			<label for="formNo" id="writelabel7">기안 양식</label> 
+			<select class="form-control" id="writeformNo" name="formNo">
 				<option value="0"></option>
 				<!-- 반복시작 -->
 				<c:forEach var="docformVo" items="${formlist }">
@@ -94,39 +86,23 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 				</c:forEach>
 				<!-- 반복끝 -->
 			</select>
-		</div><br>
-	<div class="form-group">
 		<c:import url="/payment/summer.do"></c:import>
-	</div><br><br>
-	<div class="form-group">
-		<label for="upfile">첨부파일</label>
-		<input type="file" class="form-control" id="upfile">
-		<a href="#">삭제</a>
-	</div>
-	<div class="form-group" id="confirmBt">
-		<button type="submit" class="btn btn-default" id="sendBt">결재상신</button>
-		<button type="submit" class="btn btn-default" id="saveBt"
+		<label for="upfile" id="writelabel8">첨부파일</label>
+		<input type="file" class="form-control" id="writeupfile" name="upfile">
+
+		<button type="button" class="btn btn-primary" id="writedocForm">문서양식 설정</button>
+			<select class="form-control" id="writetypeNo" name="typeNo" style="width: 200px;">
+				<!-- 반복 시작 -->
+					<c:forEach var="doctypeVo" items="${doctypelist }">
+						<option value="${doctypeVo.typeNo}">${doctypeVo.typeName}</option>
+					</c:forEach>
+				<!-- 반복 끝 -->
+			</select>
+		<button type="submit" class="btn btn-primary" id="writesaveBt"
 			onclick="imsy()">임시저장</button>
-	</div>
+		<button type="submit" class="btn btn-primary" id="writesendBt">결재상신</button>
 </form>
-	<div id="div2">
-		<button type="button" class="btn btn-primary" id="docForm">문서양식 설정</button>
-	</div>
-	<div id="div3">
-		<form name="writeFrm" class="form-inline" id="writeFrm">
-			<div class="form-group">
-				<select class="form-control" id="typeNo" name="typeNo">
-					<!-- 반복 시작 -->
-						<c:forEach var="doctypeVo" items="${doctypelist }">
-							<option value="${doctypeVo.typeNo }">${doctypeVo.typeName}</option>
-						</c:forEach>
-					<!-- 반복 끝 -->
-				</select>
-				<button type="submit" class="btn btn-primary" id="writeBt">문서작성</button>
-			</div>
-		</form>
-	</div>
-	</div><br>
+</div>
 </div>
 </div>
 </div>

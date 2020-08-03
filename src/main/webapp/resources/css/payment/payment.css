@@ -11,13 +11,53 @@
 #empList tr:first-of-type,#paylineList tr:first-of-type{background-color: #808080;color:white;}
 #payline3{padding-top: 20px;}
 
-/* writePay */
-form[name=payInfoFrm] {width: 80%; position: relative; left: 150px;}
-form[name=payInfoFrm] input[type=text] {width:200px; margin-top: 10px;margin-bottom: 10px;margin-right: 100px}
-#keep, #formNo{width:200px; margin-top: 10px;margin-bottom: 10px;margin-right: 100px}
-#writepay1 #title {width: 570px;}
-#confirmBt {position: relative;left: 100px;}
-#confirmBt button{position: relative;text-align: right;}
-form[name=payInfoFrm] h2{font-weight: 600; color:#4e73df;}
-#sendBt,#saveBt,#lookBt{background-color: #4e73df; color:white;}
+/* payList */
+#writeupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#writeupperDiv p{padding-top: 5px;padding-left: 5px;}
+#writewholeDiv{padding-left: 20px;padding-right: 20px;height:fit-content;}
+#writelabel1 {position: relative;top: 40px;}#writedocNo {position: relative;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel2 {top: -40px;left: 310px;position: relative;}#writekeep {position: relative;top: -80px;left: 400px;width: 200px;}
+#writelabel3 {position: relative;top: -60px;}#writedepartment {position: relative;top: -100px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel4 {position: relative;top: -140px;left: 310px;}#writename {position: relative;top: -180px;left: 390px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel5 {position: relative;top: -170px;}#writewriteDay {position: relative;top: -210px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
+#writelabel6 {position: relative;top: -182px;}#writetitle {width: 92%;position: relative;top: -220px;left: 75px;}
+#writelabel7 {position: relative;top: -200px;}#writeformNo {width: 200px;position: relative;top: -237px;left: 80px;}
+.note-editor.note-frame.card {position: relative;top: -216px;}.note-editable.card-block {height: 600px;}
+#writelabel8 {position: relative;top: -193px;}#writeupfile {position: relative;top: -231px;left: 75px;width: 93%;}
+#writedocForm {position: relative;top:-213px;}#writesendBt {position: absolute;top: 80%;right: 1%;}
+#writesaveBt {position: absolute;top: 80%;right: 10%;}#writetypeNo {position: absolute;top: 80%;right: 19%;width:200px;}
 
+/* imsyBox */
+#imsydatefrm{padding-top: 10px;text-align: center;height:120px;}
+#imsydatefrm label, 
+#imsydatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}
+#imsysearchDateDiv,#imsypaylist{background-color: white;}
+#imsypaylist{margin-top: 20px;}
+#imsypayTable{width:100%;text-align: center;}
+#imsypayTable thead tr{background-color: gray;color:white;}
+#imsyupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#imsyupperDiv p{padding-top: 5px;padding-left: 5px;}
+#imsywholeDiv{padding-left: 20px;padding-right: 20px;}
+#imsypaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
+.imsydocNoInfo{cursor: pointer;}
+
+/* setForm */
+#SF{overflow: hidden; font-size: 1.3em;}
+#SFheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#SFheaderDiv p{padding-left: 8px;padding-top: 8px;}
+#SFformTable thead tr{background-color: #858796; color:white;}
+#SFformlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;}
+#SFbtForm{background-color: #4e73df; color:white;position: absolute;left: 450px;font-size: 1.0em;}
+#SFbtDel{font-size:1.0em;}
+#SFlastDiv{padding-left: 8px;position:absolute;bottom: 4%;}
+
+/* checkDocView */
+#CDV{overflow: hidden;}
+#CDVcancelBt{background-color: #4e73df; color:white;}
+#CDVheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#CDVheaderDiv p{padding-left: 8px;padding-top: 8px;}
+#CDVdocTable{text-align: center;height: 790px;}
+#CDVdocType{font-size: 1.5em;font-weight: 600;}
+#CDVtitle,#CDVcontent{text-align: left;}
+#CDVcontent{height: 50%;}
+#CDVlastDiv{position: relative;left: 88%;}
