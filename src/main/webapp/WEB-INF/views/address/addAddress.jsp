@@ -5,10 +5,14 @@
 <script type="text/javascript">
 	$(function(){
 
+		$('input[type=reset]').click(function(){
+			location.href="<c:url value='/address/addressMain.do'/>";
+		});
+		
 			/* 조직도에서 추가 */
 		$('#addFromOrgan').click(function(){
 			window.open('<c:url value="/address/organizeChart.do"/>', 'organ', 
-					'width=450, height=350, left=1200, top=200, location=yes, resizable=yes');
+					'width=420, height=320, left=800, top=200, location=yes, resizable=yes');
 		});
 		
 		$('input[type=submit]').click(function(){
@@ -200,10 +204,15 @@
 
 #addFromOrgan{
 	margin-right: 20px;
-	font-size: 12px;
+	font-size: 15px;
 	background-color: #fdfdfd;
 	border-radius: 3px 3px 3px 3px;
-	border: 1px solid lightgray;
+	border: 2px solid lightgray;
+}
+
+#addFromOrgan_span{
+	float:right;
+	display:inline-block;
 }
 </style>
 <section>

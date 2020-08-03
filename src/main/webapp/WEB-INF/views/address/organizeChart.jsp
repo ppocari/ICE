@@ -16,9 +16,9 @@
 		
 		$('form[name=organForm]').submit(function(){
 			var idList=$('input[type=radio]:checked').attr('id').split('_');
-//${organ.memNo }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}
+//${organ.name }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}
 			
-			var memNo= idList[0];
+			var name= idList[0];
 			var hp1= idList[1];
 			var hp2= idList[2];
 			var hp3= idList[3];
@@ -26,12 +26,17 @@
 			var em2= idList[5];
 			var deptN= idList[6];
 			var posN= idList[7];
-
-			if(hp1.length==0 && hp2.length)
 			
-		/* 	$(opener.document).find("#zipcode").val(zipcode);
-			$(opener.document).find("input[name=address]").val(address); */
-			event.preventDefault();
+			$(opener.document).find("input[name=name]").val(name);
+			$(opener.document).find("input[name=hp1]").val(hp1);
+			$(opener.document).find("input[name=hp2]").val(hp2);
+			$(opener.document).find("input[name=hp3]").val(hp3);
+			$(opener.document).find("input[name=email1]").val(em1);
+			$(opener.document).find("input[name=email2]").val(em2);
+			$(opener.document).find("input[name=deptName]").val(deptN);
+			$(opener.document).find("input[name=posName]").val(posN);
+			
+			self.close();
 		});
 		
 		
@@ -182,7 +187,7 @@ table {
 									<tr id="${organ.memNo }">
 										<th class="organTable_narrow">
 											<input type="radio" name="addressOrganRadio" 
-												id="${organ.memNo }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}" 
+												id="${organ.name }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}" 
 												class="organ_checkboxOne">
 										</th>
 										<td class="organTable_normal">${organ.name }</td>

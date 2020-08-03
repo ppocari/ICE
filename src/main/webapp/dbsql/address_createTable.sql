@@ -28,7 +28,7 @@ CREATE TABLE address (
 	deptName VARCHAR2(100), /* �μ� */
 	posName VARCHAR2(100), /* ���� */
 	isFavorite VARCHAR2(10), /* ���ã�� ���� */
-	isDeleted VARCHAR2(10) /* ����(������) */
+	isDeleted DATE /* ����(������) */
 );
 
 ALTER TABLE address
