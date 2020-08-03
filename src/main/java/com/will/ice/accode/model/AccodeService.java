@@ -2,6 +2,9 @@ package com.will.ice.accode.model;
 
 import java.util.List;
 
+import com.will.ice.common.SearchVO;
+
 public interface AccodeService {
-	public List<AccodeVO> selectAccode(String useplace);
+	List<AccodeVO> selectListAccode(SearchVO searchVO);
+
 }

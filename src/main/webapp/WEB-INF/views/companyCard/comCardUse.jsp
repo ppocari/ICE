@@ -65,7 +65,7 @@
 		
 		$("#acccode").click(function(){
 			var edit_memNo = $(this).children().eq(0).text();
-			window.open('/ice/companyCard/comCardAccode.do','companyCard',
+			window.open('/ice/companyCard/Accode.do','companyCard',
 			'width=400,height=500,left=50,top=50,location=yes,resizable=yes');
 			
 		});
@@ -106,15 +106,23 @@
 								SimpleDateFormat sdf_month  = new SimpleDateFormat("MM");
 								
 								String year = sdf_year.format(d);
-								int month = Integer.parseInt(sdf_month.format(d));
+								String month = sdf_month.format(d);
+								
+								if(month.length() == 1){
+									month = "0"+month;
+								}
 							%>
 							<label id = "year"><%= year %></label>
 							<select id = "month">
-								<option value="">파일 선택</option>
  								<%
-								for( int i=1; i<month; i++){
+								for( int i=1; i<Integer.parseInt(month); i++){
 									%>
-									<option value="<%=i%>"><%= i %>월 </option>
+									<c:set var = "i" value="<%=i %>"/>
+									<option value="<%=i%>" 
+										<c:if test="${dsvo.month == i }">
+											selected="selected"
+										</c:if>
+									><%= i %>월 </option>
 								<%}%>
 							</select>
 							<button type="submit" class="btn btn-info">조회</button>

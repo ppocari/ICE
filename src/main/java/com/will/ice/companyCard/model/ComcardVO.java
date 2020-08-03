@@ -13,6 +13,9 @@ public class ComcardVO {
 	private String NAME;
 	private String DEPTNAME;
 	private String POSNAME;
+	
+	private String DEPTCODE;
+	private String POSCODE;
 	public int getNO() {
 		return NO;
 	}
@@ -81,12 +84,30 @@ public class ComcardVO {
 	public void setDEPTNAME(String dEPTNAME) {
 		DEPTNAME = dEPTNAME;
 	}
+	
+	
+	public String getDEPTCODE() {
+		return DEPTCODE;
+	}
+	public void setDEPTCODE(String dEPTCODE) {
+		DEPTCODE = dEPTCODE;
+	}
+	public String getPOSCODE() {
+		return POSCODE;
+	}
+	public void setPOSCODE(String pOSCODE) {
+		POSCODE = pOSCODE;
+	}
 	@Override
 	public String toString() {
 		return "ComcardVO [NO=" + NO + ", CARDNO=" + CARDNO + ", MEMNO=" + MEMNO + ", ACCCODE=" + ACCCODE + ", PRICE="
 				+ PRICE + ", USEPLACE=" + USEPLACE + ", USEDATE=" + USEDATE + ", FILENO=" + FILENO + ", NAME=" + NAME
-				+ ", DEPTNAME=" + DEPTNAME + ", POSNAME=" + POSNAME + "]";
+				+ ", DEPTNAME=" + DEPTNAME + ", POSNAME=" + POSNAME + ", DEPTCODE=" + DEPTCODE + ", POSCODE=" + POSCODE
+				+ "]";
 	}
+	
+	
+	
 	
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 
 @Repository
 public class MemberDAOMybatis implements MemberDAO{
@@ -31,14 +32,10 @@ public class MemberDAOMybatis implements MemberDAO{
 	}
 
 	@Override
-	public List<MemberVO> searchAllmember(String searchKeyword) {
-		return sqlsession.selectList(namespace+"searchAllmember" , searchKeyword);
+	public List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo) {
+		return sqlsession.selectList(namespace+"selectMemberList" , dpdvo);
 	}
 
-	@Override
-	public List<MemberVO> selectMemberList(DateSearchVO dateSearchVo) {
-		return sqlsession.selectList(namespace+"selectMemberList" , dateSearchVo);
-	}
 
 	@Override
 	public int updateSelectMember(MemberVO memberVO) {
@@ -48,6 +45,11 @@ public class MemberDAOMybatis implements MemberDAO{
 	@Override
 	public int deleteSelectMember(MemberVO memberVO) {
 		return sqlsession.update(namespace+"deleteSelectMember", memberVO);
+	}
+
+	@Override
+	public int newPwd(MemberVO memVo) {
+		return sqlsession.update(namespace+"newPwd", memVo);
 	}
 
 	
