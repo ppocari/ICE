@@ -29,6 +29,7 @@ public class WorkRecordController {
 		= LoggerFactory.getLogger(WorkRecordController.class);
 	private SimpleDateFormat hm = new SimpleDateFormat("HH:mm");
 	private SimpleDateFormat h9 = new SimpleDateFormat("09:00");
+	private SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat ym = new SimpleDateFormat("yyyy-MM");
 	private SimpleDateFormat mm = new SimpleDateFormat("MM");
 	
@@ -45,8 +46,7 @@ public class WorkRecordController {
 		WorkRecordVO vo = workService.selectToday(memNo);
 		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
 		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(d);
+		String date = ymd.format(d);
 		
 		/*
 		 <select id="selectToday" resultType="WorkRecordVO" parameterType="String">
@@ -57,6 +57,7 @@ public class WorkRecordController {
 		  내 포스트잇 왜 무시해 ....
 		 */
 		logger.info("date={}"+date);
+		
 		model.addAttribute("date",date);
 		model.addAttribute("vo",vo);
 		model.addAttribute("userName",userName);
@@ -107,7 +108,9 @@ public class WorkRecordController {
 		String nine_format = h9.format(nine);
 		
 		//CmpRegdate 현재날짜로 셋팅
-		Svo.setCmpRegdate(day);
+		String regdate = ymd.format(day);
+		Svo.setCmpRegdate(regdate);
+		logger.info("regdate={}"+Svo.getCmpRegdate());
 		/*
 		//regdate
 		//ymd 형식으로 변경	
@@ -132,19 +135,12 @@ public class WorkRecordController {
 		logger.info("Svo.getCmpRegdate={}"+Svo.getCmpRegdate()); 
 		*/
 		
-		/*
-		 * 
-		 * cmp_regdate yyyy-mm-dd 형식으로 저장으로 바꿔줘.... => jsp에서 변환함
-		 * 
-		 * 그리고 date랑 sdf를 너무 많이 써서 헷갈리니까  맨위에 private 밑에다가 모아두고 가져다가 쓰는걸로 바꿨으면 좋겠어  => 바꿈
-		 */
 		
 		// cmp_month 셋팅
-		String date = ym.format(Svo.getCmpRegdate());
+		String date = ym.format(day);
 		Svo.setCmpMonth(date);
 		
 		
-		//6~9시 아닌 시간에 출근시 결근
 		try {
 			day = hm.parse(day_format); //출근버튼 클릭
 			nine = h9.parse(nine_format); // 오늘날짜 9시 정각
@@ -181,11 +177,7 @@ public class WorkRecordController {
 		logger.info("퇴근!! , 파라미터 memNo={}, Evo={}", memNo, Evo);
 		
 		Evo = workService.selectToday(memNo);
-		
-		// cmp_month 셋팅
-		String date = mm.format(Evo.getCmpRegdate());
-		Evo.setCmpMonth(date);
-		logger.info("===============Evo={}"+Evo);
+		logger.info("오늘날짜 조회 , Evo={}"+Evo);
 		
 		//현재 시간으로 퇴근시간 셋팅
 		Date d = new Date();
@@ -193,10 +185,8 @@ public class WorkRecordController {
 		Evo.setCmpOut(Edate);
 		
 		
-		
 		int nomal = Integer.parseInt(Evo.getCmpStatus());
 		
-		//결근시 결근으로 저장
 		if( (nomal-1) > 8 ) {
 			Evo.setCmpStatus("야근");
 		}else if( (nomal-1) < 8 ) {
@@ -205,28 +195,7 @@ public class WorkRecordController {
 			Evo.setCmpStatus("출근");
 		}
 		logger.info("퇴근 후 vo={},Evo.getCmpStatus={}"+Evo,Evo.getCmpStatus());
-		
-/**
- 	<update id="updateWork" parameterType="WorkRecordVO">
-		update workRecord 
-		set cmp_out=#{cmpOut}, cmp_status=#{cmpStatus}
-		where memno=#{memNo} 
-	</update>
-	
-	cmp_status 이거를 출근 퇴근 , 결근 , 이걸로 상태 표시 하기에는 시간 계산으로 판단 할 수 없잖아
-	cmp_status 는 시간 계산 할걸로 바꿩 제발
-	18:00 - 9:00 -> 9시간
-	그리고 나중에 조회 에서 숫자를 불러서 거기서  
-	if( (cmp_status-1, 점심시간 제외) > 8){
-		야근
-	}else if ((cmp_status-1, 점심시간 제외) < 8){
-		이상(반차)
-		관리자에게 결재를 보낼 수 있도록 결재하기로 이동할 수 있는 버튼 활성화
-	}else{
-		정상(??출근??)
-	}
- */
-		
+
 		int cnt = workService.updateWork(Evo);
 		logger.info("퇴근 결과 cnt={}",cnt);
 		
@@ -247,10 +216,9 @@ public class WorkRecordController {
 		String memNo = (String) session.getAttribute("identNum");
 		WorkRecordVO searchVo = new WorkRecordVO();
 		searchVo.setMemNo(memNo);
-		logger.info("selectDate={}"+selectDate);
 		
 		searchVo = workService.selectToday(memNo);
-		
+		logger.info("searchVo={}"+searchVo);
 		if(searchVo == null) {
 			String msg = "조회결과가 없습니다.";
 			String url = "/workRecord/workRecord.do";
@@ -261,6 +229,7 @@ public class WorkRecordController {
 			return "common/message";
 		}
 		
+		//selectDate Date로 변경
 		Date d = new Date();
 		try {
 			d = ym.parse(selectDate);
@@ -277,14 +246,11 @@ public class WorkRecordController {
 		for (int i = 0; i < Slist.size(); i++) {
 			searchVo = Slist.get(i);
 		}
-		logger.info("=================================searchVo={}",searchVo);
-		logger.info("=================================Slist.size={}",Slist.size());
+		logger.info("Slist.size={}"+Slist);
 		
-		logger.info("================searchVo.getCmpMonth={}"+searchVo.getCmpMonth());
-		logger.info("==================================");
-		logger.info("Slist"+Slist);
+		
 		//조회결과 없을시
-		if(!selectDate.equals(searchVo.getCmpMonth())) {
+		if(Slist.size()==0) {
 			String msg = "조회결과가 없습니다.";
 			String url = "/workRecord/workRecord.do";
 			
@@ -312,7 +278,8 @@ public class WorkRecordController {
 		
 		//CmpRegdate 현재날짜로 셋팅
 		Date d = new Date();
-		Dvo.setCmpRegdate(d);
+		String regdate = ymd.format(d);
+		Dvo.setCmpRegdate(regdate);
 		
 		
 		// cmp_month 셋팅

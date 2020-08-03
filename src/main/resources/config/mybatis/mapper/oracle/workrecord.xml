@@ -7,8 +7,8 @@
 		<selectKey keyProperty="cmpNo" resultType="int" order="BEFORE">
 			select workRecord_seq.nextval from dual
 		</selectKey>
-		insert into workRecord(cmp_no,memNo,cmp_status,cmp_in,cmp_month)
-		values(#{cmpNo},#{memNo},#{cmpStatus},#{cmpIn},#{cmpMonth})
+		insert into workRecord(cmp_no,memNo,cmp_in,cmp_status,cmp_regdate,cmp_month)
+		values(#{cmpNo},#{memNo},#{cmpIn},#{cmpStatus},#{cmpRegdate},#{cmpMonth})
 	</insert>
 	
 	<select id="selectWorkList" resultType="WorkRecordVO" parameterType="WorkRecordVO">

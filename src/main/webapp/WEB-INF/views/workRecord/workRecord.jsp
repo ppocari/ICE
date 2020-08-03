@@ -123,13 +123,13 @@
 					
 					<!-- 출퇴근 등록 -->
 					<button class="btn btn-primary" id="btStart" onclick="start()"
-						<c:if test="${not null && vo.cmpIn != null && date == vo.cmpIn}">
+						<c:if test="${not null && vo.cmpIn != null && date == vo.cmpRegdate}">
 							disabled
 						</c:if>
 						>출근
 					</button>
 					<button class="btn btn-primary" id="btEnd" onclick="end()"
-						<c:if test="${not null && vo.cmpOut != null && date == vo.cmpOut}">
+						<c:if test="${not null && vo.cmpOut != null && date == vo.cmpRegdate}">
 						disabled
 						</c:if>
 						>퇴근
@@ -145,16 +145,15 @@
 						<th>근무상태</th>
 						<th></th>
 					</tr>
-					<fmt:formatDate value="${vo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
 					<c:if test="${empty vo}">
 						<tr id="workList">
 							<td>출근 전입니다</td>
 						</tr>
 					</c:if>
 					
-					<c:if test="${!empty vo}">
+					<c:if test="${!empty vo && date == vo.cmpRegdate}">
 						<tr id="workList">
-							<td id="regdate">${regdate}</td>
+							<td id="regdate">${vo.cmpRegdate}</td>
 							<td id="start">${vo.cmpIn}</td>
 							<td id="end">${vo.cmpOut}</td>
 							<c:if test="${vo.cmpStatus == '0' && vo.cmpStatus == '9' }">
@@ -201,8 +200,7 @@
 			<c:if test="${!empty searchVo}">
 				<c:forEach var="Svo" items="${Slist}">
 					<tr>
-						<fmt:formatDate value="${Svo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
-						<td id="regdate">${regdate}</td>
+						<td id="regdate">${Svo.cmpRegdate}</td>
 						<td id="start">${Svo.cmpIn}</td>
 						<td id="end">${Svo.cmpOut}</td>
 						<td id="status">${Svo.cmpStatus}</td>

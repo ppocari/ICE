@@ -1,14 +1,12 @@
 package com.will.ice.workrecord.model;
 
-import java.util.Date;
-
 public class WorkRecordVO {
 	private int cmpNo;
 	private String memNo;
 	private String cmpIn;
 	private String cmpOut;
 	private String cmpStatus;
-	private Date cmpRegdate;
+	private String cmpRegdate;
 	private String cmpMonth;
 	
 	
@@ -42,10 +40,10 @@ public class WorkRecordVO {
 	public void setCmpStatus(String cmpStatus) {
 		this.cmpStatus = cmpStatus;
 	}
-	public Date getCmpRegdate() {
+	public String getCmpRegdate() {
 		return cmpRegdate;
 	}
-	public void setCmpRegdate(Date cmpRegdate) {
+	public void setCmpRegdate(String cmpRegdate) {
 		this.cmpRegdate = cmpRegdate;
 	}
 	public String getCmpMonth() {
@@ -55,10 +53,15 @@ public class WorkRecordVO {
 		this.cmpMonth = cmpMonth;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "WorkRecordVO [cmpNo=" + cmpNo + ", memNo=" + memNo + ", cmpIn=" + cmpIn + ", cmpOut=" + cmpOut
-				+ ", cmpStatus=" + cmpStatus + ", cmpRegdate=" + cmpRegdate + ", cmpMonth=" + cmpMonth + "]";
+				+ ", cmpStatus=" + cmpStatus + ", cmpRegdate=" + cmpRegdate + ", cmpMonth=" + cmpMonth + ", getCmpNo()="
+				+ getCmpNo() + ", getMemNo()=" + getMemNo() + ", getCmpIn()=" + getCmpIn() + ", getCmpOut()="
+				+ getCmpOut() + ", getCmpStatus()=" + getCmpStatus() + ", getCmpRegdate()=" + getCmpRegdate()
+				+ ", getCmpMonth()=" + getCmpMonth() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 	
 	
