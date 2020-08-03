@@ -78,7 +78,8 @@ $(function(){
 			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"  
-				action="<c:url value='/notice/noticeWrite.do'/> ">
+					action="<c:url value='/notice/noticeWrite.do'/>"
+					enctype="multipart/form-data">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<tr>
 							<th>
@@ -127,7 +128,8 @@ $(function(){
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
 								<td style="width:80%;">
-									<input type="text" class="form-control" 
+									<input type="text" 
+									class="form-control" 
 									name="NOTI_TITLE" id="NOTI_TITLE">
 								</td>
 							</tr>
@@ -144,7 +146,7 @@ $(function(){
 								</td>
 								<td style="width:80%;">
 									<input type="file"
-									id="NOTI_CONTENT" name="NOTI_CONTENT" /> <span>(최대 2M)</span>
+									id="NOTI_FILENAME" name="NOTI_FILENAME" /> <span>(최대 2M)</span>
 								</td>
 							</tr>
 						</table>
