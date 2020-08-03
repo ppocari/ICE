@@ -10,28 +10,29 @@
 <script type="text/javascript"
 	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
-body{overflow: hidden;}
-#cancelBt{background-color: #4e73df; color:white;}
-#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#headerDiv p{padding-left: 8px;padding-top: 8px;}
-#docTable{text-align: center;height: 790px;}
-#docType{font-size: 1.5em;font-weight: 600;}
-#title,#content{text-align: left;}
-#content{height: 50%;}
-#lastDiv{position: relative;left: 88%;}
+#CDV{overflow: hidden;}
+#CDVcancelBt{background-color: #4e73df; color:white;}
+#CDVheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#CDVheaderDiv p{padding-left: 8px;padding-top: 8px;}
+#CDVdocTable{text-align: center;height: 790px;}
+#CDVdocType{font-size: 1.5em;font-weight: 600;}
+#CDVtitle,#CDVcontent{text-align: left;}
+#CDVcontent{height: 50%;}
+#CDVlastDiv{position: relative;left: 88%;}
 </style>
 </head>
-<body>
+<body id="CDV">
 <div id="bigDiv">
-	<div id="headerDiv">
+	<div id="CDVheaderDiv">
 		<p>문서보기</p>
 	</div>
 	<div id="tableDiv">
-		<table id="docTable" class="table table-bordered">
+		<table id="CDVdocTable" class="table table-bordered">
 			<tr>
-				<td rowspan="2" colspan="6" id="docType">${payVo.typeName }</td>
+				<td rowspan="2" colspan="6" id="CDVdocType">${payVo.typeName }</td>
 				<td>문서번호</td>
 				<td>${payVo.docNo }</td>
 			</tr>
@@ -64,27 +65,32 @@ body{overflow: hidden;}
 				<td rowspan="2">기안일자</td>
 				<td rowspan="2">${payVo.writedate }</td>
 				<td rowspan="2" width="15">첨부파일</td>
-				<td rowspan="2" colspan="5"></td>
+				<td rowspan="2" colspan="5">
+					<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+						id="fileName" style="position: relative;top: 30px;">
+						${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+					</a>
+				</td>
 			</tr>
 			<tr height="10">
 			</tr>
 			<tr>
 				<td>제목</td>
-				<td colspan="7" id="title">${payVo.title }</td>
+				<td colspan="7" id="CDVtitle">${payVo.title }</td>
 			</tr>
 			<tr>
-				<td colspan="8" id="content">${payVo.content }</td>
+				<td colspan="8" id="CDVcontent">${payVo.content }</td>
 			</tr>
 		</table>
 	</div>
-	<div id="lastDiv">
+	<div id="CDVlastDiv">
 		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write.do?docNo=${payVo.docNo }"/>'">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'">
 				결재선 지정
 			</button>
 		</c:if>
 		<c:if test="${param.flag!='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'">
+			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'">
 				결재상신 취소
 			</button>
 		</c:if>

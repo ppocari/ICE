@@ -26,7 +26,6 @@ input[type="text"]{width: 200px;margin: 0px 0px 10px 10px;}
 #paylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
 .docNoInfo{cursor: pointer;}
 </style>
-
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({

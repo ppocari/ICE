@@ -6,6 +6,7 @@ import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.payline.model.PaylineVO;
+import com.will.ice.paymentfile.model.PaymentfileVO;
 
 public interface PaymentDAO {
 	int insertPaydoc(PaylinedocVO pldVo);
@@ -13,10 +14,17 @@ public interface PaymentDAO {
 	List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo);
 	List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo);
 	int insertPayline(PaylinedocVO pldVo);
+	int updatePayline(PaylinedocVO pldVo);
 	PaymentviewVO selectDocument(int docNo);
 	List<DocumentviewVO> selectPayLine(int docNo);
 	int deletePayLine(int docNo);
+	int reallydeletePayLine(int docNo);
 	List<MemberVO> selectAllMem(int poscode);
 	List<PaylineVO> isRead(int docNo);
 	int updateImsy(int docNo);
+	int updatePaydoc(PaylinedocVO pldVo);
+	int saveFile(PaymentfileVO fileVo);
+	int isFile(int docNo);
+	PaymentfileVO getFile(int docNo);
+	int updateFile(PaymentfileVO fileVo);
 }

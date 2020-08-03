@@ -3,7 +3,7 @@ package com.will.ice.common;
 public class PaymentSearchVO {
 	private String startDay;  //시작일
 	private String endDay; //종료일
-	private String customerId; //고객 아이디
+	private String identNum; //고객 아이디
 	private String searchCondition = "";//문서종류
 	private String searchKeyword = "";//키워드
 	private String searchUseYn = "";//검색사용여부
@@ -19,11 +19,11 @@ public class PaymentSearchVO {
 	public void setEndDay(String endDay) {
 		this.endDay = endDay;
 	}
-	public String getCustomerId() {
-		return customerId;
+	public String getIdentNum() {
+		return identNum;
 	}
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setIdentNum(String identNum) {
+		this.identNum = identNum;
 	}
 	public String getSearchCondition() {
 		return searchCondition;
@@ -45,7 +45,7 @@ public class PaymentSearchVO {
 	}
 	@Override
 	public String toString() {
-		return "PaymentSearchVO [startDay=" + startDay + ", endDay=" + endDay + ", customerId=" + customerId
+		return "PaymentSearchVO [startDay=" + startDay + ", endDay=" + endDay + ", identNum=" + identNum
 				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", searchUseYn="
 				+ searchUseYn + "]";
 	}

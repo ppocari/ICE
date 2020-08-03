@@ -13,6 +13,33 @@
 			add_months(sysdate,#{keep}),#{imsy})
 	</insert>
 	
+	<insert id="saveFile" parameterType="paymentfileVo">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select payfile_seq.nextval from dual
+		</selectKey>
+		insert into paymentfile
+		values(#{fileNo},#{fileName},#{originalFileName},#{fileSize},#{docNo})
+	</insert>
+	
+	<update id="updateFile" parameterType="paymentfileVo">
+		update paymentfile
+		set fileName=#{fileName},originalFileName=#{originalFileName},fileSize=#{fileSize}
+		where docNo=#{docNo}
+	</update>
+	
+	<update id="isFile" parameterType="int">
+		update payment
+		set hasFile='Y'
+		where docNo=#{docNo}
+	</update>
+	
+	<update id="updatePaydoc" parameterType="paylinedocVo">
+		update payment
+		set formNo=#{formNo},typeNo=#{typeNo},title=#{title},content=#{content},keep=#{keep},
+		expirydate=add_months(sysdate,#{keep}), writedate=sysdate, imsy=#{imsy}
+		where docNo=#{docNo} and memNo=#{writememNo}
+	</update>
+	
 	<insert id="insertOnePay" parameterType="paylinedocVo">
 		<selectKey keyProperty="docNo" resultType="int" order="BEFORE">
 			select doc_seq.nextval from dual
@@ -37,6 +64,11 @@
 		where docNo=#{docNo}
 	</update>
 	
+	<delete id="reallydeletePayLine" parameterType="int">
+		delete from paylistView
+		where docNo=#{docNo}
+	</delete>
+	
 	<update id="updateImsy" parameterType="int">
 		update payment
 		set imsy='Y'
@@ -52,17 +84,22 @@
 			writedate,expirydate,typeName,name,imsy from paylistView
 			<where>
 				imsy='N'
-				and memNo=#{customerId}
+				and memNo=#{identNum}
 				<if test="searchKeyword!=null and searchKeyword!=''">
 					and title=#{searchKeyword}
 				</if>
 				<if test="searchCondition!=null and searchCondition!=''">
 					and typeNo=#{searchCondition}
 				</if>
+				<if test="startDay!=null and startDay!=''">
+					and to_date(writedate)>=to_date(#{startDay})
+				</if>
+				<if test="endDay!=null and endDay!=''">
+					<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
+				</if>
 				<![CDATA[
 					and sysdate < expirydate+1
-					and to_date(writedate)>=to_date(#{startDay})
-					and to_date(writedate) < to_date(#{endDay})+1
+					order by docNo desc
 				]]>
 			</where>
 	</select>
@@ -70,17 +107,34 @@
 
 	<select id="selectImsy" parameterType="String" resultType="paymentViewVo">
 		select * from paymentview
-		<![CDATA[
-			where sysdate<=expirydate
+		<where>
+			imsy='Y'
 			and memNo=#{identNum}
-			and imsy='Y']]>
+			<if test="searchKeyword!=null and searchKeyword!=''">
+				and title=#{searchKeyword}
+			</if>
+			<if test="searchCondition!=null and searchCondition!=''">
+				and typeNo=#{searchCondition}
+			</if>
+			<if test="startDay!=null and startDay!=''">
+				and to_date(writedate)>=to_date(#{startDay})
+			</if>
+			<if test="endDay!=null and endDay!=''">
+				<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
+			</if>
+			<![CDATA[
+				and sysdate < expirydate+1
+				order by docNo desc
+			]]>
+		</where>
 	</select>
 	
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
 		select * from mypage_mem
 		<![CDATA[
 			where poscode>#{poscode}
-			and poscode!='999']]>
+			and poscode!='999'
+			order by poscode desc]]>
 	</select>
 	
 	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">
@@ -92,6 +146,10 @@
 		select * from docview where docNo=#{docNo}
 	</select>
 	
+	<select id="getFile" parameterType="int" resultType="paymentfileVo">
+		select * from paymentfile
+		where docNo=#{docNo}
+	</select>
 </mapper>
 
 
