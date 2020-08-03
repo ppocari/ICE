@@ -12,7 +12,7 @@
 <script>
 $('#summernote').summernote({
     minHeight: 370,
-    maxHeight: null,
+    maxHeight: 600,
     focus: true, 
     lang : 'ko-KR'
 });

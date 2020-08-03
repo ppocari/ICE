@@ -23,7 +23,8 @@
 		    select rownum as RNUM, A.*
 		    from(
 		        select NOTI_NO, NOTI_TITLE, NOTI_REGDATE,
-			    NOTI_READCOUNT, NOTI_CONTENT,
+			    NOTI_READCOUNT, NOTI_CONTENT, NOTI_FILENAME,
+			    NOTI_FILESIZE, NOTI_ORFILENAME, NOTI_DOWNCOUNT,
 			    (sysdate-NOTI_REGDATE)*24 as newImgTerm 
 			    from notice
 		       <!--  <if test="searchKeyword!=null and searchKeyword !=''">

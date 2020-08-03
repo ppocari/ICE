@@ -6,7 +6,12 @@
 		$('input[type=button]').click(function(){
 			location.href="<c:url value='/address/editAddress.do?adNo=${adVo.adNo}'/>";
 		});
+		
+		$('input[type=reset]').click(function(){
+			location.href="<c:url value='/address/addressMain.do'/>";
+		});
 	});
+	
 </script>
 
 <style type="text/css">
@@ -117,7 +122,7 @@
 			</header>
 			<div class="card shadow mb-4" style="height: 500px">
 				<div class="divForm">
-					<form method="post" action="<c:url value='/address/editAddress.do?adNo=${adVo.adNo }'/>">
+					<form>
 						<fieldset>
 							<legend>기본 정보</legend>
 							<div>
@@ -173,7 +178,7 @@
 							</div>
 							<div id="add_inputs">
 								<input type="button" value="수정"> 
-								<input type="reset"	value="닫기">
+								<input type="reset" value="취소">
 							</div>
 						</fieldset>
 					</form>

@@ -1,6 +1,7 @@
 package com.will.ice.notice.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.SearchVO;
 import com.will.ice.common.Utility;
@@ -31,6 +33,8 @@ public class NoticeController {
 	
 	@Autowired private NoticeService noticeService;
 	
+	@Autowired private FileUploadUtil fileUploadUtil;
+	
 	@RequestMapping(value="/noticeWrite.do", method = RequestMethod.GET)
 	public String noticeWrite_get() {
 		logger.info("공지사항 글쓰기 화면 실행");
@@ -41,7 +45,8 @@ public class NoticeController {
 	//관리자 받기
 	@RequestMapping(value="/noticeWrite.do", method = RequestMethod.POST)
 	public String noticeWrite_post(@ModelAttribute NoticeVO noticeVo,
-			Model model, HttpSession session) {
+			Model model, HttpSession session,
+			HttpServletRequest request) {
 		
 		String memNo = (String) session.getAttribute("identNum");
 		
@@ -55,13 +60,31 @@ public class NoticeController {
 		
 		logger.info("공지사항 등록, 파라미터 vo={}, identNum={}", noticeVo, memNo);
 		
+		//파일 업로드
+		List<Map<String, Object>> list
+			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+		
+		String NOTI_FILENAME="", NOTI_ORFILENAME="";
+		long NOTI_FILESIZE=0;
+		
+		for(Map<String, Object> map : list) {
+			NOTI_FILESIZE= (Long) map.get("NOTI_FILESIZE");
+			NOTI_FILENAME= (String) map.get("NOTI_FILENAME");
+			NOTI_ORFILENAME= (String) map.get("NOTI_ORFILENAME");
+		}
+		
+		noticeVo.setNOTI_FILENAME(NOTI_FILENAME);
+		noticeVo.setNOTI_ORFILENAME(NOTI_ORFILENAME);
+		noticeVo.setNOTI_FILESIZE(NOTI_FILESIZE);
+		
+		
 		int cnt=noticeService.insertNotice(noticeVo);
 		logger.info("공지사항 등록 결과, cnt={}", cnt);
 		
 		String msg="공지사항 등록 실패", url="/notice/noticeWrite.do";
 		if(cnt>0) {
 			msg="공지사항 등록되었습니다.";
-			url="notice/noticeList.do";
+			url="/notice/noticeList.do";
 		}
 		
 		model.addAttribute("msg", msg);
