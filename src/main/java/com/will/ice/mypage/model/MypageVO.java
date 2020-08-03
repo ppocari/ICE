@@ -15,7 +15,7 @@ public class MypageVO {
 	private String addr;
 	private String addrDetail;
 	private int salary;
-	private Date hireDate;
+	private String hireDate;
 	private String gender;
 	private String proFileURL;
 	private String originalFileName;
@@ -98,10 +98,10 @@ public class MypageVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	public Date getHireDate() {
+	public String getHireDate() {
 		return hireDate;
 	}
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
 	public String getGender() {

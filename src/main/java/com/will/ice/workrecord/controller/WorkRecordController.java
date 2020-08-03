@@ -51,7 +51,7 @@ public class WorkRecordController {
 		/*
 		 <select id="selectToday" resultType="WorkRecordVO" parameterType="String">
 		select * from workRecord 
-        where memno=#{memNo} and cmp_out is not null
+        where memno=#{memNo} and cmp_in is not null
 		</select>
 		  
 		  내 포스트잇 왜 무시해 ....

@@ -18,14 +18,14 @@ CREATE TABLE member (
 	addr VARCHAR2(100), /* 주소 */
 	addrDetail VARCHAR2(100), /* 상세주소 */
 	salary NUMBER, /* 연봉 */
-	hiredate DATE, /* 입사일 */
-	firedate DATE, /* 퇴사일 */
+	hiredate VARCHAR2(30), /* 입사일 */
+	firedate VARCHAR2(30), /* 퇴사일 */
 	gender VARCHAR2(10), /* 성별 */
 	profileURL VARCHAR2(100), /* 사진 */
 	originalFileName VARCHAR2(100), /* 오리지날파일이름 */
 	fileSize LONG, /* 파일사이즈 */
-	deptCode NUMBER, /* 부서코드 */
-	posCode NUMBER /* 직급코드 */
+	deptCode VARCHAR2(10), /* 부서코드 */
+	posCode VARCHAR2(10) /* 직급코드 */
 );
 
 
