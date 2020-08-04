@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.model.SearchYearMonthVO;
 
 
@@ -13,15 +15,17 @@ public class ComcardServiceImpl implements ComcardService{
 	@Autowired private ComcardDAO comcardDAO;
 	
 	@Override
-	public List<ComcardVO> selectUnUseComcard(SearchYearMonthVO ymvo) {
-		return comcardDAO.selectUnUseComcard(ymvo);
+	public List<ComcardVO> selectUnUseComcard(DateSearchVO search_dsvo) {
+		return comcardDAO.selectUnUseComcard(search_dsvo);
 	}
 
 	@Override
 	public ComcardVO selectNoComcard(int comcard_no) {
 		return comcardDAO.selectNoComcard(comcard_no);
 	}
-	public List<ComcardVO> selectAllComcard() {
-		return comcardDAO.selectAllComcard();
+	
+	@Override
+	public List<ComcardVO> selectListComcard(Depart_posi_dateVO dpdvo) {
+		return comcardDAO.selectListComcard(dpdvo);
 	}
 }

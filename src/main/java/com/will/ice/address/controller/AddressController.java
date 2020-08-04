@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.address.model.AddressGroupVO;
-import com.will.ice.address.model.AddressListVO;
+import com.will.ice.address.model.AddressSearchVO;
 import com.will.ice.address.model.AddressService;
+import com.will.ice.address.model.AddressUtility;
 import com.will.ice.address.model.AddressVO;
+import com.will.ice.common.PaginationInfo;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
 
@@ -34,15 +37,14 @@ public class AddressController {
 	
 	/* 주소록 조회 */
 	@RequestMapping("/addressMain.do")
-	public String address_get(HttpServletRequest request, Model model) {
-		
-		logger.info("주소록 메인");
+	public String address_get(@ModelAttribute AddressSearchVO adSearchVo, HttpServletRequest request, Model model) {
 		
 		 HttpSession session= request.getSession(); 
 		 String memNo=(String)session.getAttribute("identNum");
 		
-		 logger.info("memNo={}", memNo);
-
+		 logger.info("주소록 메인 보기, memNo={}, AddressSearchVo={}", memNo, adSearchVo);
+		 
+		 adSearchVo.setNextCondition(adSearchVo.findNextCondition(adSearchVo.getSearchCondition()));
 		 
 		 String url="/log/login.do", msg="먼저 로그인 해주세요!";
 		 if(memNo==null) {
@@ -51,15 +53,34 @@ public class AddressController {
 			 
 			 return "common/message";
 		 }
-
 		/* String memNo="111910"; */
 		
-		List<AddressVO> adList=service.selectAddress(memNo);
+		//[1] PaginationInfo
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(adSearchVo.getCurrentPage());
+		
+		//[2] SearchVo
+		adSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		adSearchVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		
+		//2
+		adSearchVo.setMemNo(memNo);
+		System.out.println(adSearchVo);
+		List<AddressVO> adList=service.selectAddress(adSearchVo);
 		logger.info("주소록 조회 결과, list.size={}", adList.size());
+
+		int totalRecord=service.selectTotalRecord(adSearchVo);
+		logger.info("전체 레코드 : " + totalRecord);
 		
-		
+		pagingInfo.setTotalRecord(totalRecord);
+				
+		//3
 		model.addAttribute("adList", adList);
+		model.addAttribute("pagingInfo", pagingInfo);
 		
+		//4
 		return "address/addressMain";
 		
 	}
@@ -79,7 +100,6 @@ public class AddressController {
 		
 	}
 	
-
 	/* 주소록 상세보기 */
 	@RequestMapping("/detailAddress.do")
 	public void editAddress_get(@RequestParam (defaultValue="0") int adNo, Model model) {
@@ -90,7 +110,6 @@ public class AddressController {
 		logger.info("주소록 상세보기 화면 보여주기, adVo={},", adVo);
 		
 		model.addAttribute("adVo", adVo);
-		
 	}
 	
 	/* 주소록 insert 관련 */
@@ -173,32 +192,35 @@ public class AddressController {
 		return "common/message";
 	}
 	
-	@RequestMapping("/deleteMulti.do")
-	public String delMult(@ModelAttribute AddressListVO adListVo
-			, HttpServletRequest request, Model model) {
-
-		//1.
-		logger.info("선택한 상품 삭제, 파라미터 pdListVo={}", adListVo);
+	/* 좋아요 처리 */
+	@RequestMapping("/isFavorite.do")
+	@ResponseBody
+	public String isFavorite(@RequestParam int adNo) {
+		logger.info("ajax - isFavorite.do 실행, adNo={}", adNo);
 		
-		List<AddressVO> adList=adListVo.getAdItems();
-		
-		//2.
-		int cnt=service.deleteMulti(adList);
-		
-		logger.info("선택한 주소 삭제 결과, cnt={})", cnt);
-		String msg="", url="/address/addressMain.do";
-		
+		int cnt=service.updateIsFavorite(adNo);
 		if(cnt>0) {
-			msg="선택한 주소를 삭제하였습니다.";
+			logger.info("좋아요 처리 완료!");
 		}else {
-			msg="선택한 상품들 삭제시 에러 발생!!";
+			logger.info("좋아요 처리 실패!");
 		}
 		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
+		return "";
+	}
+	
+	@RequestMapping("/notFavorite.do")
+	@ResponseBody
+	public String notFavorite(@RequestParam int adNo) {
+		logger.info("ajax - notFavorite.do 실행, adNo={}", adNo);
 		
-		return "common/message";
-
+		int cnt=service.updateNotFavorite(adNo);
+		if(cnt>0) {
+			logger.info("좋아요 취소 처리 완료!");
+		}else {
+			logger.info("좋아요 취소 처리 실패!");
+		}
+		
+		return "";
 	}
 	
 }

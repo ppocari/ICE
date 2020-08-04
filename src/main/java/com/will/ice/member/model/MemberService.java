@@ -3,6 +3,7 @@ package com.will.ice.member.model;
 import java.util.List;
 
 import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 
 public interface MemberService {
 	
@@ -22,7 +23,7 @@ public interface MemberService {
 		
 		
 		
-		List<MemberVO> searchAllmember(String searchKeyword);
+		List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo);
 
 		int registerMulti(List<MemberVO> memVO);
 		
@@ -30,6 +31,6 @@ public interface MemberService {
 		
 		int deleteSelectMember(MemberVO memberVO);
 
-		List<MemberVO> selectMemberList(DateSearchVO dateSearchVo);
+		int newPwd(MemberVO memVo);
 
 }

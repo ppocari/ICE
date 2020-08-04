@@ -6,7 +6,9 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
 
 public interface AddressService {
-	List<AddressVO> selectAddress(String memNo);
+	List<AddressVO> selectAddress(AddressSearchVO searchVo);
+	int selectTotalRecord(AddressSearchVO searchVo);
+	
 	public List<MemberVO> selectMemDeptPosForOrgan();
 	List<DepartmentVO> selectDepartment();
 	int insertAddress(AddressVO vo);
@@ -16,5 +18,12 @@ public interface AddressService {
 	int updateAddress(AddressVO adVo);
 	
 	int deleteMulti(List<AddressVO> list);
+	List<AddressVO> selectTrashAddress(String memNo);
+	int updateTrashMulti(List<AddressVO> list);
+	int updateBackMulti(List<AddressVO> list);
+	int updateIsFavorite(int adNo);
+	int updateNotFavorite(int adNo);
+	
+	
 
 }

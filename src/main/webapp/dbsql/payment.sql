@@ -245,6 +245,12 @@ create sequence payline_seq
 start with 1
 increment by 1
 nocache;
+--------------------업로드파일
+drop sequence payfile_seq;
+create sequence payfile_seq
+start with 1
+increment by 1
+nocache;
 -----------------------문서타입
 insert into doctype(typeNo,typeName)
 values(1,'품의서');
@@ -256,6 +262,7 @@ insert into doctype(typeNo,typeName)
 values(4,'보고서');
 insert into doctype(typeNo,typeName)
 values(5,'결근보고서');
+
 select * from doctype;
 ------------------------뷰
 create or replace view paymentView
@@ -278,16 +285,6 @@ select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ
 from payment p join paymentline l
 on p.DOCNO = l.DOCNO;
 
-select * from paylistview
-where sysdate<=expirydate
-and memNo='111910'
-and gmemNo is null;
-
-select * from paylistview;
-
-select * from payment;
-select * from paymentline;
-
 create or replace view paylistView
 as
 select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ,d.TYPENAME,m.NAME
@@ -296,17 +293,7 @@ on p.DOCNO = l.DOCNO)join doctype d
 on p.TYPENO = d.TYPENO)join member m
 on p.MEMNO = m.MEMNO;
 
-create or replace view test1
-as
-select * from paylistView
-where sysdate<=expirydate
-and memNo='111910'
-and gmemNo is null
-union
-select * from paymentview
-where sysdate<=expirydate
-and memNo='111910'
-and imsy='Y';
-
+select * from paymentfile;
+select * from payment;
 
 commit;
