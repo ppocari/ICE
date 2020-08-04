@@ -24,13 +24,18 @@
 			var em1=$('input[name=email1]').val();
 			var em2=$('input[name=email2]').val();
 			
+			var check_num = /[0-9]/; // 숫자 
+			var check_eng = /[a-zA-Z]/; // 문자 
+			var check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글
+			
 			if(name.length==0) {
 				alert('이름은 필수입니다!');
 				$('input[name=name]').focus();
 				return false;
+			}else if(!check_num.test(name) && !check_eng.test(name) && !check_kor.test(name)) {
+				alert('이름은 한글, 영어, 숫자만 입력할 수 있습니다!');
+				$('input[name=name]').focus();
 			}else if(!validate_phone(hp1) || !validate_phone(hp2) || !validate_phone(hp3)) {
-				alert('validate_phone');
-				
 				hp_alert();
 				event.preventDefault();
 			}else if(hp1.length>0) {

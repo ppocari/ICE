@@ -10,10 +10,13 @@ public class AddressSearchVO {
 	private String memNo;
 	
 	/** 검색조건 */
-	private String searchCondition = "";
+	private String searchKeyword = "";
 	
 	/** 검색조건 - 마이바티스 뒷부분*/
-	private String nextCondition = "";
+	private String nextKeyword = "";
+	
+	/** 검색조건 - 한글인지, 영어인지, 즐겨찾기인지 */
+	private String searchCondition;
 	
 	/** 현재 페이지 */
 	private int currentPage = 1;
@@ -47,12 +50,20 @@ public class AddressSearchVO {
     
     }
     
-	public String getNextCondition() {
-		return nextCondition;
+	public String getSearchKeyword() {
+		return searchKeyword;
 	}
 
-	public void setNextCondition(String nextCondition) {
-		this.nextCondition = nextCondition;
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
+
+	public String getNextKeyword() {
+		return nextKeyword;
+	}
+
+	public void setNextKeyword(String nextKeyword) {
+		this.nextKeyword = nextKeyword;
 	}
 
 	public String getIsTrash() {
@@ -118,60 +129,15 @@ public class AddressSearchVO {
 	public void setRecordCountPerPage(int recordCountPerPage) {
 		this.recordCountPerPage = recordCountPerPage;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "SearchVO [memNo=" + memNo + ", searchCondition=" + searchCondition
-				+ ", nextCondition=" + nextCondition + ", currentPage=" + currentPage
-				+ ", blockSize=" + blockSize + ", firstRecordIndex="
-				+ firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
-				+ ", recordCountPerPage=" + recordCountPerPage + "isTrash"+isTrash+"]";
+		return "AddressSearchVO [memNo=" + memNo + ", searchKeyword=" + searchKeyword + ", nextKeyword=" + nextKeyword
+				+ ", searchCondition=" + searchCondition + ", currentPage=" + currentPage + ", blockSize=" + blockSize
+				+ ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
+				+ ", recordCountPerPage=" + recordCountPerPage + ", isTrash=" + isTrash + "]";
 	}
 	
-	public String findNextCondition(String searchCondition) {
-		String result="";
-		if(searchCondition.equals("ga")) {
-			result= "na";
-		}
-		if(searchCondition.equals("na")) {
-			result= "da";
-		}
-		if(searchCondition.equals("da")) {
-			result= "ra";
-		}
-		if(searchCondition.equals("ra")) {
-			result= "ma";
-		}
-		if(searchCondition.equals("ma")) {
-			result= "ba";
-		}
-		if(searchCondition.equals("ba")) {
-			result= "sa";
-		}
-		if(searchCondition.equals("sa")) {
-			result= "a";
-		}
-		if(searchCondition.equals("a")) {
-			result= "ja";
-		}
-		if(searchCondition.equals("ja")) {
-			result= "cha";
-		}
-		if(searchCondition.equals("cha")) {
-			result= "ka";
-		}
-		if(searchCondition.equals("ka")) {
-			result= "ta";
-		}
-		if(searchCondition.equals("ta")) {
-			result= "pa";
-		}
-		if(searchCondition.equals("pa")) {
-			result= "ha";
-		}
-		
-		return result;
-	}
 	
 }
  

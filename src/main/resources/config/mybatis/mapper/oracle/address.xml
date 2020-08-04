@@ -5,44 +5,76 @@
 <mapper namespace="com.mybatis.mapper.oracle.address">
 	<!-- 주소록 메인화면 -->
 	<select id="selectAddress" parameterType="AddressSearchVo" resultType="AddressVo">
-	<!-- all -->
-	<!-- 한글 -->
-	<!-- 기타 -->
-	<!-- 즐겨찾기 -->
-		select *
-		from
-		(
-		    select rownum as RNUM, A.*
+	select * from(
+		select rownum as RNUM, A.*
+		from (
+		    select B.*
 		    from(
-		        select adNo, name, hp1, hp2, hp3, email1, email2,
-                    ad.adgno, company, deptname, posname, homeaddress, homepage,
-                    messenger, sns, memo, isfavorite, isdeleted
-			    from address ad, addressGroup adg 
-	        	where ad.adgNo=adg.adgNo
-		       <!--  <if test="searchCondition!=null and searchCondition !=''">
-				and memno='111910'
-				and name >= '가' and name < '나'
-		        </if> -->
-	        	 <!-- 공백이나 null이면 일반 조회 -->
-		        <if  test="isTrash ==null or isTrash ==''">
+		        select ad.*, adg.memNo, adg.groupName from address ad, addressGroup adg
+                where ad.adgNo=adg.adgNo)B
+            where memno='111910'
+            <!-- <if test='userId == "hong"'>  (O) -->
+		     	<if test='searchCondition == "kor"'> 
+		     		<if test='searchKeyword == "하"'>
+		     		and name >= #{searchKeyword}
+		     		</if>
+		     		<if test='searchKeyword != "하"'>
+			     	<![CDATA[ 
+						and name >= #{searchKeyword} and name < #{nextKeyword}]]>
+		     		</if>
+		        </if>
+		      	<if test='searchCondition == "eng"'> 
+		      	<![CDATA[ 
+					and name >= 'A' and name < 'Z'
+					or name >= 'a' and name < 'z']]>
+		        </if> 
+		       <if test='searchCondition == "num"'> 
+				<![CDATA[ 
+				and name >='0' and name <='9']]>
+		        </if> 
+		       <if test='searchCondition == "favorite"'> 
+			 	and isfavorite = 'yes'
+		        </if> 
+		        <if  test='isTrash ==null or isTrash ==""'>
 		        and isDeleted is null
 		        </if>
-		        <!-- 공백이 아니면 휴지통 -->
-		        <if  test="isTrash !=null and isTrash !=''">
+		        <if  test='isTrash !=null and isTrash !=""'>
 		        and isDeleted is not null
 		        </if> 
-	        	and memNo=#{memNo}
-		        order by name
-		    )A    
-		)
-		<![CDATA[ 
+		    order by name
+		)A
+	)
+	<![CDATA[ 
 		where RNUM>#{firstRecordIndex}
-		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
 	<select id="getTotalRecord" parameterType="addressSearchVo"
 		resultType="int">
-		select count(*) from address ad, addressGroup adg
-        where ad.adgNo=adg.adgNo
+		select count(*) from 
+			(select ad.*, adg.memNo, adg.groupName from address ad, addressGroup adg
+        	where ad.adgNo=adg.adgNo)A
+        where memno=#{memNo}
+       	<if test='searchCondition == "kor"'> 
+     		<if test='searchKeyword == "하"'>
+     		and name >= #{searchKeyword}
+     		</if>
+     		<if test='searchKeyword != "하"'>
+	     	<![CDATA[ 
+				and name >= #{searchKeyword} and name < #{nextKeyword}]]>
+     		</if>
+       	</if>
+      	<if test='searchCondition == "eng"'> 
+      	<![CDATA[ 
+			and name >= 'A' and name < 'Z'
+			or name >= 'a' and name < 'z']]>
+        </if> 
+       <if test='searchCondition == "num"'> 
+		<![CDATA[ 
+		and name >='0' and name <='9']]>
+        </if> 
+      	<if test='searchCondition == "favorite"'> 
+	 	and isfavorite = 'yes'
+	 	</if>
          <!-- 공백이나 null이면 일반 조회 -->
         <if  test="isTrash ==null or isTrash ==''">
         and isDeleted is null
@@ -51,7 +83,6 @@
         <if  test="isTrash !=null and isTrash !=''">
         and isDeleted is not null
         </if>
-		and memno=#{memNo}       
 	</select>
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
 		select m.*, d.deptname, p.posname from member m, department d, position p

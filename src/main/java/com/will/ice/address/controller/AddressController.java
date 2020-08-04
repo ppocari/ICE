@@ -41,10 +41,9 @@ public class AddressController {
 		
 		 HttpSession session= request.getSession(); 
 		 String memNo=(String)session.getAttribute("identNum");
+		 /* String memNo="111910"; */
 		
-		 logger.info("주소록 메인 보기, memNo={}, AddressSearchVo={}", memNo, adSearchVo);
-		 
-		 adSearchVo.setNextCondition(adSearchVo.findNextCondition(adSearchVo.getSearchCondition()));
+		 logger.info("주소록 메인 보기, memNo={}", memNo);
 		 
 		 String url="/log/login.do", msg="먼저 로그인 해주세요!";
 		 if(memNo==null) {
@@ -53,8 +52,7 @@ public class AddressController {
 			 
 			 return "common/message";
 		 }
-		/* String memNo="111910"; */
-		
+		 
 		//[1] PaginationInfo
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
@@ -67,7 +65,8 @@ public class AddressController {
 		
 		//2
 		adSearchVo.setMemNo(memNo);
-		System.out.println(adSearchVo);
+		
+		logger.info("처리 후 AddressSearchVo={}", adSearchVo);;
 		List<AddressVO> adList=service.selectAddress(adSearchVo);
 		logger.info("주소록 조회 결과, list.size={}", adList.size());
 
@@ -181,7 +180,7 @@ public class AddressController {
 		
 		String url="", msg="";
 		if(cnt>0) {
-			url="/address/addressMain.do";
+			url="/address/addressClose.do";
 			msg="주소록이 수정되었습니다.";
 			
 		}
@@ -190,6 +189,11 @@ public class AddressController {
 		model.addAttribute("msg", msg);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/addressClose.do")
+	public void windowClose() {
+		 logger.info("주소록 수정 완료!"); 
 	}
 	
 	/* 좋아요 처리 */
