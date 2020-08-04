@@ -2,14 +2,12 @@ package com.will.ice.companyCard.controller;
 
 import java.util.List;
 
-import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +17,9 @@ import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.companyCard.model.ComcardVO;
-import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
 import com.will.ice.model.EtcService;
 import com.will.ice.model.PositionVO;
-import com.will.ice.model.SearchYearMonthVO;
 
 @Controller
 @RequestMapping("/companyCard")

@@ -3,10 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.accode">
+
 	<select id="selectListAccode" parameterType="SearchVO" resultType="AccodeVO">
 		select * from accountCode
 		
 	</select>
+	
 </mapper>
 
 

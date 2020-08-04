@@ -3,11 +3,57 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.address">
-	 <select id="selectAddress" parameterType="String" resultType="addressVo">
-		select ad.*, adg.groupname from address ad, addressGroup adg
-		where ad.ADGNO = adg.ADGNO
-		and memno=#{memNo}
-		order by name
+
+	<!-- 주소록 메인화면 -->
+	<select id="selectAddress" parameterType="AddressSearchVo" resultType="AddressVo">
+	<!-- all -->
+	<!-- 한글 -->
+	<!-- 기타 -->
+	<!-- 즐겨찾기 -->
+		select *
+		from
+		(
+		    select rownum as RNUM, A.*
+		    from(
+		        select adNo, name, hp1, hp2, hp3, email1, email2,
+                    ad.adgno, company, deptname, posname, homeaddress, homepage,
+                    messenger, sns, memo, isfavorite, isdeleted
+			    from address ad, addressGroup adg 
+	        	where ad.adgNo=adg.adgNo
+		       <!--  <if test="searchCondition!=null and searchCondition !=''">
+				and memno='111910'
+				and name >= '가' and name < '나'
+		        </if> -->
+	        	 <!-- 공백이나 null이면 일반 조회 -->
+		        <if  test="isTrash ==null or isTrash ==''">
+		        and isDeleted is null
+		        </if>
+		        <!-- 공백이 아니면 휴지통 -->
+		        <if  test="isTrash !=null and isTrash !=''">
+		        and isDeleted is not null
+		        </if> 
+	        	and memNo=#{memNo}
+		        order by name
+		    )A    
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="getTotalRecord" parameterType="addressSearchVo"
+		resultType="int">
+		select count(*) from address ad, addressGroup adg
+        where ad.adgNo=adg.adgNo
+         <!-- 공백이나 null이면 일반 조회 -->
+        <if  test="isTrash ==null or isTrash ==''">
+        and isDeleted is null
+        </if>
+        <!-- 공백이 아니면 휴지통 -->
+        <if  test="isTrash !=null and isTrash !=''">
+        and isDeleted is not null
+        </if>
+		and memno=#{memNo}       
+
 	</select>
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
 		select m.*, d.deptname, p.posname from member m, department d, position p
@@ -62,7 +108,35 @@
 		delete from address
 		where adno=#{adNo}
 	</delete>
-
+	<update id="updateTrashAddress" parameterType="int">
+		update address
+		set isDeleted=sysdate
+		where adno=#{adNo}
+	</update>
+	<select id="selectTrashAddress" parameterType="String" resultType="addressVo">
+		select ad.*, adg.groupname from address ad, addressGroup adg
+		where ad.ADGNO = adg.ADGNO
+		and memno=#{memNo}
+		and isDeleted is not null
+		order by name
+	</select>
+	<update id="updateBackAddress" parameterType="int">
+		update address
+		set isDeleted = null
+		where adno=#{adNo}
+	</update>
+	
+	<!-- 좋아요 -->
+	<update id="updateIsFavorite" parameterType="int">
+		update address 
+		set isfavorite='yes'
+		where adno=#{adNo}
+	</update>
+	<update id="updateNotFavorite" parameterType="int">
+		update address 
+		set isfavorite = null
+		where adno=#{adNo}
+	</update>
 </mapper>
 
 

@@ -26,6 +26,7 @@ import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.spay.model.SpayService;
 import com.will.ice.spay.model.SpayVO;
+import com.will.ice.spay.model.SpayViewVO;
 
 @Controller
 @RequestMapping("/spay")
@@ -46,19 +47,9 @@ public class SpayController {
 	@RequestMapping("/sList.do")
 	public void sList(@ModelAttribute DateSearchVO dateSearchVo,
 			HttpSession session, Model model) {
-		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
 		String identNum = (String)session.getAttribute("identNum");
 		dateSearchVo.setMemNo(identNum);
-		
-		String startDay=dateSearchVo.getStartDay();
-		if(startDay==null || startDay.isEmpty()) {
-			Date today = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String str=sdf.format(today);
-			dateSearchVo.setStartDay(str);
-			dateSearchVo.setEndDay(str);			
-		}
-		logger.info("구매 내역 파라미터 dateSearchVo={}", dateSearchVo);
+		logger.info("구매 목록 파라미터 dateSearchVo={}", dateSearchVo);
 		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -68,15 +59,22 @@ public class SpayController {
 		dateSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		dateSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 		
+		String startDay=dateSearchVo.getStartDay();
+		if(startDay==null || startDay.isEmpty()) {
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String str=sdf.format(today);
+			dateSearchVo.setStartDay(str);
+			dateSearchVo.setEndDay(str);			
+		}
 		
-		int totalRecord=spayService.selectDay(dateSearchVo);
-			logger.info("구매내역 조회 결과, totalRecord={}", totalRecord);
+		List<SpayViewVO> list=spayService.selectSpayView(dateSearchVo);
+		logger.info("구매 내역 결과 list.size={}", list.size());
+		
+		int totalRecord=spayService.selectTotalRecord(dateSearchVo);
+		logger.info("구매내역 조회 결과, totalRecord={}", totalRecord);
 			
-			pagingInfo.setTotalRecord(totalRecord);
-		
-		
-		List<Map<String, Object>> list=spayService.selectSpayView(MemNo);
-		logger.info("구매 내역 결과 vo={}", list);
+		pagingInfo.setTotalRecord(totalRecord);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);	

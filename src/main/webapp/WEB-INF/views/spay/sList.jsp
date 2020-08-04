@@ -13,6 +13,13 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
+<script type="text/javascript">	
+	function pageFunc(curPage){
+		$('input[name=currentPage]').val(curPage);
+		$("form[name=frmPage]").submit();
+	}
+</script>
+
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post"
 	action="<c:url value='/spay/sList.do'/>">
@@ -21,26 +28,6 @@
 		type="hidden" name="currentPage">
 </form>
 <!-- 페이징 처리 form 끝 -->
-
-<script type="text/javascript">
-	$(function() {
-		$('#datetimepicker1').datetimepicker({
-            format: 'YYYY-MM-DD',
-            date: moment().add(-7,"days")
-        });
-
-		$('#datetimepicker2').datetimepicker({
-		    format: 'YYYY-MM-DD',
-		    date: moment()
-		});
-		$("#datetimepicker1").on("change.datetimepicker", function(e) {
-			$('#datetimepicker2').datetimepicker('minDate', e.date);
-		});
-		$("#datetimepicker2").on("change.datetimepicker", function(e) {
-			$('#datetimepicker1').datetimepicker('maxDate', e.date);
-		});
-	});
-</script>
 
 <div class="container-fluid">
 
@@ -62,7 +49,7 @@
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"
-					action="<c:url value='/spay/sList.do?selectAll='/> ">
+					action="<c:url value='/spay/sList.do'/> ">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">식권구매</h6>
@@ -70,36 +57,10 @@
 							<button type="submit" class="btn btn-info">조회</button>
 						</div>
 					</div>
-					<div
-						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<label for="department" style="margin-left: 10px;">구매 일자</label>
-						<div class="search" style="margin-left: auto;">
-							<div class="input-group date" id="datetimepicker1"
-								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
-									data-target="datetimepicker1" id="datetimepicker1" value="">
-								<div class="input-group-append" data-target="#datetimepicker1"
-									data-toggle="datetimepicker">
-									<div class="input-group-text">
-										<i class="fa fa-calendar"></i>
-									</div>
-								</div>
-							</div>
+							<%@include file="../inc/dateTerm.jsp" %>
 						</div>
-						<div class="search" style="margin-left: 10px;">
-							<div class="input-group date" id="datetimepicker2"
-								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
-									data-target="datetimepicker2" id="datetimepicker2" value="">
-								<div class="input-group-append" data-target="#datetimepicker2"
-									data-toggle="datetimepicker">
-									<div class="input-group-text">
-										<i class="fa fa-calendar"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: auto;">
@@ -121,14 +82,14 @@
 										</tr>
 									</c:if>
 									<c:if test="${!empty list }">
-										<c:forEach var="map" items="${list }">
+										<c:forEach var="vo" items="${list }">
 											<tr>
-												<td><fmt:formatDate value="${map['TICREGDATE'] }"
+												<td><fmt:formatDate value="${vo.TICREGDATE }"
 														pattern="yyyy-MM-dd hh:mm:ss" /></td>
-												<td>${map['TICQUANTITY'] }</td>
-												<td>${map['NAME'] }</td>
-												<td>${map['HP1']}-${map['HP2']}-${map['HP3']}</td>
-												<td>${map['EMAIL1']}${map['EMAIL2'] }</td>
+												<td>${vo.TICQUANTITY }</td>
+												<td>${vo.NAME }</td>
+												<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
+												<td>${vo.EMAIL1}${vo.EMAIL2 }</td>
 											</tr>
 										</c:forEach>
 									</c:if>
