@@ -24,35 +24,43 @@
 		
 	</insert>
 	
-	<select id="searchAllmember" resultType="memberVo">
+	<select id="selectMemberList" parameterType="Depart_posi_dateVO" resultType="memberVo">
 		select * from mypage_mem
 		where memno != 999999 and firedate is null
+		<if test="deptCode!=null and deptCode!=''">
+		      and deptcode  = #{deptCode }
+		</if>
+		<if test="posCode!=null and posCode!=''">
+		      and poscode  = #{posCode }
+		</if>
+		<if test="hiredate1 !=null and hiredate1 != ''">
+			and hiredate >= #{hiredate1}
+		</if>
+		<if test="hiredate2 !=null and hiredate2 != ''">
+			<![CDATA[
+			and hiredate < #{hiredate2} ]]>
+		</if>
 	</select>
 	
 	<update id="updateSelectMember" parameterType="memberVO">
 		update member
-		set name = #{name},  HIREDATE = #{hiredate},
+		set name = #{name}, HIREDATE = #{hiredate},
 			deptcode = #{deptCode}, POSCODE = #{posCode},  salary = #{salary}
 		where memno = #{memNo} 
 	</update>
 	
-	<select id="selectMemberList" parameterType="dateSearchVo" 
-		resultType="int">
-		select count(*) from member
-		<where> 
-			<if test="customerId!=null and customerId!=''">
-				memNo=#{customerId}
-			</if>				
-			and hiredate >=#{startDay}
-			<![CDATA[
-			and hiredate < to_date(#{endDay})+1 ]]>
-		</where>
-	</select>
+	
 	
 	<update id="deleteSelectMember" parameterType="memberVO">
 		update member
 		set firedate = #{firedate}
 		where memno = #{memNo}
 	
+	</update>
+	
+	<update id="newPwd" parameterType="MemberVO">
+		update member
+		set pwd = #{pwd}
+		where memno = #{memNo}
 	</update>
 </mapper>

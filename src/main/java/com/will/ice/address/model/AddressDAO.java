@@ -7,7 +7,6 @@ import com.will.ice.model.DepartmentVO;
 
 public interface AddressDAO {
 	//주소록 조회
-	List<AddressVO> selectAddress(String memNo);
 	List<MemberVO> selectMemDeptPosForOrgan();
 	List<DepartmentVO> selectDepartment();
 	
@@ -21,5 +20,12 @@ public interface AddressDAO {
 	int updateAddress(AddressVO adVo);
 	
 	int deleteAddress(int adNo);
-
+	List<AddressVO> selectTrashAddress(String memNo);
+	int updateTrashAddress(int adNo);
+	int updateBackAddress(int adNo);
+	int updateIsFavorite(int adNo);
+	int updateNotFavorite(int adNo);
+	
+	public List<AddressVO> selectAddress(AddressSearchVO searchVo);
+	int getTotalRecord(AddressSearchVO searchVo);
 }

@@ -88,42 +88,44 @@
 						
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							 >조회</button>
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
+							<label for="deptCode" style="margin-right: 20px;">부서별 조회</label>
+							<select name="deptCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
+									<option value="${deptvo.deptCode }" 
+										<c:if test="${dpdvo.deptCode == deptvo.deptCode }">
+											selected="selected"
+										</c:if>
+										>${deptvo.deptName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
+							<label for="posCode" style="margin-right: 20px;">직급별 조회</label>
+							<select name="posCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
+									<option value="${posvo.posCode }">${posvo.posName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
 							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1" value="${param.startDay }"> ~
-							<input type="text" name="hiredate2" value="${param.endDay }">
+							<input type="text" name="hiredate1" value="${dpdvo.hiredate1  }"> ~
+							<input type="text" name="hiredate2" value="${dpdvo.hiredate2  }">
 						</div>
 					
 					</div>
-				</form>
-				<!-- 페이징 처리 form 끝 -->
 				
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do'/> ">
+				<!-- 페이징 처리 form 끝 -->
+			
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">

@@ -1,5 +1,7 @@
 package com.will.ice.address.model;
 
+import java.sql.Timestamp;
+
 public class AddressVO {
 	private int adNo;
 	private String name;
@@ -13,7 +15,7 @@ public class AddressVO {
 	private String deptName;
 	private String posName;
 	private String isFavorite;
-	private String isDeleted;
+	private Timestamp isDeleted;
 	private String groupName;
 	private String homeAddress;
 	private String homePage;
@@ -92,10 +94,10 @@ public class AddressVO {
 	public void setIsFavorite(String isFavorite) {
 		this.isFavorite = isFavorite;
 	}
-	public String getIsDeleted() {
+	public Timestamp getIsDeleted() {
 		return isDeleted;
 	}
-	public void setIsDeleted(String isDeleted) {
+	public void setIsDeleted(Timestamp isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 	public String getGroupName() {

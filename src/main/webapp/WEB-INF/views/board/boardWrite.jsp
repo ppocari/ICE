@@ -72,7 +72,9 @@ $(function(){
 			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"  
-				action="<c:url value='/board/boardWrite.do'/> ">
+					action="<c:url value='/board/boardWrite.do'/>"
+					enctype="multipart/form-data">
+					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<tr>
 							<th>
@@ -97,16 +99,14 @@ $(function(){
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
 							<td style="width:80%; weight:100px;">
-								<select name="NOTI_CATEGORY" class="form-control">
+								<select name="category" class="form-control">
 									<option value="전체">전체</option>
-									<option value="경영">경영</option>
-									<option value="회계">회계</option>
-									<option value="영업">영업</option>
-									<option value="경리">경리</option>
+									<option value="잡담">잡담</option>
+									<option value="동아리">동아리</option>
 								</select> 
-								<input type="checkbox" id="isMain" name="NOTI_MAIN" 
-								 	value="option1"> 
-								<span>메인 공지사항 등록</span>
+								<input type="checkbox" name="isMain" id="isMain"
+								 	value="Y"> 
+								<span>사내게시판 메인 등록</span>
 							</td>
 						</tr>
 						</table>
@@ -129,23 +129,16 @@ $(function(){
 						
 					</div>
 					
-					<!-- 이름,비밀번호 -->
+					<!-- 이름 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
 							<tr>
-								<td style="width:15%;">
+								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">별명</h6>
 								</td>
-								<td style="width:35%;">
+								<td style="width:80%;">
 									<input type="text" class="form-control" 
 									name="nickname" id="nickname">
-								</td>
-								<td style="width:15%;">
-									<h6 class="m-0 font-weight-bold text-primary">비밀번호</h6>
-								</td>
-								<td style="width:35%;">
-									<input type="text" class="form-control" 
-									name="password" id="password">
 								</td>
 							</tr>
 						</table>
@@ -168,7 +161,7 @@ $(function(){
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<input type = "submit" class="form-control" value="등록"/>
-            			<a href="<c:url value='/companyBoard/companyBoardList.do'/>">
+            			<a href="<c:url value='/board/boardList.do'/>">
             				<input type = "Button" class="form-control btList" id="nList"value="글목록"  />
             			</a>
 					</div>

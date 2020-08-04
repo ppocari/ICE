@@ -76,20 +76,22 @@ where memno = '111910';
 
 commit;
 
+--drop table companyCard
+
 select * from companyCard;
 
 
-insert into companyCard
-values(companyCard_seq.nextval,'1111222233334448','111910','102038',9000,'서울시','2020-06-31' ,1  );
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'1111222233334448','111910',10000,'김가네(식당)','2020-06-31' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'3243222233334321','111910',9000,'서울시','2020-07-01' ,1  );
+values(companyCard_seq.nextval,'3243222233334321','111910',9000,'스타벅스(카페)','2020-07-01' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'4321222233331234','111910',9000,'서울시','2020-07-31' ,1  );
+values(companyCard_seq.nextval,'4321222233331234','111910',20000,'택시(서울)','2020-07-31' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'3777222233331234','111910',9000,'서울시','2020-06-01' ,1  );
+values(companyCard_seq.nextval,'3777222233331234','111910',8000,'서울시','2020-06-01' ,1  );
 
 --drop table companyCard
 --drop sequence companyCard_seq
@@ -97,7 +99,7 @@ values(companyCard_seq.nextval,'3777222233331234','111910',9000,'서울시','202
 select * from accountCode;
 
 select * from accountCode
-where acctitle like '%통신%';
+where acctitle like '%비%';
 --102306
 --102307
 
@@ -109,7 +111,7 @@ from companyCard c join mypage_mem m
  
  create view comcard_mem
  as 
- select c.*, m.NAME , m.POSNAME, m.DEPTNAME
+ select c.*, m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
 from companyCard c join mypage_mem m
  on c.MEMNO = m.MEMNO ;
  

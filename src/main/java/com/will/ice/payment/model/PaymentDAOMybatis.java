@@ -6,9 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.payline.model.PaylineVO;
+import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Repository
 public class PaymentDAOMybatis implements PaymentDAO{
@@ -23,13 +25,13 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public List<PaylistViewVO> selectSent(String identNum) {
-		return sqlSession.selectList(namespace+"selectSent",identNum);
+	public List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectSent",paysearchVo);
 	}
 
 	@Override
-	public List<PaymentviewVO> selectImsy(String identNum) {
-		return sqlSession.selectList(namespace+"selectImsy",identNum);
+	public List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectImsy",paysearchVo);
 	}
 
 	@Override
@@ -70,6 +72,41 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	@Override
 	public int updateImsy(int docNo) {
 		return sqlSession.update(namespace+"updateImsy",docNo);
+	}
+
+	@Override
+	public int updatePaydoc(PaylinedocVO pldVo) {
+		return sqlSession.update(namespace+"updatePaydoc",pldVo);
+	}
+
+	@Override
+	public int updatePayline(PaylinedocVO pldVo) {
+		return sqlSession.insert(namespace+"updatePayline",pldVo);
+	}
+
+	@Override
+	public int reallydeletePayLine(int docNo) {
+		return sqlSession.delete(namespace+"reallydeletePayLine",docNo);
+	}
+
+	@Override
+	public int saveFile(PaymentfileVO fileVo) {
+		return sqlSession.insert(namespace+"saveFile",fileVo);
+	}
+
+	@Override
+	public int isFile(int docNo) {
+		return sqlSession.update(namespace+"isFile",docNo);
+	}
+
+	@Override
+	public PaymentfileVO getFile(int docNo) {
+		return sqlSession.selectOne(namespace+"getFile",docNo);
+	}
+
+	@Override
+	public int updateFile(PaymentfileVO fileVo) {
+		return sqlSession.update(namespace+"updateFile",fileVo);
 	}
 
 }

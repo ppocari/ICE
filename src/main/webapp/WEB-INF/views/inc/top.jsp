@@ -51,12 +51,9 @@
 <link rel="stylesheet" href="/resources/demos/style.css"/>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
-
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" /> -->
 
 
 </head>
@@ -171,7 +168,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -313,7 +310,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
