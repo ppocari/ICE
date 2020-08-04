@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
@@ -88,7 +90,6 @@
 			
 		});
 		
-		
 	});//doc
 	
 	function start() {
@@ -119,10 +120,20 @@
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">출퇴근</h5>
-					<!-- 출퇴근 등록 -->
-					<button class="btn btn-primary" id="btStart" onclick="start()">출근</button>
-					<button class="btn btn-primary" id="btEnd" onclick="end()">퇴근</button>
 					
+					<!-- 출퇴근 등록 -->
+					<button class="btn btn-primary" id="btStart" onclick="start()"
+						<c:if test="${not null && vo.cmpIn != null && date == vo.cmpRegdate}">
+							disabled
+						</c:if>
+						>출근
+					</button>
+					<button class="btn btn-primary" id="btEnd" onclick="end()"
+						<c:if test="${not null && vo.cmpOut != null && date == vo.cmpRegdate}">
+						disabled
+						</c:if>
+						>퇴근
+					</button>
 				</div>
 				<!-- Card Header - Dropdown -->
 				<table class="table table-hover">
@@ -132,7 +143,6 @@
 						<th>출근시간</th>
 						<th>퇴근시간</th>
 						<th>근무상태</th>
-						<th>월 조회test</th>
 						<th></th>
 					</tr>
 					<c:if test="${empty vo}">
@@ -141,55 +151,26 @@
 						</tr>
 					</c:if>
 					
-					<c:if test="${!empty vo}">
+					<c:if test="${!empty vo && date == vo.cmpRegdate}">
 						<tr id="workList">
-							<fmt:formatDate value="${vo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
-							<td id="regdate">${regdate}</td>
+							<td id="regdate">${vo.cmpRegdate}</td>
 							<td id="start">${vo.cmpIn}</td>
 							<td id="end">${vo.cmpOut}</td>
-							<td id="status">${vo.cmpStatus}</td>
-							<td id="status">${vo.cmpMonth}</td>
+							<c:if test="${vo.cmpStatus == '0' && vo.cmpStatus == '9' }">
+								<td id="status"></td>
+							</c:if>
+							<c:if test="${vo.cmpStatus != '0' && vo.cmpStatus != '9' }">
+								<td id="status">${vo.cmpStatus}</td>
+							</c:if>
 							<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
 						</tr>
 					</c:if>
 				</table>
-				
-			</div>
-		</div>
-		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 300px">
-				<!-- 근태관리 조회 -->
-				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h5 class="m-0 font-weight-bold text-primary">출퇴근 내역</h5>
-					<!-- 출퇴근 등록 -->
-					<form action="//search.do">
-						<input type="text" >	<!-- 여기에 달력 2020-07, 2020-06 하는거 -->
-						<button type="button">조회하기</button> <!-- 버튼 누르면 jquery로 위에 있는 text의 val 읽어서 조회 -->
-					</form>
-	
-				</div>
-				<!-- Card Header - Dropdown -->
-				<table class="table table-hover">
-					<!-- 출퇴근 찍을 화면 -->
-					<tr>
-						<th>현재시간</th>
-						<th>출근시간</th>
-						<th>퇴근시간</th>
-						<th>근무상태</th>
-						<th>월 조회test</th>
-						<th></th>
-					</tr>
-					<!-- db에서 조회해서 foreach -->
-					<!-- list<vo> 형태로 넘어 올텐데 c:foreach전에 c:if로 empty 일때 아닐때 구분  -->
-				</table>
-				
 			</div>
 		</div>
 	</div>	
 </div>
 
-
-<c:if test="${!empty searchVo.cmpStatus}">
 <!-- Area Chart -->
 <div class="col-xl-12 " >
 	<div class="card shadow mb-4" style="height: 500px">
@@ -209,14 +190,20 @@
 		<!-- Card Header - Dropdown -->
 		<table class="table table-hover">
 			<!-- 출퇴근 조회 -->
+			<tr>
+				<th>현재시간</th>
+				<th>출근시간</th>
+				<th>퇴근시간</th>
+				<th>근무상태</th>
+				<th></th>
+			</tr>
 			<c:if test="${!empty searchVo}">
 				<c:forEach var="Svo" items="${Slist}">
 					<tr>
-						<fmt:formatDate value="${searchVo.cmpRegdate}" pattern="yyyy-MM-dd" var="regdate"/>
-						<td id="regdate">${regdate}</td>
-						<td id="start">${searchVo.cmpIn}</td>
-						<td id="end">${searchVo.cmpOut}</td>
-						<td id="status">${searchVo.cmpStatus}</td>
+						<td id="regdate">${Svo.cmpRegdate}</td>
+						<td id="start">${Svo.cmpIn}</td>
+						<td id="end">${Svo.cmpOut}</td>
+						<td id="status">${Svo.cmpStatus}</td>
 						<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
 					</tr>
 				</c:forEach>
@@ -224,7 +211,7 @@
 		</table>
 	</div>
 </div>
-</c:if>
+
 
 
 

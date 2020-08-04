@@ -26,9 +26,23 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		$("#usedate1").datepicker();
-		$("#usedate2").datepicker();
+		$( "input[name=usedate1]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         changeMonth:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
 		
+		$( "input[name=usedate2]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         changeMonth:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
 		
 	});
 	
@@ -55,7 +69,7 @@
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
+				action="<c:url value='/companyCard/comCardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">법인카드 조회</h6>
 						<div style="float: right">
@@ -66,34 +80,38 @@
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
+							<label for="deptCode" style="margin-right: 20px;">부서별 조회</label>
+							<select name="deptCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
+									<option value="${deptvo.deptCode }" 
+										<c:if test="${dpdvo.deptCode == deptvo.deptCode }">
+											selected="selected"
+										</c:if>
+										>${deptvo.deptName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
+							<label for="posCode" style="margin-right: 20px;">직급별 조회</label>
+							<select name="posCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
+									<option value="${posvo.posCode }">${posvo.posName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
 							<label for="price1" style="margin-right: 20px;">금액별</label>
-							<input type="text" name="price1"> ~
-							<input type="text" name="price2">
+							<input type="text" name="price1" value="${dpdvo.price1 }"> ~
+							<input type="text" name="price2" value="${dpdvo.price2 }">
 						</div>
 						<div class="search" style="margin-right: 20px;">
 							<label for="usedate1" style="margin-right: 20px;">사용일별</label>
-							<input type="text" name="usedate1" id="usedate1"> ~
-							<input type="text" name="usedate2" id="usedate2">
+							<input type="text" name="usedate1" id="usedate1" value="${dpdvo.usedate1 }"> ~
+							<input type="text" name="usedate2" id="usedate2" value="${dpdvo.usedate2 }">
 						</div>
 						
 						

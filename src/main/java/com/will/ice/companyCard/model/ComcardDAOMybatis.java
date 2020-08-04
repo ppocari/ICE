@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.DateSearchVO;
+import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.model.SearchYearMonthVO;
 
 @Repository
@@ -16,8 +18,8 @@ public class ComcardDAOMybatis implements ComcardDAO{
 	private SqlSession sqlsession;
 
 	@Override
-	public List<ComcardVO> selectUnUseComcard(SearchYearMonthVO ymvo) {
-		return sqlsession.selectList(namespace+"selectUnUseComcard", ymvo);
+	public List<ComcardVO> selectUnUseComcard(DateSearchVO search_dsvo) {
+		return sqlsession.selectList(namespace+"selectUnUseComcard", search_dsvo);
 	}
 
 	
@@ -25,8 +27,10 @@ public class ComcardDAOMybatis implements ComcardDAO{
 	public ComcardVO selectNoComcard(int comcard_no) {
 		return sqlsession.selectOne(namespace+"selectNoComcard", comcard_no);
 	}
-	
-	public List<ComcardVO> selectAllComcard() {
-		return sqlsession.selectList(namespace+"selectAllComcard");
+
+
+	@Override
+	public List<ComcardVO> selectListComcard(Depart_posi_dateVO dpdvo) {
+		return sqlsession.selectList(namespace+"selectListComcard",dpdvo);
 	}
 }

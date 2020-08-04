@@ -53,13 +53,15 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
-				<form name="companyBoardSearch" method="post"  
-				action="<c:url value='/companyBoard/companyBoardWrite.do'/> ">
+				<form name="boardSearch" method="post"  
+				action="<c:url value='/board/boardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">ICE 사내게시판</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info">게시글작성</button>
-						</div>
+						<a href="<c:url value='/board/boardWrite.do'/>">
+							<div style="float: right">
+								<button type="button" class="btn btn-info">게시글작성</button>
+							</div>
+						</a>
 						
 					</div>
 					
@@ -106,9 +108,10 @@
 													</c:if>
 												</a>
 											</td>
+											<td>${vo.nickname }</td>
 											<td><fmt:formatDate value="${vo.regdate}"
 												pattern="yyyy-MM-dd"/> </td>
-											<td>${vo.readcount}</td>
+											<td>${vo.visited}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -148,7 +151,7 @@
 							</select>
 							<input type="text" class="form-control" 
 								placeholder="검색어를 입력...">
-							<button type="button" class="btn btn-primary btn-sm">검색</button>
+							<button type="submit" class="btn btn-primary btn-sm">검색</button>
 							
 						</div>
 					</div>		

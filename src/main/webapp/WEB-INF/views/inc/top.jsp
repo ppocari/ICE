@@ -168,7 +168,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
@@ -310,7 +310,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
-							<a class="collapse-item" href="<c:url value='/companyBoard/companyBoardList.do'/>">사내게시판</a>
+							<a class="collapse-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
 						</div>
 
 					</div>
