@@ -38,6 +38,16 @@ public class SpayServiceImpl implements SpayService{
 		return spayDao.searchNum(MEMNO);
 	}
 
+	@Override
+	public List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo) {
+		return spayDao.selectSpayView(dateSearchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll(DateSearchVO dateSearchVo) {
+		return spayDao.selectTotalRecordAll(dateSearchVo);
+	}
+
 	
 
 }

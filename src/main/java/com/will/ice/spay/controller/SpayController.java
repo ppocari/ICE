@@ -1,5 +1,6 @@
 package com.will.ice.spay.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -136,6 +137,49 @@ public class SpayController {
 		model.addAttribute("sVo", sVo);
 		
 		return "spay/sok";
+	}
+	
+	@RequestMapping("/sListAll.do")
+	public String sListAll(@ModelAttribute DateSearchVO dateSearchVo,
+			HttpSession session, Model model) {
+		String memno = (String)session.getAttribute("memno");
+		if(memno=="999999") {
+			
+			dateSearchVo.setMemNo(memno);
+			logger.info("구매 목록 파라미터 dateSearchVo={}", dateSearchVo);
+			
+			PaginationInfo pagingInfo = new PaginationInfo();
+			pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+			pagingInfo.setCurrentPage(dateSearchVo.getCurrentPage());
+			pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+			
+			dateSearchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+			dateSearchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
+			
+			String startDay=dateSearchVo.getStartDay();
+			if(startDay==null || startDay.isEmpty()) {
+				Date today = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String str=sdf.format(today);
+				dateSearchVo.setStartDay(str);
+				dateSearchVo.setEndDay(str);			
+			}
+			
+			List<SpayViewVO> list=spayService.selectSpayView(dateSearchVo);
+			logger.info("구매 내역 결과 list.size={}", list.size());
+			
+			int totalRecord=spayService.selectTotalRecord(dateSearchVo);
+			logger.info("구매내역 조회 결과, totalRecord={}", totalRecord);
+				
+			pagingInfo.setTotalRecord(totalRecord);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pagingInfo", pagingInfo);	
+
+		}else {
+			return "authority";
+		}
+		return "spay/sListAll";
 	}
 	
 }

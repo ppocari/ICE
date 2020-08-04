@@ -10,6 +10,8 @@ public interface SpayService {
 	public int insertTic(SpayVO vo);
 	List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo);
 	int selectTotalRecord(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo);
+	int selectTotalRecordAll(DateSearchVO dateSearchVo);
 	SpayVO searchAll(int ticno);
 	int searchNum(int MEMNO);
 	

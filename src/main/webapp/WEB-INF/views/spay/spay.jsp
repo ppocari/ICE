@@ -116,14 +116,15 @@
 	        		dataType: 'json',
 	        		data: {
 	    	    		TICQUANTITY: ${sVo.TICQUANTITY },
-	    	    		TICPRICE: ${sVo.TICPRICE }
+	    	    		TICPRICE: ${sVo.TICPRICE },
+	    	    		
 	        		}
 	        	});
 	        	location.href="<c:url value='/spay/sok.do'/>";
 	        	
-	            var msg = '결제가 완료되었습니다.';
-	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            msg += '카드 승인번호 : ' + rsp.apply_num;
+	            var msg = '결제가 완료되었습니다. \n';
+	            msg += '결제 금액 : ' + rsp.paid_amount +'\n';
+	            msg += '카드 승인번호 : ' + rsp.apply_num +'\n';
 	        } else {
 	            var msg = '결제에 실패하였습니다.';
 	            msg += '에러내용 : ' + rsp.error_msg;

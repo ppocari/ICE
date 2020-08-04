@@ -41,5 +41,15 @@ public class SpayDAOMybatis implements SpayDAO{
 		return sqlSession.selectOne(namespace+"searchNum", MEMNO);
 	}
 
+	@Override
+	public List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo) {
+		return sqlSession.selectList(namespace+"selectSpayViewAll", dateSearchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll(DateSearchVO dateSearchVo) {
+		return sqlSession.selectOne(namespace+"selectTotalRecordAll",dateSearchVo);
+	}
+
 
 }

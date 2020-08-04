@@ -11,6 +11,8 @@ public interface SpayDAO {
 	public int insertTic(SpayVO vo);
 	List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo);
 	int selectTotalRecord(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo);
+	int selectTotalRecordAll(DateSearchVO dateSearchVo);
 	int searchNum(int MEMNO);
 	SpayVO searchAll(int ticno);
 }

@@ -48,8 +48,8 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
-				<form name="sListFrm" method="post"
-					action="<c:url value='/spay/sList.do'/> ">
+				<form name="sListAllFrm" method="post"
+					action="<c:url value='/spay/sListAll.do'/> ">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">식권구매</h6>
