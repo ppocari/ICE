@@ -3,6 +3,7 @@ package com.will.ice.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.ice.board.model.BoardService;
 import com.will.ice.board.model.BoardVO;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.SearchVO;
 import com.will.ice.common.Utility;
+import com.will.ice.member.model.MemberService;
+import com.will.ice.member.model.MemberVO;
 
 @Controller
 @RequestMapping("board")
@@ -28,6 +32,8 @@ public class BoardController {
 		= LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired private BoardService boardService;
+	
+	@Autowired private MemberService memberService;
 	
 	@RequestMapping("/boardList.do")
 	public String boardList(@ModelAttribute SearchVO searchVo, Model model,
@@ -100,4 +106,71 @@ public class BoardController {
 		
 		return "common/message";
 	}
+	
+	@RequestMapping("boardDetail.do")
+	public String boardDetail(@RequestParam(defaultValue = "0") int boardNo,
+			HttpServletRequest request, Model model) {
+		//1.
+		logger.info("상세보기, 파라미터 no={}", boardNo);
+		if(boardNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/board/boardList.do");
+			
+			return "common/message";
+		}
+		
+		//2.
+		BoardVO vo = boardService.selectByNo(boardNo);
+		logger.info("상세보기 조회 결과, vo={}", vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "board/boardDetail";
+	}
+	
+	@RequestMapping(value="boardDelete.do", method = RequestMethod.GET)
+	public String boardDelete_get(@RequestParam(defaultValue = "0") int boardNo,
+			Model model) {
+		logger.info("삭제 화면 파라미터 no={}", boardNo);
+		if(boardNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/board/boardList.do");
+			
+			return "common/message";
+		}
+		
+		return "board/boardDelete";
+	}
+	
+	@RequestMapping(value="boardDelete.do", method=RequestMethod.POST)
+	public String boardDelete_post(@RequestParam(defaultValue = "0") String boardNo,
+			@RequestParam String pwd ,HttpSession session, Model model) {
+		logger.info("삭제처리 파라미터 boardNo={}, pwd={}", boardNo,pwd);
+		
+		String memNo= (String) session.getAttribute("identNum");
+		MemberVO memVo= memberService.selectMember(memNo);
+		
+		String dbPwd = memVo.getPwd();
+		
+		String msg="삭제 실패", url="/board/boardDetail.do?boardNo="+boardNo;
+		
+		if(dbPwd.equals(pwd)) {
+			boardService.deleteBoard(Integer.parseInt( boardNo));
+			msg="삭제되었습니다.";
+			url="/board/boardClose.do";
+		}else {
+			msg="비밀번호가 틀렸습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/boardClose.do")
+	   public void boardClose() {
+	      logger.info("사내게시판 삭제완료");   
+	   }
+ 
 }

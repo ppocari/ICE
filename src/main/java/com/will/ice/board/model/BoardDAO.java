@@ -8,4 +8,7 @@ public interface BoardDAO {
 	public int insertBoard(BoardVO vo);
 	public List<BoardVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecord(SearchVO searchVo);
+	public BoardVO selectByNo(int boardNo);
+	public String selectPwd(int boardNo);	
+	public int deleteBoard(int boardNo);
 }

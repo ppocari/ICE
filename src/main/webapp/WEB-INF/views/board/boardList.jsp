@@ -30,7 +30,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	
-	
+
 </script>
 <!-- Begin Page Content -->
 
@@ -98,7 +98,7 @@
 													<img>
 												</c:if>
 												
-												<a href="">
+												<a href="<c:url value='/board/boardDetail.do?boardNo=${vo.boardNo }'/>">
 													<!-- 제목보여주기 길면 일부 -->
 													<c:if test="${fn:length(vo.title)>30 }">
 														${fn:substring(vo.title, 0, 30)} ...
