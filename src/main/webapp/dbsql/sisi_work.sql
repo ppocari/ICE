@@ -132,4 +132,9 @@ select * from comcard_mem
 delete from member
 where memno = '999999';
  
-
+select * from
+(
+select * from accountCode
+where acctitle like '%비%'
+)
+where rownum <=5;

@@ -68,7 +68,7 @@ public class LoginController {
 				ck.setPath("/");
 				response.addCookie(ck);
 			}
-			
+
 			msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
 			if(memVo.getPosCode().equals("999")) {	//관리자
 				url = "/main/main_admin.do";
@@ -94,7 +94,7 @@ public class LoginController {
 				if(pwd.equals(memVo.getSsn1())){ 
 					msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다"; 
 					url = "/member/memPwd.do";
-										
+
 				}else { 
 					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다."; 
 					url = "/main/main_manager.do"; 
@@ -102,15 +102,23 @@ public class LoginController {
 			}
 
 
-	}else if(result==MemberService.PWD_DISAGREE){
-		msg="비밀번호가 일치하지 않습니다.";			
-	}else if(result==MemberService.ID_NONE) {
-		msg="해당 아이디가 존재하지 않습니다.";			
+		}else if(result==MemberService.PWD_DISAGREE){
+			msg="비밀번호가 일치하지 않습니다.";			
+		}else if(result==MemberService.ID_NONE) {
+			msg="해당 아이디가 존재하지 않습니다.";			
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		return "common/message";
 	}
-
-	model.addAttribute("msg", msg);
-	model.addAttribute("url", url);
-
-	return "common/message";
-}
+	
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "log/login";
+		
+	}
 }
