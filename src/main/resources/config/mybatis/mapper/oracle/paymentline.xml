@@ -6,7 +6,10 @@
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
 		select * from mypage_mem
 		<![CDATA[
-			where poscode>#{poscode}]]>
+			where trunc(poscode,-1)>trunc(#{poscode},-1)]]>
+		<if test="trunc(poscode,-1)=='910'">
+			and poscode!='920'
+		</if>
 	</select>
 	
 	

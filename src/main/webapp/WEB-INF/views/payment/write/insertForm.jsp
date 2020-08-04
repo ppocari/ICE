@@ -8,21 +8,16 @@
 <title>ICE</title>
 <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
 #IF{overflow: hidden;}
 #IFformNo,#IFformName{width:200px;}
 #IFheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
 #IFheaderDiv p{padding-left: 8px;padding-top: 8px;}
-#IFbtwriteForm{background-color: #4e73df; color:white;}
+#IFbtwriteForm{background-color: #4e73df; color:white;}.note-editor.note-frame.card {position: relative;top: 0;}
 #IFsummerDiv{padding-top: 10px;padding-bottom: 10px;}
-#IFformDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 8px;text-align: center;}
+#IFformDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 13px;text-align: center;}
+
 </style>
-<script type="text/javascript">
-window.onload = function() {
-	window.resizeTo(790, 700);
-}
-</script>
 </head>
 <body id="IF">
 	<div id="bigDiv">
@@ -32,10 +27,6 @@ window.onload = function() {
 		<div id="IFformDiv">
 			<form class="form-inline" method="post" name="formInfoFrm"
 				action="<c:url value='/payment/write/insertForm.do'/>">
-				<div class="form-group">
-					<label for="formNo">양식코드</label> 
-					<input type="text" class="form-control" id="IFformNo" readonly="readonly">
-				</div>
 				<div class="form-group">
 					<label for="formName">양식이름</label> 
 					<input type="text" class="form-control" id="IFformName" name="formName">

@@ -21,22 +21,16 @@
 		values(#{fileNo},#{fileName},#{originalFileName},#{fileSize},#{docNo})
 	</insert>
 	
-	<update id="updateFile" parameterType="paymentfileVo">
-		update paymentfile
-		set fileName=#{fileName},originalFileName=#{originalFileName},fileSize=#{fileSize}
-		where docNo=#{docNo}
-	</update>
-	
-	<update id="isFile" parameterType="int">
+	<update id="isFile" parameterType="paylinedocVo">
 		update payment
-		set hasFile='Y'
+		set hasFile=#{hasFile}
 		where docNo=#{docNo}
 	</update>
 	
 	<update id="updatePaydoc" parameterType="paylinedocVo">
 		update payment
 		set formNo=#{formNo},typeNo=#{typeNo},title=#{title},content=#{content},keep=#{keep},
-		expirydate=add_months(sysdate,#{keep}), writedate=sysdate, imsy=#{imsy}
+		expirydate=add_months(sysdate,#{keep}), writedate=sysdate, imsy=#{imsy},progress=#{progress}
 		where docNo=#{docNo} and memNo=#{writememNo}
 	</update>
 	
@@ -103,8 +97,7 @@
 				]]>
 			</where>
 	</select>
-
-
+	
 	<select id="selectImsy" parameterType="String" resultType="paymentViewVo">
 		select * from paymentview
 		<where>
@@ -132,9 +125,9 @@
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
 		select * from mypage_mem
 		<![CDATA[
-			where poscode>#{poscode}
+			where trunc(poscode,-1)>trunc(#{poscode},-1)]]>
 			and poscode!='999'
-			order by poscode desc]]>
+		order by poscode desc
 	</select>
 	
 	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">
@@ -150,6 +143,13 @@
 		select * from paymentfile
 		where docNo=#{docNo}
 	</select>
+	
+	<update id="updateFile" parameterType="paymentfileVo">
+		update paymentfile
+		set fileName=#{fileName},originalFileName=#{originalFileName},filesize=#{fileSize}
+		where docNo=#{docNo}
+	</update>
+	
 </mapper>
 
 

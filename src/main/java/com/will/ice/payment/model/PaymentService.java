@@ -15,8 +15,8 @@ public interface PaymentService {
 	List<DocumentviewVO> selectPayLine(int docNo);
 	int deletePayLine(int docNo);
 	List<MemberVO> selectAllMem(int poscode);
-	int insertOnePay(PaylinedocVO pldVo);
-	int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo);
+	int insertImsyPay(PaylinedocVO pldVo,PaymentfileVO fileVo);
+	int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo,String oldfileName);
 	PaymentfileVO getFile(int docNo);
-	int updatePaydoc(PaylinedocVO pldVo);
+	int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName);
 }

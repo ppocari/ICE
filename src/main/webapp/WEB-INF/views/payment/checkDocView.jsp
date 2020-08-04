@@ -66,10 +66,12 @@
 				<td rowspan="2">${payVo.writedate }</td>
 				<td rowspan="2" width="15">첨부파일</td>
 				<td rowspan="2" colspan="5">
-					<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
-						id="fileName" style="position: relative;top: 30px;">
-						${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
-					</a>
+					<c:if test="${!empty fileVo.fileName }">
+						<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+							id="fileName" style="position: relative;top: 30px;">
+							${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+						</a>
+					</c:if>
 				</td>
 			</tr>
 			<tr height="10">

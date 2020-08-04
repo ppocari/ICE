@@ -95,8 +95,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public int isFile(int docNo) {
-		return sqlSession.update(namespace+"isFile",docNo);
+	public int isFile(PaylinedocVO pldVo) {
+		return sqlSession.update(namespace+"isFile",pldVo);
 	}
 
 	@Override

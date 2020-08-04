@@ -1,38 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>ICE</title>
-<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<link href="<c:url value="/resources/css/sb-admin-2.min.css"/>" rel="stylesheet"> 
+<%@include file="../../inc/top.jsp" %>
+<style type="text/css">
+#SFformTable thead tr{background-color: #858796; color:white;}
+.table td, .table th{text-align: center;}
+#SFformlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;padding: 1% 10% 1% 10%;}
+#SFbtForm{background-color: #4e73df; color:white;}
+#SFbtDel{font-size:1.0em;}#SFbigDiv{padding-left: 2%;padding-right: 2%;}
+#SFlastDiv{padding-left: 8px;float:right;}
+#SFheaderDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
+#SFheaderDiv p{padding-top: 5px;padding-left: 5px;}
+</style>
 <script type="text/javascript">
 	$(function(){
-		$('#btForm').click(function(){
-			location.href="<c:url value='/payment/write/insertForm.do'/>";
+		$('#SFbtForm').click(function(){
+			window.open('insertForm.do','docform','width= 790,height=620,left=0,top=0,location=no,resizable=no,scroll=no');
 		});
 		$('.chk').click(function(){
 			$(this).next().attr("disabled", false);
 		});
 	});
 </script>
-</head>
-<body id="SF">
-<!-- Content Row -->
-<div id="bigDiv">
+<div class="row" style="padding-left: 15px;">
+	<!-- Area Chart -->
+	<div class="col-xl-12 ">
+	<div class="card shadow mb-4" style="height:fit-content;width: 99%;padding: 10px 0px 10px 0px;">
+<div id="SFbigDiv">
 	<div id="SFheaderDiv">
-		<p>문서 양식 등록</p>
+		<p>문서 양식</p>
 	</div>
 	<form name="formFrm" method="post" 
 		action="<c:url value='/payment/deleteForm.do' />">
-	<div class="row" style="padding-left: 15px;">
-	<!-- Area Chart -->
-	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:400px;width: 99%;padding: 10px 10px 10px 10px;">
 	<div id="SFformlistDiv">
 		<table class="table" id="SFformTable">
 			<thead>
@@ -60,14 +58,11 @@
 			</tbody>
 		</table>
 	</div>
-	</div>
-	</div>
-	</div>
 	<div id="SFlastDiv">
 		<button type="submit" class="btn btn-default" id="SFbtDel">선택삭제</button>
 		<button type="button" class="btn btn-default" id="SFbtForm">등록</button>
 	</div>
 	</form>
 </div>
-</body>
-</html>
+</div></div></div>
+<%@include file="../../inc/bottom.jsp"%>

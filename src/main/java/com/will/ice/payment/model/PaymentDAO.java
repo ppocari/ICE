@@ -24,7 +24,7 @@ public interface PaymentDAO {
 	int updateImsy(int docNo);
 	int updatePaydoc(PaylinedocVO pldVo);
 	int saveFile(PaymentfileVO fileVo);
-	int isFile(int docNo);
+	int isFile(PaylinedocVO pldVo);
 	PaymentfileVO getFile(int docNo);
 	int updateFile(PaymentfileVO fileVo);
 }
