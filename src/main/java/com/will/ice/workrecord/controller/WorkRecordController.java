@@ -1,6 +1,5 @@
 package com.will.ice.workrecord.controller;
 
-import java.text.DateFormat;
 import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
 import java.util.Date;
@@ -48,14 +47,6 @@ public class WorkRecordController {
 		Date d = new Date();
 		String date = ymd.format(d);
 		
-		/*
-		 <select id="selectToday" resultType="WorkRecordVO" parameterType="String">
-		select * from workRecord 
-        where memno=#{memNo} and cmp_in is not null
-		</select>
-		  
-		  내 포스트잇 왜 무시해 ....
-		 */
 		logger.info("date={}"+date);
 		
 		model.addAttribute("date",date);
@@ -64,27 +55,6 @@ public class WorkRecordController {
 		
 		return "workRecord/workRecord";
 	}
-	
-	/*
-	@RequestMapping(value = "/workRecord.do",method = RequestMethod.POST)		
-	public String workRecord_post(HttpServletRequest request,Model model) {
-		//사원번호,이름 셋팅
-		HttpSession session = request.getSession();
-		String userName = (String)session.getAttribute("userName");
-		String memNo = (String) session.getAttribute("identNum");
-		WorkRecordVO vo = new WorkRecordVO();
-		vo.setMemNo(memNo);
-		
-		List<WorkRecordVO>list = workService.selectWorkList(vo);
-		
-		logger.info("workRecord 보여주기 vo={},userName={}",vo,userName);
-		model.addAttribute("vo",vo);
-		model.addAttribute("list",list);
-		model.addAttribute("userName",userName);
-		
-		return "workRecord/workRecord";
-	}
-	*/
 	
 	
 	//출근
@@ -111,35 +81,10 @@ public class WorkRecordController {
 		String regdate = ymd.format(day);
 		Svo.setCmpRegdate(regdate);
 		logger.info("regdate={}"+Svo.getCmpRegdate());
-		/*
-		//regdate
-		//ymd 형식으로 변경	
-		SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
-		String ymdString = ymd.format(Svo.getCmpRegdate());
-		logger.info("Svo.getCmpRegdate={}"+Svo.getCmpRegdate());
-		logger.info("ymdString"+ymdString);
-		
-		//date 변환
-		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		Date format_reg = new Date();
-		try {
-			format_reg = dateformat.parse(ymdString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		//regdate 셋팅
-		Svo.setCmpRegdate(format_reg);
-		//ymd.format(Svo.getCmpRegdate());
-		
-		logger.info("Svo.getCmpRegdate={}"+Svo.getCmpRegdate()); 
-		*/
-		
 		
 		// cmp_month 셋팅
 		String date = ym.format(day);
 		Svo.setCmpMonth(date);
-		
 		
 		try {
 			day = hm.parse(day_format); //출근버튼 클릭
@@ -276,15 +221,8 @@ public class WorkRecordController {
 		Dvo.setMemNo(memNo);
 		logger.info("출퇴근 상세보기 memNo={}",memNo);
 		
-		//CmpRegdate 현재날짜로 셋팅
-		Date d = new Date();
-		String regdate = ymd.format(d);
-		Dvo.setCmpRegdate(regdate);
-		
-		
-		// cmp_month 셋팅
-		String date = mm.format(Dvo.getCmpRegdate());
-		Dvo.setCmpMonth(date);
+		Dvo = workService.selectToday(memNo);
+		logger.info("Dvo={}"+Dvo);
 		
 		//조회
 		List<WorkRecordVO>list = workService.selectWorkList(Dvo);
