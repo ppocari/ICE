@@ -95,9 +95,15 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeList.do")
-	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
+	public String noticeList(@ModelAttribute SearchVO searchVo, Model model,
+			HttpSession session) {
 		logger.info("글 목록 파라미터 searchVo", searchVo);
 		
+		//맴버정보 받아오기
+		String memNo = (String) session.getAttribute("identNum");
+						
+		logger.info("list에서 memNo 받아오기 memNo={}", memNo);
+				
 		//[1] PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCKSIZE);

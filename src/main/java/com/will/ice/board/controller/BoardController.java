@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.FormSubmitEvent.MethodType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,6 @@ public class BoardController {
 			Model model, HttpSession session) {
 		//맴버정보 받아오기
 		String memNo = (String) session.getAttribute("identNum");
-		
 		boardVo.setMemNo(memNo);
 		
 		//이미지 없을떄 null값 넣기
@@ -173,4 +173,58 @@ public class BoardController {
 	      logger.info("사내게시판 삭제완료");   
 	   }
  
+	@RequestMapping(value="boardEdit.do", method = RequestMethod.GET)
+		public String boardEdit_get(@RequestParam(defaultValue = "0") int boardNo,
+				HttpServletRequest request, Model model) {
+		//1
+		logger.info("수정화면 ,파리미터 no={}", boardNo);
+		
+		if(boardNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/board/boardList.do");
+			
+			return "common/message";
+		}
+		
+		BoardVO vo=boardService.selectByNo(boardNo);
+		logger.info("수정화면 조회 결과 vo={}", vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "board/boardEdit";
+		
+	}
+	
+	@RequestMapping(value="boardEdit.do", method = RequestMethod.POST)
+	public String boardEdit_post(@ModelAttribute BoardVO boardVo,
+			HttpServletRequest request, Model model, HttpSession session) {
+		logger.info("수정 처리 파라미터 vo={}", boardVo);
+		
+		//맴버정보 받아오기
+		String memNo = (String) session.getAttribute("identNum");
+		boardVo.setMemNo(memNo);
+		
+		//이미지 없을떄 null값 넣기
+		if(boardVo.getFilePath()==null || boardVo.getFilePath().isEmpty()) {
+			boardVo.setFilePath("");
+		}
+		
+		//메인여부 체크안할시 N
+		if(boardVo.getIsMain()==null || boardVo.getFilePath().isEmpty()) {
+			boardVo.setIsMain("N");
+		}
+		logger.info("사내게시판 등록, 파라미터 boardVo={}", boardVo, memNo);
+		
+		String msg="글수정 실패", url="/board/boardEdit.do?boardNo="+boardVo.getBoardNo();
+		int cnt=boardService.updateBoard(boardVo);
+		if(cnt>0) {
+			msg="글 수정 처리되었습니다";
+			url="/board/boardDetail.do?boardNo="+boardVo.getBoardNo();
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }

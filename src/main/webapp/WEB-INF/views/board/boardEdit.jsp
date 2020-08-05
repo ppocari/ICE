@@ -36,7 +36,7 @@ $(function(){
 			= "<c:url value='/board/boardList.do'/>"
 	});
 	
-	$('form[name=frmWrite]').submit(function(){
+	$('form[name=frmEdit]').submit(function(){
 		if($('#title').val()==''){
 			alert('제목을 입력하세요');
 			$('#title').focus();
@@ -56,7 +56,7 @@ $(function(){
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">사내게시판 작성</h1>
+		<h1 class="h3 mb-0 text-gray-800">사내게시판 수정</h1>
 
 		<a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -71,14 +71,16 @@ $(function(){
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
 				<!-- Card Header - Dropdown -->
-				<form name="frmWrite" method="post"  
-					action="<c:url value='/board/boardWrite.do'/>"
+				<form name="frmEdit" method="post"  
+					action="<c:url value='/board/boardEdit.do'/>"
 					enctype="multipart/form-data">
+					
+					<input type="hidden" name="boardNo" value="${param.boardNo }">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<tr>
 							<th>
-								<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
+								<h6 class="m-0 font-weight-bold text-primary">사내게시판 수정</h6>
 							</th>
 							<td>
 								<a href="<c:url value='/board/boardList.do'/>">
@@ -122,7 +124,7 @@ $(function(){
 								</td>
 								<td style="width:80%;">
 									<input type="text" class="form-control" 
-									name="title" id="title">
+									name="title" id="title" value="${vo.title }">
 								</td>
 							</tr>
 						</table>
@@ -134,14 +136,15 @@ $(function(){
 						<table>
 							<tr>
 								<td style="width:20%;">
+								
 									<h6 class="m-0 font-weight-bold text-primary">별명</h6>
 								</td>
 								<td style="width:80%;">
 									<input type="text" class="form-control" 
-									name="nickname" id="nickname">
+									name="nickname" id="nickname" value="${vo.nickname }">
 								</td>
 							</tr>
-						</table>
+						</table> 
 					</div>
 					
 					<!-- 내용 -->
@@ -152,7 +155,7 @@ $(function(){
 									<h6 class="m-0 font-weight-bold text-primary">내용</h6>
 								</td>
 								<td style="width:80%; text-align:left;">
-									<%@ include file="summer.jsp" %>
+									<%@ include file="EditSummer.jsp" %>
 								</td>
 							</tr>
 						</table>

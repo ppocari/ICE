@@ -11,4 +11,5 @@ public interface BoardDAO {
 	public BoardVO selectByNo(int boardNo);
 	public String selectPwd(int boardNo);	
 	public int deleteBoard(int boardNo);
+	public int updateBoard(BoardVO vo);
 }
