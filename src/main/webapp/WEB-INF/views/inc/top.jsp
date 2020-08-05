@@ -317,6 +317,26 @@
 				</div>
 			</li>
 			
+			<!-- Nav Item -게시판-->		
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseNine"
+				aria-expanded="true" aria-controls="collapseNine"> <i
+					class="fas fa-fw fa-folder"></i> <span>쪽지</span>
+			</a>
+				<div id="collapseNine" class="collapse" aria-labelledby="headingNine"
+					data-parent="#accordionSidebar" >
+					<div class="bg-white py-2 collapse-inner rounded">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<a class="collapse-item" href="<c:url value='/message/messageWrite.do'/>">쪽지쓰기</a>
+							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">보낸쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">받은쪽지함</a>
+							<a class="collapse-item" href="<c:url value='#'/>">보관함</a>
+							<a class="collapse-item" href="<c:url value='#'/>">휴지통</a>
+						</div>
+
+					</div>
+				</div>
+			</li>
 			<!-- Nav Item -스케줄-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
