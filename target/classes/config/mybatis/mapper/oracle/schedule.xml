@@ -16,6 +16,11 @@
 		select * from schedule where memNo=#{memNo}
 	</select>
 	
+	<select id="selectDetail" parameterType="ScheduleVo" resultType="ScheduleVo">
+		select * from SCHEDULE 
+		where memNo = #{memNo} and start_day = #{startDay}
+	</select>
+	
 </mapper>
 
 

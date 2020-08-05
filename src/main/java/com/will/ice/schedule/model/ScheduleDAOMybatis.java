@@ -20,6 +20,11 @@ public class ScheduleDAOMybatis implements ScheduleDAO{
 	public List<ScheduleVo> selectSchedule(String memNo) {
 		return sqlseeion.selectList(namespace+"selectSchedule",memNo);
 	}
+
+	@Override
+	public ScheduleVo selectDetail(ScheduleVo vo) {
+		return sqlseeion.selectOne(namespace+"selectDetail",vo);
+	}
 	
 	
 	
