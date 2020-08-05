@@ -4,6 +4,9 @@ select * from position;
 
 select * from department;
 
+select * from board;    --사내게시판
+
+select * from notice;   --공지사항
 
 select * from workRecord;
 
