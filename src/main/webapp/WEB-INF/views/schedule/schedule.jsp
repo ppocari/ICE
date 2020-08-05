@@ -21,10 +21,12 @@
 				title:'<c:out value="${citem.title}"/>',
 				start:'<c:out value="${citem.startDay}"/>',
 				end:'<c:out value="${citem.endDay}"/>',
+				id:'<c:out value="${citem.schNo}"/>',
+				resourceId:'<c:out value="${citem.resourceId}"/>'
 			},
 		</c:forEach>
 	];
-	
+
 	
   $(function() {
 		var memNo = $("#memNo").val();
@@ -77,6 +79,7 @@
                	                      title: res.title,
                	                      start: res.startDay,
                	                      end: res.endDay,
+               	                      id: res.schNo,
                	                      allDay: false
                	                    });
                	                    alert('일정이 추가되었습니다!');
@@ -109,10 +112,10 @@
       //allDaySlot: false,
 		
       resources: [
-        { id: 'a', title: 'Room A' },
-        { id: 'b', title: 'Room B', eventColor: 'green' },
-        { id: 'c', title: 'Room C', eventColor: 'orange' },
-        { id: 'd', title: 'Room D', eventColor: 'red' }
+        { id: 'a', title: 'Room A' , color:'orange'},
+        { id: 'b', title: 'Room B', eventColor: 'green' , textColor: 'red'},
+        { id: 'c', title: 'Room C', eventColor: 'red' ,color:'orange'},
+        { id: 'd', title: 'Room D', eventColor: 'orange' }
       ],
   	
       //일정보여주기
@@ -179,23 +182,24 @@
     	  	$('#modal-title').text('\'${detailVo.title}\'');
     	  	
 	   	  	var eventStrat = info.event.start;
-    	  	var dbTitle;
-	   	  	alert(eventStrat);
+    	  	var dbTitle = info.event.title;
+    	  	var dbId = info.event.id;
+    	  	var content;
 		   	 $.ajax({
-					url:"<c:url value='/schedule/ajaxDetail.do?eventStrat=\'+eventStrat+\''/>",
+					url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
 					type:"get",
 					datatype:"json",
 					success:function(res){
-						dbTitle = res.title;
-                        alert(dbTitle);
+						content = res.content;
+                        $("#modal-contents").text(content); //fullcalendar에는 content가 없어서 조회해와야함
 					},
 					error:function(xhr, status, error){
 						alert(status + ", " + error);
 					}
 				});
-    	  	
-    	  	$('#modal').show();
+		   	$('#modal').show();
     	  	$("#modal-title").text(dbTitle);
+    	  	
     	    //borderColor 변경
     	    //info.el.style.borderColor = 'red';
     	    
@@ -245,6 +249,10 @@
     td.fc-day-top.fc-sun.fc-past { color: red;}			/* 일요일 */
     td.fc-day-top.fc-sun.fc-future { color: red;}		/* 일요일 */
     
+    .fc-title {		/*이벤트 폰트 컬러 변경*/
+	    color: white;
+	}
+	
 	.msgbox{
 		position: absolute;
 	    left: 33%;

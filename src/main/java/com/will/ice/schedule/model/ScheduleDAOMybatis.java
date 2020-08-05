@@ -25,6 +25,11 @@ public class ScheduleDAOMybatis implements ScheduleDAO{
 	public ScheduleVo selectDetail(ScheduleVo vo) {
 		return sqlseeion.selectOne(namespace+"selectDetail",vo);
 	}
+
+	@Override
+	public ScheduleVo selectRownum(String memNo) {
+		return sqlseeion.selectOne(namespace+"selectRownum",memNo);
+	}
 	
 	
 	

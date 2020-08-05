@@ -65,7 +65,7 @@
 		
 		$("#btDetail").click(function() {
 			event.preventDefault();
-			window.open('<c:url value="/workRecord/detail.do?Start=${vo.cmpIn}&End=${vo.cmpOut}"/>','workList',
+			window.open('<c:url value="/workRecord/detail.do?Start=${vo.cmpIn}&End=${vo.cmpOut}"/>','workDetail',
 		'width=600,height=500,left=0,top=0,location=yes,resizable=yes');
 		});
 		

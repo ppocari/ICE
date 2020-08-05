@@ -1,13 +1,8 @@
 package com.will.ice.schedule.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -46,28 +41,44 @@ public class ScheduleController {
 	
 	@RequestMapping("/ajaxWrite.do")
 	@ResponseBody
-	public void ajaxWrite(@ModelAttribute ScheduleVo scheduleVo,
+	public ScheduleVo ajaxWrite(@ModelAttribute ScheduleVo scheduleVo,
 			HttpSession session) {
 		String memNo = (String) session.getAttribute("identNum");
 		scheduleVo.setMemNo(memNo);
-		logger.info("ajax 스케줄 등록, 파라미터 scheduleVo={},memNo={}"+scheduleVo,memNo);
+		logger.info("ajax 스케줄 등록, 파라미터 scheduleVo={},memNo={}",scheduleVo,memNo);
 		
-		if(scheduleVo.getPlace() == null || scheduleVo.getPlace().isEmpty()) {
+		if(scheduleVo.getPlace().equals("1")) {
+			scheduleVo.setResourceId("a");
+			scheduleVo.setPlace("업무관련");
+		}else if(scheduleVo.getPlace().equals("2")) {
+			scheduleVo.setResourceId("b");
 			scheduleVo.setPlace("기타");
+		}else if(scheduleVo.getPlace().equals("3")) {
+			scheduleVo.setResourceId("c");
+			scheduleVo.setPlace("휴가,연차");
+		}else {
+			scheduleVo.setResourceId("d");
+			scheduleVo.setPlace("유연근무");
 		}
 		
 		int cnt = scheduleService.insertSchedule(scheduleVo);
 		logger.info("스케줄 등록 결과, cnt={}",cnt);
+		
+		ScheduleVo vo = scheduleService.selectRownum(memNo);
+		
+		return vo;
 	}
 	
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("ajaxDetail.do")
 	@ResponseBody
-	public ScheduleVo ajaxDetail(@RequestParam String eventStrat,HttpSession session,Model model) {
+	public ScheduleVo ajaxDetail(@RequestParam String dbId, HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
-		logger.info("ajaxDetail 파라미터 eventStrat={}"+eventStrat);
+		logger.info("ajaxDetail 파라미터 dbId={}"+dbId);
 		
 		ScheduleVo vo = new ScheduleVo();
+		ScheduleVo detailVo  = new ScheduleVo();
 		List<ScheduleVo> list = new ArrayList<ScheduleVo>();
 		
 		list = scheduleService.selectSchedule(memNo);
@@ -75,17 +86,16 @@ public class ScheduleController {
 		
 		for (int i = 0; i < list.size(); i++) {
 			vo = list.get(i);
+			if(dbId.equals(vo.getSchNo())) {
+				detailVo = scheduleService.selectDetail(vo);
+			}
+			if("35".equals(vo.getSchNo())) {
+				logger.info("35번입니다.");
+			}
+			logger.info("vo.getSchNo={}",vo.getSchNo());
 		}
 		
-		// 일정 클릭시 받아온 날짜를 db값과 조회 할 수 있도록 ymd 형태로 변경
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(eventStrat);
-		logger.info("date={}"+date);
-		
-		vo.setStartDay(date);
-		
-		ScheduleVo detailVo = scheduleService.selectDetail(vo);
-		logger.info("detailVo={}"+detailVo);
+		logger.info("detailVo={}",detailVo);
 		
 		return detailVo;
 	}
