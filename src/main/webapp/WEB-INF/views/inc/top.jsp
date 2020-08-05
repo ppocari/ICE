@@ -122,7 +122,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
@@ -208,15 +208,16 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안 작성</a>
 						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
 						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/setForm.do' />">문서 양식설정</a>
 					</div>
 				</div>
 			</li>

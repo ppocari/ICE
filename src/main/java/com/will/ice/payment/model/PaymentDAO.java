@@ -5,10 +5,12 @@ import java.util.List;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 public interface PaymentDAO {
+	/* 기안함 */
 	int insertPaydoc(PaylinedocVO pldVo);
 	int insertOnePay(PaylinedocVO pldVo);
 	List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo);
@@ -24,7 +26,12 @@ public interface PaymentDAO {
 	int updateImsy(int docNo);
 	int updatePaydoc(PaylinedocVO pldVo);
 	int saveFile(PaymentfileVO fileVo);
-	int isFile(int docNo);
+	int isFile(PaylinedocVO pldVo);
 	PaymentfileVO getFile(int docNo);
 	int updateFile(PaymentfileVO fileVo);
+	
+	/* 결재함 */
+	List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo);
+	int insertComment(PaycommentVO comVo);
+	int updateStatus(String progress);
 }

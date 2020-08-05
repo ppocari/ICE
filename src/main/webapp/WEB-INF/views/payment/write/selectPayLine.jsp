@@ -43,13 +43,16 @@
 				<input type="hidden" id="writememNo" name="writememNo" value="${pldVo.writememNo }">
 				<c:if test="${update==1 }">
 					<input type="hidden" id="writedocNo" name="docNo" value="${pldVo.docNo }">
-					<input type="hidden" id="filedocNo" name="docNo" value="${fileVo.docNo }">
 				</c:if>
 				<input type="hidden" id="formNo" name="formNo" value="${pldVo.formNo }">
 				<input type="hidden" id="typeNo" name="typeNo" value="${pldVo.typeNo }">
 				<input type="hidden" id="title" name="title" value="${pldVo.title }">
 				<textarea id="content" name="content" hidden="hidden">${pldVo.content }</textarea>
 				<input type="hidden" id="keep" name="keep" value="${pldVo.keep }">
+				<input type="hidden" id="imsy" name="imsy" value="${pldVo.imsy }">
+				<input type="hidden" id="progress" name="progress" value="${pldVo.progress }">
+				<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName }">
+				<input type="hidden" id="oldfileName" name="oldfileName2" value="${oldfileName }">
 				<input type="hidden" id="fileName" name="fileName" value="${fileVo.fileName }">
 				<input type="hidden" id="fileSize" name="fileSize" value="${fileVo.fileSize }">
 				<input type="hidden" id="originalFileName" name="originalFileName" value="${fileVo.originalFileName }">

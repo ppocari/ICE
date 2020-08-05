@@ -32,7 +32,6 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
-import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -49,13 +48,68 @@ public class PaymentController {
 	@Autowired private FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
-	public String insertPaydoc(@RequestParam(required = false) String memNo,@RequestParam int formNo,
-			@RequestParam String title, @RequestParam String content,@RequestParam String keep,
-			@RequestParam String typeNo, Model model ,HttpServletRequest request,HttpSession session) {
+	public String insertPaydoc(@ModelAttribute PaylinedocVO pldVo, Model model ,HttpServletRequest request,HttpSession session) {
 		String identNum=(String)session.getAttribute("identNum");
-		logger.info("기안 작성 처리, 파라미터 memNo={},formNo={}",memNo,formNo);
-		logger.info("title={},content={}",title,content);
-		logger.info("keep={}",keep);
+		pldVo.setWritememNo(identNum);
+		logger.info("기안작성=>완료함, pldVo={}",pldVo);
+		
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";long fileSize=0;
+		if(fileList!=null) {
+			for(Map<String, Object> map : fileList) {
+				fileURL=(String) map.get("fileName");
+				fileSize=(Long)map.get("fileSize");
+				originalFileName = (String)map.get("originalFileName");
+			}
+		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
+		
+		MemberVO memVo = memService.selectMember(identNum);
+		List<MemberVO> memlist = 
+				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
+		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
+		
+		int update=0;
+		model.addAttribute("memlist",memlist);
+		model.addAttribute("update",update);
+		model.addAttribute("pldVo",pldVo);
+		model.addAttribute("fileVo",fileVo);
+		
+		return "payment/write/selectPayLine";
+	}
+	
+	@RequestMapping(value="/write/editPayment.do",method=RequestMethod.GET)
+	public void editPayment_get(@RequestParam int docNo,Model model,HttpSession session) {
+		logger.info("임시보관 항목 수정하기, 파라미터 docNo={}",docNo);
+		
+		String identNum = (String)session.getAttribute("identNum");
+		logger.info("기안 목록 보여주기,사원번호={}",identNum);
+		
+		List<DoctypeVO> doctypelist = doctypeService.selectAll();
+		PaymentfileVO fileVo = paymentService.getFile(docNo);
+		logger.info("첨부된 파일,fileVo={}",fileVo);
+		MemberVO memVo = memService.selectMember(identNum);
+		List<DocformVO> formlist = docformService.selectAllForm();
+		
+		PaymentviewVO payVo = paymentService.selectDocument(docNo);
+		logger.info("기안 내용,payVo={}",payVo);
+		
+		model.addAttribute("memVo",memVo);
+		model.addAttribute("formlist",formlist);
+		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("doctypelist",doctypelist);
+		model.addAttribute("payVo",payVo);
+	}
+	
+	@RequestMapping("/write/imsyInsert.do")
+	public String imsyInsert(@ModelAttribute PaylinedocVO pldVo,HttpSession session,Model model,HttpServletRequest request) {
+		String identNum = (String)session.getAttribute("identNum");
+		pldVo.setWritememNo(identNum);
+		logger.info("기안작성=>임시보관함, pldVo={}",pldVo);
 		
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
@@ -71,130 +125,8 @@ public class PaymentController {
 		fileVo.setFileName(fileURL);
 		fileVo.setOriginalFileName(originalFileName);
 		fileVo.setFileSize(fileSize);
-		
-		MemberVO memVo = memService.selectMember(identNum);
-		List<MemberVO> memlist = 
-				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
-		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
-		
-		model.addAttribute("memlist",memlist);
-		PaylinedocVO pldVo = new PaylinedocVO();
-		pldVo.setWritememNo(identNum);
-		pldVo.setFormNo(formNo);
-		pldVo.setTypeNo(Integer.parseInt(typeNo));
-		pldVo.setTitle(title);
-		pldVo.setContent(content);
-		pldVo.setKeep(Integer.parseInt(keep));
-		
-		int update=0;
-		model.addAttribute("update",update);
-		model.addAttribute("pldVo",pldVo);
-		model.addAttribute("fileVo",fileVo);
-		
-		return "payment/write/selectPayLine";
-	}
-	
-	@RequestMapping("/write/editPaydoc.do")
-	public String editPaydoc_post(@RequestParam int docNo,@RequestParam int formNo,@RequestParam String title,
-			@RequestParam String content,@RequestParam String keep,@RequestParam String typeNo,
-			Model model,HttpServletRequest request,HttpSession session) {
-		String identNum = (String)session.getAttribute("identNum");
-		logger.info("수정할 문서번호 docNo={}",docNo);
-		MemberVO memVo = memService.selectMember(identNum);
-		List<MemberVO> memlist = 
-				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
-		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
-		
-		PaymentviewVO docVo= paymentService.selectDocument(docNo);
-		
-		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
-		
-		if(!fileList.isEmpty()) {
-			if(docVo.getHasFile().equalsIgnoreCase("Y")) {
-				String oldFileName=paymentService.getFile(docNo).getFileName();
-				
-				if(oldFileName!=null && !oldFileName.isEmpty()) {
-					String upPath 
-					= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
-					File file = new File(upPath, oldFileName);
-					if(file.exists()) {
-						boolean bool=file.delete();
-						logger.info("파일 삭제 여부: {}", bool);
-					}
-				}
-			}
-			
-			String fileURL="",originalFileName="";long fileSize=0;
-			for(Map<String, Object> map : fileList) {
-				fileURL=(String) map.get("fileName");
-				fileSize=(Long)map.get("fileSize");
-				originalFileName = (String)map.get("originalFileName");
-			}
-			
-			PaymentfileVO fileVo = new PaymentfileVO(); 
-			fileVo.setFileName(fileURL);
-			fileVo.setOriginalFileName(originalFileName);
-			fileVo.setFileSize(fileSize);
-			model.addAttribute("fileVo",fileVo);
-		}
-		
-		PaylinedocVO pldVo = new PaylinedocVO();
-		pldVo.setWritememNo(identNum);
-		pldVo.setDocNo(docNo);
-		pldVo.setFormNo(formNo);
-		pldVo.setTypeNo(Integer.parseInt(typeNo));
-		pldVo.setTitle(title);
-		pldVo.setContent(content);
-		pldVo.setKeep(Integer.parseInt(keep));
-		
-		model.addAttribute("memlist",memlist);
-		int update=1;
-		model.addAttribute("update",update);
-		model.addAttribute("pldVo",pldVo);
-		
-		
-		return "payment/write/selectPayLine";
-	}
-	
-	@RequestMapping("/write/editPayment.do")
-	public void editPayment_get(@RequestParam int docNo,Model model,HttpSession session) {
-		logger.info("임시보관 항목 수정하기, 파라미터 docNo={}",docNo);
-		
-		String identNum = (String)session.getAttribute("identNum");
-		logger.info("기안 목록 보여주기,사원번호={}",identNum);
-		
-		List<DoctypeVO> doctypelist = doctypeService.selectAll();
-		PaymentfileVO fileVo = paymentService.getFile(docNo);
-		MemberVO memVo = memService.selectMember(identNum);
-		List<DocformVO> formlist = docformService.selectAllForm();
-		
-		PaymentviewVO payVo = paymentService.selectDocument(docNo);
-		logger.info("기안 내용,payVo={}",payVo);
-		
-		model.addAttribute("memVo",memVo);
-		model.addAttribute("formlist",formlist);
-		model.addAttribute("fileVo",fileVo);
-		model.addAttribute("doctypelist",doctypelist);
-		model.addAttribute("payVo",payVo);
-	}
-	
-	@RequestMapping("/write/imsyInsert.do")
-	public String imsyInsert(@RequestParam(required = false) String memNo,@RequestParam int formNo,@RequestParam String title,
-			@RequestParam String content,@RequestParam String keep,@RequestParam(defaultValue = "Y") String imsy,
-			@RequestParam int typeNo,HttpSession session,Model model) {
-		String identNum = (String)session.getAttribute("identNum");
-		PaylinedocVO pldVo = new PaylinedocVO();
-		pldVo.setWritememNo(identNum);
-		pldVo.setFormNo(formNo);
-		pldVo.setTypeNo(typeNo);
-		pldVo.setTitle(title);
-		pldVo.setContent(content);
-		pldVo.setKeep(Integer.parseInt(keep));
-		pldVo.setImsy(imsy);
-		pldVo.setProgress("결재진행중");
-		
-		int cnt = paymentService.insertOnePay(pldVo);
+
+		int cnt = paymentService.insertImsyPay(pldVo,fileVo);
 		String msg="임시보관 저장 실패!",url="/payment/write/imsyBox.do";
 		if(cnt>0) {
 			msg="임시보관함에 저장 되었습니다.";
@@ -206,27 +138,95 @@ public class PaymentController {
 		return "common/message";
 	}
 
-	@RequestMapping("/write/imsyEdit.do")
-	public String imsyEdit(@RequestParam(required = false) String memNo,@RequestParam int formNo,@RequestParam String title,
-			@RequestParam String content,@RequestParam String keep,@RequestParam(defaultValue = "Y") String imsy,
-			@RequestParam int typeNo,HttpSession session,Model model) {
+	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
+	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
+			Model model,HttpServletRequest request,HttpSession session,@RequestParam String keep,
+			@RequestParam String oldfileName) {
+		//임시보관함에서 결재선 등록시
 		String identNum = (String)session.getAttribute("identNum");
-		PaylinedocVO pldVo = new PaylinedocVO();
-		pldVo.setWritememNo(identNum);
-		pldVo.setFormNo(formNo);
-		pldVo.setTypeNo(typeNo);
-		pldVo.setTitle(title);
-		pldVo.setContent(content);
 		pldVo.setKeep(Integer.parseInt(keep));
-		pldVo.setImsy(imsy);
-		pldVo.setProgress("결재진행중");
+		pldVo.setWritememNo(identNum);
+		pldVo.setImsy("N");
+		pldVo.setProgress("결재대기중");
+		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
 		
-		int cnt = paymentService.updatePaydoc(pldVo);
-		logger.info("임시보관에서 임시보관결과 cnt={}",cnt);
-		String msg="임시보관 저장 실패!",url="/payment/write/imsyBox.do";
+		MemberVO memVo = memService.selectMember(identNum);
+		List<MemberVO> memlist = 
+				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
+		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
+
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
+		if(fileList!=null) {
+			for(Map<String, Object> map : fileList) {
+				fileURL=(String) map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize=(Long)map.get("fileSize");
+			}
+		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
+
+		int update=1;
+		model.addAttribute("oldfileName",oldfileName);
+		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("memlist",memlist);
+		model.addAttribute("update",update);
+		model.addAttribute("pldVo",pldVo);
+		
+		return "payment/write/selectPayLine";
+	}
+	
+	@RequestMapping("/write/imsyEdit.do")
+	public String imsyEdit(@ModelAttribute PaylinedocVO pldVo,HttpSession session,
+			Model model,HttpServletRequest request,@RequestParam String oldfileName) {
+		//임시보관함에서 임시보관
+		String identNum = (String)session.getAttribute("identNum");
+		pldVo.setWritememNo(identNum);
+		logger.info("임시보관함=>임시보관함, pldVo={}",pldVo);
+		logger.info("첨부되있던 옛날파일={}",oldfileName);
+		logger.info("문서번호={}",pldVo.getDocNo());
+		
+		int cnt=0;
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
+		if(fileList!=null) {
+			for(Map<String, Object> map : fileList) {
+				fileURL=(String) map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize=(Long)map.get("fileSize");
+			}
+		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
+		
+		cnt = paymentService.updatePaydoc(pldVo,fileVo,oldfileName);
+		
+		String msg="임시보관 저장 실패!",url="/payment/close.do";
 		if(cnt>0) {
 			msg="임시보관함에 저장 되었습니다.";
-			url="/payment/close.do";
+			if(fileURL!=null && !fileURL.isEmpty()) {
+				if(oldfileName!=null && !oldfileName.isEmpty()) {
+					String oldFileName=paymentService.getFile(pldVo.getDocNo()).getFileName();
+					String upPath 
+						= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
+					File file = new File(upPath, oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("파일 삭제 여부: {}", bool);
+					}
+				}
+			}
 		}
 		
 		model.addAttribute("msg",msg);
@@ -237,6 +237,7 @@ public class PaymentController {
 	
 	@RequestMapping("/write/payList.do")
 	public void payList(Model model,HttpSession session) {
+		//기안 작성
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("기안 목록 보여주기,사원번호={}",identNum);
 		
@@ -253,6 +254,7 @@ public class PaymentController {
 	@RequestMapping("/getForm.do")
 	@ResponseBody
 	public DocformVO getForm(@RequestParam int formNo) {
+		//문서 양식목록 ajax불러오기
 		logger.info("폼내용 가져오기, 파라미터 formNo={}",formNo);
 		
 		DocformVO formVo = docformService.getcontent(formNo);
@@ -262,7 +264,8 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/checkDocView.do")
-	public void docView(@RequestParam int docNo, Model model) {
+	public void checkdocView(@RequestParam int docNo, Model model) {
+		//작성자가 확인하는 문서보기
 		logger.info("문서 상세보기, 파라미터 docNo={}",docNo);
 		
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
@@ -278,6 +281,7 @@ public class PaymentController {
 	
 	@RequestMapping("/deletePayline.do")
 	public String deletePayline(@RequestParam int docNo,Model model) {
+		//결재선이 읽지 않았을 경우 결재상신 취소하기
 		logger.info("결재상신 취소, 파라미터 docNo={}",docNo);
 		
 		int cnt = paymentService.deletePayLine(docNo);
@@ -302,7 +306,8 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/write/sentpayList.do") 
-	public void sentpayList_get(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
+	public void sentpayList(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
+		//작성완료 결재함
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("기안완료 목록 보여주기,사원번호={}",identNum);
 		paysearchVo.setIdentNum(identNum);
@@ -319,6 +324,7 @@ public class PaymentController {
 	
 	@RequestMapping("/write/imsyBox.do") 
 	public void imsyBox(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
+		//임시보관함
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("임시보관 목록 보여주기,사원번호={}",identNum);
 		paysearchVo.setIdentNum(identNum);
@@ -341,6 +347,7 @@ public class PaymentController {
 	@RequestMapping("/download.do")
 	public ModelAndView download(@RequestParam int docNo,@RequestParam String fileName,
 			HttpServletRequest request,Model model) {
+		//첨부파일 다운로드
 		//1
 		logger.info("다운로드 파라미터, docNo={}, fileName={}", docNo, fileName);
 		

@@ -89,7 +89,7 @@ public class LoginController {
 					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다."; 
 					url ="/main/main_account.do"; 
 				} 
-			}else if(Integer.parseInt(memVo.getPosCode()) >940){ 
+			}else {
 				//과장 이상 
 				if(pwd.equals(memVo.getSsn1())){ 
 					msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다"; 
