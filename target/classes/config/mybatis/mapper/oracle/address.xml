@@ -3,11 +3,83 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.address">
-	 <select id="selectAddress" parameterType="String" resultType="addressVo">
-		select ad.*, adg.groupname from address ad, addressGroup adg
-		where ad.ADGNO = adg.ADGNO
-		and memno=#{memNo}
-		order by name
+
+	<!-- 주소록 메인화면 -->
+	<select id="selectAddress" parameterType="AddressSearchVo" resultType="AddressVo">
+	select * from(
+		select rownum as RNUM, A.*
+		from (
+		   	select * from v_address
+            where memno=#{memNo}
+            <!-- <if test='userId == "hong"'>  (O) -->
+		     	<if test='searchCondition == "kor"'> 
+		     		<if test='searchKeyword == "하"'>
+		     		and name >= #{searchKeyword}
+		     		</if>
+		     		<if test='searchKeyword != "하"'>
+			     	<![CDATA[ 
+						and name >= #{searchKeyword} and name < #{nextKeyword}]]>
+		     		</if>
+		        </if>
+		      	<if test='searchCondition == "eng"'> 
+		      	<![CDATA[ 
+					and name >= 'A' and name < 'Z'
+					or name >= 'a' and name < 'z']]>
+		        </if> 
+		       <if test='searchCondition == "num"'> 
+				<![CDATA[ 
+				and name >='0' and name <='9']]>
+		        </if> 
+		       <if test='searchCondition == "favorite"'> 
+			 	and isfavorite = 'yes'
+		        </if> 
+		        <if  test='isTrash ==null or isTrash ==""'>
+		        and isDeleted is null
+		        </if>
+		        <if  test='isTrash !=null and isTrash !=""'>
+		        and isDeleted is not null
+		        </if> 
+		    order by name
+		)A
+	)
+	<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+	</select>
+	<select id="getTotalRecord" parameterType="addressSearchVo"
+		resultType="int">
+		select count(*) from v_address
+		where memno=#{memNo}
+       	<if test='searchCondition == "kor"'> 
+     		<if test='searchKeyword == "하"'>
+     		and name >= #{searchKeyword}
+     		</if>
+     		<if test='searchKeyword != "하"'>
+	     	<![CDATA[ 
+				and name >= #{searchKeyword} and name < #{nextKeyword}]]>
+     		</if>
+       	</if>
+      	<if test='searchCondition == "eng"'> 
+      	<![CDATA[ 
+			and name >= 'A' and name < 'Z'
+			or name >= 'a' and name < 'z']]>
+        </if> 
+       <if test='searchCondition == "num"'> 
+		<![CDATA[ 
+		and name >='0' and name <='9']]>
+        </if> 
+      	<if test='searchCondition == "favorite"'> 
+	 	and isfavorite = 'yes'
+	 	</if>
+         <!-- 공백이나 null이면 일반 조회 -->
+        <if  test="isTrash ==null or isTrash ==''">
+        and isDeleted is null
+        </if>
+        <!-- 공백이 아니면 휴지통 -->
+        <if  test="isTrash !=null and isTrash !=''">
+        and isDeleted is not null
+        </if>
+
 	</select>
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
 		select m.*, d.deptname, p.posname from member m, department d, position p
@@ -19,34 +91,25 @@
 	</select>
 	
 
-	<select id="selectCountAddressGroup" parameterType="string" resultType="int">
+	<!-- <select id="selectCountAddressGroup" parameterType="string" resultType="int">
 		select count(*) from addressgroup
 		where memNo=#{memNo}
-	</select>
-	<select id="selectAddressGroup" parameterType="string" resultType="addressGroupVo">
+	</select> -->
+
+	<!-- 주소록 등록 -->
+	<select id="selectAddressGroup" resultType="addressGroupVo">
 		select * from addressgroup
-		where memNo=#{memNo}
-	</select>
-	<insert id="insertDefaultAddressGroup" parameterType="string">
-		insert into addressgroup(adgno, groupname, memno)
-		values(adgNo_seq.nextval, '기본', #{memNo})
-	</insert>
-	<select id="selectAdgNo" parameterType="addressGroupVo">
-		select adgNo from addressGroup
-		where groupName=#{groupName}
-		and memno=#{memNo}
 	</select>
 	
 	<insert id="insertAddress" parameterType="addressVo">
-		insert into address(adno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
-		values(adno_seq.nextval, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
+		insert into address(adno, memno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
+		values(adno_seq.nextval, #{memNo}, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
 	</insert>
 	
 	
 	<select id="selectOneAdderss" resultType="addressVo">
-		select ad.*, adg.groupname from address ad, addressGroup adg
-		where ad.ADGNO = adg.ADGNO
-		and adno=#{adNo}
+		select * from v_address
+		where adno=#{adNo}
 	</select>
 	
 	<update id="updateAddress" parameterType="addressVo">
@@ -62,7 +125,28 @@
 		delete from address
 		where adno=#{adNo}
 	</delete>
-
+	<update id="updateTrashAddress" parameterType="int">
+		update address
+		set isDeleted=sysdate
+		where adno=#{adNo}
+	</update>
+	<update id="updateBackAddress" parameterType="int">
+		update address
+		set isDeleted = null
+		where adno=#{adNo}
+	</update>
+	
+	<!-- 좋아요 -->
+	<update id="updateIsFavorite" parameterType="int">
+		update address 
+		set isfavorite='yes'
+		where adno=#{adNo}
+	</update>
+	<update id="updateNotFavorite" parameterType="int">
+		update address 
+		set isfavorite = null
+		where adno=#{adNo}
+	</update>
 </mapper>
 
 

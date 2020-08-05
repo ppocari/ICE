@@ -65,6 +65,10 @@ function pageProc(curPage){
 	text-align: center;
 }
 
+#addressTableTr {
+	height: 30px;
+}
+
 .addressCB {
 	margin-top: 5px;
 }
@@ -151,11 +155,11 @@ function pageProc(curPage){
 					</div>
 					<div id="addressTableDiv">
 						<table id="addressTable">
-							<tr class="card-header">
+							<tr id="addressTableTr" class="card-header">
 								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
 								<th  style="width:10%">이름</th>
 								<th  style="width:15%">전화번호</th>
-								<th  style="width:22%">이메일</th>
+								<th  style="width:20%">이메일</th>
 								<th  style="width:10%">그룹</th>
 								<th  style="width:13%">회사명</th>
 								<th  style="width:13%">부서</th>
@@ -164,56 +168,61 @@ function pageProc(curPage){
 							</tr>
 							<!-- 반복 시작 -->
 							<c:set var="idx" value="0"/>
-							<c:forEach var="address" items="${adList }">
-								<tr>
-									<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
-									<td>${address.name}</td>
-									<c:set var="idx" value="${idx +1 }"/>
-									<c:if test="${empty address.hp1 }">
-										<td></td>
-									</c:if>
-									<c:if test="${!empty address.hp1 }">
-										<td>${address.hp1}-${address.hp2} - ${address.hp3}</td>
-									</c:if>
-									
-									<c:if test="${empty address.email1 }">
-										<td></td>
-									</c:if>
-									<c:if test="${!empty address.email1 }">
-										<td>${address.email1 }@${address.email2 }</td>
-									</c:if>
-									<c:if test="${empty address.groupName }">
-										<td class="groupName"></td>
-									</c:if>
-									<c:if test="${!empty address.groupName }">
-										<td class="groupName">${address.groupName}</td>
-									</c:if>
-									<c:if test="${empty address.company }">
-										<td class="company"></td>
-									</c:if>
-									<c:if test="${!empty address.company }">
-										<td class="company">${address.company}</td>
-									</c:if>
-									
-									<c:if test="${empty address.deptName }">
-										<td class="deptName"></td>
-									</c:if>
-									<c:if test="${!empty address.deptName }">
-										<td class="deptName">${address.deptName}</td>
-									</c:if>
-									<c:if test="${empty address.posName }">
-										<td class="posName"></td>
-									</c:if>
-									<c:if test="${!empty address.posName }">
-										<td class="posName">${address.posName}</td>
-									</c:if>
-									<td class="isDeleted">
-										<fmt:formatDate  value="${address.isDeleted}"
-										pattern="yyyy-MM-dd"/>
-									</td>
-								</tr>
-							</c:forEach>
-							<!-- 반복 끝 -->
+							<c:if test="${pagingInfo.totalRecord==0 }"> <!-- 등록된 주소가 없음 -->
+								<tr><td colspan="9">휴지통으로 옮겨진 주소가 없습니다.</td></tr>
+							</c:if>
+							<c:if test="${pagingInfo.totalRecord!=0 }"> <!-- 등록된 주소가 없음 -->
+								<c:forEach var="address" items="${adList }">
+									<tr>
+										<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
+										<td>${address.name}</td>
+										<c:set var="idx" value="${idx +1 }"/>
+										<c:if test="${empty address.hp1 }">
+											<td></td>
+										</c:if>
+										<c:if test="${!empty address.hp1 }">
+											<td>${address.hp1}-${address.hp2} - ${address.hp3}</td>
+										</c:if>
+										
+										<c:if test="${empty address.email1 }">
+											<td></td>
+										</c:if>
+										<c:if test="${!empty address.email1 }">
+											<td>${address.email1 }@${address.email2 }</td>
+										</c:if>
+										<c:if test="${empty address.groupName }">
+											<td class="groupName"></td>
+										</c:if>
+										<c:if test="${!empty address.groupName }">
+											<td class="groupName">${address.groupName}</td>
+										</c:if>
+										<c:if test="${empty address.company }">
+											<td class="company"></td>
+										</c:if>
+										<c:if test="${!empty address.company }">
+											<td class="company">${address.company}</td>
+										</c:if>
+										
+										<c:if test="${empty address.deptName }">
+											<td class="deptName"></td>
+										</c:if>
+										<c:if test="${!empty address.deptName }">
+											<td class="deptName">${address.deptName}</td>
+										</c:if>
+										<c:if test="${empty address.posName }">
+											<td class="posName"></td>
+										</c:if>
+										<c:if test="${!empty address.posName }">
+											<td class="posName">${address.posName}</td>
+										</c:if>
+										<td class="isDeleted">
+											<fmt:formatDate  value="${address.isDeleted}"
+											pattern="yyyy-MM-dd"/>
+										</td>
+									</tr>
+								</c:forEach>
+								<!-- 반복 끝 -->
+							</c:if>
 						</table>
 					</div>
 				</form>

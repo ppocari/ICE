@@ -49,7 +49,6 @@ function pageProc(curPage){
 		$('.star').click(function(){
 			var star_id=$(this).attr('id').split('_');
 			var tx= $(this).text();
-			alert(tx);
 			if(tx == '★') { //좋아요라면, 좋아요 취소 처리하기
 				$(this).text('☆');
 				$(this).removeClass('star_color');
@@ -100,11 +99,16 @@ function pageProc(curPage){
 	margin: 0 auto;
 	padding: 5px;
 	background-color: white;
+	margin-bottom:10px;
 } 
 
 #addressTable {
 	background-color: white;
 	text-align: center;
+}
+
+#addressTableTr {
+	height: 30px;
 }
 
 .star_color {
@@ -191,7 +195,7 @@ function pageProc(curPage){
 
 .divPage{
 	text-align: center;
-	margin: 10px;
+	margin-bottom: 10px;
 }
 </style>
 
@@ -200,10 +204,12 @@ function pageProc(curPage){
 	<form action="<c:url value='/address/addressMain.do'/>" 
 		name="frmPage" method="post">
 		<input type="hidden" name="currentPage">
-		<%-- input type="text" name="searchCondition" 
+		<input type="hidden" name="searchCondition" 
 			value="${param.searchCondition}">
-		<input type="text" name="searchKeyword" 
-			value="${param.searchKeyword}">	 --%>
+		<input type="hidden" name="searchKeyword" 
+			value="${param.searchKeyword}">	
+		<input type="hidden" name="nextKeyword" 
+			value="${param.nextKeyword}">	
 	</form>
 	
 	<article>
@@ -227,23 +233,24 @@ function pageProc(curPage){
 								<input type="button" id="btDel" value="삭제">
 							</div>
 								<span>
-									<a href="<c:url value='address/addressMain.do'/>">전체</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ga"'/>">가</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="na"'/>">나</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="da"'/>">다</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ra"'/>">라</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ma"'/>">마</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ba"'/>">바</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="sa"'/>">사</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="a"'/>">아</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ja"'/>">자</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="cha"'/>">차</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ka"'/>">카</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ta"'/>">타</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="pa"'/>">파</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="ha"'/>">하</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="etc"'/>">기타</a>
-									<a href="<c:url value='address/addressMain.do?searchCondition="favorite"'/>">즐겨찾기</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=all'/>">전체</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=가&nextKeyword=나'/>">가</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=나&nextKeyword=다'/>">나</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=다&nextKeyword=라'/>">다</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=라&nextKeyword=마'/>">라</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=마&nextKeyword=바'/>">마</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=바&nextKeyword=사'/>">바</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=사&nextKeyword=아'/>">사</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=아&nextKeyword=자'/>">아</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=자&nextKeyword=차'/>">자</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=차&nextKeyword=카'/>">차</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=카&nextKeyword=타'/>">카</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=타&nextKeyword=파'/>">타</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=파&nextKeyword=하'/>">파</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=kor&searchKeyword=하'/>">하</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=eng'/>">영어</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=num'/>">숫자</a>
+									<a href="<c:url value='/address/addressMain.do?searchCondition=favorite'/>">즐겨찾기</a>
 								</span>
 							<div id="spanThd">
 								<input type="button" id="btEdit" value="설정">
@@ -254,7 +261,7 @@ function pageProc(curPage){
 					</div>
 					<div id="addressTableDiv">
 						<table id="addressTable">
-							<tr class="card-header">
+							<tr id="addressTableTr" class="card-header">
 								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
 								<th class="star_color">★</th>
 								<th  style="width:10%">이름</th>
@@ -268,54 +275,67 @@ function pageProc(curPage){
 	
 							<!-- 반복 시작 -->
 							<c:set var="idx" value="0"/>
-							<c:forEach var="address" items="${adList }">
-								<tr>
-									<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
-									<td class="star" id="${address.adNo }_${address.isFavorite}" style="cursor:pointer">☆</td>
-									<td><a href="<c:url value='/address/detailAddress.do?adNo=${address.adNo }'/>" class="addressName">${address.name}</a></td>
-									<c:set var="idx" value="${idx +1 }"/>
-	
-									<c:if test="${empty address.hp1 }">
-										<td></td>
-									</c:if>
-									<c:if test="${!empty address.hp1 }">
-										<td>${address.hp1}-${address.hp2} - ${address.hp3}</td>
-									</c:if>
-									
-									<c:if test="${empty address.email1 }">
-										<td></td>
-									</c:if>
-									<c:if test="${!empty address.email1 }">
-										<td>${address.email1 }@${address.email2 }</td>
-									</c:if>
-									<c:if test="${empty address.groupName }">
-										<td class="groupName"></td>
-									</c:if>
-									<c:if test="${!empty address.groupName }">
-										<td class="groupName">${address.groupName}</td>
-									</c:if>
-									<c:if test="${empty address.company }">
-										<td class="company"></td>
-									</c:if>
-									<c:if test="${!empty address.company }">
-										<td class="company">${address.company}</td>
-									</c:if>
-									
-									<c:if test="${empty address.deptName }">
-										<td class="deptName"></td>
-									</c:if>
-									<c:if test="${!empty address.deptName }">
-										<td class="deptName">${address.deptName}</td>
-									</c:if>
-									<c:if test="${empty address.posName }">
-										<td class="posName"></td>
-									</c:if>
-									<c:if test="${!empty address.posName }">
-										<td class="posName">${address.posName}</td>
-									</c:if>
-								</tr>
-							</c:forEach>
-							<!-- 반복 끝 -->
+							
+							<c:if test="${empty param.searchCondition}"> <!-- 조건이 없는데 -->
+								<c:if test="${pagingInfo.totalRecord==0 }"> <!-- 등록된 주소가 없음 -->
+									<tr><td colspan="8">등록된 주소가 없습니다.</td></tr>
+								</c:if>
+							</c:if>
+							<c:if test="${!empty param.searchCondition}"> <!-- 조건이 있는데 -->
+								<c:if test="${pagingInfo.totalRecord==0 }"> <!-- 등록된 주소가 없음 -->
+									<tr><td colspan="8">조건에 맞는 주소가 없습니다.</td></tr>
+								</c:if>
+							</c:if>
+							<c:if test="${pagingInfo.totalRecord !=0 }"><!-- 주소가 있음 -->
+								<c:forEach var="address" items="${adList }">
+									<tr>
+										<td><input name="adItems[${idx }].adNo" value="${address.adNo }" type="checkbox" class="addressCB"></td>
+										<td class="star" id="${address.adNo }_${address.isFavorite}" style="cursor:pointer">☆</td>
+										<td><a href="<c:url value='/address/detailAddress.do?adNo=${address.adNo }'/>" class="addressName">${address.name}</a></td>
+										<c:set var="idx" value="${idx +1 }"/>
+		
+										<c:if test="${empty address.hp1 }">
+											<td></td>
+										</c:if>
+										<c:if test="${!empty address.hp1 }">
+											<td>${address.hp1}-${address.hp2} - ${address.hp3}</td>
+										</c:if>
+										
+										<c:if test="${empty address.email1 }">
+											<td></td>
+										</c:if>
+										<c:if test="${!empty address.email1 }">
+											<td>${address.email1 }@${address.email2 }</td>
+										</c:if>
+										<c:if test="${empty address.groupName }">
+											<td class="groupName"></td>
+										</c:if>
+										<c:if test="${!empty address.groupName }">
+											<td class="groupName">${address.groupName}</td>
+										</c:if>
+										<c:if test="${empty address.company }">
+											<td class="company"></td>
+										</c:if>
+										<c:if test="${!empty address.company }">
+											<td class="company">${address.company}</td>
+										</c:if>
+										
+										<c:if test="${empty address.deptName }">
+											<td class="deptName"></td>
+										</c:if>
+										<c:if test="${!empty address.deptName }">
+											<td class="deptName">${address.deptName}</td>
+										</c:if>
+										<c:if test="${empty address.posName }">
+											<td class="posName"></td>
+										</c:if>
+										<c:if test="${!empty address.posName }">
+											<td class="posName">${address.posName}</td>
+										</c:if>
+									</tr>
+								</c:forEach>
+								<!-- 반복 끝 -->
+							</c:if> 
 						</table>
 					</div>
 				</form>

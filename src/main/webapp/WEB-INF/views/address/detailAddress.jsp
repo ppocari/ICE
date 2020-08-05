@@ -4,7 +4,9 @@
 <script type="text/javascript">
 	$(function(){
 		$('input[type=button]').click(function(){
-			location.href="<c:url value='/address/editAddress.do?adNo=${adVo.adNo}'/>";
+			/* location.href="<c:url value='/address/editAddress.do?adNo=${adVo.adNo}'/>"; */
+			window.open('<c:url value="/address/editAddress.do?adNo=${adVo.adNo}"/>', 'edit', 
+			'width=600, height=900, left=600, top=30, location=yes, resizable=no');
 		});
 		
 		$('input[type=reset]').click(function(){
@@ -89,7 +91,6 @@
 .textareaSize{
 	width: 610px;
 	height: 100px;
-	border: 1px solid lightgray;
 }
 
 .divForm select {

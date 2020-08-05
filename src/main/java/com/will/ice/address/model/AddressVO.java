@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class AddressVO {
 	private int adNo;
+	private String memNo;
 	private String name;
 	private String hp1;
 	private String hp2;
@@ -22,11 +23,20 @@ public class AddressVO {
 	private String messenger;
 	private String SNS;
 	private String memo;
+	
 	public int getAdNo() {
 		return adNo;
 	}
+	
 	public void setAdNo(int adNo) {
 		this.adNo = adNo;
+	}
+	
+	public String getMemNo() {
+		return memNo;
+	}
+	public void setMemNo(String memNo) {
+		this.memNo = memNo;
 	}
 	public String getName() {
 		return name;
@@ -139,7 +149,7 @@ public class AddressVO {
 	
 	@Override
 	public String toString() {
-		return "AddressVO [adNo=" + adNo + ", name=" + name + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3
+		return "AddressVO [adNo=" + adNo + ", memNo="+memNo+", name=" + name + ", hp1=" + hp1 + ", hp2=" + hp2 + ", hp3=" + hp3
 				+ ", email1=" + email1 + ", email2=" + email2 + ", adgNo=" + adgNo + ", company=" + company
 				+ ", deptName=" + deptName + ", posName=" + posName + ", isFavorite=" + isFavorite + ", isDeleted="
 				+ isDeleted + ", groupName=" + groupName + ", homeAddress=" + homeAddress + ", homePage=" + homePage
