@@ -49,6 +49,8 @@
 				<input type="hidden" id="title" name="title" value="${pldVo.title }">
 				<textarea id="content" name="content" hidden="hidden">${pldVo.content }</textarea>
 				<input type="hidden" id="keep" name="keep" value="${pldVo.keep }">
+				<input type="hidden" id="imsy" name="imsy" value="${pldVo.imsy }">
+				<input type="hidden" id="progress" name="progress" value="${pldVo.progress }">
 				<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName }">
 				<input type="hidden" id="oldfileName" name="oldfileName2" value="${oldfileName }">
 				<input type="hidden" id="fileName" name="fileName" value="${fileVo.fileName }">

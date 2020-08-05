@@ -28,7 +28,9 @@ CREATE TABLE payComment (
 	MEMNO VARCHAR2(50), /* 사원번호 */
 	content CLOB, /* 내용 */
 	docNo NUMBER, /* 문서번호 */
-	regdate DATE DEFAULT sysdate /* 작성일 */
+	regdate DATE DEFAULT sysdate, /* 작성일 */
+	signName VARCHAR2(100), /*서명*/
+	originalSignName VARCHAR2(100) /*원본파일명*/
 );
 
 COMMENT ON TABLE payComment IS '코멘트';
@@ -140,7 +142,7 @@ ALTER TABLE payment
 CREATE TABLE paymentLine (
 	payNo NUMBER NOT NULL, /* 결재건번호 */
 	docNo NUMBER references payment(docNo), /* 문서번호 */
-	payDate VARCHAR2(100) DEFAULT sysdate, /* 결재변경일 */
+	payDate VARCHAR2(100), /* 결재변경일 */
 	MEMNO VARCHAR2(50), /* 받는사원번호 */
 	read VARCHAR2(10) DEFAULT 'N' /* 읽음여부 */
 );
@@ -230,7 +232,7 @@ ALTER TABLE docType
 --------------------결재문서
 drop sequence doc_seq;
 create sequence doc_seq
-start with 1
+start with 11023
 increment by 1
 nocache;
 --------------------문서양식
@@ -248,6 +250,12 @@ nocache;
 --------------------업로드파일
 drop sequence payfile_seq;
 create sequence payfile_seq
+start with 1
+increment by 1
+nocache;
+--------------------코멘트
+drop sequence com_seq;
+create sequence com_seq
 start with 1
 increment by 1
 nocache;
@@ -281,12 +289,6 @@ on p.MEMNO = m.MEMNO;
 
 create or replace view paylistView
 as
-select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ
-from payment p join paymentline l
-on p.DOCNO = l.DOCNO;
-
-create or replace view paylistView
-as
 select p.*, l.MEMNO as gmemNo,l.PAYDATE, l.PAYNO,l.READ,d.TYPENAME,m.NAME
 from ((payment p join paymentline l
 on p.DOCNO = l.DOCNO)join doctype d
@@ -295,5 +297,9 @@ on p.MEMNO = m.MEMNO;
 
 select * from paymentfile;
 select * from payment;
+select * from paycomment;
+
+select * from position;
+select * from member;
 
 commit;

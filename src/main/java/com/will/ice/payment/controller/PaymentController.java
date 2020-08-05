@@ -32,7 +32,6 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
-import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -139,7 +138,6 @@ public class PaymentController {
 		return "common/message";
 	}
 
-	//안되는거
 	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
 	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
 			Model model,HttpServletRequest request,HttpSession session,@RequestParam String keep,
@@ -147,6 +145,9 @@ public class PaymentController {
 		//임시보관함에서 결재선 등록시
 		String identNum = (String)session.getAttribute("identNum");
 		pldVo.setKeep(Integer.parseInt(keep));
+		pldVo.setWritememNo(identNum);
+		pldVo.setImsy("N");
+		pldVo.setProgress("결재대기중");
 		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
 		
 		MemberVO memVo = memService.selectMember(identNum);
@@ -263,7 +264,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/checkDocView.do")
-	public void docView(@RequestParam int docNo, Model model) {
+	public void checkdocView(@RequestParam int docNo, Model model) {
 		//작성자가 확인하는 문서보기
 		logger.info("문서 상세보기, 파라미터 docNo={}",docNo);
 		
@@ -305,7 +306,7 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/write/sentpayList.do") 
-	public void sentpayList_get(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
+	public void sentpayList(Model model,HttpSession session,@ModelAttribute PaymentSearchVO paysearchVo) {
 		//작성완료 결재함
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("기안완료 목록 보여주기,사원번호={}",identNum);

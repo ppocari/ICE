@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -87,8 +88,6 @@ public class PaymentServiceImpl implements PaymentService{
 	public int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo, String oldfileName2) {
 		//임시보관 -> 결재선 지정
 		int cnt=0;
-		pldVo.setImsy("N");
-		pldVo.setProgress("결재대기중");
 		int a=paymentDao.updatePaydoc(pldVo);
 		logger.info("임시보관 => 완료함 pldVo={},a={}",pldVo,a);
 		
@@ -189,6 +188,21 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public PaymentfileVO getFile(int docNo) {
 		return paymentDao.getFile(docNo);
+	}
+
+	@Override
+	public List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo) {
+		return paymentDao.selectUndecided(paysearchVo);
+	}
+
+	@Override
+	public int insertComment(PaycommentVO comVo) {
+		return paymentDao.insertComment(comVo);
+	}
+
+	@Override
+	public int updateStatus(String progress) {
+		return paymentDao.updateStatus(progress);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -19,6 +20,7 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	
 	private String namespace="com.mybatis.mapper.oracle.payment.";
 
+	/* ---------------결재함------------------- */
 	@Override
 	public int insertPaydoc(PaylinedocVO pldVo) {
 		return sqlSession.insert(namespace+"insertPaydoc",pldVo);
@@ -107,6 +109,22 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	@Override
 	public int updateFile(PaymentfileVO fileVo) {
 		return sqlSession.update(namespace+"updateFile",fileVo);
+	}
+	
+	/* ---------------기안함------------------- */
+	@Override
+	public List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectUndecided",paysearchVo);
+	}
+
+	@Override
+	public int insertComment(PaycommentVO comVo) {
+		return sqlSession.insert(namespace+"insertComment",comVo);
+	}
+
+	@Override
+	public int updateStatus(String progress) {
+		return sqlSession.update(namespace+"updateStatus",progress);
 	}
 
 }

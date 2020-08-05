@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../../inc/top.jsp" %>
 <style type="text/css">
-#SFformTable thead tr{background-color: #858796; color:white;}
-.table td, .table th{text-align: center;}
-#SFformlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;padding: 1% 10% 1% 10%;}
-#SFbtForm{background-color: #4e73df; color:white;}
-#SFbtDel{font-size:1.0em;}#SFbigDiv{padding-left: 2%;padding-right: 2%;}
-#SFlastDiv{padding-left: 8px;float:right;}
-#SFheaderDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#SFheaderDiv p{padding-top: 5px;padding-left: 5px;}
+	#SFformTable thead tr{background-color: #858796; color:white;}.table td, .table th{text-align: center;}#SFformlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;padding: 1% 10% 1% 10%;}#SFbtForm{background-color: #4e73df; color:white;}#SFbtDel{font-size:1.0em;}#SFbigDiv{padding-left: 2%;padding-right: 2%;}#SFlastDiv{padding-left: 8px;float:right;}#SFheaderDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#SFheaderDiv p{padding-top: 5px;padding-left: 5px;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -21,14 +14,18 @@
 		});
 	});
 </script>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800" style="padding-left: 1.5%;">문서 양식설정</h1>
+</div>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:fit-content;width: 99%;padding: 10px 0px 10px 0px;">
-<div id="SFbigDiv">
-	<div id="SFheaderDiv">
-		<p>문서 양식</p>
+	<div class="card shadow mb-4" style="height:fit-content;width: 99%;padding: 0px 0px 10px 0px;">
+	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+		<h6 class="m-0 font-weight-bold text-primary">양식 목록</h6>
 	</div>
+<div id="SFbigDiv">
 	<form name="formFrm" method="post" 
 		action="<c:url value='/payment/deleteForm.do' />">
 	<div id="SFformlistDiv">
