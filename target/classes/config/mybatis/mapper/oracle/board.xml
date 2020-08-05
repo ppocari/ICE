@@ -58,16 +58,8 @@
 		from member a join board b 
 		on a.memno=b.memno
 		where boardNo=#{boardNo}
+		
 	</select>
-	
-	<update id="updateBoard" parameterType="BoardVO">
-		update board
-		set title=#{title}, memNo=#{memNo}, 
-			nickname=#{nickname}, content=#{content}, visited=#{visited},
-			recommend=#{recommend}, category=#{category}, isMain=#{isMain}, 
-			filePath=#{filePath}
-		where boardNo=#{boardNo}
-	</update>
 </mapper>
 
 

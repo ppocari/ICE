@@ -39,6 +39,10 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">공지사항 목록</h1>
+
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -53,20 +57,19 @@
 				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
-						
-						<c:if test="${sessionScope.identNum == '999999' }">
-							<a href="<c:url value='/notice/noticeWrite.do'/>">
-								<button type="button" class="btn btn-info" style="float: right;"
+						<a href="<c:url value='/notice/noticeWrite.do'/>">
+							<div style="float: right">
+								<button type="button" class="btn btn-info"
 								 >공지사항 작성</button>
-							</a>
-						</c:if>	
+							</div>
+						</a>
 						
 					</div>
 					
 					
 					<!-- Card Body -->
-					<div  style="height: 500px;">
-						<div class="chart-area" style="overflow: scroll; height: 450px; font-size: 13px;">
+					<div class="card-body">
+						<div class="chart-area" style="overflow: scroll;">
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
@@ -136,10 +139,9 @@
 							            	</c:if>
 							            >내용</option>
 							        </select>   
-							        <input type="text" class="form-control" placeholder="검색어를 입력..."
-										style=" width: 100px; height: 30px; font-size: 13px;">
-									<button type="submit" class="btn btn-primary btn-sm">검색</button>
-							
+							        <input type="text" class="form-control" name="searchKeyword" title="검색어 입력"
+							        	value="${param.searchKeyword}">   
+									<input type="submit" class="btn btn-primary btn-sm" value="검색">
 							    </form>
 								
 							</div>

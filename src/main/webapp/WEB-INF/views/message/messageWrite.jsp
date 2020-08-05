@@ -35,12 +35,16 @@ function popup(){
 		<hr>
 	</div>
 	
-	<div class="send" style="display:inline-block;">
+	<div class="send" style="display:block;">
 		<div style="font-size:12px;">
 			<span>
 				<label for="who" class="receiverName">받는사람</label>
-				<input type="text" id="receiver" name="receiver" class="form-control"
-					style="ime-mode:disabled; font-size:40%; width:270px;, height:150px;" >
+			</span>
+			<span>
+				<span id="receive">
+					<input type="text" id="receiver" name="receiver" class="form-control"
+						style="ime-mode:disabled; font-size:40%; width:300px;, height:150px;" >
+				</span>
 				<a href="javascript:popup()" >
 					<button>주소록</button>
 				</a>
