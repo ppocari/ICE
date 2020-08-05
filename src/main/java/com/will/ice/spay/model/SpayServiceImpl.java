@@ -40,7 +40,7 @@ public class SpayServiceImpl implements SpayService{
 
 	@Override
 	public List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo) {
-		return spayDao.selectSpayView(dateSearchVo);
+		return spayDao.selectSpayViewAll(dateSearchVo);
 	}
 
 	@Override

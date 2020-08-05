@@ -15,6 +15,7 @@ public class SpayViewVO {
 	private String HP3;
 	private String EMAIL1;
 	private String EMAIL2;
+	
 	public int getTICNO() {
 		return TICNO;
 	}

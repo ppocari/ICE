@@ -142,11 +142,13 @@ public class SpayController {
 	@RequestMapping("/sListAll.do")
 	public String sListAll(@ModelAttribute DateSearchVO dateSearchVo,
 			HttpSession session, Model model) {
-		String memno = (String)session.getAttribute("memno");
-		if(memno=="999999") {
+		String identNum=(String) session.getAttribute("identNum");
+		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
+		logger.info("사원번호 MemNo={}", MemNo);
+		if(MemNo==888888) {
 			
-			dateSearchVo.setMemNo(memno);
-			logger.info("구매 목록 파라미터 dateSearchVo={}", dateSearchVo);
+			dateSearchVo.setMemNo(identNum);
+			logger.info("구매 조회 파라미터 dateSearchVo={}", dateSearchVo);
 			
 			PaginationInfo pagingInfo = new PaginationInfo();
 			pagingInfo.setBlockSize(Utility.BLOCKSIZE);
@@ -165,10 +167,10 @@ public class SpayController {
 				dateSearchVo.setEndDay(str);			
 			}
 			
-			List<SpayViewVO> list=spayService.selectSpayView(dateSearchVo);
+			List<SpayViewVO> list=spayService.selectSpayViewAll(dateSearchVo);
 			logger.info("구매 내역 결과 list.size={}", list.size());
 			
-			int totalRecord=spayService.selectTotalRecord(dateSearchVo);
+			int totalRecord=spayService.selectTotalRecordAll(dateSearchVo);
 			logger.info("구매내역 조회 결과, totalRecord={}", totalRecord);
 				
 			pagingInfo.setTotalRecord(totalRecord);
@@ -179,6 +181,7 @@ public class SpayController {
 		}else {
 			return "authority";
 		}
+		
 		return "spay/sListAll";
 	}
 	

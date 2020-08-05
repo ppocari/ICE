@@ -22,7 +22,7 @@
 
 <!-- 페이징 처리를 위한 form 시작-->
 <form name="frmPage" method="post"
-	action="<c:url value='/spay/sList.do'/>">
+	action="<c:url value='/spay/sListAll.do'/>">
 	<input type="hidden" name="startDay" value="${param.startDay }">
 	<input type="hidden" name="endDay" value="${param.endDay }"> <input
 		type="hidden" name="currentPage">
@@ -88,7 +88,12 @@
 														pattern="yyyy-MM-dd hh:mm:ss" /></td>
 												<td>${vo.TICQUANTITY }</td>
 												<td>${vo.NAME }</td>
-												<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
+												<c:if test="${empty vo.HP1}">
+													<td></td>
+												</c:if>
+												<c:if test="${!empty vo.HP1}">
+													<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
+												</c:if>
 												<td>${vo.EMAIL1}${vo.EMAIL2 }</td>
 											</tr>
 										</c:forEach>

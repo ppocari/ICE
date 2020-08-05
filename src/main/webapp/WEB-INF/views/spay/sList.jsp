@@ -88,7 +88,12 @@
 														pattern="yyyy-MM-dd hh:mm:ss" /></td>
 												<td>${vo.TICQUANTITY }</td>
 												<td>${vo.NAME }</td>
-												<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
+												<c:if test="${empty vo.HP1}">
+													<td></td>
+												</c:if>
+												<c:if test="${!empty vo.HP1}">
+													<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
+												</c:if>
 												<td>${vo.EMAIL1}${vo.EMAIL2 }</td>
 											</tr>
 										</c:forEach>

@@ -174,10 +174,37 @@
 					</div>
 				</div>
 			</li>
+			
+			<%
+				
+				posCode = (String)session.getAttribute("posCode");
+				}else if (posCode.equals("888")) { //발권소 전용
+			%>
+			
+			<!-- Heading -->
+			<div class="sidebar-heading">workspace</div>
+
+			<!-- Nav Item -발권소-->		
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseEight"
+				aria-expanded="true" aria-controls="collapseEight"> <i
+					class="fas fa-fw fa-folder"></i> <span>식권관리대장</span>
+			</a>
+				<div id="collapseEight" class="collapse" aria-labelledby="headingEight"
+					data-parent="#accordionSidebar" >
+					<div class="bg-white py-2 collapse-inner rounded">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<a class="collapse-item" href="<c:url value='/spay/sListAll.do'/>">사내 식권 구매내역</a>
+						</div>
+
+					</div>
+				</div>
+			</li>
 
 			<%
 				}else { //관리자가 아니고 팀장 , 경리, 사원
 			%>
+
 
 			<!-- Heading -->
 			<div class="sidebar-heading">workspace</div>
