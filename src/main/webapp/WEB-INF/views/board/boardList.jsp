@@ -40,9 +40,9 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">사내게시판</h1>
 
-		<a href="#"
+		<!-- <a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
 	</div>
 
 	<!-- Content Row -->
@@ -67,20 +67,20 @@
 					
 					<!-- Card Body -->
 					<div class="card-body" style="height: 500px">
-						<div class="chart-area" style="overflow: scroll; height: 450px" >
+						<div class="chart-area" style="overflow: scroll; height: 450px; font-size: 13px;" >
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<colgroup>
-									<col style="width:10%;"/>
+									<col style="width:5%;"/>
 									<col style="width:50%;"/>
-									<col style="width:20%;"/>
 									<col style="width:15%;"/>
 									<col style="width:15%;"/>
+									<col style="width:25%;"/>
 								</colgroup>
 								<thead>
 									<tr style="height:0px">
-										<th scope="col">번호</th>
+										<th scope="col">no</th>
 										<th scope="col">제목</th>
 										<th scope="col">작성자</th>
 										<th scope="col">작성일</th>
@@ -121,7 +121,8 @@
 					</div>
 					
 					<!-- 검색기능 -->
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+						style="float:center;">
 						<%-- <div class="search" style="margin-left: 10px;">
 							<label for="department" style="margin-right: 20px;">부서별 조회</label>
 							<select name="department">
@@ -142,18 +143,17 @@
 								</c:forEach>
 							</select>
 						</div> --%>
-						<div class="search" style="margin-right: 20px; text-align:right;">
-							<label for="hiredate1" style="margin-right: 20px;"></label>
-							<select class="form-control" style="weight:50px;">
-							 	 <option>제목</option>
-							 	 <option>내용</option>
-								 <option>작성자</option>
-							</select>
-							<input type="text" class="form-control" 
-								placeholder="검색어를 입력...">
-							<button type="submit" class="btn btn-primary btn-sm">검색</button>
-							
-						</div>
+							<div id = "searchboard" style="">
+								<select class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+								 	 <option>제목</option>
+								 	 <option>내용</option>
+									 <option>작성자</option>
+								</select>
+								<input type="text" class="form-control" placeholder="검색어를 입력..."
+									style=" width: 180px; height: 30px; font-size: 13px; display: inline-block;">
+								<button type="submit" class="btn btn-primary btn-sm">검색</button>
+							</div>
 					</div>		
 				</form>
 				

@@ -48,4 +48,9 @@ public class BoardDAOMybatis implements BoardDAO{
 		return sqlSession.delete(namespace+"deleteBoard", boardNo);
 	}
 
+	@Override
+	public int updateBoard(BoardVO vo) {
+		return sqlSession.update(namespace+"updateBoard", vo);
+	}
+
 }

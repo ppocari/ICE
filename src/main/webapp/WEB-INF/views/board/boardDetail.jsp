@@ -22,11 +22,6 @@
 	width:150px;
 }
 
-
-
-
-
-
  </style>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -55,17 +50,6 @@ function popup(){
 
 <div class="container-fluid">
 
-	<!-- Page Heading -->
-	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">사내게시판</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-	</div>
-
-	<!-- Content Row -->
-
 	<div class="row">
 
 		<!-- Area Chart -->
@@ -73,89 +57,52 @@ function popup(){
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
 				
+					<input type="hidden" name="boardNo" value="${param.boardNo }">
+					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">ICE 사내게시판</h6>
-						<a href="<c:url value='/board/boardWrite.do'/>">
-							<div style="float: right">
-								<button type="button" class="btn btn-info">게시글작성</button>
-							</div>
+						<a href="<c:url value='/board/boardList.do'/>">
+							<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
 						</a>
 						
 					</div>
+					<br>
+					<div class="card-body"style="text-align:center;">
+						<span style="font-size:25px; display: inline-block;
+									text-align:left; vertical-align:middle;">
+									${vo.title }</span>
+						<br><br>
+						<p>
+							<a href="#">
+								<span style="font-size:14px; display: inline-block;
+									text-align:left; vertical-align:middle;">
+									${vo.nickname }</span>
+							</a><br>
+							<span style="vertical-algin:middle; opacity:.4;">
+								2020-08-06
+								<%-- <fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/> --%>
+							</span>
+							<span style="vertical-algin:middle; opacity:.4;">
+								| ${vo.visited } 읽음
+							</span>
+						</p>
+					</div>
+					<hr>					
 					
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<table>
-							<tr>
-								<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">제목</h6>
-								</td>
-								<td style="width:80%; weight:100px;">
-									${vo.title }
-								</td>
-							</tr>
-						</table>
+					<div class="card-body">
+						<p class="content">
+							<% pageContext.setAttribute("newLine", "\r\n"); %>
+							${fn:replace(vo.content, newLine, '<br>')}
+						</p>
 					</div>
 					
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<table>
-							<tr>
-								<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">별명</h6>
-								</td>
-								<td style="width:80%; weight:100px;">
-									${vo.nickname }
-								</td>
-							</tr>
-						</table>
-					</div>
+					<input type="hidden" value="${vo.boardNo}" id="btDel_boardNo">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<table>
-							<tr>
-								<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">작성일</h6>
-								</td>
-								<td style="width:80%; weight:100px;">
-									${vo.regdate }
-								</td>
-							</tr>
-						</table>
-					</div>
-					
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<table>
-							<tr>
-								<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">조회수</h6>
-								</td>
-								<td style="width:80%; weight:100px;">
-									${vo.visited }
-								</td>
-							</tr>
-						</table>
-					</div>
-					
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<table>
-							<tr>
-								<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">내용</h6>
-								</td>
-								<td style="width:80%; weight:100px;">
-									<p class="content">
-										<%
-											pageContext.setAttribute("newLine", "\r\n");
-										%>
-			
-											${fn:replace(vo.content, newLine, '<br>')}</p>
-								</td>
-							</tr>
-						</table>
-					</div>
-					
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<%-- <a href
-						="<c:url value='/board/boardEdit.do?no=${param.no }'/>">
-							수정</a> |--%><!--   -->
+						<a href
+						="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
+							수정</a> |
 			        	<a href="javascript:popup()" >
-			        		삭제</a> 
-			        	<!-- <input type="button" id="btDel" value="삭제"> -->
-			        	<input type="text" value="${vo.boardNo}" id="btDel_boardNo">	|
+			        		삭제</a> |
 			        	<a href="<c:url value='/board/boardList.do'/>">
 			        		목록</a>	
 					</div>
