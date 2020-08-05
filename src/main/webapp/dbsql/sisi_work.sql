@@ -80,6 +80,10 @@ commit;
 
 select * from companyCard;
 
+update companyCard
+set acccode = ''
+where no = 3;
+
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
 values(companyCard_seq.nextval,'1111222233334448','111910',10000,'김가네(식당)','2020-06-31' ,1  );
@@ -132,9 +136,28 @@ select * from comcard_mem
 delete from member
 where memno = '999999';
  
-select * from
+select * 
+from
 (
-select * from accountCode
-where acctitle like '%비%'
+    select rownum as rnum, A.*
+    from(
+    select * from accountCode
+    where acctitle like '%비%'
+    order by acccode 
+    )A
 )
 where rownum <=5;
+
+select * 
+			from
+			(
+			    select rownum as rnum, A.*
+			    from(
+			    select * from accountCode
+			    
+			    order by acccode 
+			    )A
+			)
+	
+		where RNUM>1
+		  and RNUM<=5;

@@ -109,33 +109,7 @@ import com.will.ice.model.SearchYearMonthVO;
 	}
 	
 	
-	@RequestMapping(value = "/regAccode.do" , method = RequestMethod.POST)
-	public String regAccodeList(@ModelAttribute AccodeListVO accListVO, Model model) {
-		logger.info("계정코드 등록 accListVO={}", accListVO);
-		
-		int cnt = 0;
-		
 	
-		try {
-			List<AccodeVO> accList = accListVO.getAccItems();
-			cnt = accService.accRegisterMulti(accList);
-
-			String msg = "계정코드 등록 실패 !", url = "/companyCard/comCardUse.do";
-			if(cnt > 0) {
-				msg = "계정코드 등록 성공!";
-				url = "/companyCard/comCardList.do";
-
-			}
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "/common/message"; 
-		  
-	}
 		
 	
 }

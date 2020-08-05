@@ -53,7 +53,8 @@
 		
 		$("#dynamicTbody tr").click(function(){
 			var acccode = $(this).children().eq(0).text();
-		
+			alert(acccode);
+			alert("#acccode"+loc_num);
 			$(opener.document).find("#acccode"+loc_num).val(acccode);
 			self.close();
 		});
@@ -104,7 +105,7 @@ label {
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 		<input type="hidden" name="loc_num" 
-			value="${loc_num}">	
+			value="${param.loc_num}">	
 	</form>
 	<div class="divSearch">
 			<form name="frmSearch" method="post"

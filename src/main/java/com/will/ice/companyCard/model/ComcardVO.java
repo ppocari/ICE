@@ -2,112 +2,104 @@ package com.will.ice.companyCard.model;
 
 
 public class ComcardVO {
-	private int NO;
-	private String CARDNO;
-	private String MEMNO;
-	private String ACCCODE;
-	private int PRICE;
-	private String USEPLACE;
-	private String USEDATE;
-	private String FILENO;
-	private String NAME;
-	private String DEPTNAME;
-	private String POSNAME;
-	
-	private String DEPTCODE;
-	private String POSCODE;
-	public int getNO() {
-		return NO;
+	private String no;
+	private String cardNo;
+	private String memNo;
+	private String accCode;
+	private String price;
+	private String usePlace;
+	private String useDate;
+	private String fileNo;
+	private String name;
+	private String posCode;
+	private String posName;
+	private String deptCode;
+	private String deptName;
+	public String getNo() {
+		return no;
 	}
-	public void setNO(int nO) {
-		NO = nO;
+	public void setNo(String no) {
+		this.no = no;
 	}
-	public String getCARDNO() {
-		return CARDNO;
+	public String getCardNo() {
+		return cardNo;
 	}
-	public void setCARDNO(String cARDNO) {
-		CARDNO = cARDNO;
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
 	}
-	public String getMEMNO() {
-		return MEMNO;
+	public String getMemNo() {
+		return memNo;
 	}
-	public void setMEMNO(String mEMNO) {
-		MEMNO = mEMNO;
+	public void setMemNo(String memNo) {
+		this.memNo = memNo;
 	}
-	public String getACCCODE() {
-		return ACCCODE;
+	public String getAccCode() {
+		return accCode;
 	}
-	public void setACCCODE(String aCCCODE) {
-		ACCCODE = aCCCODE;
+	public void setAccCode(String accCode) {
+		this.accCode = accCode;
 	}
-	public int getPRICE() {
-		return PRICE;
+	public String getPrice() {
+		return price;
 	}
-	public void setPRICE(int pRICE) {
-		PRICE = pRICE;
+	public void setPrice(String price) {
+		this.price = price;
 	}
-	public String getUSEPLACE() {
-		return USEPLACE;
+	public String getUsePlace() {
+		return usePlace;
 	}
-	public void setUSEPLACE(String uSEPLACE) {
-		USEPLACE = uSEPLACE;
+	public void setUsePlace(String usePlace) {
+		this.usePlace = usePlace;
 	}
-	public String getUSEDATE() {
-		return USEDATE;
+	public String getUseDate() {
+		return useDate;
 	}
-	public void setUSEDATE(String uSEDATE) {
-		USEDATE = uSEDATE;
+	public void setUseDate(String useDate) {
+		this.useDate = useDate;
 	}
-	public String getFILENO() {
-		return FILENO;
+	public String getFileNo() {
+		return fileNo;
 	}
-	public void setFILENO(String fILENO) {
-		FILENO = fILENO;
+	public void setFileNo(String fileNo) {
+		this.fileNo = fileNo;
 	}
-	public String getNAME() {
-		return NAME;
+	public String getName() {
+		return name;
 	}
-	public void setNAME(String nAME) {
-		NAME = nAME;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getPOSNAME() {
-		return POSNAME;
+	public String getPosCode() {
+		return posCode;
 	}
-	public void setPOSNAME(String pOSNAME) {
-		POSNAME = pOSNAME;
+	public void setPosCode(String posCode) {
+		this.posCode = posCode;
 	}
-	
-	
-	public String getDEPTNAME() {
-		return DEPTNAME;
+	public String getPosName() {
+		return posName;
 	}
-	public void setDEPTNAME(String dEPTNAME) {
-		DEPTNAME = dEPTNAME;
+	public void setPosName(String posName) {
+		this.posName = posName;
 	}
-	
-	
-	public String getDEPTCODE() {
-		return DEPTCODE;
+	public String getDeptCode() {
+		return deptCode;
 	}
-	public void setDEPTCODE(String dEPTCODE) {
-		DEPTCODE = dEPTCODE;
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
 	}
-	public String getPOSCODE() {
-		return POSCODE;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setPOSCODE(String pOSCODE) {
-		POSCODE = pOSCODE;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	@Override
 	public String toString() {
-		return "ComcardVO [NO=" + NO + ", CARDNO=" + CARDNO + ", MEMNO=" + MEMNO + ", ACCCODE=" + ACCCODE + ", PRICE="
-				+ PRICE + ", USEPLACE=" + USEPLACE + ", USEDATE=" + USEDATE + ", FILENO=" + FILENO + ", NAME=" + NAME
-				+ ", DEPTNAME=" + DEPTNAME + ", POSNAME=" + POSNAME + ", DEPTCODE=" + DEPTCODE + ", POSCODE=" + POSCODE
+		return "ComcardVO [no=" + no + ", cardNo=" + cardNo + ", memNo=" + memNo + ", accCode=" + accCode + ", price="
+				+ price + ", usePlace=" + usePlace + ", useDate=" + useDate + ", fileNo=" + fileNo + ", name=" + name
+				+ ", posCode=" + posCode + ", posName=" + posName + ", deptCode=" + deptCode + ", deptName=" + deptName
 				+ "]";
 	}
-	
-	
-	
 	
 	
 	

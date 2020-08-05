@@ -1,8 +1,6 @@
 package com.will.ice.member.model;
 
 import java.util.List;
-
-import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 
 public interface MemberService {

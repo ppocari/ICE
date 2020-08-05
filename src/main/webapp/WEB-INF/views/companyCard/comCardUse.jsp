@@ -45,10 +45,8 @@
 		});
 		
 		$("#accReg").click(function(){
-			$("form[name=regAccFrm]").submit(function(){
-				
-				
-			});
+			$("form[name=regAccFrm]").submit();
+	
 			
 		});
 	});
@@ -142,17 +140,17 @@
 									<c:if test="${!empty list }">
 										<c:forEach var="vo" items="${list }">
 											<tr id="edit_tr${i}">
-												<td>${vo.CARDNO }</td>
-												<td>${vo.NAME }</td>
-												<td><input type="text" id="acccode${i }"
-													class="acccode" value=""> <input type="hidden"
-													value="${i}" id="edit_td${i}"></td>
-
-												<td>${vo.USEPLACE }</td>
-												<td>${vo.PRICE }</td>
-												<td>${vo.USEDATE }</td>
-												<td>${vo.DEPTNAME }</td>
-												<td>${vo.POSNAME }</td>
+												<input type="hidden" name="accItems[${i}].no"  value="${vo.no }"/></td>
+												<td><input type="text" name="accItems[${i}].cardNo"  value="${vo.cardNo }"/></td>
+												<td><input type="text" name="accItems[${i}].name"  value="${vo.name }"/></td>
+												<td><input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" > 
+													<input type="hidden" value="${i}" id="edit_td${i}">
+												</td>
+												<td><input type="text" name="accItems[${i}].usePlace"  value="${vo.usePlace }" /></td>
+												<td><input type="text" name="accItems[${i}].price"  value="${vo.price}"/></td>
+												<td><input type="text" name="accItems[${i}].useDate"  value="${vo.useDate }"/></td>
+												<td><input type="text" name="accItems[${i}].deptName"  value="${vo.deptName }"/></td>
+												<td><input type="text" name="accItems[${i}].posName"  value="${vo.posName }"/></td>
 											</tr>
 											<c:set var="i" value="${i+1 }" />
 										</c:forEach>

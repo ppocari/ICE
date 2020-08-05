@@ -30,10 +30,9 @@
 	</select>
 	
 	<update id="accRegisterMulti" parameterType="AccodeVO">
-		update comcard_mem
-		set acccode = #{accode}
+		update companyCard
+		set acccode = #{accCode}
 		where no = #{no}
-	
 	</update>
 </mapper>
 
