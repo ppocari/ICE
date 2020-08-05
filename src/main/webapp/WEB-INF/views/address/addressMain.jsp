@@ -49,7 +49,6 @@ function pageProc(curPage){
 		$('.star').click(function(){
 			var star_id=$(this).attr('id').split('_');
 			var tx= $(this).text();
-			alert(tx);
 			if(tx == '★') { //좋아요라면, 좋아요 취소 처리하기
 				$(this).text('☆');
 				$(this).removeClass('star_color');

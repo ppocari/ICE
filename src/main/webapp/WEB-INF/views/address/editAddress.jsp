@@ -36,12 +36,102 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>  -->
 
 <script type="text/javascript">
-	$(function(){
-		$('input[type=reset]').click(function(){
-			self.close();
-		});
+$(function(){
+	$('input[type=reset]').click(function(){
+		self.close();
 	});
 	
+	/* 이메일 직접 입력 처리 */
+	$('#email2').change(function(){
+		if($(this).val()=='직접 입력') {
+			$('#email3').val("");
+			$('#email3').css('visibility','visible');
+			$('#email3').focus();
+		}else{
+			$('#email3').css('visibility','hidden');
+		}
+	});
+	
+	$('input[type=submit]').click(function(){
+		
+		var name=$('input[name=name]').val();
+		var hp2=$('input[name=hp2]').val();
+		var hp3=$('input[name=hp3]').val();
+		var em=$('#email3').val();
+		
+		var check_num = /[0-9]/; // 숫자 
+		var check_eng = /[a-zA-Z]/; // 문자 
+		var check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글
+		
+		if(name.length==0) {
+			alert('이름은 필수입니다!');
+			$('input[name=name]').focus();
+			return false;
+		}else if(!check_num.test(name) && !check_eng.test(name) && !check_kor.test(name)) {
+			alert('이름은 한글, 영어, 숫자만 입력할 수 있습니다!');
+			$('input[name=name]').focus();
+		}
+		
+		if(hp2.length!=0) {
+			if(hp3.length==0) {
+				hp_empty();
+				$('input[name=hp3]').focus();
+				return false;
+			}else if(!validate_phone(hp2)) {
+				hp_error();
+				$('input[name=hp2]').focus();
+				return false;
+			}
+		}
+		if(hp3.length!=0) {
+			if(hp2.length==0) {
+				hp_empty();
+				$('input[name=hp2]').focus();
+				return false;
+			}else if(!validate_phone(hp3)) {
+				hp_error();
+				$('input[name=hp3]').focus();
+				return false;
+			}
+		}
+		
+		if(em.length>0) {
+			if(em.length==0 || !email_check(em)) {
+				email_alert();
+				event.preventDefault();
+			}
+		}
+	});
+
+	function hp_error(){
+		alert('전화번호는 숫자만 입력할 수 있습니다.');
+	}
+	
+	function hp_empty(){
+		alert('전화번호 양식에 맞지 않습니다.');
+	}
+	
+	function validate_phone(hp) {
+		var pattern = new RegExp(/^[0-9]*$/g);
+		return pattern.test(hp); 
+	}
+	
+	function email_alert(){
+		alert('이메일 형식이 올바르지 않습니다.');
+	}
+	
+	function email_check(em) {
+		var isPoint=em.indexOf(".");
+		var isLen=em.length;
+		if(isPoint==-1 || isPoint==0){
+			return false;
+		}else if(isPoint>=1 && isPoint+1!=isLen){
+			return true;
+		}else{
+			return false;
+		}
+	}
+});
 		
 </script>
 <style type="text/css">
@@ -94,12 +184,17 @@
 
 .hp {
 	border: 1px solid #DCDDE3;
-	width: 71px;
+	width: 86px;
+}
+
+.em3 {
+	border: 1px solid #DCDDE3;
+	width: 69px;
 }
 
 .email{
 	border: 1px solid #DCDDE3;
-	width: 110px;
+	width: 69px;
 }
 
 .divForm textarea {
@@ -145,14 +240,24 @@
 					</div>
 					<div>
 						<label class="la_left">전화번호</label> 
-						<input class="hp" type="text" name="hp1" value="${adVo.hp1 }"> -  
-						<input class="hp" type="text" name="hp2" value="${adVo.hp2 }"> -  
-						<input class="hp" type="text" name="hp3" value="${adVo.hp3 }">
+						<select name="hp1">
+							<c:forEach var="hp" items="${phList }">
+								<option value="${hp }" >${hp }</option>
+							</c:forEach>
+						</select>   
+						- <input class="hp" type="text" name="hp2" value="${adVo.hp2 }">  
+						- <input class="hp" type="text" name="hp3" value="${adVo.hp3 }">
 					</div>
 					<div>
 						<label class="la_left">이메일</label> 
-						<input class="email" type="text" name="email1" value="${adVo.email1 }"> @ 
-						<input class="email" type="text" name="email2" value="${adVo.email2 }">
+						<input class="email" type="text" name="email1"> @ 
+						<select name="email2" id="email2">
+							<c:forEach var="em" items="${emList }">
+								<option value="${em }" >${em }</option>
+							</c:forEach>
+						</select>
+						  <input class="em3" type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리"
+      							style="visibility:hidden">
 					</div>
 					<div>
 						<label class="la_left">회사명</label> 

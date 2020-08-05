@@ -159,7 +159,7 @@ function pageProc(curPage){
 								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
 								<th  style="width:10%">이름</th>
 								<th  style="width:15%">전화번호</th>
-								<th  style="width:22%">이메일</th>
+								<th  style="width:20%">이메일</th>
 								<th  style="width:10%">그룹</th>
 								<th  style="width:13%">회사명</th>
 								<th  style="width:13%">부서</th>

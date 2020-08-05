@@ -8,11 +8,8 @@
 	select * from(
 		select rownum as RNUM, A.*
 		from (
-		    select B.*
-		    from(
-		        select ad.*, adg.memNo, adg.groupName from address ad, addressGroup adg
-                where ad.adgNo=adg.adgNo)B
-            where memno='111910'
+		   	select * from v_address
+            where memno=#{memNo}
             <!-- <if test='userId == "hong"'>  (O) -->
 		     	<if test='searchCondition == "kor"'> 
 		     		<if test='searchKeyword == "하"'>
@@ -50,10 +47,8 @@
 	</select>
 	<select id="getTotalRecord" parameterType="addressSearchVo"
 		resultType="int">
-		select count(*) from 
-			(select ad.*, adg.memNo, adg.groupName from address ad, addressGroup adg
-        	where ad.adgNo=adg.adgNo)A
-        where memno=#{memNo}
+		select count(*) from v_address
+		where memno=#{memNo}
        	<if test='searchCondition == "kor"'> 
      		<if test='searchKeyword == "하"'>
      		and name >= #{searchKeyword}
@@ -94,34 +89,19 @@
 	</select>
 	
 	<!-- 주소록 등록 -->
-	<select id="selectCountAddressGroup" parameterType="string" resultType="int">
-		select count(*) from addressgroup
-		where memNo=#{memNo}
-	</select>
-	<select id="selectAddressGroup" parameterType="string" resultType="addressGroupVo">
+	<select id="selectAddressGroup" resultType="addressGroupVo">
 		select * from addressgroup
-		where memNo=#{memNo}
-	</select>
-	<insert id="insertDefaultAddressGroup" parameterType="string">
-		insert into addressgroup(adgno, groupname, memno)
-		values(adgNo_seq.nextval, '기본', #{memNo})
-	</insert>
-	<select id="selectAdgNo" parameterType="addressGroupVo">
-		select adgNo from addressGroup
-		where groupName=#{groupName}
-		and memno=#{memNo}
 	</select>
 	
 	<insert id="insertAddress" parameterType="addressVo">
-		insert into address(adno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
-		values(adno_seq.nextval, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
+		insert into address(adno, memno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
+		values(adno_seq.nextval, #{memNo}, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
 	</insert>
 	
 	<!-- 주소록 수정 -->
 	<select id="selectOneAdderss" resultType="addressVo">
-		select ad.*, adg.groupname from address ad, addressGroup adg
-		where ad.ADGNO = adg.ADGNO
-		and adno=#{adNo}
+		select * from v_address
+		where adno=#{adNo}
 	</select>
 	
 	<update id="updateAddress" parameterType="addressVo">
@@ -142,13 +122,6 @@
 		set isDeleted=sysdate
 		where adno=#{adNo}
 	</update>
-	<select id="selectTrashAddress" parameterType="String" resultType="addressVo">
-		select ad.*, adg.groupname from address ad, addressGroup adg
-		where ad.ADGNO = adg.ADGNO
-		and memno=#{memNo}
-		and isDeleted is not null
-		order by name
-	</select>
 	<update id="updateBackAddress" parameterType="int">
 		update address
 		set isDeleted = null

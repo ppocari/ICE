@@ -12,15 +12,13 @@ public interface AddressDAO {
 	
 	//주소록 등록
 	int selectCountAddressGroup(String memNo);
-	List<AddressGroupVO> selectAddressGroup(String memNo);
-	int insertDefaultAddressGroup(String memNo);
+	List<AddressGroupVO> selectAddressGroup();
 	int insertAddress(AddressVO vo);
 	AddressVO selectOneAdderss(int adNo);
 
 	int updateAddress(AddressVO adVo);
 	
 	int deleteAddress(int adNo);
-	List<AddressVO> selectTrashAddress(String memNo);
 	int updateTrashAddress(int adNo);
 	int updateBackAddress(int adNo);
 	int updateIsFavorite(int adNo);

@@ -21,6 +21,7 @@ import com.will.ice.address.model.AddressSearchVO;
 import com.will.ice.address.model.AddressService;
 import com.will.ice.address.model.AddressUtility;
 import com.will.ice.address.model.AddressVO;
+import com.will.ice.common.GetSelect;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
@@ -101,7 +102,7 @@ public class AddressController {
 	
 	/* 주소록 상세보기 */
 	@RequestMapping("/detailAddress.do")
-	public void editAddress_get(@RequestParam (defaultValue="0") int adNo, Model model) {
+	public void detailAddress_get(@RequestParam int adNo, Model model) {
 		
 		logger.info("주소록 상세보기 화면, 파라미터 adNo={}", adNo);
 		
@@ -119,18 +120,45 @@ public class AddressController {
 		String memNo=(String)session.getAttribute("identNum");
 		logger.info("주소록 등록 화면, memNo={}", memNo);
 		
-		List<AddressGroupVO> adgList= service.selectAddressGroup(memNo);
+		List<AddressGroupVO> adgList= service.selectAddressGroup();
+		List<String> phList = GetSelect.getPhoneSelect();
+		List<String> emList = GetSelect.getEmailSelect();
+		
 		logger.info("주소록 등록 화면 처리 결과, adgList.size={}", adgList.size());
 		
-
 		model.addAttribute("adgList", adgList);
+		model.addAttribute("phList", phList);
+		model.addAttribute("emList", emList);
 	}
 
 	@RequestMapping(value="/addAddress.do", method=RequestMethod.POST) 
-	public String addAddress_post(@ModelAttribute AddressVO adVo, Model model) {
+	public String addAddress_post(@ModelAttribute AddressVO adVo, 
+			HttpServletRequest request, Model model, @RequestParam String email3) {
  
-		logger.info("주소록 등록 addressVo={}", adVo);
-  
+		HttpSession session= request.getSession();
+		String memNo=(String)session.getAttribute("identNum");
+		
+		
+		logger.info("주소록 등록 addressVo={}, memNo={}", adVo, memNo);
+		adVo.setMemNo(memNo);
+		
+		/*이메일 빈칸 처리*/
+		if(adVo.getEmail1()==null || adVo.getEmail1().isEmpty()) {
+			adVo.setEmail1("");
+			adVo.setEmail2("");
+		}else {
+			if(adVo.getEmail2().equals("직접 입력")) {
+				adVo.setEmail2(email3);
+			}
+		}
+		
+		/*전화번호 빈칸 처리*/
+		if(adVo.getHp2()==null || adVo.getHp2().isEmpty() || adVo.getHp3()==null || adVo.getHp3().isEmpty()) {
+			adVo.setHp1("");
+			adVo.setHp2("");
+			adVo.setHp3("");
+		}
+		
 		int cnt=service.insertAddress(adVo); 
 		logger.info("주소록 등록 결과 cnt={}", cnt);
   
@@ -148,32 +176,50 @@ public class AddressController {
 	
 	/* 주소록 수정 */
 	@RequestMapping(value="/editAddress.do", method=RequestMethod.GET)
-	public void editAddress_get(@RequestParam (defaultValue="0") int adNo,
-
-			HttpServletRequest request, Model model) {
-		
-		HttpSession session= request.getSession();
-		String memNo=(String)session.getAttribute("identNum");
+	public void editAddress_get(@RequestParam int adNo, Model model) {
 		
 		/* 주소 정보 뿌려주기 */
-		logger.info("주소록 수정 화면, 파라미터 adNo={}, memNo={}", adNo, memNo);
+		logger.info("주소록 수정 화면, 파라미터 adNo={}", adNo);
 		
 		AddressVO adVo=service.selectOneAdderss(adNo);
 		
-		/* 그룹 리스트 보여주기 */
-		List<AddressGroupVO> adgList= service.selectAddressGroup(memNo);
+		/* 그룹, 전화번호, 이메일 리스트 보여주기 */
+		List<AddressGroupVO> adgList= service.selectAddressGroup();
 		logger.info("주소록 수정 화면 보여주기, adVo={}, adgList.size={}", adVo, adgList.size());
 		
+		List<String> phList = GetSelect.getPhoneSelect();
+		List<String> emList = GetSelect.getEmailSelect();
+		
 		model.addAttribute("adgList", adgList);
+		model.addAttribute("phList", phList);
+		model.addAttribute("emList", emList);
 
 		model.addAttribute("adVo", adVo);
 		
 	}
 	
 	@RequestMapping(value="/editAddress.do", method=RequestMethod.POST)
-	public String editAddress_post(@ModelAttribute AddressVO adVo, Model model) {
+	public String editAddress_post(@ModelAttribute AddressVO adVo, Model model,
+			@RequestParam String email3) {
 		
 		logger.info("주소록 수정, 파라미터 adVo={}", adVo);
+		
+		/*이메일 빈칸 처리*/
+		if(adVo.getEmail1()==null || adVo.getEmail1().isEmpty()) {
+			adVo.setEmail1("");
+			adVo.setEmail2("");
+		}else {
+			if(adVo.getEmail2().equals("직접 입력")) {
+				adVo.setEmail2(email3);
+			}
+		}
+		
+		/*전화번호 빈칸 처리*/
+		if(adVo.getHp2()==null || adVo.getHp2().isEmpty() || adVo.getHp3()==null || adVo.getHp3().isEmpty()) {
+			adVo.setHp1("");
+			adVo.setHp2("");
+			adVo.setHp3("");
+		}
 		
 		int cnt=service.updateAddress(adVo);
 		logger.info("주소록 수정 결과, cnt={}", cnt);

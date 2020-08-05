@@ -32,16 +32,8 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public List<AddressGroupVO> selectAddressGroup(String memNo) {
-		int haveGroup=dao.selectCountAddressGroup(memNo);
-		if(haveGroup>0) {
-		}else {
-			int createDefaultAdg=dao.insertDefaultAddressGroup(memNo);
-			if(createDefaultAdg>0) {
-			}
-		}
-		
-		return dao.selectAddressGroup(memNo);
+	public List<AddressGroupVO> selectAddressGroup() {
+		return dao.selectAddressGroup();
 	}
 
 	@Override
@@ -97,11 +89,6 @@ public class AddressServiceImpl implements AddressService{
 		}
 		
 		return cnt;
-	}
-
-	@Override
-	public List<AddressVO> selectTrashAddress(String memNo) {
-		return dao.selectTrashAddress(memNo);
 	}
 
 	@Override
