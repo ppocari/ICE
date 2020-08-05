@@ -1,11 +1,10 @@
 package com.will.ice.spay.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +41,12 @@ public class SpayController {
 	public void sbuy() {
 		logger.info("구입 페이지 보여주기");
 	
+	}
+	
+	@RequestMapping("/port.do")
+	public void port() {
+		logger.info("I'm port 페이지 보여주기");
+		
 	}
 
 	@RequestMapping("/sList.do")
@@ -145,7 +149,7 @@ public class SpayController {
 		String identNum=(String) session.getAttribute("identNum");
 		int MemNo=Integer.parseInt((String)session.getAttribute("MemNo"));
 		logger.info("사원번호 MemNo={}", MemNo);
-		if(MemNo==888888) {
+		if(MemNo==999999) {
 			
 			dateSearchVo.setMemNo(identNum);
 			logger.info("구매 조회 파라미터 dateSearchVo={}", dateSearchVo);
