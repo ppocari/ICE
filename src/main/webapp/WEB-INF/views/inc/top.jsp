@@ -468,9 +468,10 @@
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+							aria-expanded="false"> 
+							<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages --> <span
-								class="badge badge-danger badge-counter">7</span>
+								class="badge badge-danger badge-counter">7<!-- 아직 안읽은 쪾지 개수 count(*)해서 뿌려주기  --></span>
 						</a> <!-- Dropdown - Messages -->
 							<div
 								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -523,7 +524,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="<c:url value='/message/messageList.do'/>">Read More Messages</a>
+									href="<c:url value='/message/messageList.do'/>">Read More Messages<!-- 받은 쪽지함으로 이동 --></a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
@@ -547,8 +548,7 @@
 									Settings
 								</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
-									data-target="#logoutModal"> <i
+								<a class="dropdown-item" href="<c:url value='/log/logout.do'/>" > <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
 								</a>

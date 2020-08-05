@@ -53,7 +53,8 @@
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 												name="identNum" aria-describedby="emailHelp"
-												placeholder="Your identification number...">
+												placeholder="Your identification number..."
+												value="${cookie.ck_identNum.value }">
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
@@ -61,10 +62,13 @@
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
-												<input type="checkbox" class="custom-control-input"
-													id="rememCheck"> <label
-													class="custom-control-label" for="customCheck">Remember
-													Me</label>
+												 <input type="checkbox" 
+													id="rememCheck"  name="rememCheck"
+													<c:if test="${!empty cookie.ck_identNum }">
+														checked="checked"
+													</c:if>>   
+													
+												<label  for="rememCheck">Remember Me</label>
 											</div>
 										</div>
 

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.ice.accode.model.AccodeListVO;
+import com.will.ice.accode.model.AccodeService;
+import com.will.ice.accode.model.AccodeVO;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.companyCard.model.ComcardService;
@@ -34,6 +37,8 @@ import com.will.ice.model.SearchYearMonthVO;
 	@Autowired private ComcardService comcardService;
 
 	@Autowired private EtcService etcService;
+	
+	@Autowired private AccodeService accService;
 	
 	@RequestMapping("/comCardList.do")
 	public void comCardList(@ModelAttribute Depart_posi_dateVO dpdvo, Model model) {
@@ -63,10 +68,9 @@ import com.will.ice.model.SearchYearMonthVO;
 	}
 	
 	@RequestMapping(value ="/comCardUse.do", method = RequestMethod.POST)
-	public void comCardUse_post(@ModelAttribute DateSearchVO dsvo, Model model) {
-		logger.info("법인카드 미등록/등록 dsvo={}",dsvo);
-		String year =dsvo.getYear();
-		String month =dsvo.getMonth();
+	public void comCardUse_post(@RequestParam(required = false) String year,
+			@RequestParam(required = false) String month, Model model) {
+		logger.info("법인카드 미등록/등록 year={},  month={}",year,month);
 		
 		if(month.length()==1) {
 			month = "0"+month;
@@ -89,7 +93,8 @@ import com.will.ice.model.SearchYearMonthVO;
 		logger.info("법인카드 미등록/등록 list.size()={}",list.size());
 		
 		model.addAttribute("list", list);
-		model.addAttribute("dsvo", dsvo);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
 		
 	}
 	
@@ -104,12 +109,7 @@ import com.will.ice.model.SearchYearMonthVO;
 	}
 	
 	
-	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.GET)
-	public void comCardUpload_get() {
-		logger.info("법인카드 미등록/등록 ");
-		
-		
-	}
+	
 		
 	
 }

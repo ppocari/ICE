@@ -141,15 +141,15 @@
 									<c:forEach var="vo" items="${list }">
 										
 										<tr>
-											<td>${vo.CARDNO }</td>
-											<td>${vo.NAME }</td>
-											<td>${vo.ACCCODE }</td>
-											<td>${vo.PRICE }</td>
-											<td>${vo.USEPLACE }</td>
-											<td>${vo.USEDATE } </td>
-											<td>${vo.DEPTNAME }</td>
-											<td>${vo.POSNAME }</td>
-																				
+											<td>${vo.cardNo }</td>
+											<td>${vo.name }</td>
+											<td>${vo.accCode }</td>
+											<td>${vo.price }</td>
+											<td>${vo.usePlace }</td>
+											<td>${vo.useDate } </td>
+											<td>${vo.deptName }</td>
+											<td>${vo.posName }</td>
+															
 										</tr>
 									</c:forEach>
 								</tbody>
