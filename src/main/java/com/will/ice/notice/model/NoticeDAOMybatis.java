@@ -51,18 +51,5 @@ public class NoticeDAOMybatis implements NoticeDAO{
 		return sqlSession.update(namespace+"updateBoard", noticeNo);
 	}
 
-	@Override
-	public NoticeVO selectByNo(int NOTI_NO) {
-		return sqlSession.selectOne(namespace+"selectByNo", NOTI_NO);
-	}
-
-	@Override
-	public int deleteBoard(int NOTI_NO) {
-		return sqlSession.delete(namespace+"deleteBoard", NOTI_NO);
-	}
-
-	@Override
-	public int updateBoard(int NOTI_NO) {
-		return sqlSession.update(namespace+"updateBoard", NOTI_NO);
-	}
+	
 }

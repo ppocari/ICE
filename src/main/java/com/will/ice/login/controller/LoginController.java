@@ -97,15 +97,7 @@ public class LoginController {
 		}else if(result==MemberService.ID_NONE) {
 			msg="해당 아이디가 존재하지 않습니다.";
 		}
-
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-
-		}else if(result==MemberService.PWD_DISAGREE){
-			msg="비밀번호가 일치하지 않습니다.";
-		}else if(result==MemberService.ID_NONE) {
-			msg="해당 아이디가 존재하지 않습니다.";
-		}
+	
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
