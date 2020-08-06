@@ -77,7 +77,7 @@
 									<col style="width:10%;"/>
 								</colgroup>
 								<thead>
-									<tr>
+									<tr style="height:0px;">
 										<th scope="col">부서</th>
 										<th scope="col">제목</th>
 										<th scope="col">작성일</th>
@@ -86,21 +86,23 @@
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 게시판 내용 반복문시작 -->							
-									<c:forEach var="vo" items="${ list }">
+									<c:forEach var="vo" items="${list }">
+										<input type="text" name="noticeNo" value="${vo.noticeNo }">		
+							
 										<tr class="align_center">
-											<td>${vo.NOTI_CATEGORY}</td>
+											<td>${vo.category}</td>
 											<td class="align_left">
 												
 												<!-- 조회수 올리기 -->
 												<%-- /notice/noticeCountUpdate.do?no=${vo.no} --%>
 												<a href 
-									="<c:url value="#"/>">
-													<!-- 제목보여주기 길면 일부 -->
-													<c:if test="${fn:length(vo.NOTI_TITLE)>30 }">
-														${fn:substring(vo.NOTI_TITLE, 0, 30)} ...
+									="<c:url value="/notice/noticeDetail.do?noticeNo=${vo.noticeNo }"/>">
+													
+													<c:if test="${fn:length(vo.title)>30 }">
+														${fn:substring(vo.title, 0, 30)} ...
 													</c:if>
-													<c:if test="${fn:length(vo.NOTI_TITLE)<=30 }">
-														${vo.NOTI_TITLE}
+													<c:if test="${fn:length(vo.title)<=30 }">
+														${vo.title}
 													</c:if>
 												</a>
 												
@@ -109,9 +111,9 @@
 													<img>
 												</c:if>
 											</td>
-											<td><fmt:formatDate value="${vo.NOTI_REGDATE}"
-												pattern="yyyy-MM-dd"/> </td>
-											<td>${vo.NOTI_READCOUNT}</td>
+											<td><fmt:formatDate value="${vo.regdate}"
+												pattern="yyyy-MM-dd-HH:mm"/></td>
+											<td>${vo.readcount}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -122,26 +124,22 @@
 						<!-- 검색기능 -->
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 							<div class="search" style="margin-left: 10px;">
-								<form name="frmSearch" method="post" 
-							   		action='<c:url value="/notice/noticeList.do"/>'>
-							        <select name="searchCondition">
-							            <option value="title" 
-							            	<c:if test="${param.searchCondition=='NOTI_TITLE' }">
-							            		selected="selected"
-							            	</c:if>
-							            >제목</option>
-							            <option value="content" 
-							            	<c:if test="${param.searchCondition=='NOTI_CONTENT' }">
-							            		selected="selected"
-							            	</c:if>
-							            >내용</option>
-							        </select>   
-							        <input type="text" class="form-control" placeholder="검색어를 입력..."
-										style=" width: 100px; height: 30px; font-size: 13px;">
-									<button type="submit" class="btn btn-primary btn-sm">검색</button>
-							
-							    </form>
-								
+						        <select name="searchCondition" class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+						            <option value="title" 
+						            	<c:if test="${param.searchCondition=='title' }">
+						            		selected="selected"
+						            	</c:if>
+						            >제목</option>
+						            <option value="content" 
+						            	<c:if test="${param.searchCondition=='content' }">
+						            		selected="selected"
+						            	</c:if>
+						            >내용</option>
+						        </select>   
+						        <input type="text" class="form-control" placeholder="검색어를 입력..."
+									style=" width: 180px; height: 30px; font-size: 13px; display: inline-block;">
+								<button type="submit" class="btn btn-primary btn-sm">검색</button>
 							</div>
 						</div>	
 					</div>		
