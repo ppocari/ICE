@@ -184,7 +184,7 @@ $(function(){
 
 .hp {
 	border: 1px solid #DCDDE3;
-	width: 86px;
+	width: 35px;
 }
 
 .em3 {
@@ -250,10 +250,14 @@ $(function(){
 					</div>
 					<div>
 						<label class="la_left">이메일</label> 
-						<input class="email" type="text" name="email1"> @ 
+						<input class="email" type="text" name="email1" value="${adVo.email1 }">@ 
 						<select name="email2" id="email2">
 							<c:forEach var="em" items="${emList }">
-								<option value="${em }" >${em }</option>
+								<option value="${em }" 
+									<c:if test="${em eq adVo.email2 }">
+										selected="selected"
+									</c:if>
+								>${em }</option>
 							</c:forEach>
 						</select>
 						  <input class="em3" type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리"
