@@ -106,9 +106,9 @@
 			<tbody>
 			<!-- 반복 시작 -->
 				<c:forEach var="i" begin="0" end="${fn:length(list) }">
-					<tr>
+					<tr onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
-							<a class="docNoInfo" onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+							<a class="docNoInfo">
 								${list[i].docNo}
 							</a>
 						</td>

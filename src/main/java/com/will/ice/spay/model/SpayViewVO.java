@@ -3,18 +3,18 @@ package com.will.ice.spay.model;
 import java.sql.Timestamp;
 
 public class SpayViewVO {
-
+	
 	private int TICNO;
-	private String MEMNO; 
+	private String MEMNO;
 	private int TICQUANTITY;
 	private int TICPRICE;
 	private Timestamp TICREGDATE;
-	private String name;
-	private int hp1;
-	private int hp2;
-	private int hp3;
-	private String email1;
-	private String email2;
+	private String NAME;
+	private String HP1;
+	private String HP2;
+	private String HP3;
+	private String EMAIL1;
+	private String EMAIL2;
 	
 	public int getTICNO() {
 		return TICNO;
@@ -46,48 +46,48 @@ public class SpayViewVO {
 	public void setTICREGDATE(Timestamp tICREGDATE) {
 		TICREGDATE = tICREGDATE;
 	}
-	public String getName() {
-		return name;
+	public String getNAME() {
+		return NAME;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNAME(String nAME) {
+		NAME = nAME;
 	}
-	public int getHp1() {
-		return hp1;
+	public String getHP1() {
+		return HP1;
 	}
-	public void setHp1(int hp1) {
-		this.hp1 = hp1;
+	public void setHP1(String hP1) {
+		HP1 = hP1;
 	}
-	public int getHp2() {
-		return hp2;
+	public String getHP2() {
+		return HP2;
 	}
-	public void setHp2(int hp2) {
-		this.hp2 = hp2;
+	public void setHP2(String hP2) {
+		HP2 = hP2;
 	}
-	public int getHp3() {
-		return hp3;
+	public String getHP3() {
+		return HP3;
 	}
-	public void setHp3(int hp3) {
-		this.hp3 = hp3;
+	public void setHP3(String hP3) {
+		HP3 = hP3;
 	}
-	public String getEmail1() {
-		return email1;
+	public String getEMAIL1() {
+		return EMAIL1;
 	}
-	public void setEmail1(String email1) {
-		this.email1 = email1;
+	public void setEMAIL1(String eMAIL1) {
+		EMAIL1 = eMAIL1;
 	}
-	public String getEmail2() {
-		return email2;
+	public String getEMAIL2() {
+		return EMAIL2;
 	}
-	public void setEmail2(String email2) {
-		this.email2 = email2;
+	public void setEMAIL2(String eMAIL2) {
+		EMAIL2 = eMAIL2;
 	}
 	
 	@Override
 	public String toString() {
 		return "SpayViewVO [TICNO=" + TICNO + ", MEMNO=" + MEMNO + ", TICQUANTITY=" + TICQUANTITY + ", TICPRICE="
-				+ TICPRICE + ", TICREGDATE=" + TICREGDATE + ", name=" + name + ", hp1=" + hp1 + ", hp2=" + hp2
-				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + "]";
+				+ TICPRICE + ", TICREGDATE=" + TICREGDATE + ", NAME=" + NAME + ", HP1=" + HP1 + ", HP2=" + HP2
+				+ ", HP3=" + HP3 + ", EMAIL1=" + EMAIL1 + ", EMAIL2=" + EMAIL2 + "]";
 	}
-
+	
 }

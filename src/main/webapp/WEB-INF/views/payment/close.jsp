@@ -9,6 +9,7 @@
 <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
 <script type="text/javascript">
 	$(function(){
+		opener.document.location.reload();
 		self.close();
 	});
 </script>

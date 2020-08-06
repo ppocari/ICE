@@ -19,19 +19,35 @@ public class SpayServiceImpl implements SpayService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSpayView(int MEMNO) {
-		return spayDao.selectSpayView(MEMNO);
+	public List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo) {
+		return spayDao.selectSpayView(dateSearchVo);
 	}
 
 	@Override
-	public List<SpayVO> selectAll() {
-		return spayDao.selectAll();
+	public int selectTotalRecord(DateSearchVO dateSearchVo) {
+		return spayDao.selectTotalRecord(dateSearchVo);
 	}
 
 	@Override
-	public int selectDay(DateSearchVO dateSearchVo) {
-		return spayDao.selectDay(dateSearchVo);
+	public SpayVO searchAll(int ticno) {
+		return spayDao.searchAll(ticno);
 	}
+
+	@Override
+	public int searchNum(int MEMNO) {
+		return spayDao.searchNum(MEMNO);
+	}
+
+	@Override
+	public List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo) {
+		return spayDao.selectSpayViewAll(dateSearchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll(DateSearchVO dateSearchVo) {
+		return spayDao.selectTotalRecordAll(dateSearchVo);
+	}
+
 	
 
 }
