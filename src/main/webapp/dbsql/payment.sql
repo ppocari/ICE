@@ -238,7 +238,7 @@ nocache;
 --------------------문서양식
 drop sequence docform_seq;
 create sequence docform_seq
-start with 1
+start with 23400
 increment by 1
 nocache;
 --------------------결재선
@@ -297,7 +297,9 @@ on p.MEMNO = m.MEMNO;
 
 select * from paymentfile;
 select * from payment;
+select * from paymentline;
 select * from paycomment;
+select * from paylistview;
 
 select * from position;
 select * from member;
