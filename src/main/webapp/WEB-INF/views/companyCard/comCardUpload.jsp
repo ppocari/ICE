@@ -30,46 +30,6 @@
 
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
-function checkFileType(filePath) {
-    var fileFormat = filePath.split(".");
-
-    if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
-      return true;
-      } else {
-      return false;
-    }
-  }
-
-  function check() {
-
-    var file = $("#excelFile").val();
-
-    if (file == "" || file == null) {
-    alert("파일을 선택해주세요.");
-
-    return false;
-    } else if (!checkFileType(file)) {
-    alert("엑셀 파일만 업로드 가능합니다.");
-
-    return false;
-    }
-
-    if (confirm("업로드 하시겠습니까?")) {
-
-      var options = {
-
-        success : function(data) {
-            console.log(data);
-          alert("모든 데이터가 업로드 되었습니다.");
-
-        },
-        type : "POST"
-        };
-      
-      $("#excelUploadForm").ajaxSubmit(options);
-      
-    }
-  }
 
 </script>
 <!-- Begin Page Content -->
@@ -86,40 +46,72 @@ function checkFileType(filePath) {
 	</div>
 
 	<!-- Content Row -->
+	<!-- https://shinsunyoung.tistory.com/71 -->
 
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
+		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
-				<form id="excelUploadForm" name="excelUploadForm"
-					enctype="multipart/form-data" method="post"
-					action="<c:url value ='/companyCard/excelUploadAjax.do'/> ">
-					<div class="contents">
-						<div>첨부파일은 한개만 등록 가능합니다.</div>
-
-						<dl class="vm_name">
-							<dt class="down w90">첨부 파일</dt>
-							<dd>
-								<input id="excelFile" type="file" name="excelFile" />
-							</dd>
-						</dl>
+				<form name="memRegisterFrm" method="post"  
+				action="<c:url value='/excel.do'/> ">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">파일 업로드</h6>
+						<div style="float: right">
+							<button type="submit" class="btn btn-info">파일 불러오기</button>
+							<input type="button" class="btn btn-info" value="사용내역 업로드">
+						</div>
 					</div>
-
-					<div class="bottom">
-						<button type="button" id="addExcelImpoartBtn" class="btn"
-							onclick="check()">
-							<span>추가</span>
-						</button>
-					</div>
+				
+					
+					<!-- Card Body -->
+					<div class="card-body">
+						<div class="chart-area" style="overflow: scroll;">
+							<table class="table table-bordered table-hover" id="dynamicTable">
+								<thead>
+									<tr>
+										<th>카드번호</th>
+										<th>사원이름</th>
+										<th>계정코드</th>
+										<th>사용금액</th>
+										<th>사용처</th>
+										<th>사용일</th>
+										<th>부서</th>
+										<th>직급</th>
+										
+									</tr>
+								</thead>
+								<tbody id="dynamicTbody">
+									<!-- 반복시작 -->
+										
+									<c:forEach var="vo" items="${list }">
+										
+										<tr>
+											<td>${vo.cardNo }</td>
+											<td>${vo.name }</td>
+											<td>${vo.accCode }</td>
+											<td>${vo.price }</td>
+											<td>${vo.usePlace }</td>
+											<td>${vo.useDate } </td>
+											<td>${vo.deptName }</td>
+											<td>${vo.posName }</td>
+															
+										</tr>
+									</c:forEach>
+								</tbody>
+						</table>
+										
+						</div>
+					</div>		
 				</form>
-
-
+				
+				
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 
