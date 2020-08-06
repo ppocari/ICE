@@ -14,14 +14,19 @@
 
 	#btStart {
 	    width: 20%;
-	    margin-left: 1%;
+	    margin-left: 54%;
 	    float: left;
+        font-weight: bold;
+    	font-size: 1.3em;
+
 	}
 
 	#btEnd {
 	    width: 20%;
 	    margin-left: 2%;
 	    float: left;
+	    font-weight: bold;
+    	font-size: 1.3em;
 	}
 	
 	#h2{
@@ -65,8 +70,11 @@
 		
 		$("#btDetail").click(function() {
 			event.preventDefault();
+			location.href="#";
+			/*
 			window.open('<c:url value="/workRecord/detail.do?Start=${vo.cmpIn}&End=${vo.cmpOut}"/>','workDetail',
 		'width=600,height=500,left=0,top=0,location=yes,resizable=yes');
+			*/
 		});
 		
 		
@@ -93,13 +101,17 @@
 	});//doc
 	
 	function start() {
-		location.href="<c:url value='/workRecord/start.do'/>";
-		alert("출근처리 되었습니다.");
+		if(confirm("출근하시겠습니까?")){
+			location.href="<c:url value='/workRecord/start.do'/>";
+			alert("출근처리 되었습니다.");
+		}
 	}
 	
 	function end() {
-		location.href="<c:url value='/workRecord/end.do'/>";
-		alert("퇴근처리 되었습니다.");
+		if(confirm("출근하시겠습니까?")){
+			location.href="<c:url value='/workRecord/end.do'/>";
+			alert("퇴근처리 되었습니다.");
+		}
 	}
 </script>
 <!-- Begin Page Content -->
@@ -120,7 +132,6 @@
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">출퇴근</h5>
-					
 					<!-- 출퇴근 등록 -->
 					<button class="btn btn-primary" id="btStart" onclick="start()"
 						<c:if test="${not null && vo.cmpIn != null && date == vo.cmpRegdate}">
@@ -128,7 +139,7 @@
 						</c:if>
 						>출근
 					</button>
-					<button class="btn btn-primary" id="btEnd" onclick="end()"
+					<button class="btn btn-danger" id="btEnd" onclick="end()"
 						<c:if test="${not null && vo.cmpOut != null && date == vo.cmpRegdate}">
 						disabled
 						</c:if>
@@ -147,7 +158,7 @@
 					</tr>
 					<c:if test="${empty vo}">
 						<tr id="workList">
-							<td>출근 전입니다</td>
+							<td colspan="5" align="center">출근 전입니다</td>
 						</tr>
 					</c:if>
 					
@@ -162,7 +173,12 @@
 							<c:if test="${vo.cmpStatus != '0' && vo.cmpStatus != '9' }">
 								<td id="status">${vo.cmpStatus}</td>
 							</c:if>
-							<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
+							<c:if test="${vo.cmpStatus == '반차' || vo.cmpStatus == '이상'}">
+								<td><button id="btDetail" class="btn btn-primary">사유서 작성</button></td>
+							</c:if>
+							<c:if test="${vo.cmpStatus == '출근'}">
+								<td></td>
+							</c:if>
 						</tr>
 					</c:if>
 				</table>
@@ -204,7 +220,12 @@
 						<td id="start">${Svo.cmpIn}</td>
 						<td id="end">${Svo.cmpOut}</td>
 						<td id="status">${Svo.cmpStatus}</td>
-						<td><button id="btDetail" class="btn btn-primary">상세보기</button></td>
+						<c:if test="${Svo.cmpStatus == '반차' || Svo.cmpStatus == '이상'}">
+							<td><button id="btDetail" class="btn btn-primary">사유서 작성</button></td>
+						</c:if>
+						<c:if test="${vo.cmpStatus == '출근'}">
+							<td colspan="2"></td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</c:if>

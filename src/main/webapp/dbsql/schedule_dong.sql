@@ -9,6 +9,7 @@ CREATE TABLE schedule (
 	END_DAY VARCHAR2(100) NOT NULL, /* 스케줄 끝날짜 */
 	PLACE VARCHAR2(100), /* 스케줄 장소 */
 	CONTENT VARCHAR2(100) /* 스케줄 내용 */
+	resourceId VARCHAR2(100) /* 리소스 아이디 */
 );
 
 

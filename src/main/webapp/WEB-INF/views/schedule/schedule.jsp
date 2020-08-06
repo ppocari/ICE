@@ -15,6 +15,7 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
 <script type="text/javascript">
 	//들어오자 마자 일정 보여주기
+	var contextPath = "/ice";
 	var dataset = [
 		<c:forEach var="citem" items="${list}">
 			{
@@ -29,18 +30,7 @@
 
 	
   $(function() {
-		var memNo = $("#memNo").val();
-		
-		
-		$('.BtClose').click(function() {
-			$('#modal').hide();
-		});
-		
-		$('.writeClose').click(function() {
-			event.preventDefault();
-			$('#writeModal').hide();
-		});
-	
+	  
   $('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 	
@@ -67,29 +57,29 @@
           add_event: {
               text: '일정추가',
               click: function() {
-            	  $('#writeModal').show();
-               	  $("#frm").submit(function() {
-            			$.ajax({
-               				url:"<c:url value='/schedule/ajaxWrite.do'/>",
-               				type:"post",
-               				datatype:"json",
-               				data: $(this).serializeArray(),
-               				success:function(res){
-               					calendar.addEvent({
-               	                      title: res.title,
-               	                      start: res.startDay,
-               	                      end: res.endDay,
-               	                      id: res.schNo,
-               	                      allDay: false
-               	                    });
-               	                    alert('일정이 추가되었습니다!');
-               	                 	location.reload();
-               				},
-               				error:function(xhr, status, error){
-               					alert(status + ", " + error);
-               				}
-               			});
-            		});  
+            	  $("#writeModal").css("visibility","visible");
+	            	  $("#frm").submit(function() {
+	            		  $.ajax({
+	          				url:"<c:url value='/schedule/ajaxWrite.do'/>",
+	          				type:"post",
+	          				datatype:"json",
+	          				data: $(this).serializeArray(),
+	          				success:function(res){
+	          					calendar.addEvent({
+	          	                      title: res.title,
+	          	                      start: res.startDay,
+	          	                      end: res.endDay,
+	          	                      id: res.schNo,
+	          	                      allDay: false
+	          	                    });
+	          	                    alert('일정이 추가되었습니다!');
+	          	                 	location.reload();
+	          				},
+	          				error:function(xhr, status, error){
+	          					alert(status + ", " + error);
+	          				}
+	          			});
+	          		}); 
               }
           }
       },
@@ -124,7 +114,6 @@
  	  //드래그
  	  /*
       select: function(arg) {
-    	$('#writeModal').show();
         console.log(
           'select',
           arg.startStr,
@@ -153,7 +142,6 @@
       
       //날짜클릭
       dateClick: function(arg) {
-    	$('#writeModal').show();
     	$.ajax({
 			url:"<c:url value='/schedule/ajaxWrite.do'/>",
 			type:"post",
@@ -179,26 +167,32 @@
       
       //일정 보여주기
       eventClick: function(info) {
-    	  	$('#modal-title').text('\'${detailVo.title}\'');
-    	  	
-	   	  	var eventStrat = info.event.start;
     	  	var dbTitle = info.event.title;
     	  	var dbId = info.event.id;
-    	  	var content;
 		   	 $.ajax({
 					url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
 					type:"get",
 					datatype:"json",
 					success:function(res){
-						content = res.content;
-                        $("#modal-contents").text(content); //fullcalendar에는 content가 없어서 조회해와야함
+						var content = res.content;
+						var startDay = res.startDay;
+						var endDay = res.endDay;
+						var place = res.place;
+						var memNo = res.memNo;
+window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='+content+'&place='+place+'&dbId='+dbId+'&startDay='+startDay+'&endDay='+endDay+'&memNo='+memNo+''
+						,'detailSC',
+            			'width=450,height=650,left=500,top=200,location=yes,resizable=yes');
 					},
 					error:function(xhr, status, error){
 						alert(status + ", " + error);
 					}
 				});
-		   	$('#modal').show();
-    	  	$("#modal-title").text(dbTitle);
+		   	 
+		   	 /*
+		   	window.open(contextPath+'/schedule/detailSchedule.do','detailSC',
+			'width=500,height=500,left=0,top=0,location=yes,resizable=yes');
+		   	 */
+    	  	//$("#modal-title").text(dbTitle);
     	  	
     	    //borderColor 변경
     	    //info.el.style.borderColor = 'red';
@@ -219,7 +213,11 @@
          monthNamesShort: ['1월', '2월', '3월', '4월', '5월',
          	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
    });
-  
+	
+	$('.writeClose').click(function() {
+		event.preventDefault();
+		$('#writeModal').hide();
+	});
 });
 </script>
 <style>
@@ -268,12 +266,10 @@
 	    background-color: #464646;
 	}
 	
-	
 	/*일정쓰기*/
 	div#writeModal {
 	    line-height: 30px;
 	}
-	
 	
 	/*일정확인*/
 	div#modal {
@@ -297,82 +293,73 @@
 	.fc-content {
 	    color: black;
 	}
+	
 </style>
-		<div id="div"></div>
-		<!-- 캘린더 -->
-		<div class="calendar_back">
-			<div id='calendar'></div>
-		</div>
-		
-		<!-- style="display: none;" -->
-		<!-- 스케줄 글보기 모델 -->
-		<div id="modal" class="msgbox" style="display: none;">
-			<div class="head">
-				<div id="modal-type"></div>
-				<div id="modal-title"></div>
-		    </div>
-			<div class="body">
-				<div id="modal-contents"></div>
-				<div id="modal_button">
-					<button class="BtEdit">수정</button>				
-					<button class="BtDelte">삭제</button>				
-					<button class="BtClose">닫기</button>				
+
+<div class="row">
+	<!-- Area Chart -->
+	<div class="col-xl-12 " >
+		<div class="card shadow mb-4" style="fit-content">
+			<!-- 스케줄 -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">스케줄</h5>
+				</div>
+				<!-- 캘린더 -->
+				<div class="calendar_back">
+					<div id='calendar'></div>
+				</div>
+				
+				<!-- 스케줄등록모델 -->
+				<!-- style="display: none;" -->
+				<div id="writeModal" class="msgbox" style="visibility: hidden;">
+				<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
+				<form id="frm">
+					<div class="head">
+						<span>등록 폼</span>
+				    </div>
+					<div class="body">
+						<table>
+							<tr>
+								<td>
+									<select title="타입선" id="place" name="place" style="height: 28px;">
+										<option value="1">업무관련</option>
+										<option value="2">기타</option>
+										<option value="3">휴가/연차</option>
+										<option value="4">유연근무</option>
+									</select>
+									<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="schedulePicker">
+										<div style="float: left;">
+											<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
+												style="width: 192px" placeholder="시작일"/>
+											<div>STRAT</div>
+										</div>
+										<div style="float: right;">
+											<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
+												style="width: 192px" placeholder="종료일"/>
+											<div>END</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<textarea class="infobox" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
+								</td>
+							</tr>
+						</table>
+						<div style="text-align: center;">
+							<button class="writeBtn">저장</button>
+							<button class="writeClose">Close</button>
+						</div>
+					</div>
+				</form>
 				</div>
 			</div>
 		</div>
-		
-		<!-- 스케줄등록모델 -->
-		<!-- style="display: none;" -->
-		<div id="writeModal" class="msgbox" style="display: none;">
-		<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
-		<form id="frm">
-			<div class="head">
-				<span>등록 폼</span>
-		    </div>
-			<div class="body">
-				<input type="hidden" name="memNo" id="memNo" value="1">
-				<input type="hidden" name="scheduleNo" value="1">
-				<table>
-					<tr>
-						<td>
-							<select title="타입선" id="place" name="place" style="height: 28px;">
-								<option value="1">업무관련</option>
-								<option value="2">기타</option>
-								<option value="3">휴가/연차</option>
-								<option value="4">유연근무</option>
-							</select>
-							<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="schedulePicker">
-								<div style="float: left;">
-									<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
-										style="width: 192px" placeholder="시작일"/>
-									<div>STRAT</div>
-								</div>
-								<div style="float: right;">
-									<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
-										style="width: 192px" placeholder="종료일"/>
-									<div>END</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<textarea class="infobox" name="content" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
-						</td>
-					</tr>
-				</table>
-				<div style="text-align: center;">
-					<button class="writeBtn">저장</button>
-					<button class="writeClose">Close</button>
-				</div>
-			</div>
-		</form>
-		</div>
-		
-		
+	</div>
 <%@include file="../inc/bottom.jsp" %>
