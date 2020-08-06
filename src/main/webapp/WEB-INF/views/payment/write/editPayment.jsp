@@ -10,19 +10,7 @@
 <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <style type="text/css">
-#editupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#editupperDiv p{padding-top: 5px;padding-left: 5px;}
-#editwholeDiv{padding-left: 20px;padding-right: 20px;height:fit-content;}
-#editlabel1 {position: relative;top: 31px;}#editdocNo {position: relative;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
-#editlabel2 {top: -38px;left: 310px;position: relative;}#editkeep {position: relative;top: -69px;left: 400px;width: 200px;}
-#editlabel3 {position: relative;top: -58px;}#editdepartment {position: relative;top: -88px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
-#editlabel4 {position: relative;top: -126px;left: 310px;}#editname {position: relative;top: -157px;left: 390px;width: 200px;margin: 0px 0px 10px 10px;}
-#editlabel5 {position: relative;top: -155px;}#editwriteDay {position: relative;top: -187px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}
-#editlabel6 {position: relative;top: -181px;}#edittitle {width: 92%;position: relative;top: -215px;left: 79px;}
-#editlabel7 {position: relative;top: -201px;}#editformNo {width: 200px;position: relative;top: -233px;left: 80px;}
-#editlabel8 {position: relative;top: -193px;}#editupfile {position: relative;top: -225px;left: 67px;width: 93%;}
-#editdocForm {position: relative;top: -209px;}#editsendBt {position: relative;top: -262px;right: -82%;}
-#editsaveBt {position: relative;top: -262px;right: -82%;}#edittypeNo {position: relative;top: -228px;right: -60%;width:200px;}.note-editor {position: relative;top: -220px;}
+	#editupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#editupperDiv p{padding-top: 5px;padding-left: 5px;}#editwholeDiv{padding-left: 20px;padding-right: 20px;height:fit-content;}#editlabel1 {position: relative;top: 31px;}#editdocNo {position: relative;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}#editlabel2 {top: -38px;left: 310px;position: relative;}#editkeep {position: relative;top: -69px;left: 400px;width: 200px;}#editlabel3 {position: relative;top: -58px;}#editdepartment {position: relative;top: -88px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}#editlabel4 {position: relative;top: -126px;left: 310px;}#editname {position: relative;top: -157px;left: 390px;width: 200px;margin: 0px 0px 10px 10px;}#editlabel5 {position: relative;top: -155px;}#editwriteDay {position: relative;top: -187px;left: 70px;width: 200px;margin: 0px 0px 10px 10px;}#editlabel6 {position: relative;top: -181px;}#edittitle {width: 92%;position: relative;top: -215px;left: 79px;}#editlabel7 {position: relative;top: -201px;}#editformNo {width: 200px;position: relative;top: -233px;left: 80px;}#editlabel8 {position: relative;top: -193px;}#editupfile {position: relative;top: -225px;left: 67px;width: 93%;}#editdocForm {position: relative;top: -209px;}#editsendBt {position: relative;top: -262px;right: -82%;}#editsaveBt {position: relative;top: -262px;right: -82%;}#edittypeNo {position: relative;top: -228px;right: -60%;width:200px;}.note-editor {position: relative;top: -220px;}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -51,7 +39,7 @@
 				style="height: fit-content; width: 99%; padding: 10px 0px 10px 0px;">
 				<div id="editwholeDiv">
 					<div id="editupperDiv">
-						<p>기안 작성하기</p>
+						<p>기안 이어쓰기</p>
 					</div>
 					<form name="editpayInfoFrm" method="post" style="color: black;" enctype="multipart/form-data">
 						<label for="docNo" id="editlabel1">문서 번호</label> 
@@ -109,7 +97,24 @@
 							</c:forEach>
 							<!-- 반복끝 -->
 						</select>
-						<c:import url="/payment/summer.do"></c:import>
+						<!-- include libraries(jQuery, bootstrap) -->
+						<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+						<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> -->
+						<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+						<!-- include summernote css/js-->
+						<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+						
+						<textarea id="summernote" name="content">${payVo.content}</textarea>
+						<script>
+						$('#summernote').summernote({
+						    minHeight: 370,
+						    maxHeight: 600,
+						    focus: true, 
+						    lang : 'ko-KR'
+						});
+						</script>
+
 						<label for="upfile" id="editlabel8">첨부파일</label> 
 							<input type="file" class="form-control" id="editupfile" name="upfile">
 							<c:if test="${!empty fileVo.originalFileName }">

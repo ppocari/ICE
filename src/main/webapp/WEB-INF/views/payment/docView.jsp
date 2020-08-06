@@ -13,6 +13,21 @@
 <style type="text/css">
 	body{overflow: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docTable{text-align: center;height: 790px;}#docType{font-size: 1.5em;font-weight: 600;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}
 </style>
+<script type="text/javascript">
+	$(function(){
+		$('form[name=confirmFrm]').submit(function(){
+			if($('#comment').val().length<1){
+				alert("의견을 작성해주세요!");
+				event.preventDefault();
+				$('#comment').focus();
+			}else if($('#signfile').val().length<1){
+				alert("서명을 등록해주세요!");
+				event.preventDefault();
+				$('#signfile').focus();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 <div id="bigDiv">
@@ -43,7 +58,13 @@
 				<td rowspan="2">기안자</td>
 					<td rowspan="2">${payVo.name }</td>
 				<c:forEach var="vo" items="${plList }">
-					<td>${vo.payDate }</td>
+					<td>${vo.payDate }<br>
+						<c:forEach var="comVo" items="${signList }">
+							<c:if test="${!empty vo.payDate }">
+								<img alt="서명" src="<c:url value='/sign_file/${comVo.signName }'/>">
+							</c:if>
+						</c:forEach>
+					</td>
 				</c:forEach>
 			</tr>
 			<tr height="10">
@@ -79,7 +100,7 @@
 		<form class="form-inline" name="confirmFrm" method="post" enctype="multipart/form-data">
 			<div class="form-group" id="commentDiv">&nbsp;
 				의견&nbsp;<input type="text" id="comment" name="content" class="form-control">&nbsp;
-				서명 첨부&nbsp;<input type="file" class="form-control" name="upfile">
+				서명 첨부&nbsp;<input type="file" class="form-control" name="upfile" id="signfile">
 				<input type="hidden" name="docNo" value="${payVo.docNo }">
 			</div>
 			<button type="submit" class="btn btn-default" id="cancelBt"

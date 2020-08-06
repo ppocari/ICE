@@ -1,5 +1,6 @@
 package com.will.ice.payment.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class PaymentServiceImpl implements PaymentService{
 			logger.info("isFile={}",isf);
 		}
 		
-		for(int i=0; i<memList.length; i++) {
+		for(int i=memList.length-1; i>-1; i--) {
 			pldVo.setGetmemNo(memList[i]);
 			cnt += paymentDao.insertPayline(pldVo);
 		}
@@ -112,7 +113,7 @@ public class PaymentServiceImpl implements PaymentService{
 			logger.info("isFile={}",isf);
 		}
 		
-		for(int i=0; i<memList.length; i++) {
+		for(int i=memList.length-1; i>-1; i--) {
 			pldVo.setGetmemNo(memList[i]);
 			cnt += paymentDao.insertPayline(pldVo);
 		}
@@ -191,18 +192,54 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo) {
-		return paymentDao.selectUndecided(paysearchVo);
+	public List<PaylistViewVO> selectUndecided2(PaymentSearchVO paysearchVo,List<Integer> docNolist) {
+		int docNo=0;
+		List<PaylistViewVO> list = new ArrayList<PaylistViewVO>();
+		
+		for(int i=0; i<docNolist.size(); i++) {
+			docNo = docNolist.get(i);
+			paysearchVo.setDocNo(docNo);
+			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
+			if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+				list.add(vo);
+			}
+		}
+		
+		return list;
 	}
 
 	@Override
 	public int insertComment(PaycommentVO comVo) {
-		return paymentDao.insertComment(comVo);
+		paymentDao.updatePaydate(comVo);
+		int cnt = paymentDao.insertComment(comVo);
+		
+		PaymentviewVO vo = new PaymentviewVO();
+		vo.setDocNo(comVo.getDocNo());
+		vo.setMemNo(comVo.getMemNo());
+		if(paymentDao.countPayline(comVo.getDocNo())>0) {
+			vo.setProgress("결재진행중");
+		}else {
+			vo.setProgress("기결");
+		}
+		
+		paymentDao.updateProgress(vo);
+		
+		return cnt;
 	}
 
 	@Override
-	public int updateStatus(String progress) {
-		return paymentDao.updateStatus(progress);
+	public List<Integer> docNolist() {
+		return paymentDao.docNolist();
+	}
+
+	@Override
+	public int updateRead(PaylineVO plVo) {
+		return paymentDao.updateRead(plVo);
+	}
+
+	@Override
+	public List<PaycommentVO> selectSign(int docNo) {
+		return paymentDao.selectSign(docNo);
 	}
 
 }

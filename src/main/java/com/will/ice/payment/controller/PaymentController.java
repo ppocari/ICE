@@ -29,6 +29,7 @@ import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
@@ -268,12 +269,14 @@ public class PaymentController {
 		//작성자가 확인하는 문서보기
 		logger.info("문서 상세보기, 파라미터 docNo={}",docNo);
 		
+		List<PaycommentVO> signList = paymentService.selectSign(docNo);
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
 		List<DocumentviewVO> plList = paymentService.selectPayLine(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
 		PaymentfileVO fileVo = paymentService.getFile(docNo);
 		logger.info("첨부파일 fileVo={}",fileVo);
 		
+		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("plList",plList);
