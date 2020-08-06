@@ -54,7 +54,7 @@ public class LoginController {
 			session.setAttribute("identNum", identNum);
 			session.setAttribute("posCode", memVo.getPosCode());
 			session.setAttribute("userName", memVo.getName());
-			session.setAttribute("MemNo", memVo.getMemNo());
+			session.setAttribute("memImg", memVo.getOriginalFileName());
 
 			//쿠키에 저장
 			if(rememCheck!=null) {  //아이디 저장에 체크한 경우

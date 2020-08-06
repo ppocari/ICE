@@ -44,4 +44,19 @@ public class NoticeServiceImpl implements NoticeService{
 	public int updateBoard(int noticeNo) {
 		return noticeDao.updateBoard(noticeNo);
 	}
+
+	@Override
+	public NoticeVO selectByNo(int NOTI_NO) {
+		return noticeDao.selectByNo(NOTI_NO);
+	}
+
+	@Override
+	public int deleteBoard(int NOTI_NO) {
+		return noticeDao.deleteBoard(NOTI_NO);
+	}
+
+	@Override
+	public int updateBoard(int NOTI_NO) {
+		return noticeDao.updateBoard(NOTI_NO);
+	}
 }
