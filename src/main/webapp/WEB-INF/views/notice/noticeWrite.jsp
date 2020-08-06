@@ -32,10 +32,17 @@
 	
 $(function(){
 	$('#NOTI_MAIN').click(function(){
-		alert('체크됨!');
+		alert('공지사항 메인 노출여부가 체크되었습니다.');
 		
 	});
-
+	
+	$('form[name=frmWrite]').submit(function(){
+		if($('#NOTI_TITLE').val()==''){
+			alert('제목을 입력하세요');
+			$('#NOTI_TITLE').focus();
+			event.preventDefault();
+		}
+	});
 	
 	/*
 	$('#nList').click(function(){
@@ -50,8 +57,7 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-
-
+	*/
 });
 	
 	
@@ -64,10 +70,6 @@ $(function(){
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">공지사항 작성</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -79,23 +81,12 @@ $(function(){
 			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"  
-					action="<c:url value='/notice/noticeWrite.do'/>"
-					enctype="multipart/form-data">
+					action="<c:url value='/notice/noticeWrite.do'/>">
+					<!-- enctype="multipart/form-data" -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<tr>
-							<th>
-								<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
-							</th>
-							<td>
-								<a href="<c:url value='/notice/noticeList.do'/>">
-									<div>
-										<button type="button" class="btn btn-info"
-										 >공지사항 목록</button>
-									</div>
-								</a>
-							</td>
-						</tr>
-						
+						<a href="<c:url value='/notice/noticeList.do'/>">
+							<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+						</a>
 					</div>
 					
 					<!-- 분류 -->
@@ -104,7 +95,7 @@ $(function(){
 						<tr>
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
-							<td style="width:80%; weight:100px;">
+							<td style="width:80%; weight:100px; width:500px;">
 								<select name="NOTI_CATEGORY" class="form-control">
 									<option value="전체">전체</option>
 									<option value="경영">경영</option>
@@ -112,9 +103,8 @@ $(function(){
 									<option value="영업">영업</option>
 									<option value="경리">경리</option>
 								</select> 
-
-								<input type="checkbox" name="NOTI_MAIN" id="NOTI_MAIN" value="1"> 
-
+								<input type="checkbox" name="NOTI_MAIN" id="NOTI_MAIN"
+								 	value="Y"> 
 								<span>메인 공지사항 등록</span>
 							</td>
 						</tr>
@@ -129,10 +119,9 @@ $(function(){
 								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width:80%;">
-									<input type="text" 
-									class="form-control" 
-									name="NOTI_TITLE" id="NOTI_TITLE">
+								<td style="width:80%; width:500px;">
+									<input type="text" class="form-control" 
+									name="NOTI_TITLE" id="NOTI_TITLE" style="width:300px; font-size:14px;">
 								</td>
 							</tr>
 						</table>
@@ -148,7 +137,8 @@ $(function(){
 								</td>
 								<td style="width:80%;">
 									<input type="file"
-									id="NOTI_FILENAME" name="NOTI_FILENAME" /> <span>(최대 2M)</span>
+									id="NOTI_FILENAME" name="NOTI_FILENAME" /> 
+									<br><span>(최대 2M)</span>
 								</td>
 							</tr>
 						</table>
@@ -170,9 +160,11 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control btList" value="등록"/>
+						<input type = "submit" class="form-control btList" value="등록"
+							style="width: 52px; font-size: 13px;"/>
             			<a href="<c:url value='/notice/noticeList.do'/>">
-            				<input type = "Button" class="form-control btList" id="nList"value="글목록"  />
+            				<input type = "Button" class="form-control btList" id="nList"
+            					value="글목록" style="width: 60px; font-size: 13px;"/>
             			</a>
 					</div>
 				</form>

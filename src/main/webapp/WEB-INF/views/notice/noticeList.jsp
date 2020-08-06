@@ -88,30 +88,12 @@
 									<!-- 게시판 내용 반복문시작 -->							
 									<c:forEach var="vo" items="${ list }">
 										<tr class="align_center">
-											<td>${vo.NOTI_CATEGORY}</td>
-											<td class="align_left">
-												
-												<!-- 조회수 올리기 -->
-												<%-- /notice/noticeCountUpdate.do?no=${vo.no} --%>
-												<a href 
-									="<c:url value="#"/>">
-													<!-- 제목보여주기 길면 일부 -->
-													<c:if test="${fn:length(vo.NOTI_TITLE)>30 }">
-														${fn:substring(vo.NOTI_TITLE, 0, 30)} ...
-													</c:if>
-													<c:if test="${fn:length(vo.NOTI_TITLE)<=30 }">
-														${vo.NOTI_TITLE}
-													</c:if>
-												</a>
-												
-												<!-- 24시간 공지사항  new 이미지-->
-												<c:if test="">
-													<img>
-												</c:if>
-											</td>
-											<td><fmt:formatDate value="${vo.NOTI_REGDATE}"
-												pattern="yyyy-MM-dd"/> </td>
-											<td>${vo.NOTI_READCOUNT}</td>
+											<td>${vo.NOTI_NO}</td>
+											<td>${vo.MEMNO}</td>
+											<td>${vo.NOTI_CONTENT}</td>
+											<td>${vo.NOTI_REGDATE}</td>
+											<td>${vo.NOTI_TITLE}</td>
+											
 										</tr>
 									</c:forEach>
 								</tbody>

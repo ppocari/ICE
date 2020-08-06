@@ -9,4 +9,7 @@ public interface NoticeDAO {
 	public List<NoticeVO> selectAll(SearchVO searchVo);
 	public int selectTotalRecord(SearchVO searchVo);
 	public int updateReadCount(int NOTI_NO);
+	public NoticeVO selectByNo(int NOTI_NO);
+	public int deleteBoard(int NOTI_NO);
+	public int updateBoard(int NOTI_NO);
 	}

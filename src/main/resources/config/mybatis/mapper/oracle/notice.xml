@@ -8,16 +8,15 @@
 			select notice_seq.nextval from dual
 		</selectKey>
 		
-		insert into notice(NOTI_NO, NOTI_TITLE, MEMNO, NOTI_CONTENT, 
-			NOTI_FILENAME, NOTI_FILESIZE, NOTI_ORFILENAME, 
-			NOTI_CATEGORY, NOTI_MAIN)
-		values(#{NOTI_NO}, #{NOTI_TITLE}, #{MEMNO}, #{NOTI_CONTENT}, 
-			#{NOTI_FILENAME}, #{NOTI_FILESIZE}, #{NOTI_ORFILENAME}, 
-			#{NOTI_CATEGORY}, #{NOTI_MAIN})
+		insert into notice(NOTI_NO, NOTI_TITLE, MEMNO, NOTI_CONTENT, NOTI_CATEGORY)
+		values(#{NOTI_NO}, #{NOTI_TITLE}, #{MEMNO}, #{NOTI_CONTENT}, #{NOTI_CATEGORY})
 	</insert>
 	
 	<select id="selectAll" resultType="NoticeVO" parameterType="searchVo">
-		select *
+		select * from notice
+		where noti_no = 21
+		
+		<!-- select *
 		from
 		(
 		    select rownum as RNUM, A.*
@@ -27,16 +26,16 @@
 			    NOTI_FILESIZE, NOTI_ORFILENAME, NOTI_DOWNCOUNT,
 			    (sysdate-NOTI_REGDATE)*24 as newImgTerm 
 			    from notice
-		       <!--  <if test="searchKeyword!=null and searchKeyword !=''">
+		        <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
-		        </if> -->
+		        </if>
 		        order by NOTI_NO desc
 		    )A    
 		)
 		<![CDATA[ 
 		where RNUM>#{firstRecordIndex}
-		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]> -->
 	</select>
 	
 	<select id="selectTotalRecord" parameterType="searchVo"
