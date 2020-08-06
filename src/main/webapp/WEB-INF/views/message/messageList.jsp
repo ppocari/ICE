@@ -39,10 +39,6 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">쪽지함</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -80,24 +76,27 @@
 							</div> --%>
 							<div class="search" style="margin-right: 20px; text-align:right;">
 								<label for="hiredate1" style="margin-right: 20px;"></label>
-								<select class="form-control" style="weight:50px;">
+								<select class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
 								 	 <option>내용</option>
 									 <option>보낸사람</option>
 								</select>
 								<input type="text" class="form-control" 
-									placeholder="검색어를 입력...">
+									placeholder="검색어를 입력하세요" style=" width: 180px; 
+										height: 30px; font-size: 13px; display: inline-block;">
 								<button type="button" class="btn btn-primary btn-sm">검색</button>
 								
 							</div>
 						</div>
 						
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+						style="padding-right: 1385px;">
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">삭제</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">보관</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">답장</button>
 						<a href="<c:url value='/message/messageWrite.do'/>">
 							<div>
-								<button type="button"  style="float: right;" class="btn btn-info"
+								<button type="button"  style="float: right; font-size:13px;" class="btn btn-info"
 								 >쪽지작성</button>
 							</div>
 						</a>

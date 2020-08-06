@@ -22,14 +22,16 @@ function popup(){
 <div class="container-fluid">
 
 	<div class="header">
-		<div style="font-size:14px">
+		<div>
 			쪽지쓰기
 		</div>
 		<hr>
-		<div class="write_btn" style="display: block; font-size:12px">
+		<div class="write_btn" >
 			<div class="buttonSet">
-				<button type="submit" class="btn btn-primary btn-xs">보내기</button>
-				<button type="button" class="btn btn-primary btn-xs">취소</button>
+				<button type="submit" class="btn btn-primary btn-xs" 
+					style="font-size:height: 30px; font-size: 13px;">보내기</button>
+				<button type="button" class="btn btn-primary btn-xs"
+					style="font-size:height: 30px; font-size: 13px;">취소</button>
 			</div>
 		</div>
 		<hr>

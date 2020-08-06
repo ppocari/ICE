@@ -26,7 +26,22 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectTotalRecord(searchVo);
 	}
 	
-	public int updateReadCount(int NOTI_NO) {
-		return noticeDao.updateReadCount(NOTI_NO);
+	public int updateReadCount(int noticeNo) {
+		return noticeDao.updateReadCount(noticeNo);
+	}
+
+	@Override
+	public NoticeVO selectByNo(int noticeNo) {
+		return noticeDao.selectByNo(noticeNo);
+	}
+
+	@Override
+	public int deleteBoard(int noticeNo) {
+		return noticeDao.deleteBoard(noticeNo);
+	}
+
+	@Override
+	public int updateBoard(int noticeNo) {
+		return noticeDao.updateBoard(noticeNo);
 	}
 }

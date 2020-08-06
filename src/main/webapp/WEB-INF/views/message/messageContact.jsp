@@ -21,7 +21,8 @@ $(function(){
 <body>
 
 <div class="container-fluid">
-	<div id="main" style="font-size:13px;">
+	
+	<div id="main" style="font-size:13px;"class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		
 		
 	<form name="frmContact" method="post"  
@@ -29,13 +30,13 @@ $(function(){
 		<table  width="90%" cellpadding="5" cellspacing="0" border="1" align="center" 
 			style="width:700px; height: 500px; border-collapse:collapse; 
 			border:1px gray solid; table-layout: fixed;" class="table table-bordered">
-			<tr>
+			<tr class="fixed_top">
 				<td colspan="3">쪽지 주소록
 				
 				</td>
 			</tr>
-			<tr>
-				<td rowspan="3">부서별
+			<tr class="fixed_top">
+				<td rowspan="3" style="vertical-align:top;">부서별
 					<div id="leftBottom">
 						<ul>
 							<li>
@@ -59,9 +60,9 @@ $(function(){
 				
 				</td>
 				
-				<td>
+				<td style="vertical-align:top;">
 					<div id="centerBottom">
-						<h3>이름으로찾기</h3>
+						이름으로찾기
 						<div class="divSearch">
 						   	<form name="frmSearch" method="post" 
 						   		action='<c:url value="/message/messageContact.do"/>'>
@@ -91,19 +92,21 @@ $(function(){
 				
 				</td>
 				
-				<td rowspan="3">
-					<h3>받는 사람
-						<em class="cnt">8</em>
-						 / 10
-					</h3>
+				<td rowspan="3" style="vertical-align:top;">
+					받는 사람
+					<em class="cnt">8</em>
+					 / 10
+					
 					<div>
 						<ul>
-							<li></li>
+							<li>
+								
+							</li>
 						</ul>
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<tr class="fixed_top">
 				<td>
 					<ul>
 						

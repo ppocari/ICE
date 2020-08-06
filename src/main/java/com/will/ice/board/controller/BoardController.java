@@ -55,10 +55,10 @@ public class BoardController {
 		
 		
 		List<BoardVO> list = boardService.selectAll(searchVo);
-		logger.info("글 목록 결과, list.size=", list.size());
+		logger.info("글 목록 결과, list.size={}", list.size());
 		
 		int totalRecord=boardService.selectTotalRecord(searchVo);
-		logger.info("글 목록, 전체 레코드 개수 : ", totalRecord);
+		logger.info("글 목록, 전체 레코드 개수 ={}", totalRecord);
 		
 		pagingInfo.setTotalRecord(totalRecord);
 		
@@ -84,13 +84,13 @@ public class BoardController {
 		if(boardVo.getFilePath()==null || boardVo.getFilePath().isEmpty()) {
 			boardVo.setFilePath("");
 		}
+		
 		//메인여부 체크안할시 N
-		if(boardVo.getIsMain()==null || boardVo.getFilePath().isEmpty()) {
+		if(boardVo.getIsMain()==null || boardVo.getIsMain().isEmpty()) {
 			boardVo.setIsMain("N");
 		}
+		
 		logger.info("사내게시판 등록, 파라미터 boardVo={}", boardVo, memNo);
-		
-		
 		
 		int cnt=boardService.insertBoard(boardVo);
 		logger.info("사내게시판 등록 결과, cnt={}", cnt);
