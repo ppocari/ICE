@@ -93,8 +93,8 @@
 				<p style="margin: 0; height: 50px;">일정수정</p>
 		    </div>
 			<div class="body">
-				<input type="text" name="memNo" value="${memNo}">
-				<input type="text" name="schNo" value="${schNo}">
+				<input type="hidden" name="memNo" value="${memNo}">
+				<input type="hidden" name="schNo" value="${schNo}">
 				<div class="form-group">
 				    <label>시작일 :</label>
 			    	<input type="text" name="startDay" id="startDay" class="form-control" value="${startDay}">

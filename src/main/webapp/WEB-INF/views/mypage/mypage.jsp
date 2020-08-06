@@ -118,6 +118,13 @@
 	#pwd1, #pwd2{
 		max-width: 30%;
 	}
+	
+	#b,#c{
+		float: left;
+	}
+	#a_a,#a_b,#a_c{
+		float: left;
+	}
 
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
@@ -208,50 +215,55 @@
 						<div class="card shadow mb-4">
 							<form name="mypageFrm" method="post" enctype="multipart/form-data"
 								action="<c:url value='/mypage/mypage.do'/>">
-								
-									<div class="noimg1">
-										<c:if test="${empty vo.proFileURL}">
-											<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
-										</c:if>
-										
-										<c:if test="${!empty vo.proFileURL}">
-											<img alt="" src="<c:url value='/pd_images/${vo.proFileURL}'/>">
-										</c:if>
-									</div>
-									<div class="imgbt">
-										<p>*120 X 150</p>
-										<input type="file" value="사진변경" name="imgUP" class="img_ch">
-									</div>
 								<div id="a">
-									<div class="form-group">
-										사원번호 <input type="text" class="form-control" id="memNo"
-											name="memNo" value="${vo.memNo}" readonly>
+									<div id="a_a">
+										<div class="noimg1">
+											<c:if test="${empty vo.proFileURL}">
+												<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
+											</c:if>
+											
+											<c:if test="${!empty vo.proFileURL}">
+												<img alt="" src="<c:url value='/pd_images/${vo.proFileURL}'/>">
+											</c:if>
+										</div>
+										<div class="imgbt">
+											<p>*120 X 150</p>
+											<input type="file" value="사진변경" name="imgUP" class="img_ch">
+										</div>
 									</div>
-									<div class="form-group">
-										부서코드 <input type="text" class="form-control" id="deptCode"
-											name="deptCode" value="${vo.deptCode}" readonly>
+									<div id="a_b">
+										<div class="form-group" id="memNo">
+											사원번호 <input type="text" class="form-control" id="memNo"
+												name="memNo" value="${vo.memNo}" readonly style="width: 100px;">
+										</div>
+										<div class="form-group" id="deptCode">
+											부서코드 <input type="text" class="form-control" id="deptCode"
+												name="deptCode" value="${vo.deptCode}" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											직급코드 <input type="text" class="form-control" id="posCode"
+												name="posCode" value="${vo.posCode}" readonly style="width: 100px;">
+										</div>
 									</div>
-									<div class="form-group">
-										직급코드 <input type="text" class="form-control" id="posCode"
-											name="posCode" value="${vo.posCode}" readonly>
-									</div>
-									<div class="form-group">
-										부서 <input type="text" class="form-control" value="${vo.dname }"
-											name="dname" readonly>
-									</div>
-									<div class="form-group">
-										직책 <input type="text" class="form-control" value="${vo.pname }"
-											name="pname" readonly>
+									<div id="a_c">
+										<div class="form-group">
+											부서 <input type="text" class="form-control" value="${vo.deptName }"
+												name="dname" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											직책 <input type="text" class="form-control" value="${vo.posName }"
+												name="pname" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											연봉 <input type="text" class="form-control" id="salary" readonly
+												name="salary" value="${vo.salary }" style="width: 100px;">
+										</div>
 									</div>
 								</div>
 								<div id="b">
 									<div class="form-group">
 										이름 <input type="text" class="form-control" id="name" name="name"
 											value="${vo.name }">
-									</div>
-									<div class="form-group">
-										연봉 <input type="text" class="form-control" id="salary" readonly
-											name="salary" value="${vo.salary }">
 									</div>
 									<div class="form-group">
 										패스워드 <input type="password" class="form-control" id="pwd1"
@@ -309,12 +321,14 @@
 										주소
 										<div id="divZip">
 											<input type="text" name="zipcode" class="form-control"
-												id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호">
+												id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호"
+												style="width: 100px;">
 										</div>
 										<input type="Button" value="우편번호 찾기" id="btZipcode" title="새창열림">
 										<div id="divZip">
 											<input type="text" name="addr" class="form-control"
-												id="addrInput" value="${vo.addr}" ReadOnly title="주소">
+												id="addrInput" value="${vo.addr}" ReadOnly title="주소"
+												style="width: 2650px;">
 										</div>
 										<div id="divZip">
 											<input type="text" name="addrDetail" class="form-control"
