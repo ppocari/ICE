@@ -31,7 +31,12 @@ public interface PaymentDAO {
 	int updateFile(PaymentfileVO fileVo);
 	
 	/* 결재함 */
-	List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo);
+	PaylistViewVO selectUndecided(PaymentSearchVO paysearchVo);
 	int insertComment(PaycommentVO comVo);
-	int updateStatus(String progress);
+	int updatePaydate(PaycommentVO comVo);
+	int countPayline(int docNo);
+	List<Integer> docNolist();
+	int updateRead(PaylineVO plVo);
+	int updateProgress(PaymentviewVO vo);
+	List<PaycommentVO> selectSign(int docNo);
 }

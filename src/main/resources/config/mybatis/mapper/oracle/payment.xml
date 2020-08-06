@@ -150,28 +150,36 @@
 		where docNo=#{docNo}
 	</update>
 	
-	<select id="selectUndecided" parameterType="paymentSearchVo" resultType="paymentViewVo">
-		select * from PAYLISTVIEW
-		<where>
-			GMEMNO=#{identNum} 
-			and PAYDATE is null
-			<if test="searchKeyword!=null and searchKeyword!=''">
-				and title=#{searchKeyword}
-			</if>
-			<if test="searchCondition!=null and searchCondition!=''">
-				and typeNo=#{searchCondition}
-			</if>
-			<if test="startDay!=null and startDay!=''">
-				and to_date(writedate)>=to_date(#{startDay})
-			</if>
-			<if test="endDay!=null and endDay!=''">
-				<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
-			</if>
-			<![CDATA[
-				and sysdate < expirydate+1
-				order by docNo desc
-			]]>
-		</where>
+	<select id="selectUndecided" parameterType="paymentSearchVo" resultType="paylistViewVO">
+		select * from (
+			select * from PAYLISTVIEW
+			<where>
+				docNo=#{docNo}
+				and PAYDATE is null
+				<if test="searchKeyword!=null and searchKeyword!=''">
+					and title=#{searchKeyword}
+				</if>
+				<if test="searchCondition!=null and searchCondition!=''">
+					and typeNo=#{searchCondition}
+				</if>
+				<if test="startDay!=null and startDay!=''">
+					and to_date(writedate)>=to_date(#{startDay})
+				</if>
+				<if test="endDay!=null and endDay!=''">
+					<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
+				</if>
+				<![CDATA[
+					and sysdate < expirydate+1
+					order by gmemNo
+				]]>
+			</where>
+		)
+		where rownum=1
+	</select>
+	
+	<select id="docNolist" resultType="int">
+		select distinct docNo from paymentline
+		where paydate is null
 	</select>
 	
 	<insert id="insertComment" parameterType="paycommentVo">
@@ -182,10 +190,34 @@
 		values(#{commentNo},#{memNo},#{content},#{docNo},#{signName},#{originalSignName})
 	</insert>
 	
-	<update id="updateStatus" parameterType="String">
+	<update id="updatePaydate" parameterType="paycommentVo">
+		update PAYMENTLINE
+		set PAYDATE=sysdate
+		where docNo=#{docNo} and memNo=#{memNo}
+	</update>
+	
+	<update id="updateRead" parameterType="paylineVo">
+		update paymentline
+		set read='Y'
+		where docNo=#{docNo} and memNo=#{memNo}
+	</update>
+	
+	<select id="countPayline" parameterType="int" resultType="int">
+		select count(*) from PAYMENTLINE
+		where PAYDATE is null
+		and docNo=#{docNo}
+	</select>
+	
+	<update id="updateProgress" parameterType="paymentviewVo">
 		update payment
 		set PROGRESS=#{progress}
+		where docNo=#{docNo}
 	</update>
+	
+	<select id="selectSign" parameterType="int" resultType="paycommentVo">
+		select * from paycomment
+		where docNo=#{docNo}
+	</select>
 </mapper>
 
 

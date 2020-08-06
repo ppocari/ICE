@@ -25,6 +25,7 @@
 		$("#datetimepicker2").on("change.datetimepicker", function(e) {
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
+		
 	});
 </script>
 <!-- Page Heading -->
@@ -105,9 +106,9 @@
 		<tbody>
 		<!-- 반복 시작 -->
 				<c:forEach var="vo" items="${list }">
-					<tr>
+					<tr onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
-							<a class="imsydocNoInfo" onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+							<a class="imsydocNoInfo">
 								${vo.docNo }
 							</a>
 						</td>

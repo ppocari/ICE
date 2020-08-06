@@ -42,8 +42,12 @@
 			<tr height="80">
 				<td rowspan="2">기안자</td>
 					<td rowspan="2">${payVo.name }</td>
-				<c:forEach var="vo" items="${plList }">
-					<td>${vo.payDate }</td>
+				<c:forEach var="i" begin="0" end="${plList.size() }">
+					<td>${plList.get(i).payDate}<br>
+						<c:if test="${signList.size()<=plList.size()}">
+							<img alt="서명" src="<c:url value='/sign_file/${signList.get(i).signName }'/>">
+						</c:if>
+					</td>
 				</c:forEach>
 			</tr>
 			<tr height="10">
