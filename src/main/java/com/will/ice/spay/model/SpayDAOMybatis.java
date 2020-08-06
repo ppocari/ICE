@@ -1,7 +1,6 @@
 package com.will.ice.spay.model;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,34 @@ public class SpayDAOMybatis implements SpayDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSpayView(int MEMNO) {
-		return sqlSession.selectList(namespace+"selectSpayView",MEMNO);
+	public List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo) {
+		return sqlSession.selectList(namespace+"selectSpayView", dateSearchVo);
 	}
 
 	@Override
-	public List<SpayVO> selectAll() {
-		return sqlSession.selectList(namespace+"selectAll");
+	public int selectTotalRecord(DateSearchVO dateSearchVo) {
+		return sqlSession.selectOne(namespace+"selectTotalRecord",dateSearchVo);
 	}
 
 	@Override
-	public int selectDay(DateSearchVO dateSearchVo) {
-		return sqlSession.selectOne(namespace+"selectDay",dateSearchVo);
+	public SpayVO searchAll(int ticno) {
+		return sqlSession.selectOne(namespace+"searchAll", ticno);
 	}
+
+	@Override
+	public int searchNum(int MEMNO) {
+		return sqlSession.selectOne(namespace+"searchNum", MEMNO);
+	}
+
+	@Override
+	public List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo) {
+		return sqlSession.selectList(namespace+"selectSpayViewAll", dateSearchVo);
+	}
+
+	@Override
+	public int selectTotalRecordAll(DateSearchVO dateSearchVo) {
+		return sqlSession.selectOne(namespace+"selectTotalRecordAll",dateSearchVo);
+	}
+
 
 }

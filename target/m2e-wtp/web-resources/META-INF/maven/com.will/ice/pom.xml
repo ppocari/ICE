@@ -129,6 +129,20 @@
 			<version>4.5.12</version>
 		</dependency>
 
+		<!-- poi excel 파일 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
 		<!-- commons lang으로 String을 처리 하기 위함 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -167,8 +181,7 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
-
+		
 		<!-- DataSource를 사용하기 위함 -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -193,26 +206,28 @@
 
 		<!-- 화면에서 ajax처리시 Map처리 가능 -->
 		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId> 
-			<version>1.9.13</version> </dependency> <dependency> <groupId>org.codehaus.jackson</groupId> 
-			<artifactId>jackson-mapper-asl</artifactId> <version>1.9.13</version> </dependency> -->
+			<version>1.9.13</version> </dependency> -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.9.0.pr4</version>
+		</dependency>
 
 		<!-- Jackson -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.7.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.7.5</version>
-		</dependency>
-
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId> 
+			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-core</artifactId> <version>2.7.5</version> </dependency> -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.7.5</version>
+			<version>2.9.10.5</version>
 		</dependency>
 
 		<!-- Commons FileUpload -->
@@ -251,7 +266,7 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.3</version>
+			<version>1.4.7</version>
 		</dependency>
 
 		<dependency>
@@ -259,8 +274,35 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-	</dependencies>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.3.4.RELEASE</version>
+		</dependency>
+	
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>3.2.3.RELEASE</version>
+		</dependency>
+		
+	</dependencies>
 	<repositories>
 		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url> 
 			</repository> <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> 

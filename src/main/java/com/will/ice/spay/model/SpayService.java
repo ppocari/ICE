@@ -8,7 +8,11 @@ import com.will.ice.common.DateSearchVO;
 public interface SpayService {
 
 	public int insertTic(SpayVO vo);
-	List<Map<String, Object>> selectSpayView(int MEMNO);
-	List<SpayVO> selectAll();
-	int selectDay(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo);
+	int selectTotalRecord(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo);
+	int selectTotalRecordAll(DateSearchVO dateSearchVo);
+	SpayVO searchAll(int ticno);
+	int searchNum(int MEMNO);
+	
 }

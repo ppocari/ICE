@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.address">
@@ -12,37 +12,37 @@
 		   	select * from v_address
             where memno=#{memNo}
             <!-- <if test='userId == "hong"'>  (O) -->
-		     	<if test='searchCondition == "kor"'> 
+		     	<if test='searchCondition == "kor"'>
 		     		<if test='searchKeyword == "하"'>
 		     		and name >= #{searchKeyword}
 		     		</if>
 		     		<if test='searchKeyword != "하"'>
-			     	<![CDATA[ 
+			     	<![CDATA[
 						and name >= #{searchKeyword} and name < #{nextKeyword}]]>
 		     		</if>
 		        </if>
-		      	<if test='searchCondition == "eng"'> 
-		      	<![CDATA[ 
+		      	<if test='searchCondition == "eng"'>
+		      	<![CDATA[
 					and name >= 'A' and name < 'Z'
 					or name >= 'a' and name < 'z']]>
-		        </if> 
-		       <if test='searchCondition == "num"'> 
-				<![CDATA[ 
+		        </if>
+		       <if test='searchCondition == "num"'>
+				<![CDATA[
 				and name >='0' and name <='9']]>
-		        </if> 
-		       <if test='searchCondition == "favorite"'> 
+		        </if>
+		       <if test='searchCondition == "favorite"'>
 			 	and isfavorite = 'yes'
-		        </if> 
+		        </if>
 		        <if  test='isTrash ==null or isTrash ==""'>
 		        and isDeleted is null
 		        </if>
 		        <if  test='isTrash !=null and isTrash !=""'>
 		        and isDeleted is not null
-		        </if> 
+		        </if>
 		    order by name
 		)A
 	)
-	<![CDATA[ 
+	<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
@@ -50,25 +50,25 @@
 		resultType="int">
 		select count(*) from v_address
 		where memno=#{memNo}
-       	<if test='searchCondition == "kor"'> 
+       	<if test='searchCondition == "kor"'>
      		<if test='searchKeyword == "하"'>
      		and name >= #{searchKeyword}
      		</if>
      		<if test='searchKeyword != "하"'>
-	     	<![CDATA[ 
+	     	<![CDATA[
 				and name >= #{searchKeyword} and name < #{nextKeyword}]]>
      		</if>
        	</if>
-      	<if test='searchCondition == "eng"'> 
-      	<![CDATA[ 
+      	<if test='searchCondition == "eng"'>
+      	<![CDATA[
 			and name >= 'A' and name < 'Z'
 			or name >= 'a' and name < 'z']]>
-        </if> 
-       <if test='searchCondition == "num"'> 
-		<![CDATA[ 
+        </if>
+       <if test='searchCondition == "num"'>
+		<![CDATA[
 		and name >='0' and name <='9']]>
-        </if> 
-      	<if test='searchCondition == "favorite"'> 
+        </if>
+      	<if test='searchCondition == "favorite"'>
 	 	and isfavorite = 'yes'
 	 	</if>
          <!-- 공백이나 null이면 일반 조회 -->
@@ -84,12 +84,12 @@
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
 		select m.*, d.deptname, p.posname from member m, department d, position p
 		where m.deptcode=d.deptcode
-		and m.poscode=p.poscode 
+		and m.poscode=p.poscode
 	</select>
 	<select id="selectDepartment" resultType="departmentVo">
 		select * from department order by deptcode
 	</select>
-	
+
 
 	<!-- <select id="selectCountAddressGroup" parameterType="string" resultType="int">
 		select count(*) from addressgroup
@@ -100,27 +100,27 @@
 	<select id="selectAddressGroup" resultType="addressGroupVo">
 		select * from addressgroup
 	</select>
-	
+
 	<insert id="insertAddress" parameterType="addressVo">
 		insert into address(adno, memno, name, hp1, hp2, hp3, email1, email2, adgno, company, deptname, posname, homeaddress, homepage, messenger, sns, memo)
 		values(adno_seq.nextval, #{memNo}, #{name}, #{hp1}, #{hp2}, #{hp3}, #{email1}, #{email2}, #{adgNo}, #{company}, #{deptName}, #{posName}, #{homeAddress}, #{homePage}, #{messenger}, #{SNS}, #{memo})
 	</insert>
-	
-	
+
+
 	<select id="selectOneAdderss" resultType="addressVo">
 		select * from v_address
 		where adno=#{adNo}
 	</select>
-	
+
 	<update id="updateAddress" parameterType="addressVo">
-		update address 
-		set name=#{name}, hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3}, email1=#{email1}, email2=#{email2}, 
-    	adgno=#{adgNo}, company=#{company}, deptname=#{deptName}, posname=#{posName}, 
+		update address
+		set name=#{name}, hp1=#{hp1}, hp2=#{hp2}, hp3=#{hp3}, email1=#{email1}, email2=#{email2},
+    	adgno=#{adgNo}, company=#{company}, deptname=#{deptName}, posname=#{posName},
     	homeaddress=#{homeAddress}, homepage=#{homePage}, messenger=#{messenger}, sns=#{SNS}, memo=#{memo}
 		where adNo=#{adNo}
 	</update>
-	
-	
+
+
 	<delete id="deleteAddress" parameterType="int">
 		delete from address
 		where adno=#{adNo}
@@ -135,25 +135,16 @@
 		set isDeleted = null
 		where adno=#{adNo}
 	</update>
-	
+
 	<!-- 좋아요 -->
 	<update id="updateIsFavorite" parameterType="int">
-		update address 
+		update address
 		set isfavorite='yes'
 		where adno=#{adNo}
 	</update>
 	<update id="updateNotFavorite" parameterType="int">
-		update address 
+		update address
 		set isfavorite = null
 		where adno=#{adNo}
 	</update>
 </mapper>
-
-
-
-
-
-
-
-
-
