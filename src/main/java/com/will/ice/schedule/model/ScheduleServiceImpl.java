@@ -18,5 +18,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public List<ScheduleVo> selectSchedule(String memNo) {
 		return Scheduledao.selectSchedule(memNo);
 	}
+
+	@Override
+	public ScheduleVo selectDetail(ScheduleVo vo) {
+		return Scheduledao.selectDetail(vo);
+	}
+
+	@Override
+	public ScheduleVo selectRownum(String memNo) {
+		return Scheduledao.selectRownum(memNo);
+	}
 	
 }

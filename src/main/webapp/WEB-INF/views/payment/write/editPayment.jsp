@@ -40,10 +40,6 @@
 			});
 		});
 	});
-	function imsy() {
-		$('form[name=editpayInfoFrm]').attr("action",
-				"<c:url value='/payment/write/imsyEdit.do?imsy=Y'/>")
-	}
 </script>
 </head>
 <body style="overflow-x: hidden">
@@ -57,15 +53,12 @@
 					<div id="editupperDiv">
 						<p>기안 작성하기</p>
 					</div>
-					<form name="editpayInfoFrm" method="post" style="color: black;"
-						enctype="multipart/form-data" action="<c:url value='/payment/write/editPaydoc.do'/>" >
+					<form name="editpayInfoFrm" method="post" style="color: black;" enctype="multipart/form-data">
 						<label for="docNo" id="editlabel1">문서 번호</label> 
 						<input type="text" class="form-control" id="editdocNo"
 							value="${payVo.docNo}" readonly="readonly"> 
 						<input type="hidden" name="docNo" value="${payVo.docNo}">
-						<input type="hidden" id="fileName" name="fileName" value="${fileVo.fileName }">
-						<input type="hidden" id="fileSize" name="fileSize" value="${fileVo.fileSize }">
-						<input type="hidden" id="originalFileName" name="originalFileName" value="${fileVo.originalFileName }">
+						<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName}">
 						<label for="keep" id="editlabel2">보존 기간</label> 
 						<select class="form-control" id="editkeep" name="keep">
 							<option value="12"
@@ -118,10 +111,17 @@
 						</select>
 						<c:import url="/payment/summer.do"></c:import>
 						<label for="upfile" id="editlabel8">첨부파일</label> 
-							<input type="file" class="form-control" id="editupfile">
+							<input type="file" class="form-control" id="editupfile" name="upfile">
+							<c:if test="${!empty fileVo.originalFileName }">
 							<span style="position: relative;top: -200px;">
 								새 파일을 등록하면 기존 <bold style="color:#4e73df;">${fileVo.originalFileName}</bold> 은(는) 삭제됩니다
 							</span>
+							</c:if>
+							<c:if test="${empty fileVo.originalFileName }">
+							<span style="position: relative;top: -200px;color:white;">
+								첨부된 파일이 없습니다.
+							</span>
+							</c:if>
 						<select class="form-control" id="edittypeNo" name="typeNo"
 							style="width: 200px;">
 							<!-- 반복 시작 -->
@@ -135,8 +135,9 @@
 							<!-- 반복 끝 -->
 						</select>
 						<button type="submit" class="btn btn-primary" id="editsaveBt"
-							onclick="imsy()">임시저장</button>
-						<button type="submit" class="btn btn-primary" id="editsendBt">결재상신</button>
+							formaction="<c:url value='/payment/write/imsyEdit.do'/>">임시저장</button>
+						<button type="submit" class="btn btn-primary" id="editsendBt"
+							formaction="<c:url value='/payment/write/editPaydoc.do'/>">결재상신</button>
 					</form>
 				</div>
 			</div>

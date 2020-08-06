@@ -22,7 +22,9 @@
 	width:150px;
 }
 
-
+.div{
+	font-size:13px;
+}
 </style>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -76,20 +78,10 @@ $(function(){
 					enctype="multipart/form-data">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<tr>
-							<th>
-								<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
-							</th>
-							<td>
-								<a href="<c:url value='/board/boardList.do'/>">
-									<div>
-										<button type="button" class="btn btn-info"
-										 >사내게시판 목록</button>
-									</div>
-								</a>
-							</td>
-						</tr>
-						
+						<a href="<c:url value='/board/boardList.do'/>">
+							<h6 class="m-0 font-weight-bold text-primary">
+							사내게시판</h6>
+						</a>
 					</div>
 					
 					<!-- 분류 -->
@@ -98,15 +90,15 @@ $(function(){
 						<tr>
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
-							<td style="width:80%; weight:100px;">
-								<select name="category" class="form-control">
+							<td style="width:80%; weight:100px; width:500px;">
+								<select name="category" class="form-control" style=>
 									<option value="전체">전체</option>
 									<option value="잡담">잡담</option>
 									<option value="동아리">동아리</option>
 								</select> 
-								<input type="checkbox" name="isMain" id="isMain"
+						<!-- 		<input type="checkbox" name="isMain" id="isMain"
 								 	value="Y"> 
-								<span>사내게시판 메인 등록</span>
+								<span>사내게시판 메인 등록</span> -->
 							</td>
 						</tr>
 						</table>
@@ -120,9 +112,9 @@ $(function(){
 								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width:80%;">
+								<td style="width:80%; width:500px;">
 									<input type="text" class="form-control" 
-									name="title" id="title">
+									name="title" id="title" style="width:300px; font-size:14px;">
 								</td>
 							</tr>
 						</table>
@@ -136,9 +128,9 @@ $(function(){
 								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">별명</h6>
 								</td>
-								<td style="width:80%;">
+								<td style="width:80%; width:500px;">
 									<input type="text" class="form-control" 
-									name="nickname" id="nickname">
+									name="nickname" id="nickname" style="width:300px; font-size:14px;">
 								</td>
 							</tr>
 						</table>
@@ -160,9 +152,11 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록"/>
+						<input type = "submit" class="form-control" value="등록" 
+							style="width: 52px; font-size: 13px;"/>
             			<a href="<c:url value='/board/boardList.do'/>">
-            				<input type = "Button" class="form-control btList" id="nList"value="글목록"  />
+            				<input type = "Button" class="form-control btList" id="nList"
+            					value="글목록" style="width: 60px; font-size: 13px;"/>
             			</a>
 					</div>
 				</form>

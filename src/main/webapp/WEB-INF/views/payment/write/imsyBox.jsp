@@ -8,19 +8,9 @@
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
-#imsydatefrm{padding-top: 10px;text-align: center;height:120px;}
-#imsydatefrm label, 
-#imsydatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}
-#imsysearchDateDiv,#imsypaylist{background-color: white;}
-#imsypaylist{margin-top: 20px;}
-#imsypayTable{width:100%;text-align: center;}
-#imsypayTable thead tr{background-color: gray;color:white;}
-#imsyupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#imsyupperDiv p{padding-top: 5px;padding-left: 5px;}
-#imsywholeDiv{padding-left: 20px;padding-right: 20px;}
-#imsypaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}
-.imsydocNoInfo{cursor: pointer;}
+	#imsydatefrm{text-align: center;height:120px;}#imsydatefrm label, #imsydatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}#imsypaylist{margin-top: 20px;}#imsypayTable{width:100%;text-align: center;}#imsypayTable thead tr{background-color: gray;color:white;}#imsyupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#imsyupperDiv p{padding-top: 5px;padding-left: 5px;}#imsywholeDiv{padding-left: 20px;padding-right: 20px;}#imsypaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}.imsydocNoInfo{cursor: pointer;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
 </style>
+
 <script type="text/javascript">
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
@@ -37,22 +27,25 @@
 		});
 	});
 </script>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800" style="padding-left: 1.5%;">임시보관함</h1>
+</div>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 10px 0px 10px 0px;">
-	<div id="imsywholeDiv">
-		<div id="imsyupperDiv">
-		<p>임시 보관함</p>
+	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 0px 0px 10px 0px;">
+	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+		<h6 class="m-0 font-weight-bold text-primary">임시보관 목록</h6>
 	</div>
-	<div class="form-group" id="imsysearchDateDiv">
+	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<form name="searchDateFrm" method="post" class="form-inline"
-				id="imsydatefrm" action="<c:url value='/payment/write/sentpayList.do' />">
+				id="imsydatefrm" action="<c:url value='/payment/write/imsyBox.do' />">
 				<div class="form-group">
 					<label for="startDay">작성일</label>
 					<div class="input-group date" id="datetimepicker1"
 						data-target-input="nearest">
-						<input type="text" class="form-control datetimepicker-input"
+						<input type="text" class="form-control datetimepicker-input" style="margin-left: 2%;"
 							data-target="datetimepicker1" id="datetimepicker1" name="startDay" value="${paysearchVo.startDay }">
 						<div class="input-group-append" data-target="#datetimepicker1"
 							data-toggle="datetimepicker">
@@ -65,7 +58,7 @@
 				<div class="form-group">
 					<div class="input-group date" id="datetimepicker2"
 						data-target-input="nearest">
-						<input type="text" class="form-control datetimepicker-input"
+						<input type="text" class="form-control datetimepicker-input" style="margin-left: 2%;"
 							data-target="datetimepicker2" id="datetimepicker2" name="endDay" value="${paysearchVo.endDay }">
 						<div class="input-group-append" data-target="#datetimepicker2"
 							data-toggle="datetimepicker">
@@ -95,7 +88,8 @@
 				</div>
 			</form>
 	</div>
-
+	
+	<div id="imsywholeDiv">
 	<div class="form-group" id="imsypaylist">
 	<table id="imsypayTable" class="table table-hover">
 		<thead>

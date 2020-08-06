@@ -10,6 +10,7 @@
 <script type="text/javascript">
 	$(function(){
 		self.close();
+		opener.location.reload();
 	});
 </script>
 </head>

@@ -35,13 +35,8 @@ public class AddressDAOMybatis implements AddressDAO {
 	}
 
 	@Override
-	public List<AddressGroupVO> selectAddressGroup(String memNo) {
-		return sqlSession.selectList(namespaces+"selectAddressGroup", memNo);
-	}
-
-	@Override
-	public int insertDefaultAddressGroup(String memNo) {
-		return sqlSession.insert(namespaces+"insertDefaultAddressGroup", memNo);
+	public List<AddressGroupVO> selectAddressGroup() {
+		return sqlSession.selectList(namespaces+"selectAddressGroup");
 	}
 
 	@Override
@@ -68,11 +63,6 @@ public class AddressDAOMybatis implements AddressDAO {
 	@Override
 	public int updateTrashAddress(int adNo) {
 		return sqlSession.update(namespaces+"updateTrashAddress", adNo);
-	}
-
-	@Override
-	public List<AddressVO> selectTrashAddress(String memNo) {
-		return sqlSession.selectList(namespaces+"selectTrashAddress", memNo);
 	}
 
 	@Override

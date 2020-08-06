@@ -6,15 +6,15 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
+
 
 @Repository
 public class MemberDAOMybatis implements MemberDAO{
 	private String namespace = "com.mybatis.mapper.oracle.member.";
 	
-	@Autowired
-	private SqlSessionTemplate sqlsession;
+	@Autowired private SqlSessionTemplate sqlsession;
+	
 	
 	@Override
 	public String selectPwd(String memNo) {

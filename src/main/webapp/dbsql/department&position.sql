@@ -34,7 +34,7 @@ insert into position
 values('912', '사원3');
 
 insert into position
-values('920', '경리');
+values('919', '경리');
 
 insert into position
 values('930', '과장');

@@ -122,7 +122,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
@@ -229,15 +229,16 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안 작성</a>
 						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
 						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a>
+						<a class="collapse-item" href="<c:url value='/payment/write/setForm.do' />">문서 양식설정</a>
 					</div>
 				</div>
 			</li>
@@ -338,6 +339,26 @@
 				</div>
 			</li>
 			
+			<!-- Nav Item -게시판-->		
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseNine"
+				aria-expanded="true" aria-controls="collapseNine"> <i
+					class="fas fa-fw fa-folder"></i> <span>쪽지</span>
+			</a>
+				<div id="collapseNine" class="collapse" aria-labelledby="headingNine"
+					data-parent="#accordionSidebar" >
+					<div class="bg-white py-2 collapse-inner rounded">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<a class="collapse-item" href="<c:url value='/message/messageWrite.do'/>">쪽지쓰기</a>
+							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">보낸쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">받은쪽지함</a>
+							<a class="collapse-item" href="<c:url value='#'/>">보관함</a>
+							<a class="collapse-item" href="<c:url value='#'/>">휴지통</a>
+						</div>
+
+					</div>
+				</div>
+			</li>
 			<!-- Nav Item -스케줄-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
 				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
@@ -469,9 +490,10 @@
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+							aria-expanded="false"> 
+							<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages --> <span
-								class="badge badge-danger badge-counter">7</span>
+								class="badge badge-danger badge-counter">7<!-- 아직 안읽은 쪾지 개수 count(*)해서 뿌려주기  --></span>
 						</a> <!-- Dropdown - Messages -->
 							<div
 								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -524,7 +546,7 @@
 										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="<c:url value='/message/messageList.do'/>">Read More Messages</a>
+									href="<c:url value='/message/messageList.do'/>">Read More Messages<!-- 받은 쪽지함으로 이동 --></a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
@@ -548,8 +570,7 @@
 									Settings
 								</a> 
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
-									data-target="#logoutModal"> <i
+								<a class="dropdown-item" href="<c:url value='/log/logout.do'/>" > <i
 									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 									Logout
 								</a>

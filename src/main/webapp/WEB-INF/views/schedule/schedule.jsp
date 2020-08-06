@@ -14,9 +14,23 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-daygrid/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
 <script type="text/javascript">
+	//들어오자 마자 일정 보여주기
+	var dataset = [
+		<c:forEach var="citem" items="${list}">
+			{
+				title:'<c:out value="${citem.title}"/>',
+				start:'<c:out value="${citem.startDay}"/>',
+				end:'<c:out value="${citem.endDay}"/>',
+				id:'<c:out value="${citem.schNo}"/>',
+				resourceId:'<c:out value="${citem.resourceId}"/>'
+			},
+		</c:forEach>
+	];
+
+	
   $(function() {
 		var memNo = $("#memNo").val();
-		var events = [];
+		
 		
 		$('.BtClose').click(function() {
 			$('#modal').hide();
@@ -25,18 +39,6 @@
 		$('.writeClose').click(function() {
 			event.preventDefault();
 			$('#writeModal').hide();
-		});
-		
-		
-		$('form[name=frm]').submit(function() {
-			$('.infobox').each(function(idx,item) {
-				if($(this).text().length()<1 ){
-					alert($(this).prev().html()+"을(를) 입력하세요!");
-					event.preventDefault();
-					$(this).focus();
-					return false;
-				}
-			});
 		});
 	
   $('DOMContentLoaded', function() {
@@ -66,10 +68,6 @@
               text: '일정추가',
               click: function() {
             	  $('#writeModal').show();
-            	  
-            	  //var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                  //var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-                		  
                	  $("#frm").submit(function() {
             			$.ajax({
                				url:"<c:url value='/schedule/ajaxWrite.do'/>",
@@ -81,20 +79,20 @@
                	                      title: res.title,
                	                      start: res.startDay,
                	                      end: res.endDay,
-               	                      allDay: true
+               	                      id: res.schNo,
+               	                      allDay: false
                	                    });
                	                    alert('일정이 추가되었습니다!');
+               	                 	location.reload();
                				},
                				error:function(xhr, status, error){
                					alert(status + ", " + error);
                				}
                			});
-               		});  
+            		});  
               }
           }
       },
-      
-      
       
       header: {
         left: 'prev,next today',
@@ -103,7 +101,7 @@
       },
       views: {
   		dayGrid :{
-  			titleFormat: {
+			titleFormat: {
   	    		year:'numeric',
   	    		month: '2-digit'
   	    	}
@@ -114,92 +112,17 @@
       //allDaySlot: false,
 		
       resources: [
-        { id: 'a', title: 'Room A' },
-        { id: 'b', title: 'Room B', eventColor: 'green' },
-        { id: 'c', title: 'Room C', eventColor: 'orange' },
-        { id: 'd', title: 'Room D', eventColor: 'red' }
+        { id: 'a', title: 'Room A' , color:'orange'},
+        { id: 'b', title: 'Room B', eventColor: 'green' , textColor: 'red'},
+        { id: 'c', title: 'Room C', eventColor: 'red' ,color:'orange'},
+        { id: 'd', title: 'Room D', eventColor: 'orange' }
       ],
-      events: 
-    	  function (start,end,successCallback) {
-   		  $.ajax({
- 				url:"<c:url value='/schedule/ajaxSelect.do'/>",
- 				type:"get",
- 				dataType:"json",
- 				data:"memNo="+$("#memNo").val(),
- 				success:function(res){	
- 					$.each(res,function(idx,item) {
-						alert(item.startDay);
-						alert(res[idx].title);
-						/* 
-						var events = [];
-						var startDay;
-						var endDay;
-						var content;
-						var title;
-						var place;
-						 */
-						var startDay = res[idx].startDay;
-						var endDay = res[idx].startDay;
-						var title = res[idx].title;
-						events.push({
-							id : 'a',
-							start : startDay , 
-							end : endDay , 
-							title : title
-						});
-					});// .each()
-					alert(events);
-					console.log("events="+events);
-					successCallback(events);
- 				},
- 				error: function(jqXHR, exception) {
- 	                if (jqXHR.status === 0) {
- 	                        alert('Not connect.\n Verify Network.');
- 	                    } 
- 	                    else if (jqXHR.status == 400) {
- 	                        alert('Server understood the request, but request content was invalid. [400]');
- 	                    } 
- 	                    else if (jqXHR.status == 401) {
- 	                        alert('Unauthorized access. [401]');
- 	                    } 
- 	                    else if (jqXHR.status == 403) {
- 	                        alert('Forbidden resource can not be accessed. [403]');
- 	                    } 
- 	                    else if (jqXHR.status == 404) {
- 	                        alert('Requested page not found. [404]');
- 	                    } 
- 	                    else if (jqXHR.status == 500) {
- 	                        alert('Internal server error. [500]');
- 	                    } 
- 	                    else if (jqXHR.status == 503) {
- 	                        alert('Service unavailable. [503]');
- 	                    } 
- 	                    else if (exception === 'parsererror') {
- 	                        alert('Requested JSON parse failed. [Failed]');
- 	                    } 
- 	                    else if (exception === 'timeout') {
- 	                        alert('Time out error. [Timeout]');
- 	                    } 
- 	                    else if (exception === 'abort') {
- 	                        alert('Ajax request aborted. [Aborted]');
- 	                    }
- 	                    else {
- 	                        alert('Uncaught Error.n' + jqXHR.responseText);
-                     	}
-            		}
- 			});
-    	  }
-    	  
-   	        /* 
-   	        { id: '1', resourceId: 'a', start: startDay, end: endDay, title: content },
-   	        { id: '2', resourceId: 'a', start: '2020-08-12 09:00', end: '2020-08-13 14:00', title: 'event 2' },
-   	        { id: '3', resourceId: 'b', start: '2020-08-15', end: '2020-08-17', title: 'event 3' },
-   	        { id: '4', resourceId: 'c', start: '2020-08-18', end: '2020-08-22', title: 'event 4' },
-   	        { id: '5', resourceId: 'd', start: '2020-08-23', end: '2020-08-25', title: 'event 5' } 
-   	         */
-   	  ,
   	
+      //일정보여주기
+      events: dataset,
+      
  	  //드래그
+ 	  /*
       select: function(arg) {
     	$('#writeModal').show();
         console.log(
@@ -208,52 +131,86 @@
           arg.endStr,
           arg.resource ? arg.resource.id : '(no resource)'
         );
-        
-        calendar.addEvent({
-            title: content,
-            start: startDay,
-            end: endDay,
-            allDay: true
-         });
+        $.ajax({
+				url:"<c:url value='/schedule/ajaxWrite.do'/>",
+				type:"post",
+				datatype:"json",
+				data: $(this).serializeArray(),
+				success:function(res){
+					calendar.addEvent({
+	                      title: res.title,
+	                      start: res.startDay,
+	                      end: res.endDay,
+	                      allDay: false
+	                    });
+	                    alert('일정이 추가되었습니다!');
+				},
+				error:function(xhr, status, error){
+					alert(status + ", " + error);
+				}
+			});
       },
       
       //날짜클릭
       dateClick: function(arg) {
     	$('#writeModal').show();
-        console.log(
-          'dateClick',
-          arg.date,
-          arg.resource ? arg.resource.id : '(no resource)'
-        );
-        calendar.addEvent({
-            title: 'title',
-            start: startDay,
-            end: endDay,
-            allDay: true
-         });
+    	$.ajax({
+			url:"<c:url value='/schedule/ajaxWrite.do'/>",
+			type:"post",
+			datatype:"json",
+			data: $(this).serializeArray(),
+			success:function(res){
+				calendar.addEvent({
+                      title: res.title,
+                      start: res.startDay,
+                      end: res.endDay,
+                      allDay: false
+                    });
+                    alert('일정이 추가되었습니다!');
+			},
+			error:function(xhr, status, error){
+				alert(status + ", " + error);
+			}
+		});
         
       },
+      */
+      
       
       //일정 보여주기
       eventClick: function(info) {
-    	  	$('#modal').show();
+    	  	$('#modal-title').text('\'${detailVo.title}\'');
     	  	
-    	  	//$("#modal-type"),text($("#type").on("selected","selected"));
-    	  	$('#modal-title').text(title);
-    	  	$('#modal-contents').text($("textarea#content").val());
+	   	  	var eventStrat = info.event.start;
+    	  	var dbTitle = info.event.title;
+    	  	var dbId = info.event.id;
+    	  	var content;
+		   	 $.ajax({
+					url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
+					type:"get",
+					datatype:"json",
+					success:function(res){
+						content = res.content;
+                        $("#modal-contents").text(content); //fullcalendar에는 content가 없어서 조회해와야함
+					},
+					error:function(xhr, status, error){
+						alert(status + ", " + error);
+					}
+				});
+		   	$('#modal').show();
+    	  	$("#modal-title").text(dbTitle);
     	  	
-    	  	
-    	    // borderColor 변경
+    	    //borderColor 변경
     	    //info.el.style.borderColor = 'red';
+    	    
    	  },
       
       // 한국어 설정
       locale: 'ko'
     });
-
     calendar.render();
-    
   });
+  
   $("#schedulePicker input").datepicker({
       dateFormat:'yy-mm-dd',
          changeYear:true,
@@ -292,6 +249,10 @@
     td.fc-day-top.fc-sun.fc-past { color: red;}			/* 일요일 */
     td.fc-day-top.fc-sun.fc-future { color: red;}		/* 일요일 */
     
+    .fc-title {		/*이벤트 폰트 컬러 변경*/
+	    color: white;
+	}
+	
 	.msgbox{
 		position: absolute;
 	    left: 33%;

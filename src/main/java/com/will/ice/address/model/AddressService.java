@@ -12,13 +12,12 @@ public interface AddressService {
 	public List<MemberVO> selectMemDeptPosForOrgan();
 	List<DepartmentVO> selectDepartment();
 	int insertAddress(AddressVO vo);
-	List<AddressGroupVO> selectAddressGroup(String memNo);
+	List<AddressGroupVO> selectAddressGroup();
 	AddressVO selectOneAdderss(int adNo);
 
 	int updateAddress(AddressVO adVo);
 	
 	int deleteMulti(List<AddressVO> list);
-	List<AddressVO> selectTrashAddress(String memNo);
 	int updateTrashMulti(List<AddressVO> list);
 	int updateBackMulti(List<AddressVO> list);
 	int updateIsFavorite(int adNo);

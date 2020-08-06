@@ -2,12 +2,12 @@ package com.will.ice.member.model;
 
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 
 @Service
@@ -15,14 +15,14 @@ public class MemberServiceImpl implements MemberService{
 	private static final Logger logger
 	 = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
+	@Autowired private MemberDAO memberDao;
 	
-	@Autowired
-	private MemberDAO memberDao;
-
 	@Override
 	public int logCheck(String memNo, String pwd) {
 		String dbPwd = memberDao.selectPwd(memNo);
 		System.out.println("dbPwd" + dbPwd);
+		
+	
 		int result=0;
 		if(dbPwd!=null && !dbPwd.isEmpty()) {
 			if(dbPwd.equals(pwd)) {

@@ -28,7 +28,8 @@ public class FileUploadUtil {
 	
 	public static final int PATH_PDS=1;  //자료실에 사용
 	public static final int PATH_PD_IMAGE=2; //상품업로드시 사용
-	public static final int PATH_PAYMENT_FILE=3;//결재등록시 자료업로드시 사용
+	public static final int PATH_PAYMENT_FILE=3;//결재등록시 자료업로드
+	public static final int PATH_SIGN_FILE=3;//결재처리시 사인업로드
 
 	@Resource(name="fileUploadProperties")
 	Properties fileUploadProps;
@@ -94,6 +95,8 @@ public class FileUploadUtil {
 				key="imageFile.upload.path.test";
 			}else if(pathGb==PATH_PAYMENT_FILE) {
 				key="paymentfile.upload.path.test";
+			}else if(pathGb==PATH_SIGN_FILE) {
+				key="signfile.upload.path.test";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);
@@ -104,6 +107,8 @@ public class FileUploadUtil {
 				key="imageFile.upload.path";
 			}else if(pathGb==PATH_PAYMENT_FILE) {
 				key="paymentfile.upload.path";
+			}else if(pathGb==PATH_SIGN_FILE) {
+				key="signfile.upload.path";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);

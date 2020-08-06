@@ -7,21 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ICE</title>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/jquery-3.5.1.min.js'/> "></script>
+<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
-#CDV{overflow: hidden;}
-#CDVcancelBt{background-color: #4e73df; color:white;}
-#CDVheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#CDVheaderDiv p{padding-left: 8px;padding-top: 8px;}
-#CDVdocTable{text-align: center;height: 790px;}
-#CDVdocType{font-size: 1.5em;font-weight: 600;}
-#CDVtitle,#CDVcontent{text-align: left;}
-#CDVcontent{height: 50%;}
-#CDVlastDiv{position: relative;left: 88%;}
+	#CDV{overflow: hidden;}#CDVcancelBt{background-color: #4e73df; color:white;}#CDVheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#CDVheaderDiv p{padding-left: 8px;padding-top: 8px;}#CDVdocTable{text-align: center;height: 790px;}#CDVdocType{font-size: 1.5em;font-weight: 600;}#CDVtitle,#CDVcontent{text-align: left;}#CDVcontent{height: 50%;}#CDVlastDiv{position: relative;left: 88%;}
 </style>
 </head>
 <body id="CDV">
@@ -66,10 +56,12 @@
 				<td rowspan="2">${payVo.writedate }</td>
 				<td rowspan="2" width="15">첨부파일</td>
 				<td rowspan="2" colspan="5">
-					<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
-						id="fileName" style="position: relative;top: 30px;">
-						${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
-					</a>
+					<c:if test="${!empty fileVo.fileName }">
+						<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+							id="fileName" style="position: relative;top: 30px;">
+							${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+						</a>
+					</c:if>
 				</td>
 			</tr>
 			<tr height="10">

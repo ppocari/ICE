@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,14 +48,14 @@ public class PaylineController {
 	
 	@RequestMapping(value="/write/updatePayLine.do",method=RequestMethod.POST)
 	public String updatePayLine(@ModelAttribute PaylinedocVO pldVo,@RequestParam int docNo ,Model model, 
-			@ModelAttribute PaymentfileVO fileVo) {
+			@ModelAttribute PaymentfileVO fileVo,@RequestParam String oldfileName2) {
 		pldVo.setDocNo(docNo);
 		logger.info("결재문서 내용 , pldVo={}",pldVo);
 		logger.info("결재 받을 사원번호 , getmemNo={}",pldVo.getGetmemNo());
 		
 		String[] memList = pldVo.getGetmemNo().split(",");
 	
-		int cnt = paymentService.updatePaydocM(memList, pldVo, fileVo);
+		int cnt = paymentService.updatePaydocM(memList, pldVo, fileVo, oldfileName2);
 		
 		String msg="결재선 등록 실패!",url="/payment/close.do";
 		if(cnt>0) {
