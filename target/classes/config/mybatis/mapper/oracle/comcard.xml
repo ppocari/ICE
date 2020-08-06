@@ -21,7 +21,7 @@
 	
 	<select id="selectListComcard" parameterType="Depart_posi_dateVO" resultType="ComcardVO">
 		select * from comcard_mem
-		where memno is not null
+		where acccode is not null
 		<if test="deptCode!=null and deptCode!=''">
 		      and deptcode = #{deptCode}
 		</if>

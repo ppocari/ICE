@@ -190,7 +190,6 @@ $(function(){
 }
 
 .divForm textarea {
-	text-align: center;
 	border: 1px solid #DCDDE3;
 }
 

@@ -1,15 +1,14 @@
 /* 주소 */
-DROP TABLE address 
-	CASCADE CONSTRAINTS;
+--DROP TABLE address CASCADE CONSTRAINTS;
 
 /* 주소록그룹 */
-DROP TABLE addressGroup 
-	CASCADE CONSTRAINTS;
+--DROP TABLE addressGroup CASCADE CONSTRAINTS;
 
 
 /* 주소 */
 CREATE TABLE address (
 	adNo NUMBER NOT NULL, /* 주소록번호 */
+	memNo VARCHAR2(50) NOT NULL, /* 사원번호 */
 	name VARCHAR2(50) NOT NULL, /* 사원명 */
 	hp1 VARCHAR2(20), /* 전화번호1 */
 	hp2 VARCHAR2(20), /* 전화번호2 */
@@ -26,7 +25,7 @@ CREATE TABLE address (
 	SNS VARCHAR2(200),  /*SNS*/
 	memo VARCHAR2(1500),  /*메모*/
 	isFavorite VARCHAR2(10), /* 즐겨찾기 유무 */
-	isDeleted VARCHAR2(10) /* 삭제(휴지통) */
+	isDeleted Date /* 삭제(휴지통) */
 );
 
 ALTER TABLE address
@@ -39,8 +38,7 @@ ALTER TABLE address
 /* 주소록그룹 */
 CREATE TABLE addressGroup (
 	adgNo NUMBER NOT NULL, /* 그룹번호 */
-	groupName VARCHAR2(30), /* 그룹명 */
-	memNo VARCHAR2(50) /* 사원번호 */
+	groupName VARCHAR2(30) /* 그룹명 */
 );
 
 ALTER TABLE addressGroup
@@ -60,9 +58,9 @@ ALTER TABLE address
 			adgNo
 		);
 
-ALTER TABLE addressGroup
+ALTER TABLE address
 	ADD
-		CONSTRAINT FK_member_TO_addressGroup
+		CONSTRAINT FK_member_TO_address
 		FOREIGN KEY (
 			memNo
 		)
