@@ -8,5 +8,6 @@ public interface ScheduleDAO {
 	List<ScheduleVo> selectSchedule(String memNo);
 	ScheduleVo selectDetail(ScheduleVo vo);
 	ScheduleVo selectRownum(String memNo);
-	
+	int deleteSchedule(String schNo);
+	int updateSchedule(ScheduleVo vo);
 }

@@ -118,6 +118,13 @@
 	#pwd1, #pwd2{
 		max-width: 30%;
 	}
+	
+	#b,#c{
+		float: left;
+	}
+	#a_a,#a_b,#a_c{
+		float: left;
+	}
 
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
@@ -186,130 +193,157 @@
 	});//doc
 </script>
 
-<div class="row">
-	<!-- Area Chart -->
-	<div class="col-xl-12 ">
-		<div class="card shadow mb-4">
-			<div class="All">
-				<h1 id="change_h1">기본정보수정</h1>
-				<!--  -->
-				<form name="mypageFrm" method="post" enctype="multipart/form-data"
-					action="<c:url value='/mypage/mypage.do'/>">
-
-					<div class="noimg1">
-						<c:if test="${empty vo.proFileURL}">
-							<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
-						</c:if>
-						
-						<c:if test="${!empty vo.proFileURL}">
-							<img alt="" src="<c:url value='/pd_images/${vo.proFileURL}'/>">
-						</c:if>
-					</div>
-					<div class="imgbt">
-						<p>*120 X 150</p>
-						<input type="file" value="사진변경" name="imgUP" class="img_ch">
-					</div>
-					<div class="form-group">
-						사원번호 <input type="text" class="form-control" id="memNo"
-							name="memNo" value="${vo.memNo}" readonly>
-					</div>
-					<div class="form-group">
-						부서코드 <input type="text" class="form-control" id="deptCode"
-							name="deptCode" value="${vo.deptCode}" readonly>
-					</div>
-					<div class="form-group">
-						직급코드 <input type="text" class="form-control" id="posCode"
-							name="posCode" value="${vo.posCode}" readonly>
-					</div>
-					<div class="form-group">
-						부서 <input type="text" class="form-control" value="${vo.dname }"
-							name="dname" readonly>
-					</div>
-					<div class="form-group">
-						직책 <input type="text" class="form-control" value="${vo.pname }"
-							name="pname" readonly>
-					</div>
-					<div class="form-group">
-						이름 <input type="text" class="form-control" id="name" name="name"
-							value="${vo.name }">
-					</div>
-					<div class="form-group">
-						연봉 <input type="text" class="form-control" id="salary" readonly
-							name="salary" value="${vo.salary }">
-					</div>
-					<div class="form-group">
-						패스워드 <input type="password" class="form-control" id="pwd1"
-							name="pwd" placeholder="암호">
-					</div>
-					<div class="form-group">
-						패스워드 확인 <input type="password" class="form-control" id="pwd2"
-							name="pwd2"> <span id="error"></span>
-					</div>
-					<div class="form-group">
-						휴대폰<br> <select name="hp1" id="hp1" title="휴대폰 앞자리"
-							class="form-control">
-							<option value="010">010</option>
-							<option value="011">011</option>
-							<option value="016">016</option>
-							<option value="017">017</option>
-							<option value="018">018</option>
-							<option value="019">019</option>
-						</select> - 
-						<input type="text" name="hp2" class="form-control" id="hp2"
-							value="${vo.hp2 }" maxlength="4" title="휴대폰 가운데자리"
-							style="width: 80px; display: inline-block;">- 
-						<input type="text" name="hp3" class="form-control" id="hp3"
-							value="${vo.hp3 }" maxlength="4" title="휴대폰 뒷자리"
-							style="width: 80px; display: inline-block;">
-					</div>
-					<div class="form-group">
-						이메일<br> <input type="text" name="email1"
-							value="${vo.email1 }" class="form-control" id="email"
-							title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@ <select
-							name="email2" class="form-control" id="email2" title="이메일주소 뒷자리"
-							style="height: 45px;">
-							<option value="naver.com">naver.com</option>
-							<option value="hanmail.net">hanmail.net</option>
-							<option value="nate.com">nate.com</option>
-							<option value="gmail.com">gmail.com</option>
-							<option value="etc">직접입력</option>
-						</select> <input type="text" name="email3" class="form-control" id="email3"
-							title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
-					</div>
-					<div class="form-group">
-						성별 <input type="text" name="gender" class="form-control"
-							id="gender" value="${vo.gender }">
-					</div>
-					<%-- 
-					<div class="form-group">
-						입사일 <input type="text" name="hireDate" class="form-control"
-							id="hireDate" value="<fmt:formatDate value="${vo.hireDate }" pattern="yyyy-MM-dd"/>" 
-							readonly="readonly">
-					</div>
-					 --%>
-					<div class="form-group">
-						주소
-						<div id="divZip">
-							<input type="text" name="zipcode" class="form-control"
-								id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호">
+<!-- Begin Page Content -->
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">마이페이지</h1>
+	</div>
+	<div><span id="name">${userName}님</span></div>
+	<!-- Content Row -->
+	<div class="row">
+		<!-- Area Chart -->
+		<div class="col-xl-12 " >
+			<div class="card shadow mb-4" style="fit-content">
+				<!-- 근태관리 조회 -->
+			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">기본정보수정</h5>
+			</div>
+				<div class="row">
+					<!-- Area Chart -->
+					<div class="col-xl-12 ">
+						<div class="card shadow mb-4">
+							<form name="mypageFrm" method="post" enctype="multipart/form-data"
+								action="<c:url value='/mypage/mypage.do'/>">
+								<div id="a">
+									<div id="a_a">
+										<div class="noimg1">
+											<c:if test="${empty vo.proFileURL}">
+												<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
+											</c:if>
+											
+											<c:if test="${!empty vo.proFileURL}">
+												<img alt="" src="<c:url value='/pd_images/${vo.proFileURL}'/>">
+											</c:if>
+										</div>
+										<div class="imgbt">
+											<p>*120 X 150</p>
+											<input type="file" value="사진변경" name="imgUP" class="img_ch">
+										</div>
+									</div>
+									<div id="a_b">
+										<div class="form-group" id="memNo">
+											사원번호 <input type="text" class="form-control" id="memNo"
+												name="memNo" value="${vo.memNo}" readonly style="width: 100px;">
+										</div>
+										<div class="form-group" id="deptCode">
+											부서코드 <input type="text" class="form-control" id="deptCode"
+												name="deptCode" value="${vo.deptCode}" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											직급코드 <input type="text" class="form-control" id="posCode"
+												name="posCode" value="${vo.posCode}" readonly style="width: 100px;">
+										</div>
+									</div>
+									<div id="a_c">
+										<div class="form-group">
+											부서 <input type="text" class="form-control" value="${vo.deptName }"
+												name="dname" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											직책 <input type="text" class="form-control" value="${vo.posName }"
+												name="pname" readonly style="width: 100px;">
+										</div>
+										<div class="form-group">
+											연봉 <input type="text" class="form-control" id="salary" readonly
+												name="salary" value="${vo.salary }" style="width: 100px;">
+										</div>
+									</div>
+								</div>
+								<div id="b">
+									<div class="form-group">
+										이름 <input type="text" class="form-control" id="name" name="name"
+											value="${vo.name }">
+									</div>
+									<div class="form-group">
+										패스워드 <input type="password" class="form-control" id="pwd1"
+											name="pwd" placeholder="암호">
+									</div>
+									<div class="form-group">
+										패스워드 확인 <input type="password" class="form-control" id="pwd2"
+											name="pwd2"> <span id="error"></span>
+									</div>
+									<div class="form-group">
+										휴대폰<br> <select name="hp1" id="hp1" title="휴대폰 앞자리"
+											class="form-control">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="017">017</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+										</select> - 
+										<input type="text" name="hp2" class="form-control" id="hp2"
+											value="${vo.hp2 }" maxlength="4" title="휴대폰 가운데자리"
+											style="width: 80px; display: inline-block;">- 
+										<input type="text" name="hp3" class="form-control" id="hp3"
+											value="${vo.hp3 }" maxlength="4" title="휴대폰 뒷자리"
+											style="width: 80px; display: inline-block;">
+									</div>
+									<div class="form-group">
+										이메일<br> <input type="text" name="email1"
+											value="${vo.email1 }" class="form-control" id="email"
+											title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@ <select
+											name="email2" class="form-control" id="email2" title="이메일주소 뒷자리"
+											style="height: 45px;">
+											<option value="naver.com">naver.com</option>
+											<option value="hanmail.net">hanmail.net</option>
+											<option value="nate.com">nate.com</option>
+											<option value="gmail.com">gmail.com</option>
+											<option value="etc">직접입력</option>
+										</select> <input type="text" name="email3" class="form-control" id="email3"
+											title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
+									</div>
+									<div class="form-group">
+										성별 <input type="text" name="gender" class="form-control"
+											id="gender" value="${vo.gender }">
+									</div>
+								</div>
+								<%-- 
+								<div class="form-group">
+									입사일 <input type="text" name="hireDate" class="form-control"
+										id="hireDate" value="<fmt:formatDate value="${vo.hireDate }" pattern="yyyy-MM-dd"/>" 
+										readonly="readonly">
+								</div>
+								 --%>
+								 <div id="c">
+									 <div class="form-group">
+										주소
+										<div id="divZip">
+											<input type="text" name="zipcode" class="form-control"
+												id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호"
+												style="width: 100px;">
+										</div>
+										<input type="Button" value="우편번호 찾기" id="btZipcode" title="새창열림">
+										<div id="divZip">
+											<input type="text" name="addr" class="form-control"
+												id="addrInput" value="${vo.addr}" ReadOnly title="주소"
+												style="width: 2650px;">
+										</div>
+										<div id="divZip">
+											<input type="text" name="addrDetail" class="form-control"
+												id="addrDetailInput" value="${vo.addrDetail}" title="상세주소">
+										</div>
+									 </div>
+								</div>
+								<input type="submit" class="btn btn-primary" id="mypageEdit" value="수정하기">
+							</form>
+				
 						</div>
-						<input type="Button" value="우편번호 찾기" id="btZipcode" title="새창열림">
-						<div id="divZip">
-							<input type="text" name="addr" class="form-control"
-								id="addrInput" value="${vo.addr}" ReadOnly title="주소">
-						</div>
-						<div id="divZip">
-							<input type="text" name="addrDetail" class="form-control"
-								id="addrDetailInput" value="${vo.addrDetail}" title="상세주소">
-						</div>
 					</div>
-
-					<input type="submit" id="mypageEdit" value="수정하기">
-				</form>
-
+				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 </div>
-
 <%@include file="../inc/bottom.jsp"%>

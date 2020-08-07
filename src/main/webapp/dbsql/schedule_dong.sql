@@ -9,6 +9,7 @@ CREATE TABLE schedule (
 	END_DAY VARCHAR2(100) NOT NULL, /* 스케줄 끝날짜 */
 	PLACE VARCHAR2(100), /* 스케줄 장소 */
 	CONTENT VARCHAR2(100) /* 스케줄 내용 */
+	resourceId VARCHAR2(100) /* 리소스 아이디 */
 );
 
 
@@ -37,8 +38,16 @@ start with 1;
 
 select * from SCHEDULE;
 
-insert into SCHEDULE(schno,memNo,title,start_day,end_day,place,content)
-		values(schedule_seq.nextval,111910,'제목',sysdate,sysdate,'교육관','8시집합');
+insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)
+values(schedule_seq.nextval,111910,'db작업','2020-08-01','2020-08-03','업무관련','스케줄db작업','a');
+
+insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)
+values(schedule_seq.nextval,111910,'회식','2020-08-31','2020-08-31','기타','회식','b');		
 		
-		
+insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)
+values(schedule_seq.nextval,111910,'휴가','2020-08-10','2020-08-15','휴가/연차','휴가','c');
+
+insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)
+values(schedule_seq.nextval,111910,'반차','2020-08-18','2020-08-18','유연근무','반차','d');
+
 commit;

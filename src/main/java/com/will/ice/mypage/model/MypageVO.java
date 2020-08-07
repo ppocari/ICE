@@ -22,8 +22,8 @@ public class MypageVO {
 	private long fileSize;
 	private int deptCode;
 	private int posCode;
-	private String pname;
-	private String dname;
+	private String posName;
+	private String deptName;
 	
 	
 	public String getMemNo() {
@@ -140,17 +140,17 @@ public class MypageVO {
 	public void setPosCode(int posCode) {
 		this.posCode = posCode;
 	}
-	public String getPname() {
-		return pname;
+	public String getPosName() {
+		return posName;
 	}
-	public void setPname(String pname) {
-		this.pname = pname;
+	public void setPosName(String posName) {
+		this.posName = posName;
 	}
-	public String getDname() {
-		return dname;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setDname(String dname) {
-		this.dname = dname;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	
 	
@@ -160,8 +160,8 @@ public class MypageVO {
 				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", zipcode=" + zipcode + ", addr="
 				+ addr + ", addrDetail=" + addrDetail + ", salary=" + salary + ", hireDate=" + hireDate + ", gender="
 				+ gender + ", proFileURL=" + proFileURL + ", originalFileName=" + originalFileName + ", fileSize="
-				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + ", pname=" + pname + ", dname=" + dname
-				+ "]";
+				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + ", posName=" + posName + ", deptName="
+				+ deptName + "]";
 	}
 	
 	
