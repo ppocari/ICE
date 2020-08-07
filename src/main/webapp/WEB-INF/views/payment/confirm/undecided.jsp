@@ -105,7 +105,7 @@
 		<tbody>
 		<!-- 반복 시작 -->
 				<c:forEach var="vo" items="${list }">
-					<tr onclick="window.open('../docView.do?docNo=${vo.docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+					<tr onclick="window.open('../docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
 							<a class="UDdocNoInfo">
 								${vo.docNo }

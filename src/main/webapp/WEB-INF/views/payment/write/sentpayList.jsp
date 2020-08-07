@@ -75,6 +75,7 @@
 				<select class="form-control" id="docType" name="searchCondition">
 					<!-- 반복 시작 -->
 					<c:forEach var="doctypeVo" items="${doctypelist }">
+						<option value="">전체</option>
 						<option value="${doctypeVo.typeNo }"
 							<c:if test="${paysearchVo.searchCondition==doctypeVo.typeNo }">
 								selected="selected"

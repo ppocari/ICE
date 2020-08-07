@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.will.ice.common.PaymentSearchVO;
+import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.PaycommentVO;
@@ -47,7 +48,7 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public List<DocumentviewVO> selectPayLine(int docNo) {
+	public List<ChkDocumentviewVO> selectPayLine(int docNo) {
 		return sqlSession.selectList(namespace+"selectPayLine",docNo);
 	}
 
@@ -150,6 +151,16 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	@Override
 	public List<PaycommentVO> selectSign(int docNo) {
 		return sqlSession.selectList(namespace+"selectSign",docNo);
+	}
+
+	@Override
+	public List<DocumentviewVO> selectPayLine2(int docNo) {
+		return sqlSession.selectList(namespace+"selectPayLine2",docNo);
+	}
+
+	@Override
+	public List<PaylistViewVO> selectDecided(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectList(namespace+"selectDecided",paysearchVo);
 	}
 
 }

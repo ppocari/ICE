@@ -275,17 +275,24 @@ select * from doctype;
 ------------------------ºä
 create or replace view paymentView
 as
-select p.*,d.typeName,m.name
+select p.*,d.typeName,m.name, m.DEPTNAME
 from (payment p join doctype d
 on p.typeNo = d.typeNo)
-join member m
+join mypage_mem m
 on p.memNo = m.memNo;
+
+create or replace view chkdocView
+as
+select p.*,m.NAME,m.posName,m.poscode,m.deptName
+from paymentline p join mypage_mem m
+on p.MEMNO = m.MEMNO;
 
 create or replace view docView
 as
-select p.*,m.NAME,m.posName,m.deptName
-from paymentline p join mypage_mem m
-on p.MEMNO = m.MEMNO;
+select p.*,m.NAME,m.posName,m.poscode,m.deptName,c.content, c.REGDATE, c.SIGNNAME
+from (paymentline p join mypage_mem m
+on p.MEMNO = m.MEMNO) join paycomment c
+on p.MEMNO = c.MEMNO;
 
 create or replace view paylistView
 as
@@ -299,9 +306,12 @@ select * from paymentfile;
 select * from payment;
 select * from paymentline;
 select * from paycomment;
+
 select * from paylistview;
+select * from docview;
 
 select * from position;
+select * from department;
 select * from member;
 
 commit;

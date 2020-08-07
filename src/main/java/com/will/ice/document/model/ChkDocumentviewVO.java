@@ -1,8 +1,6 @@
 package com.will.ice.document.model;
 
-import java.sql.Timestamp;
-
-public class DocumentviewVO {
+public class ChkDocumentviewVO {
 	private int payNo;
 	private int docNo;
 	private String payDate;
@@ -12,28 +10,7 @@ public class DocumentviewVO {
 	private String posName;
 	private int posCode;
 	private String deptName;
-	private String content; //피드백
-	private Timestamp regdate;
-	private String signName;
-	
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public Timestamp getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(Timestamp regdate) {
-		this.regdate = regdate;
-	}
-	public String getSignName() {
-		return signName;
-	}
-	public void setSignName(String signName) {
-		this.signName = signName;
-	}
+
 	public int getPayNo() {
 		return payNo;
 	}
@@ -82,7 +59,6 @@ public class DocumentviewVO {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	
 	public int getPosCode() {
 		return posCode;
 	}
@@ -91,8 +67,9 @@ public class DocumentviewVO {
 	}
 	@Override
 	public String toString() {
-		return "DocumentviewVO [payNo=" + payNo + ", docNo=" + docNo + ", payDate=" + payDate + ", memNo=" + memNo
+		return "ChkDocumentviewVO [payNo=" + payNo + ", docNo=" + docNo + ", payDate=" + payDate + ", memNo=" + memNo
 				+ ", read=" + read + ", name=" + name + ", posName=" + posName + ", posCode=" + posCode + ", deptName="
-				+ deptName + ", content=" + content + ", regdate=" + regdate + ", signName=" + signName + "]";
+				+ deptName + "]";
 	}
+
 }

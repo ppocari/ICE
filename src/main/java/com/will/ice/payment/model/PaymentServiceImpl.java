@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.will.ice.common.PaymentSearchVO;
+import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.PaycommentVO;
@@ -37,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService{
 		//기안작성 -> 결재선 지정
 		int cnt=0;
 		pldVo.setImsy("N");
-		pldVo.setProgress("결재대기중");
+		pldVo.setProgress("waiting");
 		paymentDao.insertPaydoc(pldVo);
 		
 		logger.info("첨부파일 fileVo={}",fileVo);
@@ -67,7 +68,7 @@ public class PaymentServiceImpl implements PaymentService{
 		//기안작성 -> 임시보관
 		logger.info("첨부파일 fileVo={}",fileVo);
 		pldVo.setImsy("Y");
-		pldVo.setProgress("임시보관");
+		pldVo.setProgress("imsy");
 		int cnt = paymentDao.insertOnePay(pldVo);
 				
 		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
@@ -122,26 +123,26 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 	
 	@Override
-	public int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName) {
+	public int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName2) {
 		//임시보관 -> 임시보관
 		logger.info("첨부파일 fileVo={}",fileVo);
 		pldVo.setImsy("Y");
-		pldVo.setProgress("임시보관");
-		
+		pldVo.setProgress("imsy");
+		fileVo.setDocNo(pldVo.getDocNo());
 		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-			fileVo.setDocNo(pldVo.getDocNo());
-			int cnf =0;
-			if(oldfileName!=null && !oldfileName.isEmpty()) {//원파일있으면수정
-				cnf = paymentDao.updateFile(fileVo);
+			if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
+				paymentDao.updateFile(fileVo);
 			}else {											//없으면 새로저장
-				cnf = paymentDao.saveFile(fileVo);
+				paymentDao.saveFile(fileVo);
 			}
-			
 			pldVo.setHasFile("Y");
-			int isf = paymentDao.isFile(pldVo);
-			logger.info("파일저장 ={},isFile={}",cnf,isf);
+			paymentDao.isFile(pldVo);
 		}else {
-			pldVo.setHasFile("N");
+			if(oldfileName2!=null && !oldfileName2.isEmpty()) {
+				pldVo.setHasFile("Y");
+			}else {
+				pldVo.setHasFile("N");
+			}
 			int isf = paymentDao.isFile(pldVo);
 			logger.info("isFile={}",isf);
 		}
@@ -155,10 +156,15 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public List<DocumentviewVO> selectPayLine(int docNo) {
+	public List<ChkDocumentviewVO> selectPayLine(int docNo) {
 		return paymentDao.selectPayLine(docNo);
 	}
 
+	@Override
+	public List<DocumentviewVO> selectPayLine2(int docNo) {
+		return paymentDao.selectPayLine2(docNo);
+	}
+	
 	@Override
 	public int deletePayLine(int docNo) {
 		List<PaylineVO> list = paymentDao.isRead(docNo);
@@ -199,6 +205,7 @@ public class PaymentServiceImpl implements PaymentService{
 		for(int i=0; i<docNolist.size(); i++) {
 			docNo = docNolist.get(i);
 			paysearchVo.setDocNo(docNo);
+			logger.info("paysearchVo={}",paysearchVo);
 			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
 			if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
 				list.add(vo);
@@ -217,9 +224,9 @@ public class PaymentServiceImpl implements PaymentService{
 		vo.setDocNo(comVo.getDocNo());
 		vo.setMemNo(comVo.getMemNo());
 		if(paymentDao.countPayline(comVo.getDocNo())>0) {
-			vo.setProgress("결재진행중");
+			vo.setProgress("ongoing");
 		}else {
-			vo.setProgress("기결");
+			vo.setProgress("decided");
 		}
 		
 		paymentDao.updateProgress(vo);
@@ -240,6 +247,17 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public List<PaycommentVO> selectSign(int docNo) {
 		return paymentDao.selectSign(docNo);
+	}
+
+	@Override
+	public List<PaylistViewVO> selectDecided(PaymentSearchVO paysearchVo) {
+		paysearchVo.setProgress("decided");
+		return paymentDao.selectDecided(paysearchVo);
+	}
+
+	@Override
+	public int updateProgress(PaymentviewVO vo) {
+		return paymentDao.updateProgress(vo);
 	}
 
 }
