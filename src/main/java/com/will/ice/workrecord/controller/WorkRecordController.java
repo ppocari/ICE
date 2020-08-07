@@ -86,15 +86,16 @@ public class WorkRecordController {
 		String date = ym.format(day);
 		Svo.setCmpMonth(date);
 		
+		//date 변환
 		try {
-			day = hm.parse(day_format); //출근버튼 클릭
-			nine = h9.parse(nine_format); // 오늘날짜 9시 정각
+			day = hm.parse(day_format); 
+			nine = h9.parse(nine_format); //9시 셋팅
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		} 
 		
 		
-		if(nine.after(day)){
+		if(nine.after(day) == true){ // nine이 (day)보다 이후 일때 true : 9시 전에 출근!
 			Svo.setCmpStatus("9"); // nine > day 출근
 		}else {
 			Svo.setCmpStatus("0"); // nine < day 이상
@@ -125,20 +126,42 @@ public class WorkRecordController {
 		logger.info("오늘날짜 조회 , Evo={}"+Evo);
 		
 		//현재 시간으로 퇴근시간 셋팅
-		Date d = new Date();
-		String Edate = hm.format(d);
+		Date out = new Date();
+		String Edate = hm.format(out);
 		Evo.setCmpOut(Edate);
+		logger.info("Evo.getCmpOut={}",Evo.getCmpOut());
 		
+		//string 변수 담기
+		String outdate = Evo.getCmpOut();
+		
+		//출근시간  셋팅
+		Date date = new Date();
+		String cmpInFormat = Evo.getCmpIn();
+		
+		//date 형변환
+		try {
+			out = hm.parse(outdate); //퇴근시간
+			date = hm.parse(cmpInFormat); //출근시간 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
+		
+		long outTime = (out.getTime()+(long)(1000*60*60));
+		long dateTime = (date.getTime()+(long)(1000*60*60));
+		logger.info("outTime={}",outTime);
+		logger.info("dateTime={}",dateTime);
 		
 		int nomal = Integer.parseInt(Evo.getCmpStatus());
 		logger.info("Evo.getCmpStatus={}",Evo.getCmpStatus());
-		if( (nomal-1) > 8 ) {
-			Evo.setCmpStatus("출근");
-		}else if( (nomal-1) < 8 ) {
-			Evo.setCmpStatus("반차");
+		
+		if((outTime - dateTime) < 8){ //(date)가 nine보다 이후 일때 true 
+			Evo.setCmpStatus("퇴근(미달)");
+		}else if((outTime - dateTime) > 9){
+			Evo.setCmpStatus("퇴근(초과)");
 		}else {
-			Evo.setCmpStatus("이상");
+			Evo.setCmpStatus("퇴근");
 		}
+		
 		logger.info("퇴근 후 vo={},Evo.getCmpStatus={}",Evo,Evo.getCmpStatus());
 
 		int cnt = workService.updateWork(Evo);
@@ -186,6 +209,10 @@ public class WorkRecordController {
 		String date = ym.format(d);
 		searchVo.setCmpMonth(date);
 		
+		
+		logger.info("searchVo.getStatus={}",searchVo.getCmpStatus());
+		
+		
 		//조회
 		List<WorkRecordVO>Slist = workService.selectWorkList(searchVo);
 		for (int i = 0; i < Slist.size(); i++) {
@@ -229,9 +256,16 @@ public class WorkRecordController {
 		for (int i = 0; i < list.size(); i++) {
 			Dvo = list.get(i);
 		}
-		
 		model.addAttribute("Dvo",Dvo);
-		
 	}
 	
+	@RequestMapping("/workChart.do")
+	public void workChart(HttpSession session,Model model) {
+		String memNo = (String) session.getAttribute("identNum");
+		String userName = (String)session.getAttribute("userName");
+		logger.info("근태 통계 차트 보여주기 memNo={},userName={}",memNo,userName);
+		
+		model.addAttribute("memNo",memNo);
+		model.addAttribute("userName",userName);
+	}
 }

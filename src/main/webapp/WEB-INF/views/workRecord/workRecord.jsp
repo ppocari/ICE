@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style type="text/css">
 	
 	/*top*/
@@ -114,6 +115,7 @@
 		}
 	}
 </script>
+<c:if test="${empty searchVo}">
 <!-- Begin Page Content -->
 <div class="container-fluid">
 	<!-- Page Heading -->
@@ -150,7 +152,7 @@
 				<table class="table table-hover">
 					<!-- 출퇴근 찍을 화면 -->
 					<tr>
-						<th>현재시간</th>
+						<th>오늘날짜</th>
 						<th>출근시간</th>
 						<th>퇴근시간</th>
 						<th>근무상태</th>
@@ -167,16 +169,35 @@
 							<td id="regdate">${vo.cmpRegdate}</td>
 							<td id="start">${vo.cmpIn}</td>
 							<td id="end">${vo.cmpOut}</td>
-							<c:if test="${vo.cmpStatus == '0' && vo.cmpStatus == '9' }">
-								<td id="status"></td>
+							<c:if test="${vo.cmpStatus == '퇴근(미달)'}">
+								<td id="status">퇴근(미달)</td>
 							</c:if>
-							<c:if test="${vo.cmpStatus != '0' && vo.cmpStatus != '9' }">
-								<td id="status">${vo.cmpStatus}</td>
+							<c:if test="${vo.cmpStatus == '퇴근(초과)'}">
+								<td id="status">퇴근(초과)</td>
 							</c:if>
-							<c:if test="${vo.cmpStatus == '반차' || vo.cmpStatus == '이상'}">
+							<c:if test="${vo.cmpStatus == '퇴근'}">
+								<td id="status">퇴근</td>
+							</c:if>
+							
+							<!-- 지각시간 -->
+							<c:set var="cmpIn_Str" value="${fn:substring(vo.cmpIn,0,2)}${fn:substring(vo.cmpIn,3,5)}"/>
+							<c:set var="nine" value="0900"/>
+							<c:set var="result" value="${nine-cmpIn_Str}"/>
+								<c:if test="${result < 0}">
+									<td id="status" style="color: red">
+										${fn:substring(result,0,2)}:${fn:substring(result,2,5)} 지각
+									</td>
+								</c:if>
+							<!-- 사유서 작성 필요 -->
+							<c:if test="${vo.cmpStatus == '퇴근(미달)'}">
 								<td><button id="btDetail" class="btn btn-primary">사유서 작성</button></td>
 							</c:if>
-							<c:if test="${vo.cmpStatus == '출근'}">
+							<c:if test="${vo.cmpStatus == '퇴근(초과)'}">
+								<td><button id="btDetail" class="btn btn-primary">사유서 작성</button></td>
+							</c:if>
+							
+							<!-- 정상 퇴근 -->
+							<c:if test="${vo.cmpStatus == '퇴근'}">
 								<td></td>
 							</c:if>
 						</tr>
@@ -186,7 +207,7 @@
 		</div>
 	</div>	
 </div>
-
+</c:if>
 <!-- Area Chart -->
 <div class="col-xl-12 " >
 	<div class="card shadow mb-4" style="height: 500px">
@@ -204,10 +225,11 @@
 			</form>
 		</div>
 		<!-- Card Header - Dropdown -->
+		<div style="overflow:auto; width:1630px; height:500px;"> 
 		<table class="table table-hover">
 			<!-- 출퇴근 조회 -->
 			<tr>
-				<th>현재시간</th>
+				<th>오늘날짜</th>
 				<th>출근시간</th>
 				<th>퇴근시간</th>
 				<th>근무상태</th>
@@ -220,18 +242,21 @@
 						<td id="start">${Svo.cmpIn}</td>
 						<td id="end">${Svo.cmpOut}</td>
 						<td id="status">${Svo.cmpStatus}</td>
-						<c:if test="${Svo.cmpStatus == '반차' || Svo.cmpStatus == '이상'}">
+						<c:if test="${Svo.cmpStatus == '퇴근(초과)' || Svo.cmpStatus == '퇴근(미달)'}">
 							<td><button id="btDetail" class="btn btn-primary">사유서 작성</button></td>
 						</c:if>
-						<c:if test="${vo.cmpStatus == '출근'}">
-							<td colspan="2"></td>
+						<c:if test="${Svo.cmpStatus == '퇴근'}">
+							<td><button id="btDetail" class="btn btn-primary" disabled>사유서 작성</button></td>
 						</c:if>
 					</tr>
 				</c:forEach>
 			</c:if>
 		</table>
+		</div>
 	</div>
 </div>
+
+
 
 
 
