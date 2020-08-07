@@ -40,6 +40,7 @@
 	     <beans:property name="order" value="0" />
 	</beans:bean>
 
+
 	<!-- Websocket -->
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>

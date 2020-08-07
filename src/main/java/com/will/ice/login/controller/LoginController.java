@@ -54,7 +54,7 @@ public class LoginController {
 			session.setAttribute("identNum", identNum);
 			session.setAttribute("posCode", memVo.getPosCode());
 			session.setAttribute("userName", memVo.getName());
-			session.setAttribute("MemNo", memVo.getMemNo());
+			session.setAttribute("memImg", memVo.getOriginalFileName());
 
 			//쿠키에 저장
 			if(rememCheck!=null) {  //아이디 저장에 체크한 경우
@@ -98,14 +98,6 @@ public class LoginController {
 			msg="해당 아이디가 존재하지 않습니다.";
 		}
 
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-
-		}else if(result==MemberService.PWD_DISAGREE){
-			msg="비밀번호가 일치하지 않습니다.";
-		}else if(result==MemberService.ID_NONE) {
-			msg="해당 아이디가 존재하지 않습니다.";
-		}
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
