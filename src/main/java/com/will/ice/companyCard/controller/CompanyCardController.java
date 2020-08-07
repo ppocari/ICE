@@ -1,5 +1,6 @@
 package com.will.ice.companyCard.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.will.ice.accode.model.AccodeListVO;
 import com.will.ice.accode.model.AccodeService;
-import com.will.ice.accode.model.AccodeVO;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.companyCard.model.ComcardService;
@@ -102,6 +104,14 @@ import com.will.ice.model.PositionVO;
 		ComcardVO comvo = comcardService.selectNoComcard(comcard_no);
 		logger.info("법인카드 미등록->등록 이동 comvo={}", comvo);
 		return comvo;
+	}
+	
+	
+	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.GET)
+	public void comUpload_get() {
+		logger.info("법인카드 내역 업로드 ");
+		
+		
 	}
 	
 	

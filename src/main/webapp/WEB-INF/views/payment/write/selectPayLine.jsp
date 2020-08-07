@@ -22,6 +22,8 @@
 				$('#emplist').focus();
 			}
 		});
+		
+		window.resizeTo(1000,450);
 	});
 	
 </script>

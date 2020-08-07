@@ -557,8 +557,16 @@
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
 								class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.userName }</span>
-								 <img class="img-profile rounded-circle"
-								src="https://source.unsplash.com/QAB-WJcbgJk/60x60">	
+								<c:if test="${empty sessionScope.memImg}">
+									<img class="img-profile rounded-circle" style="width: 33px; height: 33px;"
+								src="<c:url value= '/resources/img/ICElogo.png' />">
+								</c:if>
+								<c:if test="${!empty sessionScope.memImg}">
+									<img class="img-profile rounded-circle"
+								src="<c:url value= '/resources/img/mypage/${sessionScope.mem_img}' />">
+								</c:if>
+								
+								 
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -575,9 +583,7 @@
 									Logout
 								</a>
 							</div></li>
-
 					</ul>
-
 				</nav>
 				<!-- End of Topbar -->
 

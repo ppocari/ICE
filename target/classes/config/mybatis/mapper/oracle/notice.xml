@@ -4,16 +4,16 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.notice">
 	<insert id="insertNotice" parameterType="NoticeVO">
-		<selectKey keyProperty="NOTI_NO" resultType="int" order="BEFORE">
+		<selectKey keyProperty="noticeNo" resultType="int" order="BEFORE">
 			select notice_seq.nextval from dual
 		</selectKey>
 		
-		insert into notice(NOTI_NO, NOTI_TITLE, MEMNO, NOTI_CONTENT, 
-			NOTI_FILENAME, NOTI_FILESIZE, NOTI_ORFILENAME, 
-			NOTI_CATEGORY, NOTI_MAIN)
-		values(#{NOTI_NO}, #{NOTI_TITLE}, #{MEMNO}, #{NOTI_CONTENT}, 
-			#{NOTI_FILENAME}, #{NOTI_FILESIZE}, #{NOTI_ORFILENAME}, 
-			#{NOTI_CATEGORY}, #{NOTI_MAIN})
+		insert into notice(noticeNo, title, memNo, content, 
+			fileName, fileSize, orFileName, 
+			category, main)
+		values(#{noticeNo}, #{title}, #{memNo}, #{content}, 
+			#{fileName}, #{fileSize}, #{orFileName}, 
+			#{category}, #{main})
 	</insert>
 	
 	<select id="selectAll" resultType="NoticeVO" parameterType="searchVo">
@@ -22,21 +22,22 @@
 		(
 		    select rownum as RNUM, A.*
 		    from(
-		        select NOTI_NO, NOTI_TITLE, NOTI_REGDATE,
-			    NOTI_READCOUNT, NOTI_CONTENT, NOTI_FILENAME,
-			    NOTI_FILESIZE, NOTI_ORFILENAME, NOTI_DOWNCOUNT,
-			    (sysdate-NOTI_REGDATE)*24 as newImgTerm 
+		        select noticeNo, title, regdate,
+			    readcount, content, fileName,
+			    fileSize, orFileName, downcount,
+			    category, main,
+			    (sysdate-regdate)*24 as newImgTerm 
 			    from notice
-		       <!--  <if test="searchKeyword!=null and searchKeyword !=''">
+		        <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
-		        </if> -->
-		        order by NOTI_NO desc
+		        </if>
+		        order by noticeNo desc
 		    )A    
 		)
 		<![CDATA[ 
 		where RNUM>#{firstRecordIndex}
-		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]> -->
 	</select>
 	
 	<select id="selectTotalRecord" parameterType="searchVo"
@@ -50,9 +51,17 @@
 	
 	<update id="updateReadCount" parameterType="int">
 		update notice 
-		set NOTI_READCOUNT=NOTI_READCOUNT+1
-		where NOTI_NO=#{NOTI_NO}
+		set readcount=readcount+1
+		where noticeNo=#{noticeNo}
 	</update>
+	
+	<select id="selectByNo" parameterType="int" resultType="noticeVo">
+		select * from board where noticeNo=#{noticeNo}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board where noticeNo=#{noticeNo}
+	</delete>
 </mapper>
 
 

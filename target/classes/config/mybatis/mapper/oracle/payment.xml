@@ -21,22 +21,16 @@
 		values(#{fileNo},#{fileName},#{originalFileName},#{fileSize},#{docNo})
 	</insert>
 	
-	<update id="updateFile" parameterType="paymentfileVo">
-		update paymentfile
-		set fileName=#{fileName},originalFileName=#{originalFileName},fileSize=#{fileSize}
-		where docNo=#{docNo}
-	</update>
-	
-	<update id="isFile" parameterType="int">
+	<update id="isFile" parameterType="paylinedocVo">
 		update payment
-		set hasFile='Y'
+		set hasFile=#{hasFile}
 		where docNo=#{docNo}
 	</update>
 	
 	<update id="updatePaydoc" parameterType="paylinedocVo">
 		update payment
-		set formNo=#{formNo},typeNo=#{typeNo},title=#{title},content=#{content},keep=#{keep},
-		expirydate=add_months(sysdate,#{keep}), writedate=sysdate, imsy=#{imsy}
+		set formNo=#{formNo}, typeNo=#{typeNo}, title=#{title}, content=#{content}, PROGRESS=#{progress}
+		, keep=#{keep}, EXPIRYDATE=add_months(sysdate,#{keep}), WRITEDATE=sysdate, IMSY=#{imsy}
 		where docNo=#{docNo} and memNo=#{writememNo}
 	</update>
 	
@@ -103,9 +97,8 @@
 				]]>
 			</where>
 	</select>
-
-
-	<select id="selectImsy" parameterType="String" resultType="paymentViewVo">
+	
+	<select id="selectImsy" parameterType="paymentSearchVo" resultType="paymentViewVo">
 		select * from paymentview
 		<where>
 			imsy='Y'
@@ -132,9 +125,9 @@
 	<select id="selectAllMem" parameterType="int" resultType="MemberVo">
 		select * from mypage_mem
 		<![CDATA[
-			where poscode>#{poscode}
+			where trunc(poscode,-1)>trunc(#{poscode},-1)]]>
 			and poscode!='999'
-			order by poscode desc]]>
+		order by poscode desc
 	</select>
 	
 	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">
@@ -148,6 +141,81 @@
 	
 	<select id="getFile" parameterType="int" resultType="paymentfileVo">
 		select * from paymentfile
+		where docNo=#{docNo}
+	</select>
+	
+	<update id="updateFile" parameterType="paymentfileVo">
+		update paymentfile
+		set fileName=#{fileName},originalFileName=#{originalFileName},filesize=#{fileSize}
+		where docNo=#{docNo}
+	</update>
+	
+	<select id="selectUndecided" parameterType="paymentSearchVo" resultType="paylistViewVO">
+		select * from (
+			select * from PAYLISTVIEW
+			<where>
+				docNo=#{docNo}
+				and PAYDATE is null
+				<if test="searchKeyword!=null and searchKeyword!=''">
+					and title=#{searchKeyword}
+				</if>
+				<if test="searchCondition!=null and searchCondition!=''">
+					and typeNo=#{searchCondition}
+				</if>
+				<if test="startDay!=null and startDay!=''">
+					and to_date(writedate)>=to_date(#{startDay})
+				</if>
+				<if test="endDay!=null and endDay!=''">
+					<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
+				</if>
+				<![CDATA[
+					and sysdate < expirydate+1
+					order by gmemNo
+				]]>
+			</where>
+		)
+		where rownum=1
+	</select>
+	
+	<select id="docNolist" resultType="int">
+		select distinct docNo from paymentline
+		where paydate is null
+	</select>
+	
+	<insert id="insertComment" parameterType="paycommentVo">
+		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+			select com_seq.nextval from dual
+		</selectKey>
+		insert into payComment(commentNo, MEMNO, content, docNo, signName, originalSignName)
+		values(#{commentNo},#{memNo},#{content},#{docNo},#{signName},#{originalSignName})
+	</insert>
+	
+	<update id="updatePaydate" parameterType="paycommentVo">
+		update PAYMENTLINE
+		set PAYDATE=sysdate
+		where docNo=#{docNo} and memNo=#{memNo}
+	</update>
+	
+	<update id="updateRead" parameterType="paylineVo">
+		update paymentline
+		set read='Y'
+		where docNo=#{docNo} and memNo=#{memNo}
+	</update>
+	
+	<select id="countPayline" parameterType="int" resultType="int">
+		select count(*) from PAYMENTLINE
+		where PAYDATE is null
+		and docNo=#{docNo}
+	</select>
+	
+	<update id="updateProgress" parameterType="paymentviewVo">
+		update payment
+		set PROGRESS=#{progress}
+		where docNo=#{docNo}
+	</update>
+	
+	<select id="selectSign" parameterType="int" resultType="paycommentVo">
+		select * from paycomment
 		where docNo=#{docNo}
 	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.will.ice.companyCard.model;
 
+import java.io.File;
 import java.util.List;
 
 import com.will.ice.common.DateSearchVO;
@@ -13,4 +14,8 @@ public interface ComcardService {
 	
 	
 	ComcardVO selectNoComcard(int comcard_no);
+	
+	
+	
+	
 }

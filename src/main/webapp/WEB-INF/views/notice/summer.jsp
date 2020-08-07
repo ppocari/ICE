@@ -7,7 +7,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 
-<textarea id="summernote" name="NOTI_CONTENT"></textarea>
+<textarea id="summernote" name="content"></textarea>
 <script>
 $('#summernote').summernote({
  	placeholder: '내용을 입력하세요',

@@ -113,8 +113,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	
 	/* ---------------기안함------------------- */
 	@Override
-	public List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo) {
-		return sqlSession.selectList(namespace+"selectUndecided",paysearchVo);
+	public PaylistViewVO selectUndecided(PaymentSearchVO paysearchVo) {
+		return sqlSession.selectOne(namespace+"selectUndecided",paysearchVo);
 	}
 
 	@Override
@@ -123,8 +123,33 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public int updateStatus(String progress) {
-		return sqlSession.update(namespace+"updateStatus",progress);
+	public int updatePaydate(PaycommentVO comVo) {
+		return sqlSession.update(namespace+"updatePaydate",comVo);
+	}
+
+	@Override
+	public List<Integer> docNolist() {
+		return sqlSession.selectList(namespace+"docNolist");
+	}
+
+	@Override
+	public int updateRead(PaylineVO plVo) {
+		return sqlSession.update(namespace+"updateRead",plVo);
+	}
+
+	@Override
+	public int countPayline(int docNo) {
+		return sqlSession.selectOne(namespace+"countPayline",docNo);
+	}
+
+	@Override
+	public int updateProgress(PaymentviewVO vo) {
+		return sqlSession.update(namespace+"updateProgress",vo);
+	}
+
+	@Override
+	public List<PaycommentVO> selectSign(int docNo) {
+		return sqlSession.selectList(namespace+"selectSign",docNo);
 	}
 
 }
