@@ -6,7 +6,8 @@ public class PaymentSearchVO {
 	private String identNum; //고객 아이디
 	private String searchCondition = "";//문서종류
 	private String searchKeyword = "";//키워드
-	private String searchUseYn = "";//검색사용여부
+	private int docNo;
+	
 	public String getStartDay() {
 		return startDay;
 	}
@@ -37,18 +38,17 @@ public class PaymentSearchVO {
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
-	public String getSearchUseYn() {
-		return searchUseYn;
+	public int getDocNo() {
+		return docNo;
 	}
-	public void setSearchUseYn(String searchUseYn) {
-		this.searchUseYn = searchUseYn;
+	public void setDocNo(int docNo) {
+		this.docNo = docNo;
 	}
 	@Override
 	public String toString() {
 		return "PaymentSearchVO [startDay=" + startDay + ", endDay=" + endDay + ", identNum=" + identNum
-				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", searchUseYn="
-				+ searchUseYn + "]";
+				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", docNo=" + docNo
+				+ "]";
 	}
-	
 	
 }

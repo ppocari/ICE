@@ -22,13 +22,13 @@
 				'7월','8월','9월','10월','11월','12월']
 		});
 		
-		$('.btWeek').click(function(){
+		$('#btWeek').click(function(){
 			$.setDate(7, 'd'); //1주일전
 		})
-		$('.btMonth1').click(function(){
+		$('#btMonth1').click(function(){
 			$.setDate(1, 'm'); //1개월전
 		})
-		$('.btMonth3').click(function(){
+		$('#btMonth3').click(function(){
 			$.setDate(3, 'm'); //3개월전
 		})
 		
@@ -62,16 +62,17 @@
 	}
 	
 </script>
+	<div>
+		<input type="button" value="1주일" id="btWeek" class="btn btn-primary">
+		<input type="button" value="1개월" id="btMonth1" class="btn btn-primary">
+		<input type="button" value="3개월" id="btMonth3"class="btn btn-primary">
+			
+		<input type="text" name="startDay" id="startDay" style="width: 120px"
+			value="${dateSearchVO.startDay }"> 
 
-	조회기간
-	<input type="button" value="1주일" class="btWeek">
-	<input type="button" value="1개월" class="btMonth1" >
-	<input type="button" value="3개월" class="btMonth3">
-		
-	<input type="text" name="startDay" id="startDay"
-		value="${dateSearchVO.startDay }"> 
-	~ 
-	<input type="text" name="endDay" id="endDay"
-		value="${dateSearchVO.endDay }">    
+		~ 
+		<input type="text" name="endDay" id="endDay" style="width: 120px"
+			value="${dateSearchVO.endDay }">    
+	</div>
 		
 		

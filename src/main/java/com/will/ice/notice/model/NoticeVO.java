@@ -3,91 +3,90 @@ package com.will.ice.notice.model;
 import java.sql.Timestamp;
 
 public class NoticeVO {
-	private int NOTI_NO; 
-	private String NOTI_TITLE;  
-	private String MEMNO; 
-	private String NOTI_CONTENT;
-	private Timestamp NOTI_REGDATE;
-	private String NOTI_FILENAME; 
-	private long NOTI_FILESIZE; 
-	private String NOTI_ORFILENAME;
-	private int NOTI_DOWNCOUNT; 
-	private int NOTI_READCOUNT; 
-	private String NOTI_CATEGORY; 
-	private int NOTI_MAIN;
+	private int noticeNo; 
+	private String title;  
+	private String memNo; 
+	private String content;
+	private Timestamp regdate;
+	private String fileName; 
+	private long fileSize; 
+	private String orFileName;
+	private int downcount; 
+	private int readcount; 
+	private String category; 
+	private String main;
 	private int newImgTerm;
-	
-	public int getNOTI_NO() {
-		return NOTI_NO;
+	public int getNoticeNo() {
+		return noticeNo;
 	}
-	public void setNOTI_NO(int NOTI_NO) {
-		NOTI_NO = NOTI_NO;
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
-	public String getNOTI_TITLE() {
-		return NOTI_TITLE;
+	public String getTitle() {
+		return title;
 	}
-	public void setNOTI_TITLE(String NOTI_TITLE) {
-		NOTI_TITLE = NOTI_TITLE;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getMEMNO() {
-		return MEMNO;
+	public String getMemNo() {
+		return memNo;
 	}
-	public void setMEMNO(String MEMNO) {
-		MEMNO = MEMNO;
+	public void setMemNo(String memNo) {
+		this.memNo = memNo;
 	}
-	public String getNOTI_CONTENT() {
-		return NOTI_CONTENT;
+	public String getContent() {
+		return content;
 	}
-	public void setNOTI_CONTENT(String NOTI_CONTENT) {
-		NOTI_CONTENT = NOTI_CONTENT;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public Timestamp getNOTI_REGDATE() {
-		return NOTI_REGDATE;
+	public Timestamp getRegdate() {
+		return regdate;
 	}
-	public void setNOTI_REGDATE(Timestamp NOTI_REGDATE) {
-		NOTI_REGDATE = NOTI_REGDATE;
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
 	}
-	public String getNOTI_FILENAME() {
-		return NOTI_FILENAME;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setNOTI_FILENAME(String NOTI_FILENAME) {
-		NOTI_FILENAME = NOTI_FILENAME;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
-	public long getNOTI_FILESIZE() {
-		return NOTI_FILESIZE;
+	public long getFileSize() {
+		return fileSize;
 	}
-	public void setNOTI_FILESIZE(long NOTI_FILESIZE) {
-		NOTI_FILESIZE = NOTI_FILESIZE;
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
 	}
-	public String getNOTI_ORFILENAME() {
-		return NOTI_ORFILENAME;
+	public String getOrFileName() {
+		return orFileName;
 	}
-	public void setNOTI_ORFILENAME(String NOTI_ORFILENAME) {
-		NOTI_ORFILENAME = NOTI_ORFILENAME;
+	public void setOrFileName(String orFileName) {
+		this.orFileName = orFileName;
 	}
-	public int getNOTI_DOWNCOUNT() {
-		return NOTI_DOWNCOUNT;
+	public int getDowncount() {
+		return downcount;
 	}
-	public void setNOTI_DOWNCOUNT(int NOTI_DOWNCOUNT) {
-		NOTI_DOWNCOUNT = NOTI_DOWNCOUNT;
+	public void setDowncount(int downcount) {
+		this.downcount = downcount;
 	}
-	public int getNOTI_READCOUNT() {
-		return NOTI_READCOUNT;
+	public int getReadcount() {
+		return readcount;
 	}
-	public void setNOTI_READCOUNT(int NOTI_READCOUNT) {
-		NOTI_READCOUNT = NOTI_READCOUNT;
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
 	}
-	public String getNOTI_CATEGORY() {
-		return NOTI_CATEGORY;
+	public String getCategory() {
+		return category;
 	}
-	public void setNOTI_CATEGORY(String NOTI_CATEGORY) {
-		NOTI_CATEGORY = NOTI_CATEGORY;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	public int getNOTI_MAIN() {
-		return NOTI_MAIN;
+	public String getMain() {
+		return main;
 	}
-	public void setNOTI_MAIN(int NOTI_MAIN) {
-		NOTI_MAIN = NOTI_MAIN;
+	public void setMain(String main) {
+		this.main = main;
 	}
 	public int getNewImgTerm() {
 		return newImgTerm;
@@ -95,13 +94,13 @@ public class NoticeVO {
 	public void setNewImgTerm(int newImgTerm) {
 		this.newImgTerm = newImgTerm;
 	}
+	
 	@Override
 	public String toString() {
-		return "NoticeVO [NOTI_NO=" + NOTI_NO + ", NOTI_TITLE=" + NOTI_TITLE + ", MEMNO=" + MEMNO + ", NOTI_CONTENT="
-				+ NOTI_CONTENT + ", NOTI_REGDATE=" + NOTI_REGDATE + ", NOTI_FILENAME=" + NOTI_FILENAME
-				+ ", NOTI_FILESIZE=" + NOTI_FILESIZE + ", NOTI_ORFILENAME=" + NOTI_ORFILENAME + ", NOTI_DOWNCOUNT="
-				+ NOTI_DOWNCOUNT + ", NOTI_READCOUNT=" + NOTI_READCOUNT + ", NOTI_CATEGORY=" + NOTI_CATEGORY
-				+ ", NOTI_MAIN=" + NOTI_MAIN + ", newImgTerm=" + newImgTerm + "]";
+		return "NoticeVO [noticeNo=" + noticeNo + ", title=" + title + ", memNo=" + memNo + ", content=" + content
+				+ ", regdate=" + regdate + ", fileName=" + fileName + ", fileSize=" + fileSize + ", orFileName="
+				+ orFileName + ", downcount=" + downcount + ", readcount=" + readcount + ", category=" + category
+				+ ", main=" + main + ", newImgTerm=" + newImgTerm + "]";
 	}
 	
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
-import com.will.ice.model.SearchYearMonthVO;
 
 @Repository
 public class ComcardDAOMybatis implements ComcardDAO{

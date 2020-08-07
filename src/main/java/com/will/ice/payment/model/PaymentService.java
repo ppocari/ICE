@@ -6,6 +6,7 @@ import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.PaycommentVO;
+import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 public interface PaymentService {
@@ -23,7 +24,9 @@ public interface PaymentService {
 	int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName);
 	
 	/* ---------------결재함------------------- */
-	List<PaylistViewVO> selectUndecided(PaymentSearchVO paysearchVo);
+	List<PaylistViewVO> selectUndecided2(PaymentSearchVO paysearchVo,List<Integer> docNolist);
 	int insertComment(PaycommentVO comVo);
-	int updateStatus(String progress);
+	List<Integer> docNolist();
+	int updateRead(PaylineVO plVo);
+	List<PaycommentVO> selectSign(int docNo);
 }

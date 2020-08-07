@@ -29,7 +29,7 @@ public class FileUploadUtil {
 	public static final int PATH_PDS=1;  //자료실에 사용
 	public static final int PATH_PD_IMAGE=2; //상품업로드시 사용
 	public static final int PATH_PAYMENT_FILE=3;//결재등록시 자료업로드
-	public static final int PATH_SIGN_FILE=3;//결재처리시 사인업로드
+	public static final int PATH_SIGN_FILE=4;//결재처리시 사인업로드
 
 	@Resource(name="fileUploadProperties")
 	Properties fileUploadProps;

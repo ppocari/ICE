@@ -17,22 +17,20 @@
 .register_text {
 	width: 110px;
 }
-.search input{
-	width:150px;
+
+.search input {
+	width: 150px;
 }
-
-
 </style>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-	$(function(){
-		
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-	});
-	
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script type="text/javascript">
+
 </script>
 <!-- Begin Page Content -->
 
@@ -48,6 +46,7 @@
 	</div>
 
 	<!-- Content Row -->
+	<!-- https://shinsunyoung.tistory.com/71 -->
 
 	<div class="row">
 
@@ -55,39 +54,64 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 500px">
 				<!-- Card Header - Dropdown -->
-				<!-- Card Header - Dropdown -->
-				<form id="massiveForm" name="massiveForm" enctype="multipart/form-data" method="post" action="<c:url value="/board/massiveWrite"/>" >
-        <input type="file" name="excelFile"/>
-        <input type="submit" value="업로드"/> 
-    </form>
-
-
-				
 				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
+				action="<c:url value='/excel.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">파일 목록</h6>
+						<h6 class="m-0 font-weight-bold text-primary">파일 업로드</h6>
 						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >파일 업로드</button>
+							<button type="submit" class="btn btn-info">파일 불러오기</button>
+							<input type="button" class="btn btn-info" value="사용내역 업로드">
 						</div>
-						
-					</div>		
+					</div>
+				
+					
 					<!-- Card Body -->
 					<div class="card-body">
 						<div class="chart-area" style="overflow: scroll;">
-
+							<table class="table table-bordered table-hover" id="dynamicTable">
+								<thead>
+									<tr>
+										<th>카드번호</th>
+										<th>사원이름</th>
+										<th>계정코드</th>
+										<th>사용금액</th>
+										<th>사용처</th>
+										<th>사용일</th>
+										<th>부서</th>
+										<th>직급</th>
+										
+									</tr>
+								</thead>
+								<tbody id="dynamicTbody">
+									<!-- 반복시작 -->
+										
+									<c:forEach var="vo" items="${list }">
+										
+										<tr>
+											<td>${vo.cardNo }</td>
+											<td>${vo.name }</td>
+											<td>${vo.accCode }</td>
+											<td>${vo.price }</td>
+											<td>${vo.usePlace }</td>
+											<td>${vo.useDate } </td>
+											<td>${vo.deptName }</td>
+											<td>${vo.posName }</td>
+															
+										</tr>
+									</c:forEach>
+								</tbody>
+						</table>
 										
 						</div>
 					</div>		
 				</form>
-
 				
 				
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 

@@ -1,32 +1,30 @@
 package com.will.ice.companyCard.controller;
 
+import java.io.File;
 import java.util.List;
 
-import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.will.ice.accode.model.AccodeListVO;
 import com.will.ice.accode.model.AccodeService;
-import com.will.ice.accode.model.AccodeVO;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.companyCard.model.ComcardVO;
-import com.will.ice.member.model.MemberVO;
 import com.will.ice.model.DepartmentVO;
 import com.will.ice.model.EtcService;
 import com.will.ice.model.PositionVO;
-import com.will.ice.model.SearchYearMonthVO;
 
 @Controller
 @RequestMapping("/companyCard")
@@ -106,6 +104,14 @@ import com.will.ice.model.SearchYearMonthVO;
 		ComcardVO comvo = comcardService.selectNoComcard(comcard_no);
 		logger.info("법인카드 미등록->등록 이동 comvo={}", comvo);
 		return comvo;
+	}
+	
+	
+	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.GET)
+	public void comUpload_get() {
+		logger.info("법인카드 내역 업로드 ");
+		
+		
 	}
 	
 	
