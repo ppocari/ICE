@@ -9,7 +9,10 @@ import com.will.ice.payment.model.PaymentviewVO;
 public interface SpayDAO {
 
 	public int insertTic(SpayVO vo);
-	List<Map<String, Object>> selectSpayView(int MEMNO);
-	List<SpayVO> selectAll();
-	int selectDay(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayView(DateSearchVO dateSearchVo);
+	int selectTotalRecord(DateSearchVO dateSearchVo);
+	List<SpayViewVO> selectSpayViewAll(DateSearchVO dateSearchVo);
+	int selectTotalRecordAll(DateSearchVO dateSearchVo);
+	int searchNum(int MEMNO);
+	SpayVO searchAll(int ticno);
 }

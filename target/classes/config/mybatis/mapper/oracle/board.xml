@@ -68,6 +68,13 @@
 			filePath=#{filePath}
 		where boardNo=#{boardNo}
 	</update>
+	
+	<update id="updateVisited" parameterType="int">
+		update board 
+		set visited=visited+1
+		where boardNo=#{boardNo}
+	</update>
+	
 </mapper>
 
 

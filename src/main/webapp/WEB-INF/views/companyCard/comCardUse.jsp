@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="../inc/top.jsp" />
 
@@ -23,6 +24,12 @@
 .search input {
 	width: 150px;
 }
+
+.edit_tr > td > input[type=text]{
+	border: 1px solid white;
+	
+}
+
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -139,18 +146,19 @@
 									<c:set var="i" value="${1 }" />
 									<c:if test="${!empty list }">
 										<c:forEach var="vo" items="${list }">
-											<tr id="edit_tr${i}">
+											<tr id="edit_tr${i}" >
 												<input type="hidden" name="accItems[${i}].no"  value="${vo.no }"/></td>
-												<td><input type="text" name="accItems[${i}].cardNo"  value="${vo.cardNo }"/></td>
-												<td><input type="text" name="accItems[${i}].name"  value="${vo.name }"/></td>
+												<td><input type="text" name="accItems[${i}].cardNo"  value="${vo.cardNo }" readonly="readonly"/></td>
+												<td><input style="width: 100px;" type="text" name="accItems[${i}].name"  value="${vo.name }" readonly="readonly" /></td>
 												<td><input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" > 
 													<input type="hidden" value="${i}" id="edit_td${i}">
 												</td>
-												<td><input type="text" name="accItems[${i}].usePlace"  value="${vo.usePlace }" /></td>
-												<td><input type="text" name="accItems[${i}].price"  value="${vo.price}"/></td>
-												<td><input type="text" name="accItems[${i}].useDate"  value="${vo.useDate }"/></td>
-												<td><input type="text" name="accItems[${i}].deptName"  value="${vo.deptName }"/></td>
-												<td><input type="text" name="accItems[${i}].posName"  value="${vo.posName }"/></td>
+												<td><input type="text" name="accItems[${i}].usePlace"  value="${vo.usePlace }" readonly="readonly" /></td>
+												<td><fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
+													<input type="hidden" name="accItems[${i}].price"  value="${vo.price}" readonly="readonly" /></td>
+												<td><input type="text" name="accItems[${i}].useDate"  value="${vo.useDate }" readonly="readonly" /></td>
+												<td><input type="text" style="width: 100px;" name="accItems[${i}].deptName"  value="${vo.deptName }" readonly="readonly" /></td>
+												<td><input type="text" style="width: 100px;" name="accItems[${i}].posName"  value="${vo.posName }" readonly="readonly" /></td>
 											</tr>
 											<c:set var="i" value="${i+1 }" />
 										</c:forEach>

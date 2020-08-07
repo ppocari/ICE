@@ -6,9 +6,16 @@ select * from department;
 
 select * from board;    --사내게시판
 
-select * from notice;   --공지사항
+select * from notice
+where noti = 21;   --공지사항
+
+desc notice;
 
 select * from workRecord;
+
+select *from address;
+
+select *from addressgroup;
 
 insert into workRecord(cmp_no, memno, cmp_in, cmp_out, cmp_status, cmp_regdate, cmp_month)
 values(3, '111910', '9:00', '17:00', '퇴근', '2020-08-02', '2020-08');
@@ -47,6 +54,7 @@ select * from mypage_mem;
   */
   desc department;
  
+select * from v_address;
   
   commit;
   
@@ -84,21 +92,35 @@ commit;
 select * from companyCard;
 
 update companyCard
-set acccode = ''
-where no = 3;
+set memno = '141930'
+where no = 7;
+
+select * from member;
 
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'1111222233334448','111910',10000,'김가네(식당)','2020-06-31' ,1  );
+values(companyCard_seq.nextval,'1111222233334448','141910',10000,'김가네(식당)','2020-06-31' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'3243222233334321','111910',9000,'스타벅스(카페)','2020-07-01' ,1  );
+values(companyCard_seq.nextval,'1111222233334448','141910',9000,'스타벅스(카페)','2020-07-01' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'4321222233331234','111910',20000,'택시(서울)','2020-07-31' ,1  );
+values(companyCard_seq.nextval,'1111222233334448','141910',20000,'택시(서울)','2020-07-31' ,1  );
 
 insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
-values(companyCard_seq.nextval,'3777222233331234','111910',8000,'서울시','2020-06-01' ,1  );
+values(companyCard_seq.nextval,'1111222233334448','141910',8000,'서울시','2020-06-01' ,1  );
+
+
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'3777222233331234','141930',32000,'준코노래방','2020-05-12' ,1  );
+
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'3777222233331234','141930',44000,'택시(경기)','2020-05-22' ,1  );
+
+insert into companyCard(no, cardno, memno, price, useplace, usedate, fileno)
+values(companyCard_seq.nextval,'3777222233331234','141930',57000,'5월 서울 버스비','2020-06-03' ,1  );
+
+
 
 --drop table companyCard
 --drop sequence companyCard_seq

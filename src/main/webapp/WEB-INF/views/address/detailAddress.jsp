@@ -132,9 +132,9 @@
 								<span class="la_right">전화번호</span>
 								<span class="etc">
 									<c:if test="${!empty adVo.hp1 }">
-										<span>${adVo.hp1 }</span> - 
-										<span>${adVo.hp2 }</span> - 
-										<span>${adVo.hp3 }</span>
+										<span>${adVo.hp1 }</span>
+										-<span>${adVo.hp2 }</span>
+										-<span>${adVo.hp3 }</span>
 									</c:if>
 								</span>
 							</div>
@@ -142,8 +142,7 @@
 								<span class="la_left">이메일</span>
 								<span class="etc">
 									<c:if test="${!empty adVo.email1 }">
-										<span>${adVo.email1 }</span> @ 
-										<span>${adVo.email2 }</span>
+										<span>${adVo.email1 }</span>@<span>${adVo.email2 }</span>
 									</c:if>
 								</span>
 								<span class="la_right">회사명</span>

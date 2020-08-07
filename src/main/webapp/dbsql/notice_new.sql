@@ -1,48 +1,70 @@
 /* 공지사항 */
 CREATE TABLE notice (
-	NOTI_NO NUMBER NOT NULL, /* 공지사항게시글번호 */
-	NOTI_TITLE VARCHAR2(100) NOT NULL, /* 글제목 */
-	MEMNO VARCHAR2(50), /* 사원번호 */
-	NOTI_CONTENT CLOB NOT NULL, /* 글내용 */
-	NOTI_REGDATE DATE DEFAULT sysdate NOT NULL, /* 등록일 */
-	NOTI_FILENAME VARCHAR2(100), /* 업로드파일명 */
-	NOTI_FILESIZE LONG, /* 파일사이즈 */
-	NOTI_ORFILENAME VARCHAR2(100), /* 변경전 업로드 파일명 */
-	NOTI_DOWNCOUNT NUMBER default 0, /* 다운수 */
-	NOTI_READCOUNT NUMBER default 0, /* 조회수 */
-	NOTI_CATEGORY VARCHAR2(100) NOT NULL, /* 카테고리 */
-	NOTI_MAIN NUMBER /* 상위노출 */
+	noticeNo NUMBER NOT NULL, /* 공지사항게시글번호 */
+	title VARCHAR2(100) NOT NULL, /* 글제목 */
+	memNo VARCHAR2(50), /* 사원번호 */
+	content CLOB NOT NULL, /* 글내용 */
+	regdate DATE DEFAULT sysdate NOT NULL, /* 등록일 */
+	fileName VARCHAR2(100) DEFAULT 0, /* 업로드파일명 */
+	fileSize LONG DEFAULT 0, /* 파일사이즈 */
+	orFileName VARCHAR2(100) DEFAULT 0, /* 변경전 업로드 파일명 */
+	downcount NUMBER DEFAULT 0, /* 다운수 */
+	readcount NUMBER DEFAULT 0, /* 조회수 */
+	category VARCHAR2(100) NOT NULL, /* 카테고리 */
+	main VARCHAR2(5) DEFAULT 'N', /* 메인여부 */
+	newImgTerm VARCHAR2(200) DEFAULT 0 /* 24시간 */
 );
+
+create sequence notice_seq
+start with 1
+increment by 1;
+
+COMMENT ON TABLE notice IS '공지사항';
+
+COMMENT ON COLUMN notice.noticeNo IS '공지사항게시글번호';
+
+COMMENT ON COLUMN notice.title IS '글제목';
+
+COMMENT ON COLUMN notice.memNo IS '사원번호';
+
+COMMENT ON COLUMN notice.content IS '글내용';
+
+COMMENT ON COLUMN notice.regdate IS '등록일';
+
+COMMENT ON COLUMN notice.fileName IS '업로드파일명';
+
+COMMENT ON COLUMN notice.fileSize IS '파일사이즈';
+
+COMMENT ON COLUMN notice.orFileName IS '변경전 업로드 파일명';
+
+COMMENT ON COLUMN notice.downcount IS '다운수';
+
+COMMENT ON COLUMN notice.readcount IS '조회수';
+
+COMMENT ON COLUMN notice.category IS '카테고리';
+
+COMMENT ON COLUMN notice.main IS '메인여부';
+
+COMMENT ON COLUMN notice.newImgTerm IS '24시간';
 
 CREATE UNIQUE INDEX PK_notice
 	ON notice (
-		NOTI_NO ASC
+		noticeNo ASC
 	);
 
 ALTER TABLE notice
 	ADD
 		CONSTRAINT PK_notice
 		PRIMARY KEY (
-			NOTI_NO
+			noticeNo
 		);
 
 ALTER TABLE notice
 	ADD
 		CONSTRAINT FK_MEMBER_TO_notice
 		FOREIGN KEY (
-			MEMNO
+			memNo
 		)
 		REFERENCES MEMBER (
 			MEMNO
 		);
-		
-create sequence notice_seq
-start with 1
-increment by 1;
-
---select * from notice;
-
-commit;
-
-
-select * from member;

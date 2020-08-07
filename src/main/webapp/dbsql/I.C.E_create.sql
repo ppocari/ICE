@@ -9,9 +9,9 @@ uniform size 64k
 segment space management auto;
 
 --사용자 계정 생성
-create user ICE
-identified by ICE123
-default tablespace Ice;
+create user ice
+identified by ice123
+default tablespace ICE;
 
 --사용자 권한부여
 grant connect,resource to ICE;

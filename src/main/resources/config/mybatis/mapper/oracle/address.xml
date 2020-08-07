@@ -10,7 +10,7 @@
 		select rownum as RNUM, A.*
 		from (
 		   	select * from v_address
-            where memno=#{memNo}
+            where memno = #{memNo}
             <!-- <if test='userId == "hong"'>  (O) -->
 		     	<if test='searchCondition == "kor"'> 
 		     		<if test='searchKeyword == "하"'>
@@ -78,8 +78,8 @@
         <!-- 공백이 아니면 휴지통 -->
         <if  test="isTrash !=null and isTrash !=''">
         and isDeleted is not null
+       	order by isDeleted desc
         </if>
-
 	</select>
 	<select id="selectMemDeptPosForOrgan" resultType="memberVo">
 		select m.*, d.deptname, p.posname from member m, department d, position p
