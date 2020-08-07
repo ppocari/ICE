@@ -72,24 +72,22 @@ public class NoticeController {
 				
 		logger.info("공지사항 등록, 파라미터 vo={}, identNum={}", noticeVo, memNo);
 		
-		/*
 		//파일 업로드
 		List<Map<String, Object>> list
 			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
 		
-		String NOTI_FILENAME="", NOTI_ORFILENAME="";
-		long NOTI_FILESIZE=0;
+		String fileName="", orFileName="";
+		long fileSize=0;
 		
 		for(Map<String, Object> map : list) {
-			NOTI_FILESIZE= (Long) map.get("NOTI_FILESIZE");
-			NOTI_FILENAME= (String) map.get("NOTI_FILENAME");
-			NOTI_ORFILENAME= (String) map.get("NOTI_ORFILENAME");
+			fileSize= (Long) map.get("fileSize");
+			fileName= (String) map.get("fileName");
+			orFileName= (String) map.get("orFileName");
 		}
 		
-		noticeVo.setNOTI_FILENAME(NOTI_FILENAME);
-		noticeVo.setNOTI_ORFILENAME(NOTI_ORFILENAME);
-		noticeVo.setNOTI_FILESIZE(NOTI_FILESIZE);
-		*/
+		noticeVo.setFileName(fileName);
+		noticeVo.setOrFileName(orFileName);
+		noticeVo.setFileSize(fileSize);
 		
 		int cnt=noticeService.insertNotice(noticeVo);
 		logger.info("공지사항 등록 결과, cnt={}", cnt);
@@ -210,4 +208,136 @@ public class NoticeController {
 		return "notice/noticeDetail";
 	}
 	
+	@RequestMapping(value="noticeDelete.do", method = RequestMethod.GET)
+	public String noticeDelete_get(@RequestParam(defaultValue = "0") int noticeNo,
+			Model model) {
+		logger.info("삭제 화면 파라미터 no={}", noticeNo);
+		
+		if(noticeNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			
+			return "common/message";
+		}
+		
+		return "notice/noticeDelete";
+	}
+	
+	@RequestMapping(value="noticeDelete.do", method = RequestMethod.POST)
+	public String noticeDelete_post(@RequestParam(defaultValue = "0") int noticeNo,
+			HttpSession session, Model model) {
+		logger.info("삭제처리 파라미터 noticeNo={}", noticeNo);
+		
+		int cnt=noticeService.deleteNotice(noticeNo);
+		String msg="삭제 실패하였습니다", 
+			   url="/notice/noticeDetail.do?noticeNo="+noticeNo;
+		if(cnt>0) {
+			msg="삭제되었습니다.";
+			url="/notice/noticeClose.do";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/noticeClose.do")
+	   public void noticeClose() {
+	      logger.info("사내게시판 삭제완료");   
+	   }
+	
+	@RequestMapping(value="noticeEdit.do", method= RequestMethod.GET)
+		public String noticeEdit_get(@RequestParam(defaultValue = "0") int noticeNo,
+				HttpServletRequest request, Model model) {
+		logger.info("수정화면, 파라미터 noticeNo={}",noticeNo);
+		
+		if(noticeNo==0) {
+			model.addAttribute("msg", "잘못된 url입니다");
+			model.addAttribute("url", "/notice/noticeList.do");
+			
+			return "notice/noticeEdit";
+		}
+		
+		NoticeVO vo=noticeService.selectByNo(noticeNo);
+		logger.info("수정화면 조회 결과 vo={}", vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "notice/noticeEdit";
+	}
+	
+	@RequestMapping(value="noticeEdit.do", method= RequestMethod.POST)
+	public String noticeEdit_post(@ModelAttribute NoticeVO noticeVo,
+			HttpServletRequest request, Model model, HttpSession session) {
+		logger.info("수정 처리 파라미터 vo={}", noticeVo);
+		
+		//맴버정보 받아오기
+		String memNo = (String) session.getAttribute("identNum");
+		noticeVo.setMemNo(memNo);
+		logger.info("memNo 가져왔나? memNo={}",memNo);
+				
+		//첨부파일 없을때 null값 넣기
+		if(noticeVo.getFileName()==null || noticeVo.getOrFileName()==null
+				|| noticeVo.getFileName().isEmpty() || noticeVo.getOrFileName().isEmpty()) {
+			noticeVo.setFileName("0"); 
+			noticeVo.setOrFileName("0");
+		}
+		
+		//메인여부 체크안할시 N
+		if(noticeVo.getMain()==null || noticeVo.getMain().isEmpty()) {
+				noticeVo.setMain("N");
+		}
+		
+		logger.info("공지사항 수정, 파라미터 vo={}, identNum={}", noticeVo);
+		
+		/*
+		//파일 업로드
+		List<Map<String, Object>> list
+			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
+		
+		String NOTI_FILENAME="", NOTI_ORFILENAME="";
+		long NOTI_FILESIZE=0;
+		
+		for(Map<String, Object> map : list) {
+			NOTI_FILESIZE= (Long) map.get("NOTI_FILESIZE");
+			NOTI_FILENAME= (String) map.get("NOTI_FILENAME");
+			NOTI_ORFILENAME= (String) map.get("NOTI_ORFILENAME");
+		}
+		
+		noticeVo.setNOTI_FILENAME(NOTI_FILENAME);
+		noticeVo.setNOTI_ORFILENAME(NOTI_ORFILENAME);
+		noticeVo.setNOTI_FILESIZE(NOTI_FILESIZE);
+		*/
+		
+		int cnt=noticeService.updateNotice(noticeVo);
+		logger.info("공지사항 수정 결과, cnt={}", cnt);
+		
+		String msg="공지사항 수정 실패", url="/notice/noticeWrite.do";
+		if(cnt>0) {
+			msg="공지사항 수정되었습니다.";
+			url="/notice/noticeList.do";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/countUpdate.do")
+	public String countUpdate(@RequestParam(defaultValue = "0")int noticeNo,
+			Model model) {
+		logger.info("조회수 증가, 파라미터 no={}", noticeNo);
+		if(noticeNo==0) {
+			model.addAttribute("msg", "잘못된 url 입니다.");
+			model.addAttribute("url", "/notice/noticeList.do");
+			
+			return "common/message";
+		}
+		int cnt=noticeService.updateReadCount(noticeNo);
+		logger.info("조회수 증가 결과, cnt={}", cnt);
+		
+		return "redirect:/notice/noticeDetail.do?noticeNo="+noticeNo;
+	}
 }
