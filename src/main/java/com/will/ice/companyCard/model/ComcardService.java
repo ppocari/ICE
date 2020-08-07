@@ -5,17 +5,22 @@ import java.util.List;
 
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
+import com.will.ice.paymentfile.model.PaymentfileVO;
 
 public interface ComcardService {
 
 	List<ComcardVO> selectUnUseComcard(DateSearchVO search_dsvo);
 	List<ComcardVO> selectListComcard(Depart_posi_dateVO dpdvo);
-	
-	
-	
+
+
+
 	ComcardVO selectNoComcard(int comcard_no);
-	
-	
-	
-	
+
+	int insertCCMulti(List<ComcardVO> ccList);
+
+	int insertCCFile(ComCardFileVO CCfileVO);
+
+
+
+
 }

@@ -134,17 +134,7 @@ where acctitle like '%비%';
 
 --drop view  comcard_mem;
 
-select c.*, m.NAME , m.POSNAME
-from companyCard c join mypage_mem m
- on c.MEMNO = m.MEMNO ;
- 
- create view comcard_mem
- as 
- select c.*, m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
-from companyCard c join mypage_mem m
- on c.MEMNO = m.MEMNO ;
- 
- select * from comcard_mem;
+
  
  desc comcard_mem
  
@@ -154,7 +144,15 @@ select * from comcard_mem
 		 
 
  select * from member;
- desc member;
+ 
+ drop table companyCardFile;
+ 
+  select * from companyCardFile;
+  
+    select * from companyCard;
+  
+  
+ desc companyCard;
  
  commit;
  
@@ -186,3 +184,33 @@ select *
 	
 		where RNUM>1
 		  and RNUM<=5;
+		  
+		  
+		  
+--법인카드 
+
+select * from companyCard;
+
+--companyCard_seq
+
+drop sequence companyCard_seq;
+
+create sequence companyCard_seq
+start with 1
+increment by 1;
+
+ 
+ select * from comcard_mem;
+ 
+ desc comcard_mem;
+  desc companyCard;
+ 
+ select * from comcard_mem
+	where acccode is null 		 
+	and to_date(USEDATE) = '2020-07-01';
+	
+select * from companyCardFile;
+
+create sequence companyCardFile_seq
+start with 1
+increment by 1;

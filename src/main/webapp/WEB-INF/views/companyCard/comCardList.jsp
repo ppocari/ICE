@@ -124,14 +124,17 @@
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<thead>
 									<tr>
+										<th>카드사</th>
 										<th>카드번호</th>
 										<th>사원이름</th>
 										<th>계정코드</th>
 										<th>사용금액</th>
 										<th>사용처</th>
 										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
+										<th>승인번호</th>
+										<th>승인일자</th>
+										<th>승인시각</th>
+									
 										
 									</tr>
 								</thead>
@@ -141,6 +144,7 @@
 									<c:forEach var="vo" items="${list }">
 										
 										<tr>
+											<td>${vo.company }</td>
 											<td>${vo.cardNo }</td>
 											<td>${vo.name }</td>
 											<td>${vo.accCode }</td>
@@ -148,8 +152,11 @@
 											<td>${vo.usePlace }</td>
 											<td>${vo.useDate } </td>
 											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-															
+											<td>${vo.confirmCode }</td>
+											<td>${vo.confirmDate }</td>
+											<td>${vo.confirmTime }</td>
+
+									
 										</tr>
 									</c:forEach>
 								</tbody>
