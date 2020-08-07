@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
+<script type="text/javascript" src="<c:url value='/resources/js/address/inputCheck.js'/>"></script>
 <script type="text/javascript">
 $(function(){
-
 	$('input[type=reset]').click(function(){
 		location.href="<c:url value='/address/addressMain.do'/>";
 	});
@@ -15,208 +15,25 @@ $(function(){
 				'width=420, height=320, left=800, top=200, location=yes, resizable=yes');
 	});
 		
-	
-	/* 이메일 직접 입력 처리 */
-	$('#email2').change(function(){
-		if($(this).val()=='직접 입력') {
-			$('#email3').val("");
-			$('#email3').css('visibility','visible');
-			$('#email3').focus();
-		}else{
-			$('#email3').css('visibility','hidden');
-		}
-	});
-	
-	$('input[type=submit]').click(function(){
-		
-		var name=$('input[name=name]').val();
-		var hp2=$('input[name=hp2]').val();
-		var hp3=$('input[name=hp3]').val();
-		var em=$('#email3').val();
-		
-		var check_num = /[0-9]/; // 숫자 
-		var check_eng = /[a-zA-Z]/; // 문자 
-		var check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글
-		
-		if(name.length==0) {
-			alert('이름은 필수입니다!');
-			$('input[name=name]').focus();
-			return false;
-		}else if(!check_num.test(name) && !check_eng.test(name) && !check_kor.test(name)) {
-			alert('이름은 한글, 영어, 숫자만 입력할 수 있습니다!');
-			$('input[name=name]').focus();
-			return false;
-		}
-		
-		if(hp2.length!=0) {
-			if(hp3.length==0) {
-				hp_empty();
-				$('input[name=hp3]').focus();
-				return false;
-			}else if(!validate_phone(hp2)) {
-				hp_error();
-				$('input[name=hp2]').focus();
-				return false;
-			}
-		}
-		if(hp3.length!=0) {
-			if(hp2.length==0) {
-				hp_empty();
-				$('input[name=hp2]').focus();
-				return false;
-			}else if(!validate_phone(hp3)) {
-				hp_error();
-				$('input[name=hp3]').focus();
-				return false;
-			}
-		}
-		
-		if(em.length>0) {
-			if(em.length==0 || !email_check(em)) {
-				email_alert();
-				return false;
-			}
-		}
-	});
-
-	function hp_error(){
-		alert('전화번호는 숫자만 입력할 수 있습니다.');
-	}
-	
-	function hp_empty(){
-		alert('전화번호 양식에 맞지 않습니다.');
-	}
-	
-	function validate_phone(hp) {
-		var pattern = new RegExp(/^[0-9]*$/g);
-		return pattern.test(hp); 
-	}
-	
-	function email_alert(){
-		alert('이메일 형식이 올바르지 않습니다.');
-	}
-	
-	function email_check(em) {
-		var isPoint=em.indexOf(".");
-		var isLen=em.length;
-		if(isPoint==-1 || isPoint==0){
-			return false;
-		}else if(isPoint>=1 && isPoint+1!=isLen){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
 });
 </script>
 
 <style type="text/css">
-.divForm div, .divForm label, .divForm {
-	font-size: 0.9em;
-}
-
-.divForm form, .divForm {
-	width: 100%;
-}
-
-.divForm fieldset {
-	padding: 0;
-	border: 0;
-}
-
-.divForm legend {
-	font-weight: bold;
-	color: #555555;
-	padding: 10px 0;
-	margin-left: 15%;
-	font-size: 1.3em;
-}
 
 .divForm div {
 	margin-left: 60px;
-	width: 90%;
-	clear: both;
-	border-bottom: 1px solid #eee;
-	padding: 5px 0;
-	overflow: auto;
 }
 
-.divForm .firstDiv {
-	border-top: 2px solid #e2e2e2;
-}
-
-.divForm .sp1 {
-	width: 20%;
-	text-align: right;
-	padding: 3px 15px 0 0;
-	clear: left;
-	font-weight: bold;
-}
-
-.la_left  {
-	float: left;
-	width: 20%;
-	text-align: right;
-	padding: 3px 15px 0 0;
-	font-weight: bold;
-}
-
-.la_right {
-	width: 20%;
-	text-align: right;
-	padding: 3px 15px 0 0;
-	font-weight: bold;
-}
-
-.etc {
-	border: 1px solid #DCDDE3;
-	width: 240px;
-}
-
-.em3 {
-	border: 1px solid #DCDDE3;
+.email3 {
 	width: 150px;
 }
 
 .hp {
-	border: 1px solid #DCDDE3;
 	width: 71px;
 }
 
 .email{
-	border: 1px solid #DCDDE3;
 	width: 110px;
-}
-
-.divForm textarea {
-	border: 1px solid #DCDDE3;
-}
-
-.divForm.text_width input[type="text"], .divForm.text_width input[type="password"]
-	{
-	width: 55%;
-	height: 1.2em;
-	font-size: 0.9em;
-}
-
-.divForm select {
-	border: 1px solid #DCDDE3;
-	font-size: 0.9em;
-}
-
-.divForm input[type=submit], input[type=reset] {
-	font-size: 1.0em;
-	margin-left: 5px;
-	background-color: #f3f3f3;
-	border-radius: 5px 5px 5px 5px;
-	border: 1px solid gray;
-}
-
-#add_inputs {
-	border:none;
-	text-align: center;
-
 }
 
 #addFromOrgan_span{
@@ -253,38 +70,39 @@ $(function(){
 							<legend>기본 정보</legend>
 							<div>
 								<label class="la_left">이름</label> 
-								<input class="etc" type="text" name="name"> 
+								<input class="etc borderStyle" type="text" name="name"> 
 								<label class="la_right">전화번호</label>
-								<select name="hp1">
+								<select class="borderStyle" name="hp1">
 									<c:forEach var="hp" items="${phList }">
 										<option value="${hp }" >${hp }</option>
 									</c:forEach>
 								</select> 
-								- <input class="hp" type="text" name="hp2">  
-								- <input class="hp" type="text" name="hp3">
+								- <input class="hp borderStyle" type="text" name="hp2">  
+								- <input class="hp borderStyle" type="text" name="hp3">
 							</div>
 							<div>
 								<label class="la_left">이메일</label> 
-								<input class="email" type="text" name="email1"> @ 
-								<select name="email2" id="email2">
+								<input class="email borderStyle" type="text" name="email1"> @ 
+								<select class="borderStyle" name="email2" id="email2">
 									<c:forEach var="em" items="${emList }">
 										<option value="${em }" >${em }</option>
 									</c:forEach>
 								</select>
-								  <input class="em3" type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리"
+								  <input class="email3 borderStyle" type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리"
         							style="visibility:hidden">
 							</div>
 							<div>
 								<label class="la_left">회사명</label> 
-								<input class="etc" type="text" name="company">
+								<input class="etc borderStyle" type="text" name="company">
 								<label class="la_right">부서</label> 
-								<input class="etc" type="text" name="deptName">
+								<input class="etc borderStyle" type="text" name="deptName">
 							</div>
 							<div>
 								<label class="la_left">직책</label> 
-								<input class="etc" type="text" name="posName">
+								<input class="etc borderStyle" type="text" name="posName">
 								<label class="la_right">그룹 선택</label> 
-								<select name="adgNo">
+								<select class="borderStyle" name="adgNo">
+									<option value="">전체</option>
 									<c:forEach var="adg" items="${adgList }">
 										<option value="${adg.adgNo }" 
 											<c:if test="${adg.adgNo==1 }">
@@ -297,19 +115,19 @@ $(function(){
 							<legend>추가 정보</legend>
 							<div>
 								<label class="la_left">주소</label> 
-								<input class="etc" type="text" name="homeAddress">
+								<input class="etc borderStyle" type="text" name="homeAddress">
 								<label class="la_right">홈페이지</label> 
-								<input class="etc" type="text" name="homePage">
+								<input class="etc borderStyle" type="text" name="homePage">
 							</div>
 							<div>
 								<label class="la_left">메신저</label> 
-								<input class="etc" type="text" name="messenger"> 
+								<input class="etc borderStyle" type="text" name="messenger"> 
 								<label class="la_right">SNS</label> 
-								<input class="etc" type="text" name="SNS">
+								<input class="etc borderStyle" type="text" name="SNS">
 							</div>
 							<div>
 								<label class="la_left">메모</label><br>
-								<textarea rows="3" cols="109" name="memo"></textarea>
+								<textarea class="borderStyle" rows="3" cols="109" name="memo"></textarea>
 							</div>
 							<div id="add_inputs">
 								<input type="submit" value="등록"> 

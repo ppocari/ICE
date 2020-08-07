@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* 테이블 스타일  */
+#tableDivForm {
+	width: 95%;
+	margin: 0 auto;
+	padding: 5px;
+	background-color: white;
+	margin-bottom:10px;
+} 
+
+#tableForm {
+	background-color: white;
+	text-align: center;
+}
+
+#tableTrForm {
+	height: 30px;
+}
+
+/* .star_color {
+	color: orange;
+} */
+
+.addressCB {
+	width: 0.8em;
+	margin-top: 5px;
+}
+
+#tableForm th, td {
+	border-bottom: 2px solid #f8f9fc;
+}
+
+#tableForm tr:last-child { 
+	border-bottom:3px solid white;
+}
+
+#tableForm {
+	width: 100%;
+	font-size: 0.9em;
+}
+
+/* 버튼 스타일 */
+#buttonsDiv {
+	width:100%;
+}
+
+#buttonsDiv>* {
+	text-align: left;
+	font-size: 0.9em;
+	margin-right: 5px;
+}
+
+#buttonsDiv input[type=button] {
+	border: 1px solid lightgray;
+	margin-right: 5px;
+}
+
+#buttonsDiv a {
+	color:#858796;
+	font-size: 0.9em;
+	margin-left:3px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#buttonsDiv a:hover{
+	text-decoration: underline;
+}
+
+/* 한 줄에 정렬 3개 */
+#divAll{
+	text-align: center;
+}
+
+#divLeft{
+	float:left;
+}
+
+#divRight{
+	float:right;
+}
+
+/* 테이블에 마우스 올리면 효과 */
+.highlight {
+	background-color: #d1d3e2;
+}
+
+ 
+.highlight a {
+	text-decoration: none;
+	color:#858796;
+} 
+
+/* 하이퍼링크(a href) 건 것 스타일 취소 */
+.addressName{
+	color:#858796;
+	text-decoration: none;
+}
+
+/* 페이지 정렬 */
+.divPage{
+	text-align: center;
+	margin-bottom: 10px;
+}
