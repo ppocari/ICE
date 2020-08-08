@@ -97,7 +97,7 @@ public class WorkRecordController {
 		if(nine.after(day)){
 			Svo.setCmpStatus("9"); // nine > day 출근
 		}else {
-			Svo.setCmpStatus("0"); // nine < day 결근
+			Svo.setCmpStatus("0"); // nine < day 이상
 		}
 		logger.info("status={}"+Svo.getCmpStatus());
 		
@@ -131,15 +131,15 @@ public class WorkRecordController {
 		
 		
 		int nomal = Integer.parseInt(Evo.getCmpStatus());
-		
+		logger.info("Evo.getCmpStatus={}",Evo.getCmpStatus());
 		if( (nomal-1) > 8 ) {
-			Evo.setCmpStatus("야근");
+			Evo.setCmpStatus("출근");
 		}else if( (nomal-1) < 8 ) {
 			Evo.setCmpStatus("반차");
 		}else {
-			Evo.setCmpStatus("출근");
+			Evo.setCmpStatus("이상");
 		}
-		logger.info("퇴근 후 vo={},Evo.getCmpStatus={}"+Evo,Evo.getCmpStatus());
+		logger.info("퇴근 후 vo={},Evo.getCmpStatus={}",Evo,Evo.getCmpStatus());
 
 		int cnt = workService.updateWork(Evo);
 		logger.info("퇴근 결과 cnt={}",cnt);
