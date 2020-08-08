@@ -302,13 +302,19 @@ on p.DOCNO = l.DOCNO)join doctype d
 on p.TYPENO = d.TYPENO)join member m
 on p.MEMNO = m.MEMNO;
 
+create or replace view commentView
+as
+select p.*,m.NAME from paycomment p
+join member m
+on p.MEMNO = m.MEMNO;
+
 select * from paymentfile;
 select * from payment;
 select * from paymentline;
-select * from paycomment;
 
 select * from paylistview;
 select * from docview;
+select * from paymentview;
 
 select * from position;
 select * from department;

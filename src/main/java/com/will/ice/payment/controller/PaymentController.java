@@ -149,7 +149,7 @@ public class PaymentController {
 		pldVo.setKeep(Integer.parseInt(keep));
 		pldVo.setWritememNo(identNum);
 		pldVo.setImsy("N");
-		pldVo.setProgress("결재대기중");
+		pldVo.setProgress("waiting");
 		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
 		
 		MemberVO memVo = memService.selectMember(identNum);

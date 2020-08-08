@@ -6,6 +6,7 @@ import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
@@ -33,4 +34,6 @@ public interface PaymentService {
 	List<PaycommentVO> selectSign(int docNo);
 	List<PaylistViewVO> selectDecided(PaymentSearchVO paysearchVo);
 	int updateProgress(PaymentviewVO vo);
+	List<PaymentviewVO> selectRejected(PaymentSearchVO paysearchVo);
+	List<CommentviewVO> selectComment(int docNo);
 }

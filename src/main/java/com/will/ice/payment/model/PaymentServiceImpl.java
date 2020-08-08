@@ -12,6 +12,7 @@ import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
@@ -207,8 +208,12 @@ public class PaymentServiceImpl implements PaymentService{
 			paysearchVo.setDocNo(docNo);
 			logger.info("paysearchVo={}",paysearchVo);
 			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-			if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-				list.add(vo);
+			logger.info("PaylistViewVO={}",vo);
+			
+			if(vo!=null) {
+				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+					list.add(vo);
+				}
 			}
 		}
 		
@@ -225,6 +230,8 @@ public class PaymentServiceImpl implements PaymentService{
 		vo.setMemNo(comVo.getMemNo());
 		if(paymentDao.countPayline(comVo.getDocNo())>0) {
 			vo.setProgress("ongoing");
+		}else if(comVo.getSignName()=="" && !comVo.getSignName().isEmpty()){
+			vo.setProgress("reject");
 		}else {
 			vo.setProgress("decided");
 		}
@@ -258,6 +265,17 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public int updateProgress(PaymentviewVO vo) {
 		return paymentDao.updateProgress(vo);
+	}
+
+	@Override
+	public List<PaymentviewVO> selectRejected(PaymentSearchVO paysearchVo) {
+		paysearchVo.setProgress("reject");
+		return paymentDao.selectRejected(paysearchVo);
+	}
+
+	@Override
+	public List<CommentviewVO> selectComment(int docNo) {
+		return paymentDao.selectComment(docNo);
 	}
 
 }

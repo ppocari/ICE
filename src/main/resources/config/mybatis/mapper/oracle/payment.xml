@@ -79,6 +79,7 @@
 			<where>
 				imsy='N'
 				and memNo=#{identNum}
+				and progress!='reject'
 				<if test="searchKeyword!=null and searchKeyword!=''">
 					and title=#{searchKeyword}
 				</if>
@@ -164,7 +165,7 @@
 		select * from (
 			select * from PAYLISTVIEW
 			<where>
-				docNo=#{docNo}
+				docNo=#{docNo} and progress='waiting' or progress='ongoing'
 				and PAYDATE is null
 				<if test="searchKeyword!=null and searchKeyword!=''">
 					and title=#{searchKeyword}
@@ -249,6 +250,16 @@
 			and sysdate < expirydate+1
 			order by docNo desc
 		]]>
+	</select>
+	
+	<select id="selectRejected" parameterType="paymentSearchVo" resultType="paymentViewVo">
+		select * from paymentView
+		where memNo=#{identNum} and progress=#{progress}
+	</select>
+	
+	<select id="selectComment" parameterType="int" resultType="commentviewVo">
+		select * from commentView
+		where docNo=#{docNo}
 	</select>
 </mapper>
 

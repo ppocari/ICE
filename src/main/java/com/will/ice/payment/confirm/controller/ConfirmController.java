@@ -21,10 +21,12 @@ import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DoctypeService;
 import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.document.model.DocumentviewVO;
+import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
+import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -61,15 +63,29 @@ public class ConfirmController {
 	@RequestMapping("/confirm/decided.do")
 	public void decided(HttpSession session, @ModelAttribute PaymentSearchVO paysearchVo,
 			Model model) {
-		logger.info("기결함 보여주기");
+		logger.info("기결함 보여주기 검색vo={}",paysearchVo);
 		
 		String identNum = (String)session.getAttribute("identNum");
 		paysearchVo.setIdentNum(identNum);
 		//기결문서번호 리스트 progress로 찾아오기
 		
 		List<PaylistViewVO> list = paymentService.selectDecided(paysearchVo);
-		logger.info("검색vo={}",paysearchVo);
-
+		List<DoctypeVO> doctypelist = doctypeService.selectAll();
+		
+		model.addAttribute("list",list);
+		model.addAttribute("doctypelist",doctypelist);
+		model.addAttribute("paysearchVo",paysearchVo);
+	}
+	
+	@RequestMapping("/confirm/rejected.do")
+	public void rejected(HttpSession session, @ModelAttribute PaymentSearchVO paysearchVo,
+			Model model) {
+		String identNum = (String)session.getAttribute("identNum");
+		paysearchVo.setIdentNum(identNum);
+		logger.info("반려함 보여주기  검색vo={}",paysearchVo);
+		
+		
+		List<PaymentviewVO> list = paymentService.selectRejected(paysearchVo);
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();
 		
 		model.addAttribute("list",list);
@@ -98,6 +114,29 @@ public class ConfirmController {
 		PaymentfileVO fileVo = paymentService.getFile(docNo);
 		logger.info("첨부파일 fileVo={}",fileVo);
 		
+		model.addAttribute("signList",signList);
+		model.addAttribute("payVo",payVo);
+		model.addAttribute("plList2",plList2);
+		model.addAttribute("plList",plList);
+		model.addAttribute("fileVo",fileVo);
+	}
+
+	@RequestMapping("/rejectedDocView.do")
+	public void rejectedDocView(@RequestParam int docNo, Model model, HttpSession session) {
+		//결재자가 확인하는 문서보기
+		logger.info("반려된 문서보기, 파라미터 docNo={}",docNo);
+		String memNo = (String)session.getAttribute("identNum");
+		
+		List<CommentviewVO> commentList = paymentService.selectComment(docNo);
+		List<PaycommentVO> signList = paymentService.selectSign(docNo);
+		PaymentviewVO payVo = paymentService.selectDocument(docNo);
+		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
+		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		logger.info("결재선, 파라미터 plList={}",plList.size());
+		PaymentfileVO fileVo = paymentService.getFile(docNo);
+		logger.info("첨부파일 fileVo={}",fileVo);
+		
+		model.addAttribute("commentList",commentList);
 		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList2",plList2);

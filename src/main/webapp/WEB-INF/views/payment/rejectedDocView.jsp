@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +11,12 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	#CDV{overflow: hidden;}.center{text-align: center;background-color: #f8f9fc;}#docType{font-weight: 600;text-align: center;}#CDVcancelBt,#cancelBt{background-color: #4e73df; color:white;}#CDVlastDiv{position: relative;left: 88%;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
+	body{overflow-x: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}#lastDiv{background-color: white;text-align: center;}
 </style>
+<script type="text/javascript">
+</script>
 </head>
-<body id="CDV">
+<body>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
@@ -57,7 +59,12 @@
 							<c:if test="${!empty vo.payDate}">
 								<c:forEach var="vo2" items="${plList2 }">
 								<td>
-									<img alt="서명" src="<c:url value='/sign_file/${vo2.signName }'/>" width="60%">
+									<c:if test="${!empty vo2.signName}">
+										<img alt="서명" src="<c:url value='/sign_file/${vo2.signName }'/>" width="60%">
+									</c:if>
+									<c:if test="${empty vo2.signName}">
+										반려
+									</c:if>
 								</td>
 								</c:forEach>
 							</c:if>
@@ -89,17 +96,22 @@
 			</table>
 		</div>
 	</div>
-	<div id="CDVlastDiv">
-		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'"style="position: relative; right: 2%;top:-7px;">
-				결재선 지정
-			</button>
-		</c:if>
-		<c:if test="${param.flag!='imsy'}">
-			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: 2%;top:-7px;">
-				결재상신 취소
-			</button>
-		</c:if>
+	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+		<table class="table table-bordered" style="width: 75%;margin-left:0px;">
+			<c:if test="${!empty commentList }">
+			<c:forEach var="cVo" items="${commentList }">
+			<tr>
+				<td class="center" width="5%">${cVo.commentNo }</td>
+				<td width="15%">${cVo.name }</td>
+				<td width="60%" style="text-align: left;">${cVo.content }</td>
+				<td width="20%">
+					<fmt:formatDate value="${cVo.regdate }" pattern="YY-MM-dd HH:mm"/>
+				</td>
+			</tr>
+			</c:forEach>
+			</c:if>
+		</table>
+		<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="background-color: #4e73df; color:white;"/>
 	</div>
 	</div>
 	</div>
