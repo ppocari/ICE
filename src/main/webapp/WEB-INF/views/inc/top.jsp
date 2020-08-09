@@ -122,7 +122,7 @@
 					aria-labelledby="headingThree" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
+						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
 						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
 						
@@ -228,8 +228,8 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">결재함</h6>
 						<a class="collapse-item" href="<c:url value="/payment/confirm/undecided.do" />">미결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/decided.do" />">기결함</a>
+						<a class="collapse-item" href="<c:url value="/payment/confirm/rejected.do" />">반려함</a>
 						
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">기안함</h6>

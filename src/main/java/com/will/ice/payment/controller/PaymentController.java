@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaymentSearchVO;
+import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocformService;
 import com.will.ice.document.model.DocformVO;
 import com.will.ice.document.model.DoctypeService;
@@ -148,7 +149,7 @@ public class PaymentController {
 		pldVo.setKeep(Integer.parseInt(keep));
 		pldVo.setWritememNo(identNum);
 		pldVo.setImsy("N");
-		pldVo.setProgress("결재대기중");
+		pldVo.setProgress("waiting");
 		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
 		
 		MemberVO memVo = memService.selectMember(identNum);
@@ -269,17 +270,17 @@ public class PaymentController {
 		//작성자가 확인하는 문서보기
 		logger.info("문서 상세보기, 파라미터 docNo={}",docNo);
 		
-		List<PaycommentVO> signList = paymentService.selectSign(docNo);
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
-		List<DocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
 		PaymentfileVO fileVo = paymentService.getFile(docNo);
 		logger.info("첨부파일 fileVo={}",fileVo);
 		
-		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("plList",plList);
+		model.addAttribute("plList2",plList2);
 	}
 	
 	@RequestMapping("/deletePayline.do")

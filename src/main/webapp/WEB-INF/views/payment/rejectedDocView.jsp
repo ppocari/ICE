@@ -11,27 +11,9 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	body{overflow: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
+	body{overflow-x: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}#lastDiv{background-color: white;text-align: center;}
 </style>
 <script type="text/javascript">
-	function checkReject(){
-		if($('#comment').val().length<1){
-			alert("의견을 작성해주세요!");
-			event.preventDefault();
-			$('#comment').focus();
-		}
-	}
-	function checkApprove(){
-		if($('#comment').val().length<1){
-			alert("의견을 작성해주세요!");
-			event.preventDefault();
-			$('#comment').focus();
-		}else if($('#signfile').val().length<1){
-			alert("서명을 등록해주세요!");
-			event.preventDefault();
-			$('#signfile').focus();
-		}
-	}
 </script>
 </head>
 <body>
@@ -115,17 +97,21 @@
 		</div>
 	</div>
 	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-		<form class="form-inline" name="confirmFrm" method="post" enctype="multipart/form-data">
-			<div class="form-group" id="commentDiv">&nbsp;
-				의견&nbsp;<input type="text" id="comment" name="content" class="form-control">&nbsp;
-				서명 첨부&nbsp;<input type="file" class="form-control" name="upfile" id="signfile">
-				<input type="hidden" name="docNo" value="${payVo.docNo }">
-			</div>
-			<button type="submit" class="btn btn-default" id="cancelBt" onclick="checkReject()"
-				formaction="<c:url value='/payment/reject.do' />" value="reject">반려</button>
-			<button type="submit" class="btn btn-default" id="acceptBt" onclick="checkApprove()"
-				formaction="<c:url value='/payment/approve.do' />" value="approve">승인</button>
-		</form>
+		<table class="table table-bordered" style="width: 75%;margin-left:0px;">
+			<c:if test="${!empty commentList }">
+			<c:forEach var="cVo" items="${commentList }">
+			<tr>
+				<td class="center" width="5%">${cVo.commentNo }</td>
+				<td width="15%">${cVo.name }</td>
+				<td width="60%" style="text-align: left;">${cVo.content }</td>
+				<td width="20%">
+					<fmt:formatDate value="${cVo.regdate }" pattern="YY-MM-dd HH:mm"/>
+				</td>
+			</tr>
+			</c:forEach>
+			</c:if>
+		</table>
+		<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="background-color: #4e73df; color:white;"/>
 	</div>
 	</div>
 	</div>

@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
-	#imsydatefrm{text-align: center;height:120px;}#imsydatefrm label, #imsydatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}#imsypaylist{margin-top: 20px;}#imsypayTable{width:100%;text-align: center;}#imsypayTable thead tr{background-color: gray;color:white;}#imsyupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#imsyupperDiv p{padding-top: 5px;padding-left: 5px;}#imsywholeDiv{padding-left: 20px;padding-right: 20px;}#imsypaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}.imsydocNoInfo{cursor: pointer;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
+	#UDdatefrm{text-align: center;height:120px;}#UDdatefrm label, #UDdatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}#UDpaylist{margin-top: 20px;}#UDpayTable{width:100%;text-align: center;}#UDpayTable thead tr{background-color: gray;color:white;}#UDupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#UDupperDiv p{padding-top: 5px;padding-left: 5px;}#UDwholeDiv{padding-left: 20px;padding-right: 20px;}#UDpaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}.UDdocNoInfo{cursor: pointer;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
 </style>
 
 <script type="text/javascript">
@@ -24,23 +25,22 @@
 		$("#datetimepicker2").on("change.datetimepicker", function(e) {
 			$('#datetimepicker1').datetimepicker('maxDate', e.date);
 		});
-		
 	});
 </script>
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-	<h1 class="h3 mb-0 text-gray-800" style="padding-left: 1.5%;">임시보관함</h1>
+	<h1 class="h3 mb-0 text-gray-800" style="padding-left: 1.5%;">반려함</h1>
 </div>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
 	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 0px 0px 10px 0px;">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-		<h6 class="m-0 font-weight-bold text-primary">임시보관 목록</h6>
+		<h6 class="m-0 font-weight-bold text-primary">반려문서 목록</h6>
 	</div>
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<form name="searchDateFrm" method="post" class="form-inline"
-				id="imsydatefrm" action="<c:url value='/payment/write/imsyBox.do' />">
+				id="UDdatefrm" action="<c:url value='/payment/confirm/undecided.do' />">
 				<div class="form-group">
 					<label for="startDay">작성일</label>
 					<div class="input-group date" id="datetimepicker1"
@@ -90,9 +90,9 @@
 			</form>
 	</div>
 	
-	<div id="imsywholeDiv">
-	<div class="form-group" id="imsypaylist">
-	<table id="imsypayTable" class="table table-hover">
+	<div id="UDwholeDiv">
+	<div class="form-group" id="UDpaylist">
+	<table id="UDpayTable" class="table table-hover">
 		<thead>
 			<tr>
 				<th width="15%;">문서번호</th>
@@ -107,9 +107,9 @@
 		<!-- 반복 시작 -->
 			<c:if test="${!empty list }">
 				<c:forEach var="vo" items="${list }">
-					<tr onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
+					<tr onclick="window.open('../rejectedDocView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
-							<a class="imsydocNoInfo">
+							<a class="UDdocNoInfo">
 								${vo.docNo }
 							</a>
 						</td>
@@ -120,12 +120,12 @@
 						<td>${vo.hasFile }</td>
 					</tr>
 				</c:forEach>
-				</c:if>
-				<c:if test="${empty list }">
-					<tr>
-						<td colspan="6">문서가 존재하지 않습니다</td>
-					</tr>
-				</c:if>
+			</c:if>
+			<c:if test="${empty list }">
+				<tr>
+					<td colspan="6">문서가 존재하지 않습니다</td>
+				</tr>
+			</c:if>
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>
