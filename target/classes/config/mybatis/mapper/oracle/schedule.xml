@@ -8,7 +8,7 @@
 			select schedule_seq.nextval from dual
 		</selectKey>
 		insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)
-		values(schedule_seq.nextval,#{memNo},#{title},#{startDay},#{endDay},
+		values(#{schNo},#{memNo},#{title},#{startDay},#{endDay},
 			#{place},#{content},#{resourceId})
 	</insert>
 	
@@ -26,6 +26,18 @@
 		(select * from SCHEDULE where memNo=#{memNo} order by schNo desc)
 		where rownum = 1
 	</select>
+	
+	<delete id="deleteSchedule" parameterType="string">
+		delete from SCHEDULE where schNo = #{schNo}
+	</delete>
+	
+	<update id="updateSchedule" parameterType="ScheduleVo">
+		update SCHEDULE
+		set title=#{title},place=#{place},start_day=#{startDay},
+    		end_day=#{endDay},content=#{content}
+		where schNo=#{schNo}
+	</update>
+	
 </mapper>
 
 
