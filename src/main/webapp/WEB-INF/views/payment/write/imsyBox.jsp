@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/payment/payment.css'/>">
 <style type="text/css">
 	#imsydatefrm{text-align: center;height:120px;}#imsydatefrm label, #imsydatefrm input[type=submit]{margin-left: 10px;margin-right: 10px;}#imsypaylist{margin-top: 20px;}#imsypayTable{width:100%;text-align: center;}#imsypayTable thead tr{background-color: gray;color:white;}#imsyupperDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#imsyupperDiv p{padding-top: 5px;padding-left: 5px;}#imsywholeDiv{padding-left: 20px;padding-right: 20px;}#imsypaylist{overflow-y:auto; overflow-x:hidden;height: 500px;}.imsydocNoInfo{cursor: pointer;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
 </style>
@@ -75,6 +74,7 @@
 					<select class="form-control" id="docType" name="searchCondition">
 						<!-- 반복 시작 -->
 						<c:forEach var="doctypeVo" items="${doctypelist }">
+							<option value="">전체</option>
 							<option value="${doctypeVo.typeNo }"
 								<c:if test="${paysearchVo.searchCondition==doctypeVo.typeNo }">
 									selected="selected"
@@ -105,8 +105,9 @@
 		</thead>
 		<tbody>
 		<!-- 반복 시작 -->
+			<c:if test="${!empty list }">
 				<c:forEach var="vo" items="${list }">
-					<tr onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+					<tr onclick="window.open('../checkDocView.do?docNo=${vo.docNo}&flag=imsy','Docviewer','width=1000,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
 							<a class="imsydocNoInfo">
 								${vo.docNo }
@@ -119,6 +120,12 @@
 						<td>${vo.hasFile }</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty list }">
+					<tr>
+						<td colspan="6">문서가 존재하지 않습니다</td>
+					</tr>
+				</c:if>
 			<!-- 반복 끝 -->
 		</tbody>
 	</table>

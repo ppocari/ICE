@@ -75,6 +75,7 @@
 				<select class="form-control" id="docType" name="searchCondition">
 					<!-- 반복 시작 -->
 					<c:forEach var="doctypeVo" items="${doctypelist }">
+						<option value="">전체</option>
 						<option value="${doctypeVo.typeNo }"
 							<c:if test="${paysearchVo.searchCondition==doctypeVo.typeNo }">
 								selected="selected"
@@ -105,8 +106,9 @@
 			</thead>
 			<tbody>
 			<!-- 반복 시작 -->
+				<c:if test="${!empty list }">
 				<c:forEach var="i" begin="0" end="${fn:length(list) }">
-					<tr onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=900,left=0,top=0,location=no,resizable=no,scroll=no');">
+					<tr onclick="window.open('../checkDocView.do?docNo=${list[i].docNo}','Docviewer','width=1000,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
 							<a class="docNoInfo">
 								${list[i].docNo}
@@ -119,6 +121,12 @@
 						<td>${list[i].hasFile}</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty list }">
+					<tr>
+						<td colspan="6">문서가 존재하지 않습니다</td>
+					</tr>
+				</c:if>
 			<!-- 반복 끝 -->
 			</tbody>
 		</table>

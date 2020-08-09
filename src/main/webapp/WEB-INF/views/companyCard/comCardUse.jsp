@@ -126,9 +126,10 @@
 							<table class="table table-bordered table-hover" id="dynamicTable">
 								<thead>
 									<tr>
-										<th>카드번호</th>
+										<th>카드사</th>
+										<th style="width: 130px;">카드번호</th>
 										<th>사원이름</th>
-										<th>계정코드</th>
+										<th >계정코드</th>
 										<th>사용처</th>
 										<th>사용금액</th>
 										<th>사용일</th>
@@ -148,17 +149,35 @@
 										<c:forEach var="vo" items="${list }">
 											<tr id="edit_tr${i}" >
 												<input type="hidden" name="accItems[${i}].no"  value="${vo.no }"/></td>
-												<td><input type="text" name="accItems[${i}].cardNo"  value="${vo.cardNo }" readonly="readonly"/></td>
-												<td><input style="width: 100px;" type="text" name="accItems[${i}].name"  value="${vo.name }" readonly="readonly" /></td>
-												<td><input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" > 
+												<td>${vo.company }
+													<input type="hidden" name="accItems[${i}].company"  value="${vo.company }" />
+												</td>
+												<td>${vo.cardNo }
+													<input type="hidden" name="accItems[${i}].cardNo"  value="${vo.cardNo }" />
+												</td>
+												<td>${vo.name }
+													<input style="width: 100px;" type="hidden" name="accItems[${i}].name"  value="${vo.name }" />
+												</td>
+												<td>
+													<input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" style="width: 100px;" > 
 													<input type="hidden" value="${i}" id="edit_td${i}">
 												</td>
-												<td><input type="text" name="accItems[${i}].usePlace"  value="${vo.usePlace }" readonly="readonly" /></td>
-												<td><fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
-													<input type="hidden" name="accItems[${i}].price"  value="${vo.price}" readonly="readonly" /></td>
-												<td><input type="text" name="accItems[${i}].useDate"  value="${vo.useDate }" readonly="readonly" /></td>
-												<td><input type="text" style="width: 100px;" name="accItems[${i}].deptName"  value="${vo.deptName }" readonly="readonly" /></td>
-												<td><input type="text" style="width: 100px;" name="accItems[${i}].posName"  value="${vo.posName }" readonly="readonly" /></td>
+												<td>${vo.usePlace }
+													<input type="hidden" name="accItems[${i}].usePlace"  value="${vo.usePlace }" />
+												</td>
+												<td>
+													<fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
+													<input type="hidden" name="accItems[${i}].price"  value="${vo.price}"  />
+												</td>
+												<td>${vo.useDate }
+													<input type="hidden" name="accItems[${i}].useDate"  value="${vo.useDate }" />
+												</td>
+												<td>${vo.deptName }
+													<input type="hidden" style="width: 100px;" name="accItems[${i}].deptName"  value="${vo.deptName }"  />
+												</td>
+												<td>${vo.posName }
+													<input type="hidden" style="width: 100px;" name="accItems[${i}].posName"  value="${vo.posName }" readonly="readonly" />
+												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }" />
 										</c:forEach>

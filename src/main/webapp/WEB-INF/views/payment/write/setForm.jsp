@@ -12,6 +12,17 @@
 		$('.chk').click(function(){
 			$(this).next().attr("disabled", false);
 		});
+		
+		$('#chkAll').click(function(){
+			if($('#chkAll').prop('checked')){
+				$(".chk").prop("checked",true);
+				$(".chk").next().attr("disabled", false);
+			}else{
+				$(".chk").prop("checked",false);
+				$(".chk").next().attr("disabled", true);
+			}
+			
+		});
 	});
 </script>
 <!-- Page Heading -->
@@ -32,6 +43,7 @@
 		<table class="table" id="SFformTable">
 			<thead>
 				<tr>
+					<td width="10%"><input type="checkbox" id="chkAll"></td>
 					<td>양식코드</td>
 					<td>양식이름</td>
 				</tr>
@@ -39,18 +51,26 @@
 			<!-- 반복 시작 -->
 			<tbody>
 				<c:set var="idx" value="0"/>
+				<c:if test="${!empty formlist }">
 				<c:forEach var="docformVo" items="${formlist }">
 				<tr>
 					<td>
 						<label class="checkbox-inline">
-							<input type="checkbox" class="chk">${docformVo.formNo }
+							<input type="checkbox" class="chk">
 							<input type="hidden" name="formItems[${idx }].formNo" id="formNo" value="${docformVo.formNo }" disabled="disabled">
 						</label>
 					</td>
+					<td>${docformVo.formNo }</td>
 					<td>${docformVo.formName }</td>
 				</tr>
 				<c:set var="idx" value="${idx+1 }"/>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty formlist }">
+					<tr>
+						<td colspan="6">새로운 양식을 등록해주세요</td>
+					</tr>			
+				</c:if>
 				<!-- 반복 끝 -->
 			</tbody>
 		</table>

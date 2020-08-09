@@ -186,3 +186,7 @@ select *
 	
 		where RNUM>1
 		  and RNUM<=5;
+
+update member
+set profileurl = ''
+where memno =121930;
