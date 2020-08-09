@@ -6,17 +6,23 @@ public class ResManageVO {
 	private int resNo;
 	private String resName;
 	private String resImage;
-	private int locNo;
-	private String locDetail;
-	private int resPerson;
+
+	private Long resSize;
+	private String resOriginalImage;
+	private String resLocation;
+
 	private String resSubdesc;
 	private Timestamp resRegdate;
 	private String resState;
 	private String resIsDel;
-	private String locName;
+
 	public int getResNo() {
 		return resNo;
 	}
+	public void setResNo(int resNo) {
+		this.resNo = resNo;
+	}
+
 	public String getResName() {
 		return resName;
 	}
@@ -29,23 +35,27 @@ public class ResManageVO {
 	public void setResImage(String resImage) {
 		this.resImage = resImage;
 	}
-	public int getLocNo() {
-		return locNo;
+
+	
+	public Long getResSize() {
+		return resSize;
 	}
-	public void setLocNo(int locNo) {
-		this.locNo = locNo;
+	public void setResSize(Long resSize) {
+		this.resSize = resSize;
 	}
-	public String getLocDetail() {
-		return locDetail;
+	
+	public String getResOriginalImage() {
+		return resOriginalImage;
 	}
-	public void setLocDetail(String locDetail) {
-		this.locDetail = locDetail;
+	public void setResOriginalImage(String resOriginalImage) {
+		this.resOriginalImage = resOriginalImage;
 	}
-	public int getResPerson() {
-		return resPerson;
+	public String getResLocation() {
+		return resLocation;
 	}
-	public void setResPerson(int resPerson) {
-		this.resPerson = resPerson;
+	public void setResLocation(String resLocation) {
+		this.resLocation = resLocation;
+
 	}
 	public String getResSubdesc() {
 		return resSubdesc;
@@ -71,22 +81,14 @@ public class ResManageVO {
 	public void setResIsDel(String resIsDel) {
 		this.resIsDel = resIsDel;
 	}
-	public String getLocName() {
-		return locName;
-	}
-	public void setLocName(String locName) {
-		this.locName = locName;
-	}
-	public void setResNo(int resNo) {
-		this.resNo = resNo;
-	}
+
 	
 	@Override
 	public String toString() {
-		return "ResManageVO [resNo=" + resNo + ", resName=" + resName + ", resImage=" + resImage + ", locNo=" + locNo
-				+ ", locDetail=" + locDetail + ", resPerson=" + resPerson + ", resSubdesc=" + resSubdesc
-				+ ", resRegdate=" + resRegdate + ", resState=" + resState + ", resIsDel=" + resIsDel + ", locName="
-				+ locName + "]";
+		return "ResManageVO [resNo=" + resNo + ", resName=" + resName + ", resImage=" + resImage + ", resSize="
+				+ resSize + ", resOriginalImage=" + resOriginalImage + ", resLocation=" + resLocation + ", resSubdesc="
+				+ resSubdesc + ", resRegdate=" + resRegdate + ", resState=" + resState + ", resIsDel=" + resIsDel + "]";
+
 	}
 
 }
