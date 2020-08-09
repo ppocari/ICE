@@ -20,11 +20,6 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	}
 
 	@Override
-	public List<LocationVO> selectLocation() {
-		return sqlSession.selectList(namespace+"selectLocation");
-	}
-
-	@Override
 	public int insertResManage(ResManageVO rmVo) {
 		return sqlSession.insert(namespace+"insertResManage", rmVo);
 	}
