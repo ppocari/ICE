@@ -62,6 +62,10 @@ public class ExcelController {
 					throws IOException { // 2
 		logger.info("file={}",file);
 
+
+		
+		//insert 부터 하면 됨
+
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_COMCARD_FILE);
 		String fileURL="",originalFileName="";long fileSize=0;
@@ -82,6 +86,7 @@ public class ExcelController {
 		int cnt = comcardService.insertCCFile(ccfvo);
 		
 		logger.info("cnt={}",cnt);
+
 
 		List<ExcelData> dataList = new ArrayList<>();
 

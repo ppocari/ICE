@@ -51,7 +51,7 @@ public class AccodeServiceImpl implements AccodeService{
 				int confirm_num = RandomUtils.nextInt(3000,6000);
 				accVO.setConfirmCode(Integer.toString(confirm_num));
 				
-				
+				logger.info("accVO ={}",accVO);
 				
 				cnt = accodeDao.accRegisterMulti(accVO);
 				logger.info("cnt ={}",cnt);

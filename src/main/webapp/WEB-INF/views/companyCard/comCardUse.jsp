@@ -112,6 +112,13 @@
 								</option>
 								<%}%>
 							</select>
+							
+							<label for="comCardfile">파일로 조회</label>
+							<select name = "comCardfile"  id = "comCardfile">
+								<c:forEach var="FNvo" items="${ccfvo_list }">
+									<option>${FNvo.filename } </option>
+								</c:forEach>
+							</select>
 							<button type="submit" class="btn btn-info">미등록 조회</button>
 							<input type="button" id="accReg" value="등록">
 						</div>
@@ -122,26 +129,26 @@
 				<form action="<c:url value='/companyCard/regAccode.do'/>"
 					name="regAccFrm" method="post">
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-							<table class="table table-bordered table-hover" id="dynamicTable">
+						<div class="chart-area" style="overflow: scroll; overflow-x: scroll ">
+							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1350px;">
 								<thead>
 									<tr>
-										<th>카드사</th>
-										<th style="width: 130px;">카드번호</th>
-										<th>사원이름</th>
-										<th >계정코드</th>
-										<th>사용처</th>
-										<th>사용금액</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
+										<th style="width: 7%">카드사</th>
+										<th style="width: 15%">카드번호</th>
+										<th style="width: 8%">사원이름</th>
+										<th style="width: 10%">계정코드</th>
+										<th style="width: 13%">사용처</th>
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 10%">사용일</th>
+										<th style="width: 7%">부서</th>
+										<th style="width: 7%">직급</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
 									<c:if test="${empty list }">
 										<tr>
-											<td colspan="8">해당 월의 데이터가 없습니다</td>
+											<td colspan="9">해당 월의 데이터가 없습니다</td>
 										</tr>
 									</c:if>
 									<c:set var="i" value="${1 }" />
@@ -201,21 +208,19 @@
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
-							<table class="table table-bordered table-hover"
-								id="dynamicTable2">
+						<div class="chart-area" style="overflow: scroll; overflow-x: scroll ">
+							<table class="table table-bordered table-hover" id="dynamicTable2" style="width: 1350px;">
 								<thead>
 									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용처</th>
-										<th>사용금액</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
+										<th style="width: 7%">카드사</th>
+										<th style="width: 15%">카드번호</th>
+										<th style="width: 8%">사원이름</th>
+										<th style="width: 10%">계정코드</th>
+										<th style="width: 13%">사용처</th>
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 10%">사용일</th>
+										<th style="width: 7%">부서</th>
+										<th style="width: 7%">직급</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody2">

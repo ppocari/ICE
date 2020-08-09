@@ -51,4 +51,11 @@ public class ComcardDAOMybatis implements ComcardDAO{
 	public ComCardFileVO selectCCFile_recent() {
 		return sqlsession.selectOne(namespace+"selectCCFile_recent");
 	}
+
+
+	@Override
+	public List<ComCardFileVO> selectListFileName() {
+		return sqlsession.selectList(namespace+"selectListFileName");
+	}
+
 }

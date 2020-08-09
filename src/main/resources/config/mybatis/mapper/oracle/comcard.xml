@@ -62,6 +62,7 @@
 		values(#{fileNo}, #{fileName}, #{originalFileName}, #{fileSize})
 	</insert>
 	
+
 	<select id="selectCCFile_recent" resultType="comCardFileVO">
 		select * 
 			from
@@ -75,5 +76,10 @@
 			)
 		where RNUM=1
 	</select>
+<!-- 
+	<select id="selectListFileName" resultType="ComCardFileVO">
+		select filename from companyCardFile
+		order by fileno 
+	</select> -->
 
 </mapper>
