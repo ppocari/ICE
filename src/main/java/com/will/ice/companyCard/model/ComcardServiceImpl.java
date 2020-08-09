@@ -74,6 +74,11 @@ public class ComcardServiceImpl implements ComcardService{
 		return comcardDAO.selectCCFile_recent();
 	}
 
+	@Override
+	public List<ComCardFileVO> selectListFileName() {
+		return comcardDAO.selectListFileName();
+	}
+
 
 
 

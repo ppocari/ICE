@@ -91,6 +91,26 @@ commit;
 
 select * from companyCard;
 
+select * from companyCardFile;
+
+
+
+select * 
+			from
+			(
+			    select rownum as rnum, A.*
+			    from(
+			    select * from companyCardFile
+			    
+			    order by uploaddate  desc
+			    )A
+			)
+	
+		where RNUM=1;
+
+
+
+
 update companyCard
 set memno = '141930'
 where no = 7;

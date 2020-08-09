@@ -67,9 +67,11 @@ public class CompanyCardController {
 
 
 	@RequestMapping(value ="/comCardUse.do", method = RequestMethod.GET)
-	public void comCardUse_get() {
+	public void comCardUse_get(Model model) {
 		logger.info("법인카드 미등록/등록 ");
-
+		List<ComCardFileVO> ccfvo_list = comcardService.selectListFileName();
+		
+		model.addAttribute("ccfvo_list", ccfvo_list);
 
 	}
 

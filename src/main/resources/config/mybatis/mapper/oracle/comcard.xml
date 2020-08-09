@@ -76,6 +76,10 @@
 			)
 		where RNUM=1
 	</select>
-
+<!-- 
+	<select id="selectListFileName" resultType="ComCardFileVO">
+		select filename from companyCardFile
+		order by fileno 
+	</select> -->
 
 </mapper>

@@ -22,7 +22,7 @@ public interface ComcardService {
 	
 	ComCardFileVO selectCCFile_recent();
 
-
+	public List<ComCardFileVO> selectListFileName();
 
 
 }
