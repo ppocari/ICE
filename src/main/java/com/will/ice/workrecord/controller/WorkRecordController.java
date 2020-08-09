@@ -239,27 +239,7 @@ public class WorkRecordController {
 	}
 	
 	
-	@RequestMapping("/detail.do")
-	public void detail(HttpServletRequest request,Model model) {
-		//사원번호 셋팅
-		HttpSession session = request.getSession();
-		String memNo = (String) session.getAttribute("identNum");
-		WorkRecordVO Dvo = new WorkRecordVO();
-		Dvo.setMemNo(memNo);
-		logger.info("출퇴근 상세보기 memNo={}",memNo);
-		
-		Dvo = workService.selectToday(memNo);
-		logger.info("Dvo={}"+Dvo);
-		
-		//조회
-		List<WorkRecordVO>list = workService.selectWorkList(Dvo);
-		for (int i = 0; i < list.size(); i++) {
-			Dvo = list.get(i);
-		}
-		model.addAttribute("Dvo",Dvo);
-	}
-	
-	@RequestMapping("/workChart.do")
+	@RequestMapping(value = "/workChart.do",method = RequestMethod.GET)
 	public void workChart(HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
 		String userName = (String)session.getAttribute("userName");
@@ -267,5 +247,36 @@ public class WorkRecordController {
 		
 		model.addAttribute("memNo",memNo);
 		model.addAttribute("userName",userName);
+	}
+	
+	
+	@RequestMapping(value = "/workChart.do",method = RequestMethod.POST)
+	public void SelectMonthChart(@RequestParam String cmpMonth,HttpSession session,Model model) {
+		String memNo = (String) session.getAttribute("identNum");
+		
+		WorkRecordVO vo = new WorkRecordVO();
+		vo.setMemNo(memNo);
+		vo.setCmpMonth(cmpMonth);
+		logger.info("근태 월별 통계 파라미터 memNo={},cmpMonth={}",memNo,vo.getCmpMonth());
+		
+		
+		
+		vo.setCmpStatus("퇴근(미달)");
+		int under = workService.selectMonthCount(vo);
+		
+		vo.setCmpStatus("퇴근(초과)");
+		int over = workService.selectMonthCount(vo);
+		
+		vo.setCmpStatus("퇴근");
+		int avg = workService.selectMonthCount(vo);
+		
+		logger.info("미달 under={},",under);
+		logger.info("초과 over={},",over);
+		logger.info("퇴근 avg={},",avg);
+		
+		model.addAttribute("under",under);
+		model.addAttribute("over",over);
+		model.addAttribute("avg",avg);
+
 	}
 }

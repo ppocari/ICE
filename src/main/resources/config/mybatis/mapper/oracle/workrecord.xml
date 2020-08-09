@@ -23,8 +23,12 @@
 	
 	<select id="selectToday" resultType="WorkRecordVO" parameterType="String">
 		select * from (select * from workRecord 
-            where memno=#{memNo} order by cmp_regdate desc) 
+            where memNo=#{memNo} order by cmp_regdate desc) 
 		where rownum = 1
+	</select>
+	
+	<select id="selectMonthCount" parameterType="WorkRecordVO" resultType="int">
+		select count(*) from workrecord where memNo=#{memNo} and cmp_month=#{cmpMonth} and cmp_status=#{cmpStatus}
 	</select>
 	
 </mapper>
