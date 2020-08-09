@@ -146,9 +146,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
-								href="<c:url value='#'/>">자원등록/삭제</a>
-							<a class="collapse-item"
-								href="<c:url value='#'/>">자원예약처리</a>
+								href="<c:url value='/resource/resourceMain.do'/>">자원관리</a>
 						</div>
 
 					</div>

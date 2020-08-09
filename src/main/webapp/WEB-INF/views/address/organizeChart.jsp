@@ -14,6 +14,10 @@
 	$(function() {
 		$("#accordion").accordion();
 		
+		$('form[name=organForm]').reset(function(){
+			self.close();
+		}
+		
 		$('form[name=organForm]').submit(function(){
 			var idList=$('input[type=radio]:checked').attr('id').split('_');
 //${organ.name }_${organ.hp1}_${organ.hp2}_${organ.hp3}_${organ.email1 }_${organ.email2 }_${organ.deptName}_${organ.posName}
