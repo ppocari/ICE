@@ -4,6 +4,5 @@ import java.util.List;
 
 public interface ResourceService {
 	List<ResManageVO> selectResManage();
-	List<LocationVO> selectLocation();
 	int insertResManage(ResManageVO rmVo);
 }

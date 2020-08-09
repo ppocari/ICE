@@ -3,12 +3,32 @@
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 <script type="text/javascript">
-	$(function(){addResource
+	$(function(){
 		$('#addResource').click(function(){
 			window.open('<c:url value="/resource/addResource.do"/>', 'addRes', 
 					'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
 		});
+		
+		/* highlight */
+		$("#tableForm tr:gt(0)").hover(function(event) {
+			$(this).addClass("highlight");
+		}, function(event) {
+			$(this).removeClass("highlight");
+		});
+		
+			
 	});
+	function resEdit(resNo) {
+		location.href="<c:url value='/resource/editResource.do?resNo="+resNo+"'/>"
+	}
+	
+	function resDel(resNo, resName) {
+		var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
+		if(result) {
+			location.href="<c:url value='/resource/editResource.do?resNo="+resNo+"'/>";
+		}
+		
+	}
 
 </script>
 
@@ -44,33 +64,23 @@ article > div {
 					</div>
 				</div>
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<div id="buttonsDiv">
-						<div id="searchLoc">
-						<span>장소별</span>
-							<select>
-								<option value="">전체</option>
-								<c:forEach var="loc" items="${locList }">
-									<option>${loc.locName }</option>
-								</c:forEach>
-							</select>
-							<input type="button" id="btAdd" value="검색">
-						</div>
-					</div>
 				</div>
 				<div id="tableDivForm">
 						<table id="tableForm">
 							<tr id="tableTrForm" class="card-header">
-							<th>장소명</th>
+							<th>자원명</th>
 							<th>장소</th>
-							<th>인원</th>
 							<th>상태</th>
+							<th>수정</th>
+							<th>삭제</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
 							<tr>
-								<td>${rm.locName }</td>
-								<td>${rm.locDetail }</td>
-								<td>${rm.resPerson }</td>
+								<td>${rm.resName }</td>
+								<td>${rm.resLocation }</td>
 								<td>${rm.resState }</td>
+								<td><button onclick="resEdit(${rm.resNo})">수정</button></td>
+								<td><button onclick="resDel(${rm.resNo }, '${rm.resName}')">삭제</button></td>
 							</tr>
 						</c:forEach>
 					</table>

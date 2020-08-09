@@ -4,14 +4,11 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.resource">
 	<select id="selectResManage" resultType="resManageVo">
-		select * from v_resmanage 
+		select * from resManage 
 		order by resname
 	</select>
-	<select id="selectLocation" resultType="locationVo">
-		select * from location
-	</select>
 	<insert id="insertResManage" parameterType="resManagevo">
-	insert into resmanage(resno, resname, resimage, locno, locdetail, resperson, ressubdesc)
-	values(resno_seq.nextval, #{resName}, #{resImage}, #{locNo}, #{locDetail}, #{resPerson}, #{resSubdesc})
+	insert into resmanage(resno, resname, resimage, ressize, reslocation, resoriginalimage, ressubdesc)
+	values(resno_seq.nextval, #{resName}, #{resImage}, #{resSize}, #{resLocation}, #{resOriginalImage}, #{resSubdesc})
 	</insert>
 </mapper>

@@ -17,11 +17,6 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<LocationVO> selectLocation() {
-		return dao.selectLocation();
-	}
-
-	@Override
 	public int insertResManage(ResManageVO rmVo) {
 		return dao.insertResManage(rmVo);
 	}

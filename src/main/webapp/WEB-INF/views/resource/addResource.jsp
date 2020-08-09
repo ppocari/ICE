@@ -29,7 +29,7 @@
 <section>
 	<article>
 		<div class="divForm">
-			<form method="post" action="<c:url value='/resource/addresource.do'/>">
+			<form method="post" action="<c:url value='/resource/addResource.do'/>" enctype="multipart/form-data">
 				<fieldset>
 					<legend>자원 정보</legend>
 					<div>
@@ -37,26 +37,16 @@
 						<input style="width:200px" class="input_m borderStyle" type="text" name="resName"> 
 					</div>
 					<div>
-						<label class="la_left">이미지</label>
-						<input type="file" name="upfile">
+						<label class="la_left">이미지 첨부</label>
+						<input type="file" name="upfile" id="upfile">
 					</div>
 					<div>
 						<label class="la_left">장소</label>
-						<select class="borderStyle" name="locNo">
-							<option value="">전체</option>
-							<c:forEach var="loc" items="${locList }">
-								<option value="${loc.locNo }">${loc.locName }</option>
-							</c:forEach>
-						</select>
-						<input style="width:150px" class="borderStyle" type="text" name="resPerson">
-					</div>
-					<div>
-						<label class="la_left">인원</label>
-						<input style="width:50px" class="borderStyle" type="text" name="resPerson">명
+						<input style="width:50px" class="borderStyle" type="text" name="resLocation">
 					</div>
 					<div>
 						<label class="la_left">상세설명</label>
-						<textarea class="borderStyle" rows="5" cols="30" name="locDetail"></textarea>
+						<textarea class="borderStyle" rows="5" cols="30" name="resSubdesc"></textarea>
 					</div>
 					<div id="add_inputs">
 						<input type="submit" value="등록"> 
