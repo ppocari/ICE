@@ -29,7 +29,10 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	
+	function pageProc(curPage){
+		$('input[name=currentPage]').val(curPage);
+		$('form[name=frmPage]').submit();
+	}
 
 </script>
 <!-- Begin Page Content -->
@@ -51,7 +54,7 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 700px">
+			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
 				<form name="boardSearch" method="post"  
 				action="<c:url value='/board/boardList.do'/> ">
@@ -66,8 +69,8 @@
 					</div>
 					
 					<!-- Card Body -->
-					<div class="card-body" style="height: 500px">
-						<div class="chart-area" style="overflow: scroll; height: 450px; font-size: 13px;" >
+					<div class="card-body" style="height: 400px">
+						<div class="chart-area" style=" height: 450px; font-size: 13px;" >
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
@@ -110,7 +113,7 @@
 											</td>
 											<td>${vo.nickname }</td>
 											<td><fmt:formatDate value="${vo.regdate}"
-												pattern="yyyy-MM-dd"/> </td>
+												pattern="yyyy-MM-dd-HH:mm"/></td>
 											<td>${vo.visited}</td>
 										</tr>
 									</c:forEach>
@@ -118,6 +121,37 @@
 						</table>
 										
 						</div>
+					</div>
+					
+					<div class="divPage" style="text-align:center;">
+						<!-- 페이지 번호 추가 -->		
+						<!-- 이전 블럭으로 이동 ◀ -->
+						<c:if test="${pagingInfo.firstPage>1 }">
+							<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})">
+								<img src="<c:url value='/resources/images/first.JPG'/>" 
+									alt="이전 블럭으로 이동">
+							</a>
+						</c:if> 
+						
+						<!-- [1][2][3][4][5][6][7][8][9][10] -->
+						<c:forEach var="i" begin="${pagingInfo.firstPage }" 
+							end="${pagingInfo.lastPage }">		
+							<c:if test="${i!=pagingInfo.currentPage }">
+								<a href="#" onclick="pageProc(${i})">[${i}]</a>			
+							</c:if>
+							<c:if test="${i==pagingInfo.currentPage }">
+								<span style="color:blue;font-weight:bold">${i}</span>			
+							</c:if>		
+						</c:forEach>
+							
+						<!-- 다음 블럭으로 이동 ▶ -->
+						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+							<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})">
+								<img src="<c:url value='/resources/images/last.JPG'/>" 
+									alt="다음 블럭으로 이동">
+							</a>
+						</c:if>
+						<!--  페이지 번호 끝 -->
 					</div>
 					
 					<!-- 검색기능 -->

@@ -62,8 +62,31 @@ public class ExcelController {
 					throws IOException { // 2
 		logger.info("file={}",file);
 
+
 		
 		//insert 부터 하면 됨
+
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_COMCARD_FILE);
+		String fileURL="",originalFileName="";long fileSize=0;
+		if(fileList!=null) {
+			for(Map<String, Object> map : fileList) {
+				fileURL=(String) map.get("fileName");
+				fileSize=(Long)map.get("fileSize");
+				originalFileName = (String)map.get("originalFileName");
+			}
+		}
+		ComCardFileVO ccfvo = new ComCardFileVO(); 
+		ccfvo.setFileName(fileURL);
+		ccfvo.setOriginalFileName(originalFileName);
+		ccfvo.setFileSize(fileSize);
+		
+		logger.info("ccfvo={}",ccfvo);
+		
+		int cnt = comcardService.insertCCFile(ccfvo);
+		
+		logger.info("cnt={}",cnt);
+
 
 		List<ExcelData> dataList = new ArrayList<>();
 
@@ -101,6 +124,7 @@ public class ExcelController {
 		}
 
 		model.addAttribute("datas", dataList); // 5
+		model.addAttribute("ccfvo", ccfvo); // 5
 
 		return "/companyCard/comCardUpload";
 

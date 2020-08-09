@@ -1,6 +1,9 @@
 package com.will.ice.companyCard.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.ice.accode.model.AccodeService;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
+
+import com.will.ice.common.FileUploadUtil;
+import com.will.ice.companyCard.model.ComCardFileVO;
+
 import com.will.ice.companyCard.model.ComCardListVO;
 import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.companyCard.model.ComcardVO;
@@ -34,6 +41,10 @@ public class CompanyCardController {
 	@Autowired private EtcService etcService;
 
 	@Autowired private AccodeService accService;
+
+	@Autowired private FileUploadUtil fileUploadUtil;
+
+
 
 	@RequestMapping("/comCardList.do")
 	public void comCardList(@ModelAttribute Depart_posi_dateVO dpdvo, Model model) {
@@ -105,7 +116,6 @@ public class CompanyCardController {
 	}
 
 
-	
 	//excel 파일 화며
 	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.GET)
 	public void comUpload_get() {
@@ -113,15 +123,18 @@ public class CompanyCardController {
 	}
 
 	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.POST)
-	public String comUpload_post(@ModelAttribute ComCardListVO ccListVO, Model model) {
+	public String comUpload_post(@ModelAttribute ComCardListVO ccListVO,
+			HttpServletRequest request , Model model) {
+
 		logger.info("법인카드 내역 업로드 처리 ccListVO={}",ccListVO);
 
 		int cnt = 0;
-		try {
+		try {		
+			ComCardFileVO ccfvo = comcardService.selectCCFile_recent();
+			
+
 			List<ComcardVO> ccList = ccListVO.getComCardItmes();
-			cnt = comcardService.insertCCMulti(ccList);
-
-
+			cnt = comcardService.insertCCMulti(ccList, ccfvo);
 
 
 			String msg = "법인카드 내역 업로드 성공실패!", url = "/member/memWrite.do";

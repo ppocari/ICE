@@ -16,12 +16,19 @@ public class PaymentviewVO {
 	private Timestamp expirydate;
 	private String typeName;
 	private String name;
+	private String deptName;
 
 	public int getDocNo() {
 		return docNo;
 	}
 	public void setDocNo(int docNo) {
 		this.docNo = docNo;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public String getMemNo() {
 		return memNo;
@@ -100,7 +107,6 @@ public class PaymentviewVO {
 		return "PaymentviewVO [docNo=" + docNo + ", memNo=" + memNo + ", formNo=" + formNo + ", typeNo=" + typeNo
 				+ ", title=" + title + ", content=" + content + ", hasFile=" + hasFile + ", progress=" + progress
 				+ ", writedate=" + writedate + ", keep=" + keep + ", expirydate=" + expirydate + ", typeName="
-				+ typeName + ", name=" + name + "]";
+				+ typeName + ", name=" + name + ", deptName=" + deptName + "]";
 	}
-
 }

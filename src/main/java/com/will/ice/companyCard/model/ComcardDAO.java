@@ -18,4 +18,5 @@ public interface ComcardDAO {
 
 	int insertCCFile(ComCardFileVO CCfileVO);
 	
+	ComCardFileVO selectCCFile_recent();
 }	

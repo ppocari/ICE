@@ -29,24 +29,34 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-$(function() {
-	$('#main').click(function() {
-		alert('공지사항 메인 노출여부가 체크되었습니다.');
+	$(function() {
+		$('#main').click(function() {
+			alert('공지사항 메인 노출여부가 체크되었습니다.');
+		});
 
-	});
+		$('form[name=frmWrite]').submit(function() {
+			if ($('#title').val() == '') {
+				alert('제목을 입력하세요');
+				$('#title').focus();
+				event.preventDefault();
+			}
+		});
 
-	$('form[name=frmWrite]').submit(function() {
-		if ($('#title').val() == '') {
-			alert('제목을 입력하세요');
-			$('#title').focus();
-			event.preventDefault();
-		}
-	});
+		/*
+		$('#nList').click(function(){
+			location.href
+				= "<c:url value='/notice/noticeList.do'/>"
+		});
+		
+		$('form[name=frmWrite]').submit(function(){
+			if($('#NOTI_TITLE').val()==''){
+				alert('제목을 입력하세요');
+				$('#NOTI_TITLE').focus();
+				event.preventDefault();
+			}
+		});
+		 */
 
-	/*
-	$('#nList').click(function(){
-		location.href
-			= "<c:url value='/notice/noticeList.do'/>"
 	});
 	
 	$('form[name=frmWrite]').submit(function(){
@@ -95,14 +105,15 @@ $(function() {
 							<tr>
 								<td style="width: 20%;"><h6
 										class="m-0 font-weight-bold text-primary">분류</h6></td>
-								<td style="width: 80%; weight: 100px; width: 500px;"><select
-									name="category" class="form-control">
+								<td style="width: 80%; weight: 100px; width: 500px;">
+								<select	name="category" class="form-control">
 										<option value="전체">전체</option>
 										<option value="경영">경영</option>
 										<option value="회계">회계</option>
 										<option value="영업">영업</option>
 										<option value="경리">경리</option>
-								</select> <input type="checkbox" name="main" id="main" value="Y">
+								</select> 
+								<input type="checkbox" name="main" id="main" value="Y">
 									<span>메인 공지사항 등록</span></td>
 							</tr>
 
@@ -134,8 +145,8 @@ $(function() {
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 								</td>
-								<td style="width: 80%;"><input type="file" id="fileName"
-									name="fileName" /> <br>
+								<td style="width: 80%;"><input type="file" id="upfile"
+									name="upfile" /> <br>
 								<span>(최대 2M)</span></td>
 							</tr>
 						</table>
@@ -149,8 +160,8 @@ $(function() {
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">내용</h6>
 								</td>
-								<td style="width: 80%; text-align: left;"><%@ include
-										file="summer.jsp"%></td>
+								<td style="width: 80%; text-align: left;">
+									<%@ include	file="summer.jsp"%></td>
 							</tr>
 						</table>
 					</div>
@@ -159,9 +170,9 @@ $(function() {
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<input type="submit" class="form-control btList" value="등록"
-							style="width: 52px; font-size: 13px;" /> <a
-							href="<c:url value='/notice/noticeList.do'/>"> <input
-							type="Button" class="form-control btList" id="nList" value="글목록"
+							style="width: 52px; font-size: 13px;" /> 
+						<a href="<c:url value='/notice/noticeList.do'/>"> 
+							<input type="Button" class="form-control btList" id="nList" value="글목록"
 							style="width: 60px; font-size: 13px;" />
 						</a>
 					</div>
