@@ -62,4 +62,18 @@
 		values(#{fileNo}, #{fileName}, #{originalFileName}, #{fileSize})
 	</insert>
 	
+	<select id="selectCCFile_recent" resultType="comCardFileVO">
+		select * 
+			from
+			(
+			    select rownum as rnum, A.*
+			    from(
+			    select * from companyCardFile
+			    
+			    order by uploaddate  desc
+			    )A
+			)
+		where RNUM=1
+	</select>
+
 </mapper>

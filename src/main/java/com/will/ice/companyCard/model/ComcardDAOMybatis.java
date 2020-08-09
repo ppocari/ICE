@@ -45,4 +45,10 @@ public class ComcardDAOMybatis implements ComcardDAO{
 	public int insertCCFile(ComCardFileVO CCfileVO) {
 		return sqlsession.insert(namespace+"insertCCFile", CCfileVO);
 	}
+
+
+	@Override
+	public ComCardFileVO selectCCFile_recent() {
+		return sqlsession.selectOne(namespace+"selectCCFile_recent");
+	}
 }

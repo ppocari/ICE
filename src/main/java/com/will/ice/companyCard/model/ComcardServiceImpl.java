@@ -40,14 +40,16 @@ public class ComcardServiceImpl implements ComcardService{
 	}
 
 	@Override
-	public int insertCCMulti(List<ComcardVO> ccList) {
+	public int insertCCMulti(List<ComcardVO> ccList, ComCardFileVO ccfvo) {
 		int cnt = 0;
+		logger.info("ccfvo ={}",ccfvo);
 
 		for( int i = 0; i<ccList.size(); i++) {
 			ComcardVO ccvo = ccList.get(i);
 			if(ccvo.getCardNo() == null) {
 				cnt = 0;
 			}else {
+				ccvo.setFileNo(ccfvo.getFileNo());
 				cnt = comcardDAO.insertCCMulti(ccvo);
 			}
 
@@ -61,6 +63,11 @@ public class ComcardServiceImpl implements ComcardService{
 	public int insertCCFile(ComCardFileVO CCfileVO) {
 
 		return comcardDAO.insertCCFile(CCfileVO);
+	}
+
+	@Override
+	public ComCardFileVO selectCCFile_recent() {
+		return comcardDAO.selectCCFile_recent();
 	}
 
 

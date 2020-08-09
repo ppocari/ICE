@@ -16,10 +16,11 @@ public interface ComcardService {
 
 	ComcardVO selectNoComcard(int comcard_no);
 
-	int insertCCMulti(List<ComcardVO> ccList);
+	int insertCCMulti(List<ComcardVO> ccList, ComCardFileVO ccfvo);
 
 	int insertCCFile(ComCardFileVO CCfileVO);
-
+	
+	ComCardFileVO selectCCFile_recent();
 
 
 
