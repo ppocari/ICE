@@ -8,6 +8,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pieRenderer.js"></script>	
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.categoryAxisRenderer.min.js"></script>	
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pointLabels.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.enhancedPieLegendRenderer.js"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/jqplot/jquery.jqplot.css'/>" />
+
 
 <style type="text/css">
 	#divChart{
@@ -17,6 +20,35 @@
 	#divWorkColor{
 		float: left;
 	}
+	
+	.jqplot-pie-series.jqplot-data-label{
+		color: white;
+	}
+	
+	canvas.jqplot-pieRenderer-highlight-canvas{
+		width: 20%;
+	}
+	
+	.jqplot-cursor-tooltip{
+		width: 50px;
+	}
+	
+	/*툴팁*/
+	table.jqplot-table-legend{
+		width: 30%;
+    	height: 10%;
+	}
+	div.jqplot-table-legend-swatch{
+		width: 100%;
+	}
+	
+	.card.shadow.mb-4 {
+	    width: 60%;
+	}
+	
+	
+	
+	
 </style>
 
 	
@@ -36,45 +68,29 @@
 					<!-- 근태관리 조회 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h5 class="m-0 font-weight-bold text-primary">월별 확인</h5>
+						<form method="post" id="workChart" action="<c:url value='/workRecord/workChart.do'/>">
+							<label>조회 할 날짜 : </label>
+							<input id="cmpMonth" name="cmpMonth">
+							<input type="submit" class="btn btn-primary" id="btSearch" value="조회">
+						</form>
   					</div>
-  						<div id="divWorkColor">
-							<canvas id="canvas1" width="50" height="50"
-   								 style="background-color:#567cec"></canvas>
-							 <label>출근</label> 
-							 <canvas id="canvas1" width="50" height="50"
-   								 style="background-color:#fb1a66"></canvas>
-							<label>퇴근(미달)</label>
-							<canvas id="canvas1" width="50" height="50"
-   								 style="background-color:#52e407"></canvas>
-							<label>퇴근(초과)</label>							
-							<div>
-								<form method="post" action="<c:url value='/workRecord/workChart.do'/>">
-									<label>조회 할 날짜 : </label>
-									<input id="cmpMonth" name="cmpMonth">
-									<input type="submit" class="btn btn-primary" id="btSearch" value="조회">
-								</form>
-							</div>
-						</div>
 						<!-- 통계 API -->
 						<div id="ChartDiv1">
 							<div id="chartdiv1" style="height:100%;width:80%;"></div>	
 						</div>
-						
-						<div id="ChartDiv2">
-							<div id="chartdiv1" style="height:100%;width:80%;"></div>	
-						</div>
-						
+						<input type="hidden" id="avg" value="${avg }">
+						<input type="hidden" id="over" value="${over }">
+						<input type="hidden" id="under" value="${under }">
 				</div>
 			</div>
 		</div>
 	</div>
-	
-  	<input type="hidden" value="${avg}" id="avg">
-  	<input type="hidden" value="${over}" id="over">
-  	<input type="hidden" value="${under}" id="under">
-  	
 <script>	
-$(function(){	
+$(function(){
+	var avg = Number($("#avg").val());
+	var over = Number($("#over").val());
+	var under = Number($("#under").val());
+	/* 
 	// bar 차트	
 	var workOver = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	var workUnder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -109,25 +125,35 @@ $(function(){
 		animateReplot : false, // 애니메이션 반복 설정
 		captureRightClick : true, // 오른쪽 마우스 클릭 이벤트
 	});	
-	
+	 */
 	//원형 그래프
-	var plot1 = $.jqplot('ChartDiv2', [[['a',25],['b',14],['c',7]]], {
-        gridPadding: {top:50, bottom:38, left:0, right:0},
-        seriesDefaults:{
-            renderer:$.jqplot.PieRenderer, 
-            trendline:{ show:false }, 
-            rendererOptions: { padding: 8, showDataLabels: true }
-        },
-        legend:{
-            show:true, 
-            placement: 'outside', 
-            rendererOptions: {
-                numberRows: 1
-            }, 
-            location:'s',
-            marginTop: '15xp'
-        }       
-    });
+	data1 = [[['정상', avg],['미달', under], ['초과', over]]];
+    toolTip1 = ['정상', '미달', '초과'];
+ 
+    jQuery.jqplot('chartdiv1', 
+        data1,
+        {
+	    	height: 400,
+	        width: 400,
+            title: '출퇴근 통계 그래프', 
+            seriesColors:['#567cec', '#fb1a66', '#52e407'],
+            seriesDefaults: {
+                shadow: false, 
+                renderer: jQuery.jqplot.PieRenderer, 
+                rendererOptions: { padding: 2, sliceMargin: 2, showDataLabels: true }
+            },
+            legend: {
+                show: true,
+                location: 'e',
+                renderer: $.jqplot.EnhancedPieLegendRenderer,
+                rendererOptions: {
+                    numberColumns: 3,
+                    toolTips: toolTip1
+                }
+            },
+        }
+    );
+	
 	
 	
 	$("#cmpMonth").datepicker({

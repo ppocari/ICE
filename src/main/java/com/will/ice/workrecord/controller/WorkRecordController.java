@@ -30,7 +30,6 @@ public class WorkRecordController {
 	private SimpleDateFormat h9 = new SimpleDateFormat("09:00");
 	private SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat ym = new SimpleDateFormat("yyyy-MM");
-	private SimpleDateFormat mm = new SimpleDateFormat("MM");
 	
 	
 	@Autowired WorkRecordService workService;
@@ -151,7 +150,6 @@ public class WorkRecordController {
 		logger.info("outTime={}",outTime);
 		logger.info("dateTime={}",dateTime);
 		
-		int nomal = Integer.parseInt(Evo.getCmpStatus());
 		logger.info("Evo.getCmpStatus={}",Evo.getCmpStatus());
 		
 		if((outTime - dateTime) < 8){ //(date)가 nine보다 이후 일때 true 
