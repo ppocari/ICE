@@ -66,59 +66,38 @@
 <link type="text/css" href="<c:url value='/resources/css/sb-admin-2.min.css'/>">
 <script type="text/javascript">
 	$(function() {
-		$("form[name=workSearchFrm]").submit(function(){
-			var year = $("#year option:selected").val();
-			var month = $("#month option:selected").val();
-			alert(year+month);
-
+		var choiceDate;
+		
+		$("#btDetail").click(function() {
 			event.preventDefault();
-			$.ajax({
-				url:"/ice/workRecord/searchWork.do?month="+month+"&year="+year+"",
-				type:"get",
-				datatype:"json",
-				success:function(res){
-					makeList(res);	
-				},
-				error:function(xhr, status, error){
-					alert(status + ", " + error);
-				}
-			});
-			
-			//$(this).attr("action","searchWork.do?selectDate="+choiceDate);
+			location.href="#";
+			/*
+			window.open('<c:url value="/workRecord/detail.do?Start=${vo.cmpIn}&End=${vo.cmpOut}"/>','workDetail',
+		'width=600,height=500,left=0,top=0,location=yes,resizable=yes');
+			*/
 		});
+		
+		$("#selectDate").datepicker({
+	         dateFormat:'yy-mm',
+	            changeYear:true,
+	            changeMonth:true,
+	            dayNamesMin:['일','월','화','수','목','금','토'],
+	            monthNamesShort: ['1월', '2월', '3월', '4월', '5월',
+	            	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	      });
+		
+		$("form[name=workSearchFrm]").submit(function(){
+			if($("#selectDate").val() == ""){
+				event.preventDefault();
+				$('#selectDate').focus();
+				alert("날짜를 선택해주세요!");
+			}
+			var choiceDate = $("#selectDate").val();
+			$(this).attr("action","searchWork.do?selectDate="+choiceDate);
+			
+		});
+		
 	});//doc
-	
-	function makeList(xmlStr){
-		if(xmlStr==''){
-			$("#ajaxCount")
-				.html("<p style='text_align:center'>해당 날짜에 근태 기록이 없습니다.</p>");
-			return;
-		}
-		
-		var str = "<table class='table table-hover'>";
-		str += "<tr><th>오늘날짜</th>";
-		str += "<th>출근시간</th>";
-		str += "<th>퇴근시간</th>";
-		str += "<th>근무상태</th></tr>";
-		
-		$(xmlStr).each(function(idx, item){
-			var cmpRegdate = item.cmpRegdate;
-			var cmpIn = item.cmpIn;
-			var cmpOut = item.cmpOut;
-			var cmpStatus = item.cmpStatus;
-			
-			str += "<tr>";
-			str += "<td>"+cmpRegdate+"</td>";
-			str += "<td>"+cmpIn+"</td>";			
-			str += "<td>"+cmpOut+"</td>";			
-			str += "<td>"+cmpStatus+"</td>";			
-			str += "</tr>"; 	
-		});
-		
-		str += "</table>";
-		
-		$("#ajaxTable").html(str);
-	}
 	
 	function start() {
 		if(confirm("출근하시겠습니까?")){
@@ -230,53 +209,37 @@
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">근태관리 조회</h5>
-					<form name="workSearchFrm" id="workSearchFrm">
+					<form name="workSearchFrm" id="workSearchFrm" method="post"
+						action="<c:url value='/workRecord/searchWork.do'/>">
 						<span id="spanDate">
 							<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
-							<label>연도</label>&nbsp;&nbsp;&nbsp;
-							<select id="year">
-								<option value="2019">2019년</option>
-								<option value="2020">2020년</option>
-							</select>
-							<label>월</label>&nbsp;&nbsp;&nbsp;
-							<select id="month">
-								<option value="01">1월</option>
-								<option value="02">2월</option>
-								<option value="03">3월</option>
-								<option value="04">4월</option>
-								<option value="05">5월</option>
-								<option value="06">6월</option>
-								<option value="07">7월</option>
-								<option value="08">8월</option>
-								<option value="09">9월</option>
-								<option value="10">10월</option>
-								<option value="11">11월</option>
-								<option value="12">12월</option>
-							</select>
+							<label>근무일자</label>&nbsp;&nbsp;&nbsp;
+							<input id="selectDate"></input>
 						</span>
-						<button id="btSearch" class="btn btn-primary">조회</button>
+						<input type="submit" id="btSearch" value="조회" class="btn btn-primary">
 					</form>
 				</div>
 				<!-- Card Header - Dropdown -->
 				<div style="overflow:auto; width:1630px; height:500px;"> 
-				
-				<div id="ajaxCount"></div>
-				<div id="ajaxTable"></div>
-				<!-- <table class="table table-hover">
-					출퇴근 조회
+				<table class="table table-hover">
+					<!-- 출퇴근 조회 -->
 					<tr>
 						<th>오늘날짜</th>
 						<th>출근시간</th>
 						<th>퇴근시간</th>
 						<th>근무상태</th>
 					</tr>
-					<tr id="ajaxTd">
-						<td id="regdate"></td>
-						<td id="start"></td>
-						<td id="end"></td>
-						<td id="status"></td>
-					</tr>
-				</table> -->
+					<c:if test="${!empty searchVo}">
+						<c:forEach var="Svo" items="${Slist}">
+							<tr>
+								<td id="regdate">${Svo.cmpRegdate}</td>
+								<td id="start">${Svo.cmpIn}</td>
+								<td id="end">${Svo.cmpOut}</td>
+								<td id="status">${Svo.cmpStatus}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
 				</div>
 			</div>
 		</div>

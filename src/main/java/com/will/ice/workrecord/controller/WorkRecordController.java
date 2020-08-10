@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.workrecord.model.WorkRecordService;
 import com.will.ice.workrecord.model.WorkRecordVO;
@@ -175,8 +176,9 @@ public class WorkRecordController {
 	
 	//조회
 	@RequestMapping("/searchWork.do")
-	public String searchWork(@RequestParam String selectDate, HttpServletRequest request
-			, Model model) {
+	@ResponseBody
+	public List<WorkRecordVO> searchWork(@RequestParam String year,@RequestParam String month,
+			HttpServletRequest request) {
 		//사원번호 셋팅
 		HttpSession session = request.getSession();
 		String memNo = (String) session.getAttribute("identNum");
@@ -184,16 +186,10 @@ public class WorkRecordController {
 		searchVo.setMemNo(memNo);
 		
 		searchVo = workService.selectToday(memNo);
-		logger.info("searchVo={}"+searchVo);
-		if(searchVo == null) {
-			String msg = "조회결과가 없습니다.";
-			String url = "/workRecord/workRecord.do";
-			
-			model.addAttribute("msg",msg);
-			model.addAttribute("url",url);
-			
-			return "common/message";
-		}
+		logger.info("searchVo={}",searchVo);
+		logger.info("year={},month={}",year,month);
+		
+		String selectDate = year+"-"+month;
 		
 		//selectDate Date로 변경
 		Date d = new Date();
@@ -202,14 +198,9 @@ public class WorkRecordController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
 		// cmp_month 셋팅
 		String date = ym.format(d);
 		searchVo.setCmpMonth(date);
-		
-		
-		logger.info("searchVo.getStatus={}",searchVo.getCmpStatus());
-		
 		
 		//조회
 		List<WorkRecordVO>Slist = workService.selectWorkList(searchVo);
@@ -218,22 +209,7 @@ public class WorkRecordController {
 		}
 		logger.info("Slist.size={}"+Slist);
 		
-		
-		//조회결과 없을시
-		if(Slist.size()==0) {
-			String msg = "조회결과가 없습니다.";
-			String url = "/workRecord/workRecord.do";
-			
-			model.addAttribute("msg",msg);
-			model.addAttribute("url",url);
-			
-			return "common/message";
-		}
-		
-		model.addAttribute("searchVo",searchVo);
-		model.addAttribute("Slist",Slist);
-		
-		return "workRecord/workRecord";
+		return Slist;
 	}
 	
 	
@@ -251,30 +227,51 @@ public class WorkRecordController {
 	@RequestMapping(value = "/workChart.do",method = RequestMethod.POST)
 	public void SelectMonthChart(@RequestParam String cmpMonth,HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
-		
 		WorkRecordVO vo = new WorkRecordVO();
 		vo.setMemNo(memNo);
-		vo.setCmpMonth(cmpMonth);
-		logger.info("근태 월별 통계 파라미터 memNo={},cmpMonth={}",memNo,vo.getCmpMonth());
 		
-		
-		
+		//연도별 조회
+		vo.setCmpMonth("2019-01");
 		vo.setCmpStatus("퇴근(미달)");
-		int under = workService.selectMonthCount(vo);
-		
+		int under1 = workService.selectMonthCount(vo);
 		vo.setCmpStatus("퇴근(초과)");
-		int over = workService.selectMonthCount(vo);
-		
+		int over1 = workService.selectMonthCount(vo);
 		vo.setCmpStatus("퇴근");
-		int avg = workService.selectMonthCount(vo);
+		int avg1 = workService.selectMonthCount(vo);
+		model.addAttribute("under1",under1);
+		model.addAttribute("over1",over1);
+		model.addAttribute("avg1",avg1);
 		
-		logger.info("미달 under={},",under);
-		logger.info("초과 over={},",over);
-		logger.info("퇴근 avg={},",avg);
+		vo.setCmpMonth("2019-07");
+		vo.setCmpStatus("퇴근(미달)");
+		int under7 = workService.selectMonthCount(vo);
+		vo.setCmpStatus("퇴근(초과)");
+		int over7 = workService.selectMonthCount(vo);
+		vo.setCmpStatus("퇴근");
+		int avg7 = workService.selectMonthCount(vo);
+		model.addAttribute("under7",under7);
+		model.addAttribute("over7",over7);
+		model.addAttribute("avg7",avg7);
 		
-		model.addAttribute("under",under);
-		model.addAttribute("over",over);
-		model.addAttribute("avg",avg);
+		
+		
+		//월별 조회
+		if(cmpMonth != null && cmpMonth.isEmpty()) {
+			vo.setCmpMonth(cmpMonth);
+			
+			vo.setCmpStatus("퇴근(미달)");
+			int under = workService.selectMonthCount(vo);
+			
+			vo.setCmpStatus("퇴근(초과)");
+			int over = workService.selectMonthCount(vo);
+			
+			vo.setCmpStatus("퇴근");
+			int avg = workService.selectMonthCount(vo);
+			
+			model.addAttribute("under",under);
+			model.addAttribute("over",over);
+			model.addAttribute("avg",avg);
+		}
 
 	}
 }
