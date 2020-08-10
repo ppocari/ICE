@@ -31,7 +31,7 @@
 function popup(){
 	var url="<c:url value='/notice/noticeDelete.do?noticeNo=${param.noticeNo}' />";
 	var name="삭제하기";
-	var option="width=500, height=500, top=100, left=200, location=no"
+	var option="width=484, height=84, top=100, left=200, location=no"
 	window.open(url,name,option);
 }	
 

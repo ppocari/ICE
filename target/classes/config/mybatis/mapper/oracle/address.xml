@@ -10,7 +10,7 @@
 		select rownum as RNUM, A.*
 		from (
 		   	select * from v_address
-            where memno=#{memNo}
+            where memno = #{memNo}
             <!-- <if test='userId == "hong"'>  (O) -->
 		     	<if test='searchCondition == "kor"'> 
 		     		<if test='searchKeyword == "하"'>

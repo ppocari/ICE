@@ -11,42 +11,88 @@
 		values(#{TICNO}, #{MEMNO}, #{TICQUANTITY}, #{TICPRICE})
 	</insert>
 	
-	<select id="selectSpayView" parameterType="dateSearchVo"
-		resultType="map">
+	<select id="selectSpayView" parameterType="DateSearchVo"
+		resultType="SpayViewVO">
 		select *
 		from
 		(
-		    select rownum as RNUM, A.*
-		    from(
-		        select * from SpayViewVO
-				<where> 
+			select rownum as RNUM, A.*
+			from(
+				select * from SpayView
+				<where>
 					<if test="MemNo!=null and MemNo!=''">
 						MemNo=#{MemNo}
-					</if>				
+					</if>	
 					and TICREGDATE>=#{startDay}
 					<![CDATA[
 					and TICREGDATE < to_date(#{endDay})+1 ]]>
 				</where>
-				order by TICNO desc
-		    )A    
+				order by ticno desc
+			)A	
 		)
 		<![CDATA[ 
 		where RNUM>#{firstRecordIndex}
-		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>	
 	</select>
 	
-	<select id="selectDay" parameterType="dateSearchVo" 
-		resultType="int">
+	<select id="selectTotalRecord" parameterType="dateSearchVo" 
+		resultType="int"> 
 		select count(*) from SpayView
 		<where> 
 			<if test="MemNo!=null and MemNo!=''">
 				MemNo=#{MemNo}
 			</if>				
-			and ticRegDate>=#{startDay}
+			and TICREGDATE>=#{startDay}
 			<![CDATA[
-			and ticRegDate < to_date(#{endDay})+1 ]]>
+			and TICREGDATE < to_date(#{endDay})+1 ]]>
 		</where>
+	</select>
+	
+	<select id="searchNum" parameterType="int" resultType="int">
+		select ticno from
+		(
+		select * from SpayView
+		where memno=#{value}
 		order by ticno desc
+		)
+		where rownum=1
+	</select>
+
+	<select id="searchAll" parameterType="int" resultType="spayvo">
+		select * from SpayView
+		where ticno=#{value}
+		order by ticno desc
+	</select>
+	
+	<select id="selectSpayViewAll" parameterType="DateSearchVo"
+		resultType="SpayViewVO">
+		select *
+		from
+		(
+			select rownum as RNUM, A.*
+			from(
+				select * from SpayView
+				<where>
+					and TICREGDATE>=#{startDay}
+					<![CDATA[
+					and TICREGDATE < to_date(#{endDay})+1 ]]>
+				</where>
+				order by ticno desc
+			)A	
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>	
+	</select>
+	
+	<select id="selectTotalRecordAll" parameterType="dateSearchVo" 
+		resultType="int"> 
+		select count(*) from SpayView
+		<where> 
+			and TICREGDATE>=#{startDay}
+			<![CDATA[
+			and TICREGDATE < to_date(#{endDay})+1 ]]>
+		</where>
 	</select>
 		
 </mapper>

@@ -31,6 +31,11 @@ public class FileUploadUtil {
 	public static final int PATH_PAYMENT_FILE=3;//결재등록시 자료업로드
 	public static final int PATH_SIGN_FILE=4;//결재처리시 사인업로드
 
+	public static final int PATH_COMCARD_FILE=5;//법인카드 파일 업로드
+
+	public static final int PATH_RESOURCE_FILE=6; //자원관리 이미지 업로드
+
+
 	@Resource(name="fileUploadProperties")
 	Properties fileUploadProps;
 	
@@ -97,6 +102,10 @@ public class FileUploadUtil {
 				key="paymentfile.upload.path.test";
 			}else if(pathGb==PATH_SIGN_FILE) {
 				key="signfile.upload.path.test";
+			}else if(pathGb==PATH_COMCARD_FILE) {
+				key="comcardfile.upload.path.test";
+			}else if(pathGb==PATH_RESOURCE_FILE) {
+				key="resourceFile.upload.path.test";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);
@@ -109,6 +118,10 @@ public class FileUploadUtil {
 				key="paymentfile.upload.path";
 			}else if(pathGb==PATH_SIGN_FILE) {
 				key="signfile.upload.path";
+			}else if(pathGb==PATH_COMCARD_FILE) {
+				key="comcardfile.upload.path";
+			}else if(pathGb==PATH_RESOURCE_FILE) {
+				key="resourceFile.upload.path";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);

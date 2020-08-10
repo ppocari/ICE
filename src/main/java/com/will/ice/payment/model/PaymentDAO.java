@@ -3,8 +3,10 @@ package com.will.ice.payment.model;
 import java.util.List;
 
 import com.will.ice.common.PaymentSearchVO;
+import com.will.ice.document.model.ChkDocumentviewVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberVO;
+import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
@@ -18,7 +20,8 @@ public interface PaymentDAO {
 	int insertPayline(PaylinedocVO pldVo);
 	int updatePayline(PaylinedocVO pldVo);
 	PaymentviewVO selectDocument(int docNo);
-	List<DocumentviewVO> selectPayLine(int docNo);
+	List<ChkDocumentviewVO> selectPayLine(int docNo);
+	List<DocumentviewVO> selectPayLine2(int docNo);
 	int deletePayLine(int docNo);
 	int reallydeletePayLine(int docNo);
 	List<MemberVO> selectAllMem(int poscode);
@@ -39,4 +42,7 @@ public interface PaymentDAO {
 	int updateRead(PaylineVO plVo);
 	int updateProgress(PaymentviewVO vo);
 	List<PaycommentVO> selectSign(int docNo);
+	List<PaylistViewVO> selectDecided(PaymentSearchVO paysearchVo);
+	List<PaymentviewVO> selectRejected(PaymentSearchVO paysearchVo);
+	List<CommentviewVO> selectComment(int docNo);
 }

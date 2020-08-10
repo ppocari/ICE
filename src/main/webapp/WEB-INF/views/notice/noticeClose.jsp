@@ -6,14 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript">
+   $(function(){
+   		
+      	self.close();
+      	opener.location.href="<c:url value='/notice/noticeList.do'/>";
+   });
+</script>
 </head>
 <body>
 
-    <form action="<c:url value="/excel.do"/>" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <input type="submit" value="제출" />
-    </form>
-	
-	
 </body>
 </html>

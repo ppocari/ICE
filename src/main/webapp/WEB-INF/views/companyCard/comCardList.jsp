@@ -120,18 +120,20 @@
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-							<table class="table table-bordered table-hover" id="dynamicTable">
+						<div class="chart-area" style="overflow: scroll; overflow-x: scroll ">
+							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1350px;">
 								<thead>
 									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용금액</th>
-										<th>사용처</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
+										<th style="width: 7%">카드사</th>
+										<th style="width: 15%">카드번호</th>
+										<th style="width: 8%">사원이름</th>
+										<th style="width: 10%">계정코드</th>
+										<th style="width: 13%">사용처</th>
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 10%">사용일</th>
+										<th style="width: 7%">부서</th>
+										<th style="width: 7%">직급</th>
+									
 										
 									</tr>
 								</thead>
@@ -141,6 +143,7 @@
 									<c:forEach var="vo" items="${list }">
 										
 										<tr>
+											<td>${vo.company }</td>
 											<td>${vo.cardNo }</td>
 											<td>${vo.name }</td>
 											<td>${vo.accCode }</td>
@@ -148,8 +151,11 @@
 											<td>${vo.usePlace }</td>
 											<td>${vo.useDate } </td>
 											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-															
+											<td>${vo.confirmCode }</td>
+											<td>${vo.confirmDate }</td>
+											<td>${vo.confirmTime }</td>
+
+									
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -56,12 +56,26 @@
 	</update>
 	
 	<select id="selectByNo" parameterType="int" resultType="noticeVo">
-		select * from board where noticeNo=#{noticeNo}
+		select * from notice where noticeNo=#{noticeNo}
 	</select>
 	
-	<delete id="deleteBoard" parameterType="int">
-		delete from board where noticeNo=#{noticeNo}
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where noticeNo=#{noticeNo}
 	</delete>
+	
+	<update id="updateNotice" parameterType="NoticeVO">
+		update notice
+		set noticeNo=#{noticeNo}, title=#{title}, memNo=#{memNo}, 
+			content=#{content}, fileName=#{fileName}, fileSize=#{fileSize}, 
+			orFileName=#{orFileName}, category=#{category}, main=#{main}
+		where noticeNo=#{noticeNo}
+	</update>
+	
+	<update id="updateReadcount" parameterType="int">
+		update notice
+		set readcount=readcount+1
+		where noticeNo=#{noticeNo}
+	</update>
 </mapper>
 
 
