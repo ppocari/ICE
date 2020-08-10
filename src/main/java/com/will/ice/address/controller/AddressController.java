@@ -120,6 +120,7 @@ public class AddressController {
 		String memNo=(String)session.getAttribute("identNum");
 		logger.info("주소록 등록 화면, memNo={}", memNo);
 		
+		
 		List<AddressGroupVO> adgList= service.selectAddressGroup();
 		List<String> phList = GetSelect.getPhoneSelect();
 		List<String> emList = GetSelect.getEmailSelect();

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.accode">
+
 	<select id="selectListAccode" parameterType="SearchVO" resultType="AccodeVO">
-		select * 
+		select *
 			from
 			(
 			    select rownum as rnum, A.*
@@ -13,34 +14,25 @@
 			    <if test="searchCondition != null and searchCondition != '' ">
 					where ${searchCondition} like '%' || #{searchKeyword} || '%'
 				</if>
-			    order by acccode 
+			    order by acccode
 			    )A
 			)
-		<![CDATA[ 
+		<![CDATA[
 		where RNUM>#{firstRecordIndex}
 		  and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
+
 	<select id="selectTotalRecord" parameterType="searchVo" resultType="int">
 		select count(*) from accountCode
         <if test="searchKeyword!=null and searchKeyword !=''">
-        	where ${searchCondition} like '%' 
+        	where ${searchCondition} like '%'
         			|| #{searchKeyword} || '%'
         </if>
 	</select>
-	
+
 	<update id="accRegisterMulti" parameterType="AccodeVO">
 		update companyCard
 		set acccode = #{accCode}
 		where no = #{no}
 	</update>
 </mapper>
-
-
-
-
-
-
-
-
-

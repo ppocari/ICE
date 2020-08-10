@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.MidiDevice.Info;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,8 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.will.ice.common.FileUploadUtil;
+import com.will.ice.companyCard.model.ComCardFileVO;
+import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.excel.model.ExcelData;
-import com.will.ice.paymentfile.model.PaymentfileVO;
 
 
 @Controller
@@ -35,8 +35,9 @@ public class ExcelController {
 
 	private static final Logger logger 
 	= LoggerFactory.getLogger(ExcelController.class);
-	
+
 	@Autowired private FileUploadUtil fileUploadUtil;
+	@Autowired private ComcardService comcardService;
 
 	@RequestMapping(value="/excelhtml.do", method = RequestMethod.GET)
 	public void excelhtml_get() { // 1
@@ -58,11 +59,15 @@ public class ExcelController {
 	@RequestMapping(value="/excel.do", method = RequestMethod.POST)
 	public String readExcel(@RequestParam("file") MultipartFile file,
 			HttpServletRequest request, Model model)
-			throws IOException { // 2
+					throws IOException { // 2
 		logger.info("file={}",file);
 
+
+		
+		//insert 부터 하면 됨
+
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_COMCARD_FILE);
 		String fileURL="",originalFileName="";long fileSize=0;
 		if(fileList!=null) {
 			for(Map<String, Object> map : fileList) {
@@ -71,12 +76,17 @@ public class ExcelController {
 				originalFileName = (String)map.get("originalFileName");
 			}
 		}
-		PaymentfileVO fileVo = new PaymentfileVO(); 
-		fileVo.setFileName(fileURL);
-		fileVo.setOriginalFileName(originalFileName);
-		fileVo.setFileSize(fileSize);
+		ComCardFileVO ccfvo = new ComCardFileVO(); 
+		ccfvo.setFileName(fileURL);
+		ccfvo.setOriginalFileName(originalFileName);
+		ccfvo.setFileSize(fileSize);
+		
+		logger.info("ccfvo={}",ccfvo);
+		
+		int cnt = comcardService.insertCCFile(ccfvo);
+		
+		logger.info("cnt={}",cnt);
 
-//insert 부터 하면 됨
 
 		List<ExcelData> dataList = new ArrayList<>();
 
@@ -102,17 +112,21 @@ public class ExcelController {
 
 			ExcelData data = new ExcelData();
 
-			data.setNum((int) row.getCell(0).getNumericCellValue());
-			data.setName(row.getCell(1).getStringCellValue());
-			data.setEmail(row.getCell(2).getStringCellValue());
+			data.setCompany(row.getCell(0).getStringCellValue());
+			data.setCardNo(row.getCell(1).getStringCellValue());
+			data.setMemNo(row.getCell(2).getStringCellValue());
+			data.setPrice((int) row.getCell(3).getNumericCellValue());
+			data.setUsePlace(row.getCell(4).getStringCellValue());
+			data.setUseDate(row.getCell(5).getStringCellValue());
 
 			dataList.add(data);
 
 		}
 
 		model.addAttribute("datas", dataList); // 5
+		model.addAttribute("ccfvo", ccfvo); // 5
 
-		return "/excelhtml";
+		return "/companyCard/comCardUpload";
 
 	}
 }

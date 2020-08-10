@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 <script type="text/javascript">
 function pageProc(curPage){
 	$('input[name=currentPage]').val(curPage);
@@ -12,7 +12,7 @@ function pageProc(curPage){
 		var selected = $(this).hasClass("highlight");
 
 		/* highlight */
-		$("#addressTable tr:gt(0)").hover(function(event) {
+		$("#tableForm tr:gt(0)").hover(function(event) {
 			$(this).addClass("highlight");
 		}, function(event) {
 			$(this).removeClass("highlight");
@@ -93,110 +93,10 @@ function pageProc(curPage){
 
 <style type="text/css">
 
-/* 주소 테이블  */
-#addressTableDiv {
-	width: 95%;
-	margin: 0 auto;
-	padding: 5px;
-	background-color: white;
-	margin-bottom:10px;
-} 
-
-#addressTable {
-	background-color: white;
-	text-align: center;
-}
-
-#addressTableTr {
-	height: 30px;
-}
-
 .star_color {
 	color: orange;
-}
-
-.addressCB {
-	width: 0.8em;
-	margin-top: 5px;
-}
-
-#addressTable th, td {
-	border-bottom: 2px solid #f8f9fc;
-}
-
-#addressTable tr:last-child { 
-	border-bottom:3px solid white;
-}
-
-#addressTable {
-	width: 100%;
-	font-size: 0.9em;
-}
-
-/* 2번쨰 버튼들 위치  */
-#buttonsDiv {
-	width:100%;
-}
-
-#buttonsDiv>* {
-	text-align: left;
-	font-size: 0.9em;
-	margin-right: 5px;
-}
-
-#buttonsDiv input[type=button] {
-	border: 1px solid lightgray;
-	margin-right: 5px;
-}
-
-#buttonsDiv a {
-	color:#858796;
-	font-size: 0.9em;
-	margin-left:3px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-#buttonsDiv a:hover{
-	text-decoration: underline;
-}
-
-#spanAll{
-	text-align: center;
-}
-
-#spanFir{
-	float:left;
-}
-
-#spanThd{
-	float:right;
-}
-
-/* 테이블에 마우스 올리면 효과 */
-.highlight {
-	background-color: #d1d3e2;
-}
-
- 
-.highlight a {
-	text-decoration: none;
-	color:#858796;
 } 
- 
-.addOption_hidden{
-	visibility:hidden;
-}
 
-.addressName{
-	color:#858796;
-	text-decoration: none;
-}
-
-.divPage{
-	text-align: center;
-	margin-bottom: 10px;
-}
 </style>
 
 <section id="addressMain_section">
@@ -227,8 +127,8 @@ function pageProc(curPage){
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div id="buttonsDiv">
-							<div id="spanAll">
-							<div id="spanFir">
+							<div id="divAll">
+							<div id="divLeft">
 								<input type="button" id="btAdd" value="추가">
 								<input type="button" id="btDel" value="삭제">
 							</div>
@@ -252,16 +152,16 @@ function pageProc(curPage){
 									<a href="<c:url value='/address/addressMain.do?searchCondition=num'/>">숫자</a>
 									<a href="<c:url value='/address/addressMain.do?searchCondition=favorite'/>">즐겨찾기</a>
 								</span>
-							<div id="spanThd">
+							<div id="divRight">
 								<input type="button" id="btEdit" value="설정">
 								<input type="button" id="btTrash" value="휴지통">
 							</div>
 							</div>
 						</div>
 					</div>
-					<div id="addressTableDiv">
-						<table id="addressTable">
-							<tr id="addressTableTr" class="card-header">
+					<div id="tableDivForm">
+						<table id="tableForm">
+							<tr id="tableTrForm" class="card-header">
 								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
 								<th class="star_color">★</th>
 								<th  style="width:10%">이름</th>

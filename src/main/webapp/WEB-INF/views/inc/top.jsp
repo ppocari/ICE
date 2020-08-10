@@ -146,9 +146,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
-								href="<c:url value='#'/>">자원등록/삭제</a>
-							<a class="collapse-item"
-								href="<c:url value='#'/>">자원예약처리</a>
+								href="<c:url value='/resource/resourceMain.do'/>">자원관리</a>
 						</div>
 
 					</div>
@@ -187,7 +185,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/spay/sListAll.do'/>">사내 식권 구매내역</a>
-							<a class="collapse-item" href="<c:url value='/spay/port.do'/>">환불 내역</a>
+							<a class="collapse-item" href="https://admin.iamport.kr/payments" target="_blank">환불 내역 및 상세데이터</a>
 						</div>
 
 					</div>
