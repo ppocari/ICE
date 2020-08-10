@@ -113,8 +113,8 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping("deleteSchedule.do")
-	public String deleteSchedule(@RequestParam String dbId , Model model) {
-		int cnt = scheduleService.deleteSchedule(dbId);
+	public String deleteSchedule(@RequestParam String schNo , Model model) {
+		int cnt = scheduleService.deleteSchedule(schNo);
 		
 		String msg = "삭제를 실패하였습니다.", url = "/schedule/scheduleClose.do";
 		if(cnt > 0) {
@@ -158,5 +158,10 @@ public class ScheduleController {
 		model.addAttribute("url",url);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/scheduleWrite.do")
+	public void scheduleWrite() {
+		logger.info("스케줄 입력!");
 	}
 }

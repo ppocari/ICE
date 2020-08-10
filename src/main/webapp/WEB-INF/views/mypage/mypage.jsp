@@ -70,7 +70,7 @@
 	    border: 1px solid gray;
 	    color: white;
 	    margin-bottom: 2%;
-	    width: 30%;
+	    width: 75%;
 	}
 	
 	.All {
@@ -81,19 +81,12 @@
 	input#email1 {
 	    width: 15%;
 	}
-
-	.form-control{
-		max-width: 30%;
-	}
 	
 	#btZipcode {
 	    position: absolute;
-	    margin-left: 29%;
-	    margin-top: -2%;
-	}
-	
-	#zipInput{
-		max-width: 30%;
+	    margin-left: 156px;
+	    margin-top: -39px;
+	    width: 10%;
 	}
 	
 	#hp1{
@@ -102,30 +95,60 @@
 		display: inline-block;
 	}
 	#email{
-		max-width: 15%;
+		width: 35%;
 		display: inline-block;
 	}
 	#email2{
-		max-width: 15%;
+		width: 22%;
 		display: inline-block;
 	}
 	#email3{
-		max-width: 15%;
+		width: 22%;
 		display: inline-block;
 		height: 45px;
 	}
 	
-	#pwd1, #pwd2{
-		max-width: 30%;
+	#mypageFrm{
+		padding: 60px;
 	}
 	
-	#b,#c{
-		float: left;
-	}
 	#a_a,#a_b,#a_c{
 		float: left;
 	}
-
+	
+	#a_a{
+		width: 25%;
+	}
+	#a_b, #a_c {
+	    width: 18%;
+	}
+	
+	
+	#b_a{
+		float: left;
+		width: 25%;
+	}
+	#b_b{
+		float: left;
+		width: 50%;
+	}
+	
+	div#a_c {
+	    margin-right: 30%;
+	}
+	
+	#c{
+		
+	}
+	
+	input#mypageEdit {
+	    width: 50%;
+	    position: absolute;
+	    bottom: 0;
+	    left: 0;
+	    margin-left: 4%;
+	}
+	 
 </style>
 <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/mypage/member.js'/>"></script>
@@ -133,7 +156,7 @@
 <script type="text/javascript">
 	$(function() {
 		var pwd = $("#pwd2").val();
-		
+		var pwdFalse;
 		$("#pwd2").keyup(function() {
 			if($("#pwd2").val().length>=2){
 				$.ajax({
@@ -143,9 +166,13 @@
 					dataType:"json",
 					success:function(res){
 						if(res==1 && $("#pwd2").val() == $("#pwd1").val()){
+							pwdFalse = (res==1 && $("#pwd2").val() == $("#pwd1").val());
 							$("#error").html("패스워드가 일치합니다.").css("color","green");
-						}else if(res==2 && pwd != $("#pwd1").val()){
+						}else if((res==2 && pwd != $("#pwd1").val())){
+							pwdFalse = (res==2 && pwd != $("#pwd1").val());
 							$("#error").html("패스워드가 일치하지 않습니다.").css("color","red");
+							event.preventDefault();
+							$('#pwd1').focus();
 						}
 					},
 					error:function(xhr,status,error){
@@ -161,11 +188,12 @@
 				alert('핸드폰은 숫자만 가능합니다!');
 				$('#hp2').focus();
 				event.preventDefault();
-			}else if(!validate_pwd($('#pwd1').val())){
+			}else if(!validate_pwd($('#pwd1').val()) ||
+					!validate_pwd($('#pwd2').val())){
 				alert('비밀번호는 영문 대소문자,숫자,_만 가능합니다!');
 				$('#pwd1').focus();
 				event.preventDefault();
-			} 
+			}
 		});
 			$('#btZipcode').click(function(){
 				window.open(contextPath+'/mypage/zipcode.do','zip',
@@ -213,7 +241,7 @@
 					<!-- Area Chart -->
 					<div class="col-xl-12 ">
 						<div class="card shadow mb-4">
-							<form name="mypageFrm" method="post" enctype="multipart/form-data"
+							<form name="mypageFrm" id="mypageFrm" method="post" enctype="multipart/form-data"
 								action="<c:url value='/mypage/mypage.do'/>">
 								<div id="a">
 									<div id="a_a">
@@ -231,112 +259,115 @@
 											<input type="file" value="사진변경" name="imgUP" class="img_ch">
 										</div>
 									</div>
+									
 									<div id="a_b">
 										<div class="form-group" id="memNo">
 											사원번호 <input type="text" class="form-control" id="memNo"
-												name="memNo" value="${vo.memNo}" readonly style="width: 100px;">
+												name="memNo" value="${vo.memNo}" readonly style="width: 180px;">
 										</div>
 										<div class="form-group" id="deptCode">
 											부서코드 <input type="text" class="form-control" id="deptCode"
-												name="deptCode" value="${vo.deptCode}" readonly style="width: 100px;">
+												name="deptCode" value="${vo.deptCode}" readonly style="width: 180px;">
 										</div>
 										<div class="form-group">
 											직급코드 <input type="text" class="form-control" id="posCode"
-												name="posCode" value="${vo.posCode}" readonly style="width: 100px;">
+												name="posCode" value="${vo.posCode}" readonly style="width: 180px;">
 										</div>
 									</div>
 									<div id="a_c">
 										<div class="form-group">
 											부서 <input type="text" class="form-control" value="${vo.deptName }"
-												name="dname" readonly style="width: 100px;">
+												name="dname" readonly style="width: 180px;">
 										</div>
 										<div class="form-group">
 											직책 <input type="text" class="form-control" value="${vo.posName }"
-												name="pname" readonly style="width: 100px;">
+												name="pname" readonly style="width: 180px;">
 										</div>
 										<div class="form-group">
 											연봉 <input type="text" class="form-control" id="salary" readonly
-												name="salary" value="${vo.salary }" style="width: 100px;">
+												name="salary" value="${vo.salary }" style="width: 180px;">
 										</div>
 									</div>
 								</div>
+								
+								
+								
+								
 								<div id="b">
-									<div class="form-group">
-										이름 <input type="text" class="form-control" id="name" name="name"
-											value="${vo.name }">
+									<div id="b_a">
+										<div class="form-group">
+											이름 <input type="text" class="form-control" id="name" name="name"
+												value="${vo.name }" style="width: 75%;">
+										</div>
+										<div class="form-group">
+											패스워드 <input type="password" class="form-control" id="pwd1"
+												name="pwd" placeholder="암호" style="width: 75%;">
+										</div>
+										<div class="form-group">
+											패스워드 확인 <input type="password" class="form-control" id="pwd2"
+												name="pwd2" style="width: 75%;"> <span id="error"></span>
+										</div>
+										<div class="form-group">
+											성별 <input type="text" name="gender" class="form-control"
+												id="gender" value="${vo.gender }" style="width: 75%;">
+										</div>
 									</div>
-									<div class="form-group">
-										패스워드 <input type="password" class="form-control" id="pwd1"
-											name="pwd" placeholder="암호">
-									</div>
-									<div class="form-group">
-										패스워드 확인 <input type="password" class="form-control" id="pwd2"
-											name="pwd2"> <span id="error"></span>
-									</div>
-									<div class="form-group">
-										휴대폰<br> <select name="hp1" id="hp1" title="휴대폰 앞자리"
-											class="form-control">
-											<option value="010">010</option>
-											<option value="011">011</option>
-											<option value="016">016</option>
-											<option value="017">017</option>
-											<option value="018">018</option>
-											<option value="019">019</option>
-										</select> - 
-										<input type="text" name="hp2" class="form-control" id="hp2"
-											value="${vo.hp2 }" maxlength="4" title="휴대폰 가운데자리"
-											style="width: 80px; display: inline-block;">- 
-										<input type="text" name="hp3" class="form-control" id="hp3"
-											value="${vo.hp3 }" maxlength="4" title="휴대폰 뒷자리"
-											style="width: 80px; display: inline-block;">
-									</div>
-									<div class="form-group">
-										이메일<br> <input type="text" name="email1"
-											value="${vo.email1 }" class="form-control" id="email"
-											title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@ <select
-											name="email2" class="form-control" id="email2" title="이메일주소 뒷자리"
-											style="height: 45px;">
-											<option value="naver.com">naver.com</option>
-											<option value="hanmail.net">hanmail.net</option>
-											<option value="nate.com">nate.com</option>
-											<option value="gmail.com">gmail.com</option>
-											<option value="etc">직접입력</option>
-										</select> <input type="text" name="email3" class="form-control" id="email3"
-											title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
-									</div>
-									<div class="form-group">
-										성별 <input type="text" name="gender" class="form-control"
-											id="gender" value="${vo.gender }">
+									<div id="b_b">
+										<div class="form-group">
+											휴대폰<br> <select name="hp1" id="hp1" title="휴대폰 앞자리"
+												class="form-control">
+												<option value="010">010</option>
+												<option value="011">011</option>
+												<option value="016">016</option>
+												<option value="017">017</option>
+												<option value="018">018</option>
+												<option value="019">019</option>
+											</select> - 
+											<input type="text" name="hp2" class="form-control" id="hp2"
+												value="${vo.hp2 }" maxlength="4" title="휴대폰 가운데자리"
+												style="width: 80px; display: inline-block;">- 
+											<input type="text" name="hp3" class="form-control" id="hp3"
+												value="${vo.hp3 }" maxlength="4" title="휴대폰 뒷자리"
+												style="width: 80px; display: inline-block;">
+										</div>
+										<div class="form-group">
+											이메일<br> <input type="text" name="email1"
+												value="${vo.email1 }" class="form-control" id="email"
+												title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@ <select
+												name="email2" class="form-control" id="email2" title="이메일주소 뒷자리"
+												style="height: 45px;">
+												<option value="naver.com">naver.com</option>
+												<option value="hanmail.net">hanmail.net</option>
+												<option value="nate.com">nate.com</option>
+												<option value="gmail.com">gmail.com</option>
+												<option value="etc">직접입력</option>
+											</select> <input type="text" name="email3" class="form-control" id="email3"
+												title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
+										</div>
+										 <div class="form-group">
+											주소
+											<div id="divZip">
+												<input type="text" name="zipcode" class="form-control"
+													id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호"
+													style="width: 20%;">
+											</div>
+											<input type="Button" class="btn btn-primary" value="우편번호 찾기" id="btZipcode" title="새창열림">
+											<div id="divZip">
+												<input type="text" name="addr" class="form-control"
+													id="addrInput" value="${vo.addr}" ReadOnly title="주소"
+													style="width: 450px;">
+											</div>
+											<div id="divZip">
+												<input type="text" name="addrDetail" class="form-control"
+													id="addrDetailInput" value="${vo.addrDetail}" title="상세주소"
+													style="width: 450px;">
+											</div>
+										 </div>
 									</div>
 								</div>
-								<%-- 
-								<div class="form-group">
-									입사일 <input type="text" name="hireDate" class="form-control"
-										id="hireDate" value="<fmt:formatDate value="${vo.hireDate }" pattern="yyyy-MM-dd"/>" 
-										readonly="readonly">
+								<div id="c">
+									<input type="submit" class="btn btn-primary" id="mypageEdit" value="수정하기">
 								</div>
-								 --%>
-								 <div id="c">
-									 <div class="form-group">
-										주소
-										<div id="divZip">
-											<input type="text" name="zipcode" class="form-control"
-												id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호"
-												style="width: 100px;">
-										</div>
-										<input type="Button" value="우편번호 찾기" id="btZipcode" title="새창열림">
-										<div id="divZip">
-											<input type="text" name="addr" class="form-control"
-												id="addrInput" value="${vo.addr}" ReadOnly title="주소"
-												style="width: 2650px;">
-										</div>
-										<div id="divZip">
-											<input type="text" name="addrDetail" class="form-control"
-												id="addrDetailInput" value="${vo.addrDetail}" title="상세주소">
-										</div>
-									 </div>
-								</div>
-								<input type="submit" class="btn btn-primary" id="mypageEdit" value="수정하기">
 							</form>
 				
 						</div>
