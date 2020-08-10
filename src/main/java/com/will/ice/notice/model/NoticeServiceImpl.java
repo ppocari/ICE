@@ -45,4 +45,9 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.updateNotice(vo);
 	}
 
+	@Override
+	public int updateDownCount(int noticeNo) {
+		return noticeDao.updateDownCount(noticeNo);
+	}
+
 }

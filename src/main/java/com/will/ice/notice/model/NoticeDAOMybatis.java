@@ -51,4 +51,9 @@ public class NoticeDAOMybatis implements NoticeDAO{
 		return sqlSession.update(namespace+"updateNotice", vo);
 	}
 
+	@Override
+	public int updateDownCount(int noticeNo) {
+		return sqlSession.update(namespace+"updateDownCount", noticeNo);
+	}
+
 }

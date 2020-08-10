@@ -14,7 +14,7 @@ public class BoardVO {
 	private String category;
 	private String isMain;
 	private String filePath;
-	
+
 	public int getBoardNo() {
 		return boardNo;
 	}

@@ -54,7 +54,7 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 560px;">
+			<div class="card shadow mb-4" style="">
 				<!-- Card Header - Dropdown -->
 				<form name="boardSearch" method="post"  
 				action="<c:url value='/board/boardList.do'/> ">
@@ -65,12 +65,11 @@
 								<button type="button" class="btn btn-info">게시글작성</button>
 							</div>
 						</a>
-						
 					</div>
 					
 					<!-- Card Body -->
-					<div class="card-body" style="height: 400px">
-						<div class="chart-area" style=" height: 450px; font-size: 13px;" >
+					<div class="card-body" style="">
+						<div class="chart-area" style=" font-size: 13px;" >
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">

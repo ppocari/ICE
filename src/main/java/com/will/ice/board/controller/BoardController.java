@@ -40,7 +40,7 @@ public class BoardController {
 	public String boardList(@ModelAttribute SearchVO searchVo, Model model,
 			BoardVO boardVo) {
 		logger.info("사내게시판 실행 ");
-		logger.info("글 목록 파라미터 searchVo=",searchVo);
+		logger.info("글 목록 파라미터 searchVo={}",searchVo);
 		
 		//[1] paginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -56,6 +56,7 @@ public class BoardController {
 		
 		List<BoardVO> list = boardService.selectAll(searchVo);
 		logger.info("글 목록 결과, list.size={}", list.size());
+		logger.info("글 목록 결과, list={}", list);
 		
 		int totalRecord=boardService.selectTotalRecord(searchVo);
 		logger.info("글 목록, 전체 레코드 개수 ={}", totalRecord);
