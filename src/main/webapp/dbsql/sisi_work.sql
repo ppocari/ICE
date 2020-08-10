@@ -158,15 +158,17 @@ select c.*, m.NAME , m.POSNAME
 from companyCard c join mypage_mem m
  on c.MEMNO = m.MEMNO ;
  
- create view comcard_mem
+
+ 
+  create view comcard_mem_acc
  as 
- select c.*, m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
+ select c.*, a.ACCTITLE ,m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
 from companyCard c join mypage_mem m
- on c.MEMNO = m.MEMNO ;
+ on c.MEMNO = m.MEMNO 
+ join accountCode a
+  on c.ACCCODE = a.ACCCODE;
  
- select * from comcard_mem;
- 
- desc comcard_mem
+
  
 select * from comcard_mem
 		where acccode is null 
