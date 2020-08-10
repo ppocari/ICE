@@ -79,6 +79,11 @@ public class ComcardServiceImpl implements ComcardService{
 		return comcardDAO.selectListFileName();
 	}
 
+	@Override
+	public List<ComcardVO> selectUnUseComcardByFile(String fileName) {
+		return comcardDAO.selectUnUseComcardByFile(fileName);
+	}
+
 
 
 

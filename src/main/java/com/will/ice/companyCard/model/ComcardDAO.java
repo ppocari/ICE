@@ -21,4 +21,6 @@ public interface ComcardDAO {
 	ComCardFileVO selectCCFile_recent();
 	
 	public List<ComCardFileVO> selectListFileName();
+	
+	List<ComcardVO> selectUnUseComcardByFile(String fileName);
 }	

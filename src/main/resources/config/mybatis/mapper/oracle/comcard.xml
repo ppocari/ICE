@@ -14,13 +14,13 @@
 	</select>
 	
 	<select id="selectNoComcard" parameterType="int" resultType="ComcardVO">
-		select * from comcard_mem
+		select * from comcard_mem_acc
 		where acccode is null
 		  and no = #{comcard_no}
 	</select>
 	
 	<select id="selectListComcard" parameterType="Depart_posi_dateVO" resultType="ComcardVO">
-		select * from comcard_mem
+		select * from comcard_mem_acc
 		where acccode is not null
 		<if test="deptCode!=null and deptCode!=''">
 		      and deptcode = #{deptCode}
@@ -76,10 +76,15 @@
 			)
 		where RNUM=1
 	</select>
-<!-- 
+
 	<select id="selectListFileName" resultType="ComCardFileVO">
 		select filename from companyCardFile
 		order by fileno 
-	</select> -->
+	</select>
+	
+	<select id="selectUnUseComcardByFile" parameterType="String" resultType="ComcardVO">
+		select * from comcard_mem_acc_file
+		where filename = #{fileName}
+	</select>
 
 </mapper>
