@@ -122,6 +122,9 @@ create sequence companyCard_seq
 start with 1
 increment by 1;
 
+
+drop view comcard_mem_acc;
+
 create view comcard_mem_acc
  as 
  select c.*, a.ACCTITLE ,m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
@@ -131,3 +134,11 @@ from companyCard c join mypage_mem m
   on c.ACCCODE = a.ACCCODE;
  
 select * from comcard_mem_acc;
+
+create view comcard_mem
+ as 
+ select c.*,m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
+from companyCard c join mypage_mem m
+ on c.MEMNO = m.MEMNO ;
+ 
+select * from comcard_mem;
