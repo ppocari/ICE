@@ -19,13 +19,17 @@
 			
 	});
 	function resEdit(resNo) {
-		location.href="<c:url value='/resource/editResource.do?resNo="+resNo+"'/>"
+		window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
+		'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+		
 	}
 	
 	function resDel(resNo, resName) {
 		var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
 		if(result) {
-			location.href="<c:url value='/resource/editResource.do?resNo="+resNo+"'/>";
+			window.open('<c:url value="/resource/delResource.do?resNo='+resNo+'"/>', 'addRes', 
+			'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+			
 		}
 		
 	}

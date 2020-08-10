@@ -20,5 +20,15 @@ public class ResourceServiceImpl implements ResourceService {
 	public int insertResManage(ResManageVO rmVo) {
 		return dao.insertResManage(rmVo);
 	}
+
+	@Override
+	public ResManageVO selectResManageOne(int resNo) {
+		return dao.selectResManageOne(resNo);
+	}
+
+	@Override
+	public int updateResource(ResManageVO rmVo) {
+		return dao.updateResource(rmVo);
+	}
 	
 }

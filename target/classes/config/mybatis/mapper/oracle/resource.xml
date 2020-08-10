@@ -11,4 +11,17 @@
 	insert into resmanage(resno, resname, resimage, ressize, reslocation, resoriginalimage, ressubdesc)
 	values(resno_seq.nextval, #{resName}, #{resImage}, #{resSize}, #{resLocation}, #{resOriginalImage}, #{resSubdesc})
 	</insert>
+	<select id="selectResManageOne" parameterType="int" resultType="resManageVo">
+		select * from resManage 
+		where resNo=#{resNo}
+	</select>
+	<update id="updateResource" parameterType="resManageVo">
+		update resmanage
+		set resname=#{resName}
+		<if test="resImage!=null and resImage!=''">
+		, resimage=#{resImage}, ressize=#{resSize}, resoriginalimage=#{resOriginalImage}
+		</if>
+		, reslocation=#{resLocation}, ressubdesc=#{resSubdesc}
+		where resno=#{resNo}
+	</update>
 </mapper>

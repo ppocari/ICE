@@ -23,5 +23,15 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	public int insertResManage(ResManageVO rmVo) {
 		return sqlSession.insert(namespace+"insertResManage", rmVo);
 	}
+
+	@Override
+	public ResManageVO selectResManageOne(int resNo) {
+		return sqlSession.selectOne(namespace+"selectResManageOne", resNo);
+	}
+
+	@Override
+	public int updateResource(ResManageVO rmVo) {
+		return sqlSession.update(namespace+"updateResource", rmVo);
+	}
 	
 }

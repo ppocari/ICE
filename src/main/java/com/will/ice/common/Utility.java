@@ -13,7 +13,7 @@ public class Utility {
 		String result="";
 		if(originFileName!=null && !originFileName.isEmpty()) {
 			result="<img src='"+ request.getContextPath()
-					+"/resources/images/file.gif' alt='파일 이미지'> ";
+					+"/resources/img/file.gif' alt='파일 이미지'> ";
 			result+= originFileName;
 		}
 		
