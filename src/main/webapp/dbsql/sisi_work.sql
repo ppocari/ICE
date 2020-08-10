@@ -89,10 +89,21 @@ commit;
 
 --drop table companyCard
 
-select * from companyCard;
+select * from companyCard
+where acccode is null 
+		
+		and to_date(USEDATE) >= '2020-07-01'
+		and to_date(USEDATE) < '2020-07-06';
 
 select * from companyCardFile;
 
+select filename from companyCardFile
+		order by fileno ;
+
+select * from comcard_mem;
+
+select * from member;
+		;
 
 
 select * 
@@ -168,8 +179,22 @@ from companyCard c join mypage_mem m
  join accountCode a
   on c.ACCCODE = a.ACCCODE;
  
-
+select * from comcard_mem_acc;
  
+  create view comcard_mem_acc_file
+ as 
+ select c.*, a.ACCTITLE, f.FILENAME ,m.NAME , m.POSCODE, m.POSNAME, m.DEPTCODE, m.DEPTNAME
+from companyCard c join mypage_mem m
+ on c.MEMNO = m.MEMNO 
+ join accountCode a
+  on c.ACCCODE = a.ACCCODE
+  join companycardFile f
+  on c.FILENO = f.FILENO
+  ;
+ 
+select * from comcard_mem_acc_file;
+
+
 select * from comcard_mem
 		where acccode is null 
 		  and usedate between '2020-06-01' and '2020-07-01';
