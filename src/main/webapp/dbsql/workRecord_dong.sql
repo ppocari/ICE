@@ -36,24 +36,33 @@ increment by 1
 start with 1;
 
 
-/*
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
+values(workrecord_seq.nextval,111910,'09:00','17:00','출근','2020-08-01','2020-08');
+
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
+values(workrecord_seq.nextval,111910,'09:00','17:00','출근','2020-08-02','2020-08');
+
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
+values(workrecord_seq.nextval,111910,'09:00','17:00','출근','2020-08-03','2020-08');
+
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
+values(workrecord_seq.nextval,111910,'10:00','11:00','이상','2020-08-04','2020-08');
+
 select * from WORKRECORD;
 
+commit;
+
+
+/*
 delete from WORKRECORD
 where cmp_no = 1;
 
 delete from WORKRECORD
 where memno = 111910;
 
-insert into workRecord(cmp_no,memNo,cmp_in,cmp_status,cmp_regdate,cmp_month)
-values(workrecord_seq.nextval,111910,'09:00','0','2020-06-01','2020-06');
-
-
-select * from workRecord where memno = 111910 and cmp_regdate = '20-07' order by cmp_in desc;
-
 select * from (select * from workRecord 
             where memno=111910 order by cmp_regdate desc) 
-where rownum = 1
+where rownum = 1;
 
-commit;
+select * from workRecord where memno = 111910 and cmp_regdate = '20-07' order by cmp_in desc;
 */

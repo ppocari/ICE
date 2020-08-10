@@ -212,7 +212,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item" 
 			href="<c:url value='/workRecord/workRecord.do'/>">출퇴근</a>
-						<a class="collapse-item" href="<c:url value="#" />">통계보기</a>
+						<a class="collapse-item" href="<c:url value='/workRecord/workChart.do'/>">통계보기</a>
 					</div>
 				</div>
 			</li>

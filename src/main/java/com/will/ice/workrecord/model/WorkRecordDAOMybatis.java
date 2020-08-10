@@ -32,6 +32,12 @@ public class WorkRecordDAOMybatis implements WorkRecordDAO{
 		return session.selectOne(namespace+"selectToday",memNo);
 	}
 
+
+	@Override
+	public int selectMonthCount(WorkRecordVO vo) {
+		return session.selectOne(namespace+"selectMonthCount",vo);
+	}
+
 	
 	
 	
