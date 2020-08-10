@@ -1,4 +1,6 @@
 --drop sequence adno_seq;
+--drop view v_address;
+
 
 create sequence adno_seq
 start with 1

@@ -14,9 +14,10 @@
 	$(function() {
 		$("#accordion").accordion();
 		
-		$('form[name=organForm]').reset(function(){
+		$('input[type=reset]').click(function(){
+			
 			self.close();
-		}
+		});
 		
 
 		$('form[name=organForm]').submit(function(){

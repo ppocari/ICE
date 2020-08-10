@@ -13,6 +13,9 @@ desc notice;
 
 select * from workRecord;
 
+insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_regdate,cmp_month)
+values(workRecord_seq.nextval, '141920', '9:00', '18:00', '2020-08-08', '2020-08');
+
 select *from address;
 
 select *from addressgroup;

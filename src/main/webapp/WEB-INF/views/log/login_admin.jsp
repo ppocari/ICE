@@ -30,14 +30,12 @@
 </head>
 
 <body class="bg-gradient-primary">
-	<a href="<c:url value='/log/login_admin.do'/>"><i class="fas fa-user-cog" 
-		style="color:white; font-size:30px; float: right; margin: 20px"></i>
-	</a>
+
 	<div class="container">
 
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
-			
+
 			<div class="col-xl-10 col-lg-12 col-md-9" style="margin-top: 165px;">
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
@@ -48,15 +46,15 @@
 							<div class="col-lg-6">
 								<div class="p-5">
 									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">Welcome I.C.E.!</h1>
+										<h1 class="h4 text-gray-900 mb-4">Welcome I.C.E. ADMIN!</h1>
 									</div>
 									<form class="user" name="loginFrm" method="post"
-										action="<c:url value="/log/login.do"/>">
+										action="<c:url value="/log/login_admin.do"/>">
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 												name="identNum" aria-describedby="emailHelp"
 												placeholder="Your identification number..."
-												value="${cookie.ck_identNum.value }">
+												value="${cookie.ck_identNum_ad.value }">
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
@@ -66,7 +64,7 @@
 											<div class="custom-control custom-checkbox small">
 												 <input type="checkbox" 
 													id="rememCheck"  name="rememCheck"
-													<c:if test="${!empty cookie.ck_identNum }">
+													<c:if test="${!empty cookie.ck_identNum_ad }">
 														checked="checked"
 													</c:if>>   
 													
