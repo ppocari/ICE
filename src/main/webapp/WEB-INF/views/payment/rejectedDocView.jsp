@@ -58,14 +58,18 @@
 							<c:if test="${!empty plList2}">
 							<c:if test="${!empty vo.payDate}">
 								<c:forEach var="vo2" items="${plList2 }">
+								<c:if test="${payVo.progress!='reject' }">
 								<td>
 									<c:if test="${!empty vo2.signName}">
 										<img alt="서명" src="<c:url value='/sign_file/${vo2.signName }'/>" width="60%">
 									</c:if>
-									<c:if test="${empty vo2.signName}">
-										반려
-									</c:if>
 								</td>
+								</c:if>
+								<c:if test="${empty vo2.signName}">
+									<td>
+										반려
+									</td>
+								</c:if>
 								</c:forEach>
 							</c:if>
 							<c:if test="${empty vo.payDate}">

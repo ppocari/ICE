@@ -254,7 +254,7 @@
 	
 	<select id="selectRejected" parameterType="paymentSearchVo" resultType="paymentViewVo">
 		select * from paymentView
-		where memNo=#{identNum} and progress=#{progress}
+		where MEMNO=#{identNum} and PROGRESS=#{progress}
 	</select>
 	
 	<select id="selectComment" parameterType="int" resultType="commentviewVo">
