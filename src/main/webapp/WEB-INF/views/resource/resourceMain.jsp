@@ -29,7 +29,7 @@
 			//2. controller 처리를 한다
 			var resNo;
 			var resName;
-			var resImage;
+			var resImageVar;
 			var resSize;
 			var resOriginalImage;
 			var resLocation;
@@ -63,9 +63,12 @@
 						}
 						if(res.resSubdesc!=null && res.resSubdesc.length!=0) {
 							resSubdesc=res.resSubdesc;
+							
+							resSubdesc.replace('\r\n', '<br>');
+							
 						}
 						if(res.resImage!=null && res.resImage.length!=0) {
-							resImage=res.resImage;
+							resImageVar="<c:url value='/resource_file/"+resImage+"'/>";
 						}
 						if(res.resRegdate!=null && res.resRegdate.length!=0) {
 							resRegdate=res.resRegdate;
@@ -77,11 +80,28 @@
 							resIsDel=res.resIsDel;
 						}
 					
-						alert('a'+resNo+resName+resImage+resSize+resOriginalImage+resLocation+resSubdesc+resRegdate+resState+resIsDel);
 					/* 	var str="";
 							str+="번호 : " + res.resNo+"<br>";
 							str+="이름 : " + res.resName+"<br>";
 						alert(str); */
+						
+						$('#loadDetailResource').css('visibility', 'visible');
+						
+						$('#spanResName').html('');
+						$('#divImage').html('');
+						$('#spanResLocation').html('');
+						$('#spanResState').html('');
+						$('#spanResSubdesc').html('');
+
+						$('#spanResName').html(resName);
+						if(res.resImage!=null && res.resImage.length!=0) {
+							$('#divImage').html('<img width="250" height="250" id="spanResImage" style="border: 1px solid lightgray" src="'+resImageVar+'">');
+						}
+							
+						$('#spanResLocation').html(resLocation);
+						$('#spanResState').html(resState);
+						$('#spanResSubdesc').html(resSubdesc);
+						
 					},
 					error:function(xhr, status, error) {
 						alert(status+", "+error);
@@ -116,6 +136,10 @@
 <style type="text/css">
 
 /* 자원목록 */
+#tableDivForm{
+	font-size: 0.9em;
+}
+
 #searchLoc{
 	text-align: right;
 } 
@@ -152,26 +176,21 @@ article{
 
 /* 자원 상세보기 */
 	.divSection{
-		margin:20px;
+		margin:10px;
 	}
 	
 	#divContent{
 		margin: 0 auto;
-		width: 700px;	
-	}
-	
-	#divImage{
-		float:left;
+		font-size: 0.8em;
 	}
 	
 	#divDesc{
-		float:left;
+		text-align: left;
 	}
 	
 	#divResName{
 		font-weight: bold;
 		text-align: center;
-		font-size: 1.2em;
 		
 	}
 	
@@ -186,6 +205,10 @@ article{
 		border-radius: 5px 5px 5px 5px;
 		border: 1px solid #DCDDE3;
 		margin-right: 5px;
+	}
+	
+	#divImage{
+		margin: 0 auto;
 	}
 
 </style>
@@ -231,50 +254,40 @@ article{
 		
 		<div class="col-xl-4 ">
 			<div class="card shadow mb-4">
-				<div class="card-body">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">자원관리 > 상세보기</h6>
-					</div>
-					<div id="loadDetailResource" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<div id="divAll">
-							<c:if test="${!empty rm }">
-								<div class="divSection" id="divResName">
-									<span>${rm.resName }</span>
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
+				</div>
+				<div id="loadDetailResource" style="visibility:hidden" class="card-body">
+					<div id="divAll">
+							<div class="divSection" id="divResName">
+								<span id="spanResName"></span>
+							</div>
+							<div id="divContent">
+								<div class="divSection" id="divImage">
+								<!-- 이미지 -->
 								</div>
-								<div id="divContent">
-									<div class="divSection" id="divImage">
-										<c:if test="${!empty rm.resImage }">
-											<img width="300" height="300" src="<c:url value='/resource_file/${rm.resImage }'/>">
-										</c:if>
+								<div class="divSection" id="divDesc">
+									<div>
+										<span>장소: </span>
+										<span id="spanResLocation">
+										</span>
 									</div>
-									<div class="divSection" id="divDesc">
-										<div>
-											<span>장소</span>
-											<span>
-												${rm.resLocation }
-											</span>
-										</div>
-										<div>
-											<span>상태</span>
-											<span>${rm.resState }</span>
-										</div>
-										<div>
-											<span>자원설명</span>
-											<p>
-												<%
-													pageContext.setAttribute("newLine", "\r\n");
-												%>
-												${fn:replace(rm.resSubdesc, newLine, '<br>')}
-											</p>
-										</div>
+									<div>
+										<span>상태: </span>
+										<span id="spanResState"></span>
+									</div>
+									<div>
+										<span>자원설명: </span>
+										<p id="spanResSubdesc">
+											
+										</p>
 									</div>
 								</div>
-								<div id="divButton">
-									<button  onclick="resEdit(${rm.resNo})">수정</button> 
-									<button id="buReset">취소</button>
-								</div>
-							</c:if>
-						</div>
+							</div>
+							<div id="divButton">
+								<button id="btEdit">수정</button> 
+								<button id="btDel">삭제</button>
+							</div>
 					</div>
 				</div>
 			</div>
