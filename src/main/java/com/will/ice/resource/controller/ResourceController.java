@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.Utility;
@@ -145,7 +146,7 @@ public class ResourceController {
 	@RequestMapping(value="/editResource.do", method=RequestMethod.POST)
 	public String edit_post(@ModelAttribute ResManageVO rmVo, 
 			@RequestParam String oldFileName, HttpServletRequest request
-			, Model model) {
+			, Model model, @RequestParam(required = false) String mode ) {
 		logger.info("자원관리 수정 화면 처리, oldFileName={}", oldFileName);
 
 		List<Map<String, Object>> list
@@ -164,30 +165,49 @@ public class ResourceController {
 		rmVo.setResOriginalImage(originalFileName);
 
 		logger.info("db 처리 전 rmVo={}", rmVo);
-		
-		String msg="자원관리 수정 실패하였습니다.", url="/resource/editResource.do?resNo="+rmVo.getResNo();
 
-		int cnt=service.updateResource(rmVo);
-			if(cnt>0) {
-				if(fileName!=null && !fileName.isEmpty()) {
-					if(oldFileName!=null && !oldFileName.isEmpty()) {
-						String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_RESOURCE_FILE);
-						File file = new File(upPath, oldFileName);
-						if(file.exists()) {
-							boolean bool=file.delete();
-							logger.info("기존 파일 삭제", bool);
-						}
-					}
-				}//if
-				
-				msg="자원이 수정되었습니다.";
-				url="/resource/resourceClose.do";
+		String msg="자원관리 수정 실패하였습니다."; 
+		String url="";
+		
+		if(mode!=null && !mode.isEmpty()) {
+			if(mode.equals("redirect")) {
+				url="redirect:/resource/resourceClose.do";
 			}
-			
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			
-			return "common/message";
+		}else {
+			url="/resource/editResource.do?resNo="+rmVo.getResNo();
+		}
+		int cnt=service.updateResource(rmVo);
+		if(cnt>0) {
+			if(fileName!=null && !fileName.isEmpty()) {
+				if(oldFileName!=null && !oldFileName.isEmpty()) {
+					String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_RESOURCE_FILE);
+					File file = new File(upPath, oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("기존 파일 삭제", bool);
+					}
+				}
+			}//if
+
+			msg="자원이 수정되었습니다.";
+			url="/resource/resourceClose.do";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		return "common/message";
+	}
+	
+	/* 상세보기 */
+	@RequestMapping(value="/detailResource.do", method = RequestMethod.GET)
+	@ResponseBody
+	public ResManageVO detail_get(@RequestParam int resNo) {
+		logger.info("자원 관리 상세보기 화면");
+		
+		ResManageVO rmVo= service.selectResManageOne(resNo);
+		
+		return rmVo;
 	}
 
 }

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>자원관리 수정 화면 보기</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
+
 <style type="text/css">
 
 .divForm fieldset {
@@ -20,6 +21,23 @@
 
 .divForm .firstDiv {
 	border-top: 2px solid #e2e2e2;
+}
+
+.divForm span{
+	display: inline-block;
+}
+
+.divForm textarea {
+	border: none;
+}
+
+.textareaSize{
+	width: 610px;
+	height: 100px;
+}
+
+article{
+	font-size: 1.25em;
 }
 
 
