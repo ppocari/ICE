@@ -30,10 +30,10 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{} 연결됨!", session.getId());
 		
 		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
-		logger.info("아이디: {} 연결됨!", user.getOfficialNo());
+		logger.info("아이디: {} 연결됨!", user.getMemNo());
 		
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + "in"));
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getMemNo() +"|" + "in"));
 		}
 		
 	}
@@ -42,11 +42,12 @@ public class EchoHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		logger.info("{}로 부터 {} 를 받음",session.getId(),message.getPayload());
 		
+		
 		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
 		
 		//연결된 클라이언트에게 모두 전송 : 리스트 방법
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + message.getPayload()));
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getMemNo() +"|" + message.getPayload()));
 		}
 		
 	}
@@ -57,10 +58,10 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		logger.info("{} 연결 끊김",session.getId());
 		MemberDetails user = (MemberDetails) ((Authentication)session.getPrincipal()).getPrincipal();
-		logger.info("아이디: {} 연결 종료!", user.getOfficialNo());
+		logger.info("아이디: {} 연결 종료!", user.getMemNo());
 		
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getOfficialNo() +"|" + "out"));
+			sess.sendMessage(new TextMessage(user.getName() + "|" + user.getMemNo() +"|" + "out"));
 		}
 	}
 	
