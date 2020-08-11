@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.ice.address.model.AddressUtility;
 import com.will.ice.common.FileUploadUtil;
+import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.Utility;
+import com.will.ice.resource.model.ResManageSearchVO;
 import com.will.ice.resource.model.ResManageVO;
 import com.will.ice.resource.model.ResourceService;
 
@@ -36,7 +39,8 @@ public class ResourceController {
 	
 	/* 메인 페이지 */
 	@RequestMapping("/resourceMain.do")
-	public String main_get(HttpServletRequest request, Model model) {
+	public String main_get(@ModelAttribute ResManageSearchVO rmsVo, 
+			HttpServletRequest request, Model model) {
 		logger.info("자원관리 메인 화면");
 		
 		HttpSession session= request.getSession();
@@ -53,10 +57,29 @@ public class ResourceController {
 		
 		logger.info("파라미터 memNo={}", memNo);
 		
-		List<ResManageVO> manageList = service.selectResManage();
-		
+		//[1] PaginationInfo 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(rmsVo.getCurrentPage());
+
+		//[2] SearchVo 
+		rmsVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		rmsVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		logger.info("db 처리 전 rmsVo={}", rmsVo);
+
+		List<ResManageVO> manageList = service.selectResManager(rmsVo);
+		logger.info("자원관리 조회 결과, list.size={}", manageList.size());
+
+		int totalRecord=service.selectTotalRecord(); 
+		logger.info("전체 레코드 : " +	totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//3 
+		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("manageList", manageList);
-		
+
 		return "resource/resourceMain";
 		
 	}
@@ -203,11 +226,41 @@ public class ResourceController {
 	@RequestMapping(value="/detailResource.do", method = RequestMethod.GET)
 	@ResponseBody
 	public ResManageVO detail_get(@RequestParam int resNo) {
-		logger.info("자원 관리 상세보기 화면");
+		logger.info("자원 관리 상세보기 화면, resNo={}", resNo);
 		
 		ResManageVO rmVo= service.selectResManageOne(resNo);
 		
 		return rmVo;
 	}
-
+	
+	/* 삭제 */
+	@RequestMapping("/deleteResource.do")
+	public String delete_get(@ModelAttribute ResManageVO rmVo, Model model,
+			HttpServletRequest request) {
+		logger.info("자원 관리 삭제, rmVo={}", rmVo);
+		
+		int cnt=service.deleteResManage(rmVo.getResNo());
+		
+		String oldFileName=rmVo.getResImage();
+		if(oldFileName!=null && !oldFileName.isEmpty()) {
+			String upPath = fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_RESOURCE_FILE);
+			File file = new File(upPath, oldFileName);
+			if(file.exists()) {
+				boolean bool=file.delete();
+				logger.info("자원 이미지 파일 삭제 여부: {}", bool);
+			}
+		}
+		
+		String msg="", url="/resource/resourceMain.do";
+		if(cnt>0) {
+			msg="해당 자원을 삭제하였습니다.";
+		}else {
+			msg="자원 삭제가 실패하였습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
 }

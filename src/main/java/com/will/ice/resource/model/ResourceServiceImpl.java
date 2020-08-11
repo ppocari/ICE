@@ -12,10 +12,10 @@ public class ResourceServiceImpl implements ResourceService {
 	private ResourceDAO dao;
 	
 	@Override
-	public List<ResManageVO> selectResManage() {
-		return dao.selectResManage();
+	public List<ResManageVO> selectResManager(ResManageSearchVO rmsVo) {
+		return dao.selectResManage(rmsVo);
 	}
-
+	
 	@Override
 	public int insertResManage(ResManageVO rmVo) {
 		return dao.insertResManage(rmVo);
@@ -30,5 +30,15 @@ public class ResourceServiceImpl implements ResourceService {
 	public int updateResource(ResManageVO rmVo) {
 		return dao.updateResource(rmVo);
 	}
-	
+
+	@Override
+	public int deleteResManage(int resNo) {
+		return dao.deleteResManage(resNo);
+	}
+
+	@Override
+	public int selectTotalRecord() {
+		return dao.selectTotalRecord();
+	}
+
 }
