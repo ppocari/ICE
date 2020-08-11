@@ -30,11 +30,13 @@
 		<intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 
-		<form-login login-page="/login"
-			username-parameter="officialNo" password-parameter="pwdd"
+		<form-login login-page="/log/login.do"
+			username-parameter="identNum" 
+			password-parameter="pwd"
 			authentication-failure-url="/login?error"
 			authentication-success-handler-ref="loginSuccessHandler"
-			always-use-default-target='true' login-processing-url="/loginOk" />
+			always-use-default-target='true'
+			login-processing-url="/loginOk" />
 
 		<logout invalidate-session="true" logout-url="/logout"
 			logout-success-url="/login?logout" />
@@ -43,10 +45,10 @@
 
 		<csrf request-matcher-ref="CsrfSecurityRequestMatcher" />
 	</http>
-	<!-- <beans:bean id="loginSuccessHandler"
-		class="com.will.portal.common.LoginSuccessHandler"></beans:bean>
+	<beans:bean id="loginSuccessHandler"
+		class="com.will.ice.security.LoginSuccessHandler"></beans:bean>
 	<beans:bean id="CsrfSecurityRequestMatcher"
-		class="com.will.portal.common.CsrfSecurityRequestMatcher" /> -->
+		class="com.will.ice.security.CsrfSecurityRequestMatcher" />
 
 	<authentication-manager>
 		<authentication-provider
@@ -54,11 +56,5 @@
 		<authentication-provider
 			ref="userAuthProvider" />
 	</authentication-manager>
-
-	<!-- <beans:bean id="memberService"
-		class="com.will.portal.common.MemberService">
-	</beans:bean>
-	<beans:bean id="userAuthProvider"
-		class="com.will.portal.common.CustomAuthenticationProvider" /> -->
 
 </beans:beans>
