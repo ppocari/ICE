@@ -347,9 +347,9 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='/message/messageWrite.do'/>">쪽지쓰기</a>
-							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">보낸쪽지함</a>
-							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">받은쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgWrite.do'/>">쪽지쓰기</a>
+							<a class="collapse-item" href="<c:url value='/message/msgList.do'/>">보낸쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgList.do'/>">받은쪽지함</a>
 							<a class="collapse-item" href="<c:url value='#'/>">보관함</a>
 							<a class="collapse-item" href="<c:url value='#'/>">휴지통</a>
 						</div>
