@@ -72,8 +72,6 @@
 	          	                      id: res.schNo,
 	          	                      allDay: false
 	          	                    });
-	          	                    alert('일정이 추가되었습니다!');
-	          	                 	location.reload();
 	          				},
 	          				error:function(xhr, status, error){
 	          					alert(status + ", " + error);
@@ -214,9 +212,25 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
          	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
    });
 	
-	$('.writeClose').click(function() {
+	$('.btn-danger').click(function() {
 		event.preventDefault();
 		$('#writeModal').hide();
+	});
+	
+	$(".btn-primary").click(function() {
+		if($('#title').val() == ''){
+		event.preventDefault();
+		alert("제목을 작성해주세요!");
+		$('#title').focus();
+		}else if($('#startDay').val() == ''){
+			event.preventDefault();
+			alert("시작일을 정해주세요!");
+			$('#startDay').focus();
+		}else if($('#endDay').val() == ''){
+			event.preventDefault();
+			alert("종료일을 정해주세요!");
+			$('#endDay').focus();
+		}
 	});
 });
 </script>
@@ -263,7 +277,10 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	.head {
 	    color: #fff;
 	    border-bottom: 1px solid #f2f2f2;
-	    background-color: #464646;
+	    background-color: #4e73df;
+	    font-weight: bold;
+	    font-size: 1.2em;
+	    text-align: center;
 	}
 	
 	/*일정쓰기*/
@@ -315,32 +332,33 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 				<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
 				<form id="frm">
 					<div class="head">
-						<span>등록 폼</span>
+						<span>스케줄 등록</span>
 				    </div>
 					<div class="body">
 						<table>
 							<tr>
 								<td>
-									<select title="타입선" id="place" name="place" style="height: 28px;">
+									<select title="타입선" id="place" class="form-control" name="place">
 										<option value="1">업무관련</option>
 										<option value="2">기타</option>
 										<option value="3">휴가/연차</option>
 										<option value="4">유연근무</option>
 									</select>
-									<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
+									<input type="text" class="form-control" id="title" name="title" maxlength="100" 
+										placeholder="제목"/>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<div id="schedulePicker">
 										<div style="float: left;">
-											<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
-												style="width: 192px" placeholder="시작일"/>
+											<input name="startDay" id="startDay" class="form-control" value="${scheduleVo.scheduleStart }" 
+												placeholder="시작일"/>
 											<div>STRAT</div>
 										</div>
 										<div style="float: right;">
-											<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
-												style="width: 192px" placeholder="종료일"/>
+											<input name="endDay" id="endDay" class="form-control" value="${scheduleVo.scheduleEnd }" 
+												placeholder="종료일"/>
 											<div>END</div>
 										</div>
 									</div>
@@ -348,13 +366,13 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 							</tr>
 							<tr>
 								<td>
-									<textarea class="infobox" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
+									<textarea class="form-control" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
 								</td>
 							</tr>
 						</table>
 						<div style="text-align: center;">
-							<button class="writeBtn">저장</button>
-							<button class="writeClose">Close</button>
+							<button class="btn btn-primary">저장</button>
+							<button class="btn btn-danger">취소</button>
 						</div>
 					</div>
 				</form>

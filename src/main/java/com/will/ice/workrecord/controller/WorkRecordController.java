@@ -30,7 +30,6 @@ public class WorkRecordController {
 	private SimpleDateFormat h9 = new SimpleDateFormat("09:00");
 	private SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat ym = new SimpleDateFormat("yyyy-MM");
-	private SimpleDateFormat mm = new SimpleDateFormat("MM");
 	
 	
 	@Autowired WorkRecordService workService;
@@ -86,15 +85,16 @@ public class WorkRecordController {
 		String date = ym.format(day);
 		Svo.setCmpMonth(date);
 		
+		//date 변환
 		try {
-			day = hm.parse(day_format); //출근버튼 클릭
-			nine = h9.parse(nine_format); // 오늘날짜 9시 정각
+			day = hm.parse(day_format); 
+			nine = h9.parse(nine_format); //9시 셋팅
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		} 
 		
 		
-		if(nine.after(day)){
+		if(nine.after(day) == true){ // nine이 (day)보다 이후 일때 true : 9시 전에 출근!
 			Svo.setCmpStatus("9"); // nine > day 출근
 		}else {
 			Svo.setCmpStatus("0"); // nine < day 이상
@@ -125,20 +125,41 @@ public class WorkRecordController {
 		logger.info("오늘날짜 조회 , Evo={}"+Evo);
 		
 		//현재 시간으로 퇴근시간 셋팅
-		Date d = new Date();
-		String Edate = hm.format(d);
+		Date out = new Date();
+		String Edate = hm.format(out);
 		Evo.setCmpOut(Edate);
+		logger.info("Evo.getCmpOut={}",Evo.getCmpOut());
 		
+		//string 변수 담기
+		String outdate = Evo.getCmpOut();
 		
-		int nomal = Integer.parseInt(Evo.getCmpStatus());
+		//출근시간  셋팅
+		Date date = new Date();
+		String cmpInFormat = Evo.getCmpIn();
+		
+		//date 형변환
+		try {
+			out = hm.parse(outdate); //퇴근시간
+			date = hm.parse(cmpInFormat); //출근시간 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
+		
+		long outTime = (out.getTime()+(long)(1000*60*60));
+		long dateTime = (date.getTime()+(long)(1000*60*60));
+		logger.info("outTime={}",outTime);
+		logger.info("dateTime={}",dateTime);
+		
 		logger.info("Evo.getCmpStatus={}",Evo.getCmpStatus());
-		if( (nomal-1) > 8 ) {
-			Evo.setCmpStatus("출근");
-		}else if( (nomal-1) < 8 ) {
-			Evo.setCmpStatus("반차");
+		
+		if((outTime - dateTime) < 8){ //(date)가 nine보다 이후 일때 true 
+			Evo.setCmpStatus("퇴근(미달)");
+		}else if((outTime - dateTime) > 9){
+			Evo.setCmpStatus("퇴근(초과)");
 		}else {
-			Evo.setCmpStatus("이상");
+			Evo.setCmpStatus("퇴근");
 		}
+		
 		logger.info("퇴근 후 vo={},Evo.getCmpStatus={}",Evo,Evo.getCmpStatus());
 
 		int cnt = workService.updateWork(Evo);
@@ -186,6 +207,10 @@ public class WorkRecordController {
 		String date = ym.format(d);
 		searchVo.setCmpMonth(date);
 		
+		
+		logger.info("searchVo.getStatus={}",searchVo.getCmpStatus());
+		
+		
 		//조회
 		List<WorkRecordVO>Slist = workService.selectWorkList(searchVo);
 		for (int i = 0; i < Slist.size(); i++) {
@@ -212,26 +237,44 @@ public class WorkRecordController {
 	}
 	
 	
-	@RequestMapping("/detail.do")
-	public void detail(HttpServletRequest request,Model model) {
-		//사원번호 셋팅
-		HttpSession session = request.getSession();
+	@RequestMapping(value = "/workChart.do",method = RequestMethod.GET)
+	public void workChart(HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
-		WorkRecordVO Dvo = new WorkRecordVO();
-		Dvo.setMemNo(memNo);
-		logger.info("출퇴근 상세보기 memNo={}",memNo);
+		String userName = (String)session.getAttribute("userName");
+		logger.info("근태 통계 차트 보여주기 memNo={},userName={}",memNo,userName);
 		
-		Dvo = workService.selectToday(memNo);
-		logger.info("Dvo={}"+Dvo);
-		
-		//조회
-		List<WorkRecordVO>list = workService.selectWorkList(Dvo);
-		for (int i = 0; i < list.size(); i++) {
-			Dvo = list.get(i);
-		}
-		
-		model.addAttribute("Dvo",Dvo);
-		
+		model.addAttribute("memNo",memNo);
+		model.addAttribute("userName",userName);
 	}
 	
+	
+	@RequestMapping(value = "/workChart.do",method = RequestMethod.POST)
+	public void SelectMonthChart(@RequestParam String cmpMonth,HttpSession session,Model model) {
+		String memNo = (String) session.getAttribute("identNum");
+		
+		WorkRecordVO vo = new WorkRecordVO();
+		vo.setMemNo(memNo);
+		vo.setCmpMonth(cmpMonth);
+		logger.info("근태 월별 통계 파라미터 memNo={},cmpMonth={}",memNo,vo.getCmpMonth());
+		
+		
+		
+		vo.setCmpStatus("퇴근(미달)");
+		int under = workService.selectMonthCount(vo);
+		
+		vo.setCmpStatus("퇴근(초과)");
+		int over = workService.selectMonthCount(vo);
+		
+		vo.setCmpStatus("퇴근");
+		int avg = workService.selectMonthCount(vo);
+		
+		logger.info("미달 under={},",under);
+		logger.info("초과 over={},",over);
+		logger.info("퇴근 avg={},",avg);
+		
+		model.addAttribute("under",under);
+		model.addAttribute("over",over);
+		model.addAttribute("avg",avg);
+
+	}
 }

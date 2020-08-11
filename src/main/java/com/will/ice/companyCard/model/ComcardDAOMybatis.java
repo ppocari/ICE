@@ -58,4 +58,10 @@ public class ComcardDAOMybatis implements ComcardDAO{
 		return sqlsession.selectList(namespace+"selectListFileName");
 	}
 
+
+	@Override
+	public List<ComcardVO> selectUnUseComcardByFile(String fileName) {
+		return sqlsession.selectList(namespace+"selectUnUseComcardByFile", fileName);
+	}
+
 }
