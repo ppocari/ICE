@@ -57,7 +57,7 @@
 					</div>
 					<!-- Card Body -->
 					<div class="card-body" style="text-align: center">
-						<textarea style="width: 98%;  height: 320px;">
+						<textarea style="width: 98%;  height: 320px;" id="msgContent">
 						
 						</textarea>
 					</div>

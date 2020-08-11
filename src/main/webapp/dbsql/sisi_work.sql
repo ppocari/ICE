@@ -32,6 +32,8 @@ select * from workRecord
     and cmp_regdate = '2020-07-30'
 ;
 
+select * from v_address
+where memNO = '111920' and adgno = 1;
 
 create view mypage_mem
 as
@@ -240,3 +242,8 @@ select *
 update member
 set profileurl = ''
 where memno =121930;
+
+select * from message_rec;
+
+
+select * from message;

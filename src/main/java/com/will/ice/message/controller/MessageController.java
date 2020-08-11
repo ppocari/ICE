@@ -61,7 +61,11 @@ public class MessageController {
 	
 	
 	
-	
+	@RequestMapping(value="/msgClose.do", method = RequestMethod.GET)
+	public void msgClose() {
+		logger.info("연락처 실행");
+
+	}
 	
 	
 	

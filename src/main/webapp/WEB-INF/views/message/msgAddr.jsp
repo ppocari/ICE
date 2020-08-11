@@ -66,7 +66,6 @@
 			var str = "";
 			for( var i=0; i<people.length; i++){
 				str += $(people[i]).val()+",";
-				alert(str);	//8,9,
 			}
 			
 			$.ajax({
@@ -79,7 +78,15 @@
 				}
 				
 			});
-			$("#checked_msgAddrPeop").text(str);
+			$("#checked_msgAddrPeop").val(str);
+ 		});
+ 		
+ 		$("#checked_complete").click(function(){
+ 			
+ 			var people = $("#checked_msgAddrPeop").val();
+ 			
+ 			$(opener.document).find("#reciMsgPeop").val(people);
+			self.close();		
  		});
  	});
  </script>
@@ -97,7 +104,7 @@
 		<div class="col-xl-6 " style="margin-top: 30px;">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post" action="<c:url value='/member/memWrite.do' />">
+				<form name="msgAddrFrm" method="post" action="<c:url value='/message/msgClose.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">쪽지 주소록</h6>
 						
@@ -111,9 +118,11 @@
 								<th>주소록 그룹</th> 
 								<th style="width: 40%">검색</th>
 								<th style="width: 40%" rowspan="2">
-									<div  id="checked_msgAddrPeop">
+									<input id="checked_msgAddrPeop" >
 										
-									</div>
+										
+									
+									<input type="button" value="선택완료" id="checked_complete">
 								</th>	 
 							
 							</tr>
