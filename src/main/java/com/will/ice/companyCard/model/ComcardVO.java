@@ -7,6 +7,8 @@ public class ComcardVO {
 	private String cardNo;
 	private String memNo;
 	private String accCode;
+	private String accTitle;
+	
 	private int price;
 	private String usePlace;
 	private String useDate;
@@ -52,6 +54,14 @@ public class ComcardVO {
 	}
 	public void setAccCode(String accCode) {
 		this.accCode = accCode;
+	}
+	
+	
+	public String getAccTitle() {
+		return accTitle;
+	}
+	public void setAccTitle(String accTitle) {
+		this.accTitle = accTitle;
 	}
 	public int getPrice() {
 		return price;
@@ -134,10 +144,11 @@ public class ComcardVO {
 	@Override
 	public String toString() {
 		return "ComcardVO [no=" + no + ", company=" + company + ", cardNo=" + cardNo + ", memNo=" + memNo + ", accCode="
-				+ accCode + ", price=" + price + ", usePlace=" + usePlace + ", useDate=" + useDate + ", name=" + name
-				+ ", confirmDate=" + confirmDate + ", confirmTime=" + confirmTime + ", confirmCode=" + confirmCode
-				+ ", payType=" + payType + ", fileNo=" + fileNo + ", posCode=" + posCode + ", posName=" + posName
-				+ ", deptCode=" + deptCode + ", deptName=" + deptName + "]";
+				+ accCode + ", accTitle=" + accTitle + ", price=" + price + ", usePlace=" + usePlace + ", useDate="
+				+ useDate + ", name=" + name + ", confirmDate=" + confirmDate + ", confirmTime=" + confirmTime
+				+ ", confirmCode=" + confirmCode + ", payType=" + payType + ", fileNo=" + fileNo + ", posCode="
+				+ posCode + ", posName=" + posName + ", deptCode=" + deptCode + ", deptName=" + deptName + "]";
 	}
+	
 	
 }

@@ -73,7 +73,7 @@ public class AccodeController {
 			String msg = "계정코드 등록 실패 !", url = "/companyCard/comCardUse.do";
 			if(cnt > 0) {
 				msg = "계정코드 등록 성공!";
-				url = "/companyCard/comCardReg.do";
+				url = "/companyCard/comCardList.do";
 
 			}
 			model.addAttribute("msg", msg);
@@ -86,10 +86,5 @@ public class AccodeController {
 		return "/common/message"; 
 		  
 	}
-	
-	@RequestMapping("/comCardReg.do")
-	@ResponseBody
-	public void regAccode_sucess(Model model) {
-		
-	}
+
 }

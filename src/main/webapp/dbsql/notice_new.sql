@@ -1,3 +1,5 @@
+drop table notice;
+
 /* 공지사항 */
 CREATE TABLE notice (
 	noticeNo NUMBER NOT NULL, /* 공지사항게시글번호 */
@@ -14,6 +16,8 @@ CREATE TABLE notice (
 	main VARCHAR2(5) DEFAULT 'N', /* 메인여부 */
 	newImgTerm VARCHAR2(200) DEFAULT 0 /* 24시간 */
 );
+
+drop sequence notice_seq;
 
 create sequence notice_seq
 start with 1

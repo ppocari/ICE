@@ -78,6 +78,7 @@
 						<div id="ChartDiv1">
 							<div id="chartdiv1" style="height:100%;width:80%;"></div>	
 						</div>
+<<<<<<< HEAD
 						<div id="ChartDiv2">
 							<div id="chartdiv2" style="height:100%;width:80%;"></div>	
 						</div>
@@ -93,6 +94,11 @@
 						<input type="hidden" id="avg2" value="${avg2 }">
 						<input type="hidden" id="over2" value="${over2 }">
 						<input type="hidden" id="under2" value="${under2 }">
+=======
+						<input type="hidden" id="avg" value="${avg }">
+						<input type="hidden" id="over" value="${over }">
+						<input type="hidden" id="under" value="${under }">
+>>>>>>> master
 				</div>
 			</div>
 		</div>
@@ -102,6 +108,7 @@ $(function(){
 	var avg = Number($("#avg").val());
 	var over = Number($("#over").val());
 	var under = Number($("#under").val());
+<<<<<<< HEAD
 	
 	var avg1 = Number($("#avg1").val());
 	var over1 = Number($("#over1").val());
@@ -116,6 +123,14 @@ $(function(){
 	var workUnder = [under1, 2, 3, 4, 5, 6, under7, 8, 9, 10, 11, 12];
 	var workAvg = [avg1, 2, 3, 4, 5, 6, avg7, 8, 9, 10, 11, 12];
 	$.jqplot('chartdiv2',  [workAvg,workUnder,workOver], {
+=======
+	/* 
+	// bar 차트	
+	var workOver = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	var workUnder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	var workAvg = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	$.jqplot('ChartDiv1',  [workOver,workUnder,workAvg], {
+>>>>>>> master
 		seriesDefaults:{
 		// 바 그래프
 		renderer:$.jqplot.BarRenderer,	
@@ -145,7 +160,11 @@ $(function(){
 		animateReplot : false, // 애니메이션 반복 설정
 		captureRightClick : true, // 오른쪽 마우스 클릭 이벤트
 	});	
+<<<<<<< HEAD
 	 
+=======
+	 */
+>>>>>>> master
 	//원형 그래프
 	data1 = [[['정상', avg],['미달', under], ['초과', over]]];
     toolTip1 = ['정상', '미달', '초과'];

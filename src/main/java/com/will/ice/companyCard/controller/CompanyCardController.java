@@ -24,6 +24,7 @@ import com.will.ice.common.FileUploadUtil;
 import com.will.ice.companyCard.model.ComCardFileVO;
 
 import com.will.ice.companyCard.model.ComCardListVO;
+import com.will.ice.companyCard.model.ComcardSerchVO;
 import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.companyCard.model.ComcardVO;
 import com.will.ice.model.DepartmentVO;
@@ -68,42 +69,51 @@ public class CompanyCardController {
 
 	@RequestMapping(value ="/comCardUse.do", method = RequestMethod.GET)
 	public void comCardUse_get(Model model) {
-		logger.info("법인카드 미등록/등록 ");
-		List<ComCardFileVO> ccfvo_list = comcardService.selectListFileName();
 		
-		model.addAttribute("ccfvo_list", ccfvo_list);
 
 	}
 
 	@RequestMapping(value ="/comCardUse.do", method = RequestMethod.POST)
-	public void comCardUse_post(@RequestParam(required = false) String year,
-			@RequestParam(required = false) String month, Model model) {
-		logger.info("법인카드 미등록/등록 year={},  month={}",year,month);
+	public void comCardUse_post(@ModelAttribute ComcardSerchVO csvo , Model model) {
+		logger.info("법인카드 미등록/등록 csvo={}",csvo);
+		String month = csvo.getMonth();
+		String year = csvo.getYear();
+		String fileName = csvo.getClickfileName();
+		
+		if(month != null && !month.isEmpty()) {
+			if(month.length()==1) {
+				month = "0"+month;
+			}
+			String end_month = Integer.toString(Integer.parseInt(month)+1);
+			if(end_month.length()==1) {
+				end_month = "0"+end_month;
+			}
 
-		if(month.length()==1) {
-			month = "0"+month;
+			String startDay = year+"-"+month+"-01";	//2020-07-01
+			String endDay = year+"-"+end_month+"-01";	////2020-08-01
+
+			DateSearchVO search_dsvo = new DateSearchVO();
+			search_dsvo.setStartDay(startDay);
+			search_dsvo.setEndDay(endDay);
+			logger.info("법인카드 미등록/등록 search_dsvo={}",search_dsvo);
+
+			// 계정코드가 없는 것들만 읽어온다
+			List<ComcardVO> list = comcardService.selectUnUseComcard(search_dsvo);
+			logger.info("법인카드 미등록/등록 list.size()={}",list.size());
+			logger.info("법인카드 미등록/등록 list={}",list);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("year", year);
+			model.addAttribute("month", month);
+		}else {
+			List<ComcardVO> ccsList = comcardService.selectUnUseComcardByFile(fileName);
+			
+			model.addAttribute("list", ccsList);
 		}
-		String end_month = Integer.toString(Integer.parseInt(month)+1);
-		if(end_month.length()==1) {
-			end_month = "0"+end_month;
-		}
+		
+		
 
-		String startDay = year+"-"+month+"-01";	//2020-07-01
-		String endDay = year+"-"+end_month+"-01";	////2020-08-01
-
-		DateSearchVO search_dsvo = new DateSearchVO();
-		search_dsvo.setStartDay(startDay);
-		search_dsvo.setEndDay(endDay);
-		logger.info("법인카드 미등록/등록 search_dsvo={}",search_dsvo);
-
-		// 계정코드가 없는 것들만 읽어온다
-		List<ComcardVO> list = comcardService.selectUnUseComcard(search_dsvo);
-		logger.info("법인카드 미등록/등록 list.size()={}",list.size());
-		logger.info("법인카드 미등록/등록 list={}",list);
-
-		model.addAttribute("list", list);
-		model.addAttribute("year", year);
-		model.addAttribute("month", month);
+		
 
 	}
 
@@ -120,8 +130,13 @@ public class CompanyCardController {
 
 	//excel 파일 화며
 	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.GET)
-	public void comUpload_get() {
+	public void comUpload_get(Model model) {
 		logger.info("법인카드 내역 업로드 ");
+		
+		List<ComCardFileVO> ccfvo_list = comcardService.selectListFileName();
+		
+		model.addAttribute("ccfvo_list", ccfvo_list);
+		
 	}
 
 	@RequestMapping(value ="/comCardUpload.do", method = RequestMethod.POST)
