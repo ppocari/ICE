@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.accode.model.AccodeListVO;
 import com.will.ice.accode.model.AccodeService;
@@ -17,6 +18,8 @@ import com.will.ice.accode.model.AccodeVO;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.SearchVO;
 import com.will.ice.common.Utility;
+import com.will.ice.companyCard.model.ComCardFileVO;
+import com.will.ice.companyCard.model.ComcardService;
 
 
 @Controller
@@ -26,6 +29,8 @@ public class AccodeController {
 		= LoggerFactory.getLogger(AccodeController.class);
 	
 	@Autowired private AccodeService accodeService;
+	
+	@Autowired private ComcardService comcardService;
 	
 	@RequestMapping("/Accode.do")
 	public void selectListAccode(@ModelAttribute SearchVO searchVO, Model model) {
@@ -81,4 +86,5 @@ public class AccodeController {
 		return "/common/message"; 
 		  
 	}
+
 }

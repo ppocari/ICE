@@ -37,7 +37,7 @@
 			var year = $("#year").text();
 			var month = $("#month").val();
 			
-			 $(this).attr("action", "/ice/companyCard/comCardUse.do?year="+year+"&month="+month); 
+			 $(this).attr("action", "/ice/companyCard/comCardUse.do"); 
 			
 			
 		});
@@ -68,7 +68,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">미등록/등록</h1>
+		<h1 class="h3 mb-0 text-gray-800">법인카드</h1>
 
 		<a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -80,14 +80,13 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
-			<div class="card shadow mb-4">
+		<div class="col-xl-12 " style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
+			<div class="card shadow mb-4" >
 				<!-- Card Header - Dropdown -->
 				<form name="comCardFrm" method="post"
 					action="<c:url value='/companyCard/comCardUse.do'/> ">
-					<div
-						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">미등록</h6>
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">미등록/등록</h6>
 						<div style="float: right">
 							<% Date d = new Date();
 								SimpleDateFormat sdf_year  = new SimpleDateFormat("yyyy");
@@ -100,47 +99,53 @@
 									month = "0"+month;
 								}
 							%>
-							<label id="year"><%= year %></label> <select id="month">
-								<%
-								for( int i=1; i<Integer.parseInt(month); i++){
-									%>
-								<c:set var="i" value="<%=i %>" />
-								<option value="<%=i%>"
-									<c:if test="${month == i }">
-											selected="selected"
-										</c:if>><%= i %>월
-								</option>
-								<%}%>
-							</select>
-							<button type="submit" class="btn btn-info">미등록 조회</button>
-							<input type="button" id="accReg" value="등록">
+							
+								<input id="year" name ="year" value="<%= year %>" style="border: hidden; width: 50px;"> 
+								<select id="month" name ="month">
+									<option value="<%= 0%>">--선택--</option>
+									<%
+									for( int i=1; i<Integer.parseInt(month); i++){
+										%>
+									<c:set var="i" value="<%=i %>" />
+									<option value="<%=i%>"
+										<c:if test="${month == i }">
+												selected="selected"
+											</c:if>><%= i %>월
+									</option>
+									<%}%>
+								</select>
+							
+							<button type="submit" class="btn btn-success" > 조회</button>
+							<input type="button" class="btn btn-info" id="accReg" value="등록">
 						</div>
 
 					</div>
+					
 				</form>
 				<!-- Card Body -->
 				<form action="<c:url value='/companyCard/regAccode.do'/>"
 					name="regAccFrm" method="post">
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-							<table class="table table-bordered table-hover" id="dynamicTable">
+						<div class="chart-area" style="overflow: scroll; overflow-x: scroll; height: 630px; ">
+							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1770px;">
 								<thead>
 									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용처</th>
-										<th>사용금액</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
+										<th style="width: 7%">카드사</th>
+										<th style="width: 15%">카드번호</th>
+										<th style="width: 8%">사원이름</th>
+										<th style="width: 10%">계정코드</th>
+										<th style="width: 13%">사용처</th>
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 10%">사용일</th>
+										<th style="width: 7%">부서</th>
+										<th style="width: 7%">직급</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
 									<c:if test="${empty list }">
 										<tr>
-											<td colspan="8">해당 월의 데이터가 없습니다</td>
+											<td colspan="9">해당 월의 데이터가 없습니다</td>
 										</tr>
 									</c:if>
 									<c:set var="i" value="${1 }" />
@@ -148,17 +153,35 @@
 										<c:forEach var="vo" items="${list }">
 											<tr id="edit_tr${i}" >
 												<input type="hidden" name="accItems[${i}].no"  value="${vo.no }"/></td>
-												<td><input type="text" name="accItems[${i}].cardNo"  value="${vo.cardNo }" readonly="readonly"/></td>
-												<td><input style="width: 100px;" type="text" name="accItems[${i}].name"  value="${vo.name }" readonly="readonly" /></td>
-												<td><input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" > 
+												<td>${vo.company }
+													<input type="hidden" name="accItems[${i}].company"  value="${vo.company }" />
+												</td>
+												<td>${vo.cardNo }
+													<input type="hidden" name="accItems[${i}].cardNo"  value="${vo.cardNo }" />
+												</td>
+												<td>${vo.name }
+													<input style="width: 100px;" type="hidden" name="accItems[${i}].name"  value="${vo.name }" />
+												</td>
+												<td>
+													<input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" style="width: 100px;" > 
 													<input type="hidden" value="${i}" id="edit_td${i}">
 												</td>
-												<td><input type="text" name="accItems[${i}].usePlace"  value="${vo.usePlace }" readonly="readonly" /></td>
-												<td><fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
-													<input type="hidden" name="accItems[${i}].price"  value="${vo.price}" readonly="readonly" /></td>
-												<td><input type="text" name="accItems[${i}].useDate"  value="${vo.useDate }" readonly="readonly" /></td>
-												<td><input type="text" style="width: 100px;" name="accItems[${i}].deptName"  value="${vo.deptName }" readonly="readonly" /></td>
-												<td><input type="text" style="width: 100px;" name="accItems[${i}].posName"  value="${vo.posName }" readonly="readonly" /></td>
+												<td>${vo.usePlace }
+													<input type="hidden" name="accItems[${i}].usePlace"  value="${vo.usePlace }" />
+												</td>
+												<td>
+													<fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
+													<input type="hidden" name="accItems[${i}].price"  value="${vo.price}"  />
+												</td>
+												<td>${vo.useDate }
+													<input type="hidden" name="accItems[${i}].useDate"  value="${vo.useDate }" />
+												</td>
+												<td>${vo.deptName }
+													<input type="hidden" style="width: 100px;" name="accItems[${i}].deptName"  value="${vo.deptName }"  />
+												</td>
+												<td>${vo.posName }
+													<input type="hidden" style="width: 100px;" name="accItems[${i}].posName"  value="${vo.posName }" readonly="readonly" />
+												</td>
 											</tr>
 											<c:set var="i" value="${i+1 }" />
 										</c:forEach>
@@ -168,45 +191,7 @@
 						</div>
 					</div>
 				</form>
-				<hr>
-				<form name="memRegisterFrm" method="post"
-					action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
-					<div
-						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">등록</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info">등록
-								조회</button>
-						</div>
-
-					</div>
-					<!-- Card Body -->
-					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
-							<table class="table table-bordered table-hover"
-								id="dynamicTable2">
-								<thead>
-									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용처</th>
-										<th>사용금액</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody2">
-
-								</tbody>
-							</table>
-
-						</div>
-					</div>
-				</form>
+				
 
 			</div>
 		</div>

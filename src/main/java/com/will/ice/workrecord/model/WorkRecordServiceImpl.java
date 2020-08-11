@@ -11,15 +11,6 @@ public class WorkRecordServiceImpl implements WorkRecordService{
 
 	@Override
 	public int insertWork_status(WorkRecordVO vo) {
-		/*
-		int cnt = 0;
-		if(vo.getMemNo() != null && vo.getMemNo().isEmpty()) {
-			vo.setCmpStatus("출근");
-			cnt = workdao.insertWork(vo);
-		}else {
-			vo.setCmpStatus("결근");
-		}
-		*/
 		return workdao.insertWork(vo);
 	}
 
@@ -36,6 +27,12 @@ public class WorkRecordServiceImpl implements WorkRecordService{
 	@Override
 	public WorkRecordVO selectToday(String memNo) {
 		return workdao.selectToday(memNo);
+	}
+
+
+	@Override
+	public int selectMonthCount(WorkRecordVO vo) {
+		return workdao.selectMonthCount(vo);
 	}
 	
 	

@@ -57,7 +57,7 @@
 
 		<a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+			class="fas fa-download fa-sm text-white-50"></i>Excel 파일 다운로드</a>
 	</div>
 
 	<!-- Content Row -->
@@ -66,12 +66,12 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4" style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
 				action="<c:url value='/companyCard/comCardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">법인카드 조회</h6>
+						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
 							 >전체조회</button>
@@ -120,19 +120,21 @@
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-							<table class="table table-bordered table-hover" id="dynamicTable">
+						<div  style="overflow: scroll; overflow-x: scroll; height: 630px;">
+							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1770px;">
 								<thead>
 									<tr>
-										<th>카드번호</th>
-										<th>사원이름</th>
-										<th>계정코드</th>
-										<th>사용금액</th>
-										<th>사용처</th>
-										<th>사용일</th>
-										<th>부서</th>
-										<th>직급</th>
-										
+										<th style="width: 7%">카드사</th>
+										<th style="width: 13%">카드번호</th>
+										<th style="width: 8%">사원이름</th>
+										<th style="width: 10%">계정제목</th>
+										<th style="width: 11%">사용처</th>
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 10%">사용일</th>
+										<th style="width: 7%">부서</th>
+										<th style="width: 7%">직급</th>
+										<th style="width: 10%">승인 날짜</th>
+										<th style="width: 13%">승인 시간</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
@@ -141,15 +143,21 @@
 									<c:forEach var="vo" items="${list }">
 										
 										<tr>
+											<td>${vo.company }</td>
 											<td>${vo.cardNo }</td>
 											<td>${vo.name }</td>
-											<td>${vo.accCode }</td>
-											<td>${vo.price }</td>
+											<td>${vo.accTitle }</td>
 											<td>${vo.usePlace }</td>
+											<td>
+												<fmt:formatNumber value="${vo.price }" pattern="#,###"/>원
+											</td>
 											<td>${vo.useDate } </td>
 											<td>${vo.deptName }</td>
 											<td>${vo.posName }</td>
-															
+											<td>${vo.confirmDate }</td>
+											<td>${vo.confirmTime }</td>
+
+
 										</tr>
 									</c:forEach>
 								</tbody>

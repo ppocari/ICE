@@ -34,7 +34,7 @@
 	<update id="updateSchedule" parameterType="ScheduleVo">
 		update SCHEDULE
 		set title=#{title},place=#{place},start_day=#{startDay},
-    		end_day=#{endDay},content=#{content}
+    		end_day=#{endDay},content=#{content},resourceId=#{resourceId}
 		where schNo=#{schNo}
 	</update>
 	

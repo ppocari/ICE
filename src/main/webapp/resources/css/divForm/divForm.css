@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+.divForm div, .divForm label, .divForm {
+	font-size: 0.9em;
+}
+
+.divForm form, .divForm {
+	width: 100%;
+}
+
+.divForm fieldset {
+	padding: 0;
+	border: 0;
+}
+
+.divForm legend {
+	font-weight: bold;
+	color: #555555;
+	padding: 10px 0;
+	margin-left: 15%;
+	font-size: 1.3em;
+}
+
+.divForm div {
+	width: 90%;
+	clear: both;
+	border-bottom: 1px solid #eee;
+	padding: 5px 0;
+	overflow: auto;
+}
+
+.divForm .firstDiv {
+	border-top: 2px solid #e2e2e2;
+}
+
+.la_left  {
+	float: left;
+	width: 20%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	font-weight: bold;
+}
+
+.la_right {
+	width: 20%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	font-weight: bold;
+}
+
+.borderStyle{
+	border: 1px solid #DCDDE3;
+}
+
+.clear{
+	clear:none;
+}
+
+.etc {
+	width: 240px;
+}
+
+.divForm input[type=submit], input[type=reset] {
+	font-size: 1.0em;
+	margin-left: 5px;
+	background-color: #f3f3f3;
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid gray;
+}
+
+#add_inputs {
+	border:none;
+	text-align: center;
+}
+
+.divForm select {
+	font-size: 0.9em;
+}
+
+.divForm .sp1 {
+	width: 20%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	clear: left;
+	font-weight: bold;
+}
+

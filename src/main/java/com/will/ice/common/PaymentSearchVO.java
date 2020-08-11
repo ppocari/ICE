@@ -7,7 +7,14 @@ public class PaymentSearchVO {
 	private String searchCondition = "";//문서종류
 	private String searchKeyword = "";//키워드
 	private int docNo;
+	private String progress="";
 	
+	public String getProgress() {
+		return progress;
+	}
+	public void setProgress(String progress) {
+		this.progress = progress;
+	}
 	public String getStartDay() {
 		return startDay;
 	}
@@ -48,7 +55,7 @@ public class PaymentSearchVO {
 	public String toString() {
 		return "PaymentSearchVO [startDay=" + startDay + ", endDay=" + endDay + ", identNum=" + identNum
 				+ ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", docNo=" + docNo
-				+ "]";
+				+ ", progress=" + progress + "]";
 	}
 	
 }

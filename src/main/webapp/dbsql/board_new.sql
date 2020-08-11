@@ -1,4 +1,10 @@
 
+DROP TABLE boardComment 
+	CASCADE CONSTRAINTS;
+	
+DROP TABLE companyBoard_recommend 
+	CASCADE CONSTRAINTS;
+
 /* 사내게시판 댓글 */
 CREATE TABLE boardComment (
 	bComNo NUMBER NOT NULL, /* 댓글번호 */
