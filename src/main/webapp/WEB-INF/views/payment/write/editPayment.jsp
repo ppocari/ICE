@@ -46,7 +46,9 @@
 						<input type="text" class="form-control" id="editdocNo"
 							value="${payVo.docNo}" readonly="readonly"> 
 						<input type="hidden" name="docNo" value="${payVo.docNo}">
-						<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName}">
+						<c:forEach var="fileVo" items="${fListVo }">
+							<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName}">
+						</c:forEach>
 						<label for="keep" id="editlabel2">보존 기간</label> 
 						<select class="form-control" id="editkeep" name="keep">
 							<option value="12"
@@ -117,16 +119,13 @@
 
 						<label for="upfile" id="editlabel8">첨부파일</label> 
 							<input type="file" class="form-control" id="editupfile" name="upfile">
-							<c:if test="${!empty fileVo.originalFileName }">
-							<span style="position: relative;top: -200px;">
-								새 파일을 등록하면 기존 <bold style="color:#4e73df;">${fileVo.originalFileName}</bold> 은(는) 삭제됩니다
-							</span>
-							</c:if>
-							<c:if test="${empty fileVo.originalFileName }">
-							<span style="position: relative;top: -200px;color:white;">
-								첨부된 파일이 없습니다.
-							</span>
-							</c:if>
+								<span style="position: relative;top: -200px;">
+									새 파일을 등록하면 기존 파일은 삭제됩니다.<br>
+									<c:forEach var="fileVo" items="${fListVo }">
+									<bold style="color:#4e73df;">
+									${fileVo.originalFileName}</bold>&nbsp; 
+									</c:forEach>
+								</span>
 						<select class="form-control" id="edittypeNo" name="typeNo"
 							style="width: 200px;">
 							<!-- 반복 시작 -->

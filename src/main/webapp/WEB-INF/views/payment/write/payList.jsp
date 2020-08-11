@@ -26,6 +26,15 @@
 	function imsy(){
 		$('form[name=writepayInfoFrm]').attr("action","<c:url value='/payment/write/imsyInsert.do?imsy=Y'/>")
 	}
+	
+	function payline(){
+		var pop = "opener";
+		window.open("", opener, "width= 790,height=620,left=0,top=0,location=no,resizable=no,scroll=no");
+		var writepayInfoFrm = document.writepayInfoFrm;
+		writepayInfoFrm.target = opener;
+		writepayInfoFrm.action = "<c:url value='/payment/write/insertPaydoc.do'/>";
+		writepayInfoFrm.submit();
+	}
 </script>
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -40,8 +49,7 @@
 			<h6 class="m-0 font-weight-bold text-primary">새 문서 작성하기</h6>
 		</div>
 	<div id="writewholeDiv">
-		<form name="writepayInfoFrm" method="post" enctype="multipart/form-data"
-			action="<c:url value='/payment/write/insertPaydoc.do'/>" style="color: black;">
+		<form name="writepayInfoFrm" method="post" enctype="multipart/form-data" style="color: black;">
 			<label for="docNo" id="writelabel1">문서 번호</label> 
 				<input type="text" class="form-control" id="writedocNo" readonly="readonly"
 					placeholder="작성중">
@@ -74,7 +82,7 @@
 			</select>
 		<c:import url="/payment/summer.do"></c:import>
 		<label for="upfile" id="writelabel8">첨부파일</label>
-		<input type="file" class="form-control" id="writeupfile" name="upfile">
+		<input multiple="multiple" type="file" class="form-control" id="writeupfile" name="upfile">
 			<select class="form-control" id="writetypeNo" name="typeNo" style="width: 200px;">
 				<!-- 반복 시작 -->
 					<c:forEach var="doctypeVo" items="${doctypelist }">
@@ -84,7 +92,7 @@
 			</select>
 		<button type="submit" class="btn btn-primary" id="writesaveBt"
 			onclick="imsy()">임시저장</button>
-		<button type="submit" class="btn btn-primary" id="writesendBt">결재상신</button>
+		<button type="submit" class="btn btn-primary" id="writesendBt" onclick="payline()">결재상신</button>
 </form>
 </div>
 </div>

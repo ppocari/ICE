@@ -104,8 +104,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public PaymentfileVO getFile(int docNo) {
-		return sqlSession.selectOne(namespace+"getFile",docNo);
+	public List<PaymentfileVO> getFile(int docNo) {
+		return sqlSession.selectList(namespace+"getFile",docNo);
 	}
 
 	@Override

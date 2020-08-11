@@ -11,7 +11,7 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	#CDV{overflow: hidden;}.center{text-align: center;background-color: #f8f9fc;}#docType{font-weight: 600;text-align: center;}#CDVcancelBt,#cancelBt{background-color: #4e73df; color:white;}#CDVlastDiv{position: relative;left: 88%;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
+	#CDV{overflow: hidden;}.center{text-align: center;background-color: #f8f9fc;}#docType{font-weight: 600;text-align: center;}#CDVcancelBt,#cancelBt{background-color: #4e73df; color:white;position: relative;left: 88%;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
 </style>
 </head>
 <body id="CDV">

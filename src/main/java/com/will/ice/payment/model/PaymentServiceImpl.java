@@ -15,6 +15,7 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
+import com.will.ice.paymentfile.model.PaymentfileListVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Service
@@ -35,25 +36,30 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public int insertPaymentM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo) {
+	public int insertPaymentM(String[] memList, PaylinedocVO pldVo, PaymentfileListVO fListVo) {
 		//기안작성 -> 결재선 지정
 		int cnt=0;
 		pldVo.setImsy("N");
 		pldVo.setProgress("waiting");
 		paymentDao.insertPaydoc(pldVo);
+		List<PaymentfileVO> fileListDB = fListVo.getFileItems();
+		logger.info("fileListDB={}",fileListDB);
 		
-		logger.info("첨부파일 fileVo={}",fileVo);
-
-		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-			fileVo.setDocNo(pldVo.getDocNo());
-			int cnf = paymentDao.saveFile(fileVo);
-			pldVo.setHasFile("Y");
-			int isf = paymentDao.isFile(pldVo);
-			logger.info("파일저장 ={},isFile={}",cnf,isf);
-		}else {
+		if(fileListDB==null || fileListDB.isEmpty()) {
 			pldVo.setHasFile("N");
 			int isf = paymentDao.isFile(pldVo);
 			logger.info("isFile={}",isf);
+		}
+		
+		for(PaymentfileVO fileVo : fileListDB) {
+			logger.info("첨부파일 fileVo={}",fileVo);
+			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
+				fileVo.setDocNo(pldVo.getDocNo());
+				int cnf = paymentDao.saveFile(fileVo);
+				pldVo.setHasFile("Y");
+				int isf = paymentDao.isFile(pldVo);
+				logger.info("파일저장 ={},isFile={}",cnf,isf);
+			}
 		}
 		
 		for(int i=memList.length-1; i>-1; i--) {
@@ -65,47 +71,41 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 	
 	@Override
-	public int insertImsyPay(PaylinedocVO pldVo, PaymentfileVO fileVo) {
+	public int insertImsyPay(PaylinedocVO pldVo, List<PaymentfileVO> fileListDB) {
 		//기안작성 -> 임시보관
-		logger.info("첨부파일 fileVo={}",fileVo);
 		pldVo.setImsy("Y");
 		pldVo.setProgress("imsy");
 		int cnt = paymentDao.insertOnePay(pldVo);
-				
-		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-			fileVo.setDocNo(pldVo.getDocNo());
-			int cnf = paymentDao.saveFile(fileVo);
-			pldVo.setHasFile("Y");
-			int isf = paymentDao.isFile(pldVo);
-			logger.info("파일저장 ={},isFile={}",cnf,isf);
-		}else {
+		
+		if(fileListDB==null || fileListDB.isEmpty()) {
 			pldVo.setHasFile("N");
 			int isf = paymentDao.isFile(pldVo);
 			logger.info("isFile={}",isf);
 		}
 		
+		for(PaymentfileVO fileVo : fileListDB) {
+			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
+				fileVo.setDocNo(pldVo.getDocNo());
+				int cnf = paymentDao.saveFile(fileVo);
+				pldVo.setHasFile("Y");
+				int isf = paymentDao.isFile(pldVo);
+				logger.info("파일저장 ={},isFile={}",cnf,isf);
+			}
+		}
 		return cnt;
 	}
 	
 	@Override
-	public int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo, String oldfileName2) {
+	public int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileListVO fListVo, String oldfileName2) {
 		//임시보관 -> 결재선 지정
 		int cnt=0;
 		int a=paymentDao.updatePaydoc(pldVo);
 		logger.info("임시보관 => 완료함 pldVo={},a={}",pldVo,a);
 		
 		paymentDao.reallydeletePayLine(pldVo.getDocNo());
+		List<PaymentfileVO> fileListDB = fListVo.getFileItems();
 		
-		fileVo.setDocNo(pldVo.getDocNo());
-		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-			if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
-				paymentDao.updateFile(fileVo);
-			}else {											//없으면 새로저장
-				paymentDao.saveFile(fileVo);
-			}
-			pldVo.setHasFile("Y");
-			paymentDao.isFile(pldVo);
-		}else {
+		if(fileListDB==null || fileListDB.isEmpty()) {
 			if(oldfileName2!=null && !oldfileName2.isEmpty()) {
 				pldVo.setHasFile("Y");
 			}else {
@@ -113,6 +113,19 @@ public class PaymentServiceImpl implements PaymentService{
 			}
 			int isf = paymentDao.isFile(pldVo);
 			logger.info("isFile={}",isf);
+		}
+		
+		for(PaymentfileVO fileVo : fileListDB) {
+			fileVo.setDocNo(pldVo.getDocNo());
+			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
+				if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
+					paymentDao.updateFile(fileVo);
+				}else {											//없으면 새로저장
+					paymentDao.saveFile(fileVo);
+				}
+				pldVo.setHasFile("Y");
+				paymentDao.isFile(pldVo);
+			}
 		}
 		
 		for(int i=memList.length-1; i>-1; i--) {
@@ -124,21 +137,12 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 	
 	@Override
-	public int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName2) {
+	public int updatePaydoc(PaylinedocVO pldVo,List<PaymentfileVO> fileListDB,String oldfileName2) {
 		//임시보관 -> 임시보관
-		logger.info("첨부파일 fileVo={}",fileVo);
 		pldVo.setImsy("Y");
 		pldVo.setProgress("imsy");
-		fileVo.setDocNo(pldVo.getDocNo());
-		if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-			if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
-				paymentDao.updateFile(fileVo);
-			}else {											//없으면 새로저장
-				paymentDao.saveFile(fileVo);
-			}
-			pldVo.setHasFile("Y");
-			paymentDao.isFile(pldVo);
-		}else {
+		
+		if(fileListDB==null || fileListDB.isEmpty()) {
 			if(oldfileName2!=null && !oldfileName2.isEmpty()) {
 				pldVo.setHasFile("Y");
 			}else {
@@ -148,6 +152,18 @@ public class PaymentServiceImpl implements PaymentService{
 			logger.info("isFile={}",isf);
 		}
 		
+		for(PaymentfileVO fileVo : fileListDB) {
+			fileVo.setDocNo(pldVo.getDocNo());
+			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
+				if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
+					paymentDao.updateFile(fileVo);
+				}else {											//없으면 새로저장
+					paymentDao.saveFile(fileVo);
+				}
+				pldVo.setHasFile("Y");
+				paymentDao.isFile(pldVo);
+			}
+		}
 		return paymentDao.updatePaydoc(pldVo);
 	}
 	
@@ -194,7 +210,7 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public PaymentfileVO getFile(int docNo) {
+	public List<PaymentfileVO> getFile(int docNo) {
 		return paymentDao.getFile(docNo);
 	}
 

@@ -111,14 +111,14 @@ public class ConfirmController {
 		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
 		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
-		PaymentfileVO fileVo = paymentService.getFile(docNo);
-		logger.info("첨부파일 fileVo={}",fileVo);
+		List<PaymentfileVO> fListVo = paymentService.getFile(docNo);
+		logger.info("첨부파일 fListVo={}",fListVo);
 		
 		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList2",plList2);
 		model.addAttribute("plList",plList);
-		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("fListVo",fListVo);
 	}
 
 	@RequestMapping("/rejectedDocView.do")
@@ -133,15 +133,15 @@ public class ConfirmController {
 		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
 		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
-		PaymentfileVO fileVo = paymentService.getFile(docNo);
-		logger.info("첨부파일 fileVo={}",fileVo);
+		List<PaymentfileVO> fListVo = paymentService.getFile(docNo);
+		logger.info("첨부파일 fListVo={}",fListVo);
 		
 		model.addAttribute("commentList",commentList);
 		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList2",plList2);
 		model.addAttribute("plList",plList);
-		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("fListVo",fListVo);
 	}
 	
 	@RequestMapping("/approve.do")

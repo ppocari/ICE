@@ -53,12 +53,16 @@
 				<input type="hidden" id="keep" name="keep" value="${pldVo.keep }">
 				<input type="hidden" id="imsy" name="imsy" value="${pldVo.imsy }">
 				<input type="hidden" id="progress" name="progress" value="${pldVo.progress }">
-				<input type="hidden" id="oldfileName" name="oldfileName" value="${fileVo.fileName }">
 				<input type="hidden" id="oldfileName" name="oldfileName2" value="${oldfileName }">
-				<input type="hidden" id="fileName" name="fileName" value="${fileVo.fileName }">
-				<input type="hidden" id="fileSize" name="fileSize" value="${fileVo.fileSize }">
-				<input type="hidden" id="originalFileName" name="originalFileName" value="${fileVo.originalFileName }">
-				
+			
+				<c:set var="idx" value="0"/>
+				<c:forEach var="fListVo" items="${fileListDB }">
+					<input type="hidden" id="oldfileName" name="oldfileName" value="${fListVo.fileName }">
+					<input type="hidden" name="fileItems[${idx }].fileName" value="${fListVo.fileName }">
+					<input type="hidden" name="fileItems[${idx }].fileSize" value="${fListVo.fileSize }">
+					<input type="hidden" name="fileItems[${idx }].originalFileName" value="${fListVo.originalFileName }">
+					<c:set var="idx" value="${idx+1 }"/>
+				</c:forEach>
 				<div class="form-group">
 					<label for="deptName">부서</label> 
 						<input type="text" class="form-control" id="deptName">
