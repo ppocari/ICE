@@ -14,7 +14,16 @@ public class BoardVO {
 	private String category;
 	private String isMain;
 	private String filePath;
+	
+	private int comCount;
 
+	
+	public int getComCount() {
+		return comCount;
+	}
+	public void setComCount(int comCount) {
+		this.comCount = comCount;
+	}
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -86,7 +95,8 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [boardNo=" + boardNo + ", title=" + title + ", memNo=" + memNo + ", nickname=" + nickname
 				+ ", content=" + content + ", regdate=" + regdate + ", visited=" + visited + ", recommend=" + recommend
-				+ ", category=" + category + ", isMain=" + isMain + ", filePath=" + filePath + "]";
-	} 
+				+ ", category=" + category + ", isMain=" + isMain + ", filePath=" + filePath + ", comCount=" + comCount
+				+ "]";
+	}
 	
 }

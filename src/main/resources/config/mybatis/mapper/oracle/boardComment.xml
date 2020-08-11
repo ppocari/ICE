@@ -7,13 +7,12 @@
         <selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select boardComment_seq.nextval from dual
 		</selectKey>
-        INSERT INTO
-        commentBoard (no, boardNo, memNo, nickname, content, regdate)
-        VALUES(#{no}, #{boardNo}, #{memNo},#{nickname},#{content}, regdate) 
+        INSERT INTO boardComment (no, boardNo, memNo, nickname, content)
+        VALUES(#{no}, #{boardNo}, #{memNo},#{nickname},#{content}) 
     </insert>
     
     
-    <select id="commentList" parameterType="List">
+    <select id="commentList" parameterType="BoardCommentVO" resultType="BoardCommentVO">
     	select no, boardNo, memNo, nickname, content, regdate
     	from boardComment 
     	where boardNo=#{boardNo}
@@ -21,40 +20,16 @@
     </select> 
     
     <update id="commentUpdate" parameterType="BoardCommentVO">
-    	update commentUpdate
+    	update boardComment
     	set content=#{content}
     	where no=#{no}
     </update>
     
     <delete id="commentDelete" parameterType="int">
-    	delete from commentDelete
+    	delete from boardComment
     	where no=#{no}
     </delete>
     
-    
-	<!-- <select id="commentCount" resultType="int">
-        SELECT
-            COUNT(*)
-        FROM boardComment
-    </select>
-    
-    <select id="commentList" resultType="BoardCommentVO">
-        SELECT
-            *
-        FROM COMMENT
-    </select>
-
-    <update id="commentUpdate" parameterType="BoardCommentVO">
-        UPDATE COMMENT
-            SET
-            CONTENT = #{content}
-        WHERE CNO = #{cno}
-    </update>
-    
-    <delete id="commentDelete" parameterType="int">
-        DELETE FROM COMMENT WHERE CNO = #{cno}
-    </delete>
- -->
 </mapper>
 
 

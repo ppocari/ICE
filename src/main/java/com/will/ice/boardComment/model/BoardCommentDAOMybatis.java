@@ -20,8 +20,8 @@ public class BoardCommentDAOMybatis implements BoardCommentDAO{
 	}
 
 	@Override
-	public List<BoardCommentVO> commentList() {
-		return sqlSession.selectList(namespace+"commentList");
+	public List<BoardCommentVO> commentList(int boardNo) {
+		return sqlSession.selectList(namespace+"commentList", boardNo);
 	}
 
 	@Override

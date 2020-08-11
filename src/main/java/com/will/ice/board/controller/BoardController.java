@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.will.ice.board.model.BoardService;
 import com.will.ice.board.model.BoardVO;
+import com.will.ice.boardComment.model.BoardCommentService;
+import com.will.ice.boardComment.model.BoardCommentVO;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.SearchVO;
 import com.will.ice.common.Utility;
@@ -36,6 +38,8 @@ public class BoardController {
 	
 	@Autowired private MemberService memberService;
 	
+	@Autowired private BoardCommentService boardCommentService;
+	
 	@RequestMapping("/boardList.do")
 	public String boardList(@ModelAttribute SearchVO searchVo, Model model,
 			BoardVO boardVo) {
@@ -52,8 +56,6 @@ public class BoardController {
 		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
 				
-		
-		
 		List<BoardVO> list = boardService.selectAll(searchVo);
 		logger.info("글 목록 결과, list.size={}", list.size());
 		logger.info("글 목록 결과, list={}", list);
@@ -124,7 +126,11 @@ public class BoardController {
 		BoardVO vo = boardService.selectByNo(boardNo);
 		logger.info("상세보기 조회 결과, vo={}", vo);
 		
+		//댓글 불러오기 
+		List<BoardCommentVO> list = boardCommentService.commentList(boardNo);
+				
 		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
 		
 		return "board/boardDetail";
 	}

@@ -35,51 +35,22 @@ function popup(){
 	var option="width=500, height=500, top=100, left=200, location=no"
 	window.open(url,name,option);
 }	
+
 $(function(){
-	$("#comBtn").click(function (){ 
-		
-		/* if($("#comDiv").is(":visible")){
-			$("#comDiv").css("display","none");
+	/* $("#comDiv").hide();
+	var flag = true;
+	
+	$("#comBtn").click(function(){ 
+		if(flag){//안보일때
+			$("#comDiv").slideDown();
+			flag= false;
 		}else{
-			$("#comDiv").css("display","block");	
-		} */
-		$("#comDiv").toggle();
-
-	});
-
+			$("#comDiv").slideUp();
+			flag=true;
+		}
+	}); */
 });
 
-var httpRequest = null;
-//httpRequest 객체 생성
-function getXMLHttpRequest(){
-	var httpRequest = null;
-	
-	if(window.ActiveXObject){
-		try{
-			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		}catch(e){
-			try{
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			}catch (e) {
-				httpRequest = null;
-			}
-		}
-	}else if(window.XMLHttpRequest){
-		httpRequest = new window.XMLHttpRequest();
-	}
-	return httpRequest;
-}
-
-/* $( function(){
-	$("#btDel").click(function(){   
-        var boardNo = $("#btDel_boardNo").val();
-        console.log(boardNo);
-        window.open('/ice/board/boardDelete.do?boardNo='+boardNo,'board',
-        'width=930,height=500,left=50,top=50,location=yes,resizable=yes');
-        
-     });  
-})*/
-	
 </script>
 <!-- Begin Page Content -->
 
@@ -89,7 +60,7 @@ function getXMLHttpRequest(){
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 ">
-			<div class="card shadow mb-4" style="height: 700px">
+			<div class="card shadow mb-4" style="height: fit-content;">
 				<!-- Card Header - Dropdown -->
 
 				<input type="hidden" name="boardNo" value="${param.boardNo }">
@@ -143,47 +114,71 @@ function getXMLHttpRequest(){
 
 				</div>
 				
-				<div style="overflow:auto;">
+				<div style="">
 					<!-- 댓글 -->
 					<div class="card-body"
 						style="display: block; font-size: 13px; border: 2px solid #4e73df; border-radius: 10px;">
-	
-						<c:forEach var="comVo" items="${list }">
+		
+						<c:forEach var="comment" items="${list }">
 							<p>
-								<a href="#"> <span
-									style="font-size: 11px; display: inline-block; text-align: left; vertical-align: middle;">
-										${comVo.nickname }</span>
-								</a> <span
-									style="font-size: 10px; display: inline-block; text-align: left; vertical-align: middle;">
-									${comVo.content }test </span> <span
-									style="vertical-algin: middle; opacity: .4;"> 2020-08-12
-									<fmt:formatDate value="${comVo.regdate}"
+								<a href="#"> 
+									<span style="font-size: 12px; display: inline-block; 
+									text-align: left; vertical-align: middle;">
+									${comment.nickname}
+									</span>
+								</a> 
+								<span style="font-size: 13px; display: inline-block; 
+									text-align: left; vertical-align: middle;">
+									${comment.content}
+									</span>
+									<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
+									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
 								</span>
-								<button id="comBtn1" style="font-size: 9px;">댓글</button>
+								<c:if test="${sessionScope.identNum} == ${comment.memNo } \\ 
+									${sessionScope.identNum} == '999999'">
+									<button id="comBtn1" style="font-size: 9px;">수정</button>
+									<button id="comBtn1" style="font-size: 9px;">삭제</button>
+								</c:if>
 							</p>
 						</c:forEach>
+						
+						<div id="comDiv">
+							<form name="writeCommentForm" method="post"
+								action="<c:url value='/boardComment/boardCommentWrite.do'/>">
+								
+								<input type="text" name="boardNo" value="${vo.boardNo }">
+								<input type="text" name="memNo" value="${vo.memNo }">
+								
+								<div class="form-group">
+									<label for="exampleInputName2">별명</label> 
+									<input type="text" name="nickname" class="form-control" id="nickname" placeholder="별명을 입력하세요.">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail2">내용</label> 
+									<input type="text"
+										class="form-control" name="content" placeholder="내용을 입력하세요">
+								</div>
+								<button type="submit" id="commentBt" class="btn btn-default">댓글 등록</button> 
+							</form>
+						</div>
 	
 					</div>
 					
-					<div id="comDiv" style="">
-						<form name="noticeComment" method="post"
-							action="<c:url value='/board/boardComment.do'/>">
-							
-							<!--위에있음 <input type="hidden" name="boardNo" value="boardNo"> -->
+					<!-- <div id="comDiv" style="">
+							위에있음 <input type="hidden" name="boardNo" value="boardNo">
 							<input type="hidden" name="memNo" value="memNo">
 							
 							<div class="form-group">
-								<label for="exampleInputName2">별명</label> <input type="text"
-									class="form-control" id="nickname" placeholder="별명을 입력하세요.">
+								<label for="1">별명</label> 
+								<input type="text" class="form-control" 
+									id="nickname" placeholder="별명을 입력하세요.">
+								<label for="2">내용</label> 
+								<input type="email" class="form-control" 
+									id="content" placeholder="내용을 입력하세요">	
+								<button type="button" id="btnReply" class="btn btn-default">댓글 등록</button>	
 							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">내용</label> <input type="email"
-									class="form-control" id="content" placeholder="내용을 입력하세요">
-							</div>
-							<button type="submit" id="commentBt" class="btn btn-default">댓글 등록</button>
-						</form>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>

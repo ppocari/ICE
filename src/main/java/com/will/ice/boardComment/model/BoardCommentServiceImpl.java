@@ -18,8 +18,8 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 	}
 
 	@Override
-	public List<BoardCommentVO> commentList() {
-		return  boardCommentDao.commentList();
+	public List<BoardCommentVO> commentList(int boardNo) {
+		return  boardCommentDao.commentList(boardNo);
 	}
 
 	@Override
