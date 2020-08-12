@@ -14,10 +14,8 @@ public interface MemberService {
 		int PWD_DISAGREE=2; //비밀번호 불일치
 		int ID_NONE=3; //아이디 존재하지 않음
 			
-		int logCheck_admin(String memNo, String pwd);
 	
 		int logCheck(String memNo, String pwd);
-		
 		
 		MemberVO selectMember(String userid);
 		
@@ -32,7 +30,5 @@ public interface MemberService {
 		int deleteSelectMember(MemberVO memberVO);
 
 		int newPwd(MemberVO memVo);
-
-		
 
 }

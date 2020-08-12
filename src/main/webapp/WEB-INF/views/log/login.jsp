@@ -29,16 +29,14 @@
 
 </head>
 
-<body class="bg-gradient-primary-log">
-	<a href="<c:url value='/log/login_admin.do' />"><i class="fas fa-user-cog" 
-		style="color:#0079ff; font-size:30px; float: right; margin: 20px "></i>
-	</a>
+<body class="bg-gradient-primary">
+
 	<div class="container">
 
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
-			
-			<div class="col-xl-10 col-lg-12 col-md-9" style="margin-top: 165px;">
+
+			<div class="col-xl-10 col-lg-12 col-md-9">
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">

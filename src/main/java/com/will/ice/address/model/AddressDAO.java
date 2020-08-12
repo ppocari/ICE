@@ -26,7 +26,4 @@ public interface AddressDAO {
 	
 	public List<AddressVO> selectAddress(AddressSearchVO searchVo);
 	int getTotalRecord(AddressSearchVO searchVo);
-	
-	//쪽지 쓰기용
-	List<AddressVO> selectListMsgAddr_memNo_adgNo(AddressVO advo);
 }

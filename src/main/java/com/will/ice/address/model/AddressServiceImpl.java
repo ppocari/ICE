@@ -125,10 +125,5 @@ public class AddressServiceImpl implements AddressService{
 		return dao.getTotalRecord(searchVo);
 	}
 
-	@Override
-	public List<AddressVO> selectListMsgAddr_memNo_adgNo(AddressVO advo) {
-		return dao.selectListMsgAddr_memNo_adgNo(advo);
-	}
-
 
 }

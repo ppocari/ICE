@@ -15,8 +15,6 @@
 		$("#accordion").accordion();
 		
 		$('input[type=reset]').click(function(){
-
-			
 			self.close();
 
 		});

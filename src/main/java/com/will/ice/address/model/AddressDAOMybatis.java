@@ -92,12 +92,6 @@ public class AddressDAOMybatis implements AddressDAO {
 		return sqlSession.selectOne(namespaces+"getTotalRecord", searchVo);
 	}
 
-
-	@Override
-	public List<AddressVO> selectListMsgAddr_memNo_adgNo(AddressVO advo) {
-		return sqlSession.selectList(namespaces+"selectListMsgAddr_memNo_adgNo", advo);
-	}
-
 	
 	
 	
