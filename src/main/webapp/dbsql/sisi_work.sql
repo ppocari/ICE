@@ -244,6 +244,42 @@ set profileurl = ''
 where memno =121930;
 
 select * from message_rec;
-
-
 select * from message;
+
+select * from member;
+
+insert into message_rec
+values(message_rec_seq.nextval, '111910', 1);
+
+select * from v_address;
+
+commit;
+drop view message_view;
+
+create view message_view
+as
+select mr.NO, mem.name as recname , mr.RECMEMNO ,m.* , memb.name as sendname
+from message_rec mr join message m
+on mr.MSGNO = m.MSGNO
+join member mem
+on mem.memno = mr.RECMEMNO
+join member memb
+on memb.memno = m.sendmemno;
+
+select * from message_view;
+
+create sequence message_rec_seq
+start with 100
+increment by 1;
+
+create sequence message_seq
+start with 1
+increment by 1;
+
+drop sequence message_seq;
+drop sequence message_rec_seq;
+
+
+insert into message(msgno, msgstatus, msgcontent, sendmemno)
+		values(message_seq.nextval, 'n', 'hi', '111910' );
+

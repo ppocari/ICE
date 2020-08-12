@@ -28,20 +28,19 @@
  	$(function(){
  		
  		$("#ui_msgAddrGroup ").children().click(function(){
- 			var memNo = $("#openAddrMsg_memNo").val();
- 			var adgNo = $(this).val();
+ 			var deptCode = $(this).val();
  			$.ajax({
 				url:'<c:url value="/message/msgAddr_group.do" />',
 				type:"get",
-				data: "memNo="+ memNo+"&adgNo="+ adgNo,
+				data: "deptCode="+ deptCode,
 				dataType: 'json',
 				success:function(res){
 					if(res.length>0){
 						var str="";
 						$.each(res, function(idx, item){	
 							
-							str+= "<li class='list-group-item list-group-item-action' style='width:190px;' id='result_MAG"+item.adNo+"' value='"+item.adNo+"'>";
-							str+= "<input type='checkbox' style='margin-left:5px;'value='"+item.adNo+"'>"
+							str+= "<li class='list-group-item list-group-item-action' style='width:190px;' id='result_MAG"+item.memNo+"' value='"+item.memNo+"'>";
+							str+= "<input type='checkbox' style='margin-left:5px;'value='"+item.memNo+"'>"
 							str+= item.name;
 							if(item.deptName != null ){
 								str+= "<"+item.deptName+"></li>";
@@ -85,7 +84,7 @@
  			
  			var people = $("#checked_msgAddrPeop").val();
  			
- 			$(opener.document).find("#reciMsgPeop").val(people);
+ 			$(opener.document).find("#recMemNo").val(people);
 			self.close();		
  		});
  	});
@@ -130,9 +129,9 @@
 								<td>
 									<div id="msgAddrGroup" >
 										<ul class="list-group" id="ui_msgAddrGroup" >
-											<c:forEach var="addrVo" items="${addrList }">
+											<c:forEach var="deptVo" items="${deptList }">
 												<li class="list-group-item list-group-item-action "   
-												value="${addrVo.adgNo }"> ${addrVo.groupName }</li>
+												value="${deptVo.deptCode }"> ${deptVo.deptName }</li>
 											</c:forEach>
 										</ul>
 									</div>

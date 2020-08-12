@@ -7,10 +7,12 @@ DROP TABLE message
 	CASCADE CONSTRAINTS;
 
 /* 받는사람 */
+
+
 CREATE TABLE message_rec (
 	no NUMBER NOT NULL, /* 쪽지관리번호 */
-	recMemNo VARCHAR2(50) NOT NULL, /* 받는사원번호 */
-	msgno NUMBER NOT NULL /* 쪽지번호 */
+	msgno NUMBER NOT NULL, /* 쪽지번호 */
+	recMemNo VARCHAR2(50) NOT NULL /* 받는 사원 */
 );
 
 CREATE UNIQUE INDEX PK_message_rec
@@ -28,7 +30,7 @@ ALTER TABLE message_rec
 /* 쪽지함 */
 CREATE TABLE message (
 	msgno NUMBER NOT NULL, /* 쪽지번호 */
-	msgstatus VARCHAR2(50) DEFAULT 0 NOT NULL, /* 쪽지상태 */
+	msgstatus VARCHAR2(50)  NOT NULL, /* 쪽지상태 */
 	msgcontent CLOB, /* 쪽지내용 */
 	msgregdate DATE DEFAULT sysdate, /* 날짜 */
 	sendMemNo VARCHAR2(50) /* 보낸사원번호 */
@@ -44,16 +46,6 @@ ALTER TABLE message
 		CONSTRAINT PK_message
 		PRIMARY KEY (
 			msgno
-		);
-
-ALTER TABLE message_rec
-	ADD
-		CONSTRAINT FK_MEMBER_TO_message_rec2
-		FOREIGN KEY (
-			recMemNo
-		)
-		REFERENCES MEMBER (
-			MEMNO
 		);
 
 ALTER TABLE message_rec

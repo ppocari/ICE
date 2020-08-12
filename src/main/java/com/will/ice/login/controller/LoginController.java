@@ -128,7 +128,7 @@ public class LoginController {
 			logger.info("로그인 처리 파라미터 identNum={}, pwd={}", identNum, pwd);
 			logger.info("rememCheck={}", rememCheck);
 
-			int result=memService.logCheck(identNum, pwd);
+			int result=memService.logCheck_admin(identNum, pwd);
 			logger.info("로그인 처리 결과, result={}", result);
 
 			String msg="로그인 처리 실패",url="/log/login.do";
