@@ -252,7 +252,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
-								href="<c:url value='#'/>">예약신청</a>
+								href="<c:url value='/resourceUser/resourceMain.do'/>">자원목록</a>
 							<a class="collapse-item"
 								href="<c:url value='#'/>">예약현황</a>
 						</div>

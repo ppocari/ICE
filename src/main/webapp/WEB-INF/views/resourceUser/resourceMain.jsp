@@ -8,7 +8,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript">
-
 function pageProc(curPage){
 	$('input[name=currentPage]').val(curPage);
 	$('form[name=frmPage]').submit();
@@ -31,7 +30,6 @@ $(function(){
 	$(".goDetail").click(function(){
 		//1. 번호를 받는다
 		var res_no=$(this).attr('id');
-
 		
 		//2. controller 처리를 한다
 		var resNo;
@@ -111,16 +109,10 @@ $(function(){
 					$('#spanResSubdesc').html(resSubdesc);
 					
 					/* 수정버튼 처리 */
-					$('#btEdit').click(function(){
-						window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-						'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
-					});
-					
-					$('#btDel').click(function(){
-						var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
-						if(result) {
-							location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>'
-						}
+					$('#btReserve').click(function(){
+						location.href='<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>'
+						/* window.open('<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>', 'addRes', 
+						'width=600, height=500, left=800, top=200, location=yes, resizable=yes'); */
 					});
 				},
 				error:function(xhr, status, error) {
@@ -134,22 +126,13 @@ $(function(){
 	
 }); //전체 function()
 
-/* 목록 수정 */
-function resEdit(resNo) {
-	window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-	'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+/* 예약신청 */
+function resReserve(resNo) {
+	location.href='<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>'
+	/* window.open('<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>', 'addRes', 
+	'width=600, height=500, left=800, top=200, location=yes, resizable=yes'); */
 	
 }
-
-/* 목록 삭제 */
-function resDel(resNo, resName, resImage) {
-	var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
-	if(result) {
-		location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>'
-	}
-	
-}
-
 
 </script>
 
@@ -245,7 +228,7 @@ article{
 <section>
 	<article>
 	<!-- post방식으로 페이징 처리 -->
-	<form action="<c:url value='/resource/resourceMain.do'/>" 
+	<form action="<c:url value='/resourceUser/resourceMain.do'/>" 
 		name="frmPage" method="post">
 		<input type="hidden" name="currentPage">
 		<input type="hidden" name="searchKeyword" 
@@ -265,7 +248,6 @@ article{
 						 >자원 추가</button>
 					</div>
 				</div>
-
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
@@ -281,9 +263,7 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-
 							<th>수정</th>
-							<th>삭제</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
 							<tr>
@@ -294,10 +274,7 @@ article{
 								</td>
 								<td>${rm.resLocation }</td>
 								<td>${rm.resState }</td>
-								<td><button onclick="resEdit(${rm.resNo})">수정</button></td>
-
-								<td><button onclick="resDel(${rm.resNo }, '${rm.resName}', '${rm.resImage}')">삭제</button></td>
-
+								<td><button onclick="resReserve(${rm.resNo})">예약신청</button></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -320,7 +297,7 @@ article{
 							<a href="#" onclick="pageProc(${i})">[${i}]</a>			
 						</c:if>
 						<c:if test="${i==pagingInfo.currentPage }">
-							<span style="color:blue;font-weight:bold">${i}</span>			
+							<span style="color:blue; font-weight:bold">${i}</span>			
 						</c:if>		
 					</c:forEach>
 						
@@ -369,8 +346,8 @@ article{
 								</div>
 							</div>
 							<div id="divButton">
-								<button id="btEdit" name="">수정</button> 
-								<button id="btDel">삭제</button>
+								<button id="btReserve" name="">예약신청</button> 
+								<!-- <button id="btDel">삭제</button> -->
 							</div>
 					</div>
 				</div>

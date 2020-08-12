@@ -22,6 +22,10 @@
 	border-top: 2px solid #e2e2e2;
 }
 
+article{
+	font-size: 1.25em;
+}
+
 
 </style>
 </head>
