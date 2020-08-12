@@ -205,6 +205,7 @@ public class MemberController {
 			
 			memVo.setMemNo(memNo);
 			logger.info("memVo={}",memVo);	
+			
 			int cnt = memberService.newPwd(memVo);
 			
 			if(cnt > 0) {

@@ -79,7 +79,7 @@
 								<select class="form-control" style=" width: 100px;
 									height: 30px; font-size: 13px; display: inline-block;">
 								 	 <option>내용</option>
-									 <option>보낸사람</option>
+									 <option>받는사람</option>
 								</select>
 								<input type="text" class="form-control" 
 									placeholder="검색어를 입력하세요" style=" width: 180px; 
@@ -123,19 +123,19 @@
 										<th scope="col">
 											<input type="checkbox" id="checkAll" value="option1">
 										</th>
-										<th scope="col">보낸사람</th>
+										<th scope="col">받을 사람</th>
 										<th scope="col">내용</th>
-										<th scope="col">날짜</th>
+										<th scope="col">보낸 날짜</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 게시판 내용 반복문시작 -->
-									<c:forEach var="vo" items="${list }">
+									<c:forEach var="msgvo" items="${msgList }">
 										<tr class="align_center">
 											<td>
 												<input type="checkbox" id="inlineCheckbox1" value="option1">
 											</td>
-											<td>${vo.MEMNO}</td>
+											<td>${msgvo.recName}</td>
 											<td class="align_left">
 												<!-- 24시간 공지사항  new 이미지-->
 												<c:if test="">
@@ -144,15 +144,15 @@
 												
 												<a href="">
 													<!-- 제목보여주기 길면 일부 -->
-													<c:if test="${fn:length(vo.MSG_CONTENT)>30 }">
-														${fn:substring(vo.MSG_CONTENT, 0, 30)} ...
+													<c:if test="${fn:length(msgvo.msgContent)>30 }">
+														${fn:substring(msgvo.msgContent, 0, 30)} ...
 													</c:if>
-													<c:if test="${fn:length(vo.MSG_CONTENT)<=30 }">
-														${vo.MSG_CONTENT}
+													<c:if test="${fn:length(msgvo.msgContent)<=30 }">
+														${msgvo.msgContent}
 													</c:if>
 												</a>
 											</td>
-											<td><fmt:formatDate value="${vo.MSG_REGDATE}"
+											<td><fmt:formatDate value="${msgvo.msgRegdate}"
 												pattern="yyyy-MM-dd"/> 
 											</td>
 										</tr>
