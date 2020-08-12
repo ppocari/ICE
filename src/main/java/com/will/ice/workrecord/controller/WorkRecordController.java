@@ -154,9 +154,9 @@ public class WorkRecordController {
 		logger.info("Evo.getCmpStatus={}",Evo.getCmpStatus());
 		
 		if((outTime - dateTime) < 8){ //(date)가 nine보다 이후 일때 true 
-			Evo.setCmpStatus("퇴근(미달)");
+			Evo.setCmpStatus("지각");
 		}else if((outTime - dateTime) > 9){
-			Evo.setCmpStatus("퇴근(초과)");
+			Evo.setCmpStatus("초과근무");
 		}else {
 			Evo.setCmpStatus("퇴근");
 		}
@@ -225,39 +225,20 @@ public class WorkRecordController {
 	
 	
 	@RequestMapping(value = "/workChart.do",method = RequestMethod.POST)
-	public void SelectMonthChart(@RequestParam String cmpMonth,HttpSession session,Model model) {
+	public void SelectMonthChart(@RequestParam String year,@RequestParam String month,HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
 		WorkRecordVO vo = new WorkRecordVO();
 		vo.setMemNo(memNo);
 		
-		//연도별 조회
-		vo.setCmpMonth("2019-01");
-		vo.setCmpStatus("퇴근(미달)");
-		int under1 = workService.selectMonthCount(vo);
-		vo.setCmpStatus("퇴근(초과)");
-		int over1 = workService.selectMonthCount(vo);
-		vo.setCmpStatus("퇴근");
-		int avg1 = workService.selectMonthCount(vo);
-		model.addAttribute("under1",under1);
-		model.addAttribute("over1",over1);
-		model.addAttribute("avg1",avg1);
-		
-		vo.setCmpMonth("2019-07");
-		vo.setCmpStatus("퇴근(미달)");
-		int under7 = workService.selectMonthCount(vo);
-		vo.setCmpStatus("퇴근(초과)");
-		int over7 = workService.selectMonthCount(vo);
-		vo.setCmpStatus("퇴근");
-		int avg7 = workService.selectMonthCount(vo);
-		model.addAttribute("under7",under7);
-		model.addAttribute("over7",over7);
-		model.addAttribute("avg7",avg7);
-		
-		
-		
+		logger.info("차트시작 테스트 memNo={}",memNo);
+		logger.info("year={}",year);
+		logger.info("month={}",month);
+
 		//월별 조회
-		if(cmpMonth != null && cmpMonth.isEmpty()) {
-			vo.setCmpMonth(cmpMonth);
+		if(year != null && !year.isEmpty() || month != null && !month.isEmpty()) {
+			String ym = year+"-"+month;
+			logger.info("ym={}",ym);
+			vo.setCmpMonth(ym);
 			
 			vo.setCmpStatus("퇴근(미달)");
 			int under = workService.selectMonthCount(vo);
