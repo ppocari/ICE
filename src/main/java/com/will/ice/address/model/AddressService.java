@@ -23,6 +23,8 @@ public interface AddressService {
 	int updateIsFavorite(int adNo);
 	int updateNotFavorite(int adNo);
 	
+	//쪽지 쓰기용
+	List<AddressVO> selectListMsgAddr_memNo_adgNo(AddressVO advo);
 	
 
 }

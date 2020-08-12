@@ -15,16 +15,7 @@
 	    padding: 10px;
 	    width: 57%;
 	}
-	
-	label{
-		font-weight: bold;
-		width: 20%;
-    	background: #dedfe2;
-    	border: 1px solid gray;
-    	height: 50px;
-	    line-height: 3;
-	    padding-left: 10px;
-	}
+
 	
 	.data div p {
 	    border: 1px solid gray;
@@ -82,20 +73,14 @@
 	    width: 15%;
 	}
 	
-	#btZipcode {
-	    position: absolute;
-	    margin-left: 156px;
-	    margin-top: -39px;
-	    width: 10%;
-	}
-	
+
 	#hp1{
 		width: 80px;
 		height: 38px; 
 		display: inline-block;
 	}
 	#email{
-		width: 35%;
+		width: 22%;
 		display: inline-block;
 	}
 	#email2{
@@ -112,34 +97,9 @@
 		padding: 60px;
 	}
 	
-	#a_a,#a_b,#a_c{
-		float: left;
-	}
-	
-	#a_a{
-		width: 25%;
-	}
-	#a_b, #a_c {
-	    width: 18%;
-	}
+
 	
 	
-	#b_a{
-		float: left;
-		width: 25%;
-	}
-	#b_b{
-		float: left;
-		width: 50%;
-	}
-	
-	div#a_c {
-	    margin-right: 30%;
-	}
-	
-	#c{
-		
-	}
 	
 	input#mypageEdit {
 	    width: 50%;
@@ -147,6 +107,23 @@
 	    bottom: 0;
 	    left: 0;
 	    margin-left: 4%;
+	}
+	
+	.form-group{
+		
+		
+	}
+	
+	.form-group label{
+		float: left;
+		width: 150px;
+		
+	}
+	
+	.form-control{
+		display: inline-block;
+		width: 180px;
+		
 	}
 	 
 </style>
@@ -227,15 +204,14 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">마이페이지</h1>
 	</div>
-	<div><span id="name">${userName}님</span></div>
 	<!-- Content Row -->
 	<div class="row">
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="fit-content">
+			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- 근태관리 조회 -->
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h5 class="m-0 font-weight-bold text-primary">기본정보수정</h5>
+					<h5 class="m-0 font-weight-bold text-primary">내 정보 </h5>
 			</div>
 				<div class="row">
 					<!-- Area Chart -->
@@ -243,8 +219,8 @@
 						<div class="card shadow mb-4">
 							<form name="mypageFrm" id="mypageFrm" method="post" enctype="multipart/form-data"
 								action="<c:url value='/mypage/mypage.do'/>">
-								<div id="a">
-									<div id="a_a">
+								
+									
 										<div class="noimg1">
 											<c:if test="${empty vo.proFileURL}">
 												<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
@@ -258,63 +234,49 @@
 											<p>*120 X 150</p>
 											<input type="file" value="사진변경" name="imgUP" class="img_ch">
 										</div>
-									</div>
-									
-									<div id="a_b">
 										<div class="form-group" id="memNo">
-											사원번호 <input type="text" class="form-control" id="memNo"
-												name="memNo" value="${vo.memNo}" readonly style="width: 180px;">
-										</div>
-										<div class="form-group" id="deptCode">
-											부서코드 <input type="text" class="form-control" id="deptCode"
-												name="deptCode" value="${vo.deptCode}" readonly style="width: 180px;">
+											<label for="memNo">사원번호 </label>
+											 <input type="text" class="form-control" id="memNo"
+												name="memNo" value="${vo.memNo}" readonly >
 										</div>
 										<div class="form-group">
-											직급코드 <input type="text" class="form-control" id="posCode"
-												name="posCode" value="${vo.posCode}" readonly style="width: 180px;">
-										</div>
-									</div>
-									<div id="a_c">
-										<div class="form-group">
-											부서 <input type="text" class="form-control" value="${vo.deptName }"
-												name="dname" readonly style="width: 180px;">
+											<label for="dname">부서</label>
+											<input type="text" class="form-control" value="${vo.deptName }"
+												name="dname" readonly >
 										</div>
 										<div class="form-group">
-											직책 <input type="text" class="form-control" value="${vo.posName }"
-												name="pname" readonly style="width: 180px;">
+											<label for="pname">직책</label>
+											 <input type="text" class="form-control" value="${vo.posName }"
+												name="pname" readonly >
 										</div>
 										<div class="form-group">
-											연봉 <input type="text" class="form-control" id="salary" readonly
-												name="salary" value="${vo.salary }" style="width: 180px;">
-										</div>
-									</div>
-								</div>
-								
-								
-								
-								
-								<div id="b">
-									<div id="b_a">
-										<div class="form-group">
-											이름 <input type="text" class="form-control" id="name" name="name"
-												value="${vo.name }" style="width: 75%;">
+											<label for="salary">연봉</label>
+											<input type="text" class="form-control" id="salary" readonly
+												name="salary" value="${vo.salary }" >
 										</div>
 										<div class="form-group">
-											패스워드 <input type="password" class="form-control" id="pwd1"
-												name="pwd" placeholder="암호" style="width: 75%;">
+											<label for="name">이름</label>
+											<input type="text" class="form-control" id="name" name="name"
+												value="${vo.name }" >
 										</div>
 										<div class="form-group">
-											패스워드 확인 <input type="password" class="form-control" id="pwd2"
-												name="pwd2" style="width: 75%;"> <span id="error"></span>
+											<label for="pwd">패스워드</label>
+											<input type="password" class="form-control" id="pwd1"
+												name="pwd" placeholder="암호" >
 										</div>
 										<div class="form-group">
-											성별 <input type="text" name="gender" class="form-control"
-												id="gender" value="${vo.gender }" style="width: 75%;">
+											<label for="pwd2">패스워드 확인 </label>
+											<input type="password" class="form-control" id="pwd2"
+												name="pwd2" > <span id="error"></span>
 										</div>
-									</div>
-									<div id="b_b">
 										<div class="form-group">
-											휴대폰<br> <select name="hp1" id="hp1" title="휴대폰 앞자리"
+											<label for="gender">성별  </label>
+											<input type="text" name="gender" class="form-control"
+												id="gender" value="${vo.gender }" >
+										</div>						
+										<div class="form-group">
+											<label for="hp1">휴대폰 </label> 
+											<select name="hp1" id="hp1" title="휴대폰 앞자리"
 												class="form-control">
 												<option value="010">010</option>
 												<option value="011">011</option>
@@ -331,7 +293,8 @@
 												style="width: 80px; display: inline-block;">
 										</div>
 										<div class="form-group">
-											이메일<br> <input type="text" name="email1"
+											<label for="email1">이메일</label> 
+											<input type="text" name="email1"
 												value="${vo.email1 }" class="form-control" id="email"
 												title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@ <select
 												name="email2" class="form-control" id="email2" title="이메일주소 뒷자리"
@@ -345,26 +308,25 @@
 												title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
 										</div>
 										 <div class="form-group">
-											주소
-											<div id="divZip">
+											<label for="zipcode">우편번호/주소</label>
+											<div id="divZip" style="float: left; margin-right: 10px;">
 												<input type="text" name="zipcode" class="form-control"
-													id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호"
-													style="width: 20%;">
+													id="zipInput" value="${vo.zipcode}" ReadOnly title="우편번호" style="margin-bottom: 5px;">
+												<input type="Button" class="btn btn-primary" value="우편번호 찾기" id="btZipcode" title="새창열림">
 											</div>
-											<input type="Button" class="btn btn-primary" value="우편번호 찾기" id="btZipcode" title="새창열림">
-											<div id="divZip">
+											<label for="addr"></label>
+											<div id="divZip1">
 												<input type="text" name="addr" class="form-control"
-													id="addrInput" value="${vo.addr}" ReadOnly title="주소"
-													style="width: 450px;">
+													id="addrInput" value="${vo.addr}" ReadOnly title="주소" style="margin-left:150px;  width: 450px;margin-bottom: 5px;">
 											</div>
-											<div id="divZip">
+											<label for="addrDetail"></label>
+											<div id="divZip2">
 												<input type="text" name="addrDetail" class="form-control"
-													id="addrDetailInput" value="${vo.addrDetail}" title="상세주소"
-													style="width: 450px;">
+													id="addrDetailInput" value="${vo.addrDetail}" title="상세주소" style=" width: 450px;margin-bottom: 5px;">
 											</div>
 										 </div>
-									</div>
-								</div>
+									
+									
 								<div id="c">
 									<input type="submit" class="btn btn-primary" id="mypageEdit" value="수정하기">
 								</div>

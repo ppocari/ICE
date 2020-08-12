@@ -147,6 +147,12 @@
 		set isfavorite = null
 		where adno=#{adNo}
 	</update>
+	
+	<!-- 쪽지 쓰기 에서 그룹을 선택하면 그룹에 해당하는 목록을 보여줌 -->
+	<select id="selectListMsgAddr_memNo_adgNo" parameterType="AddressVO" resultType="AddressVO">
+		select * from v_address
+		where memno = #{memNo} and adgno = #{adgNo}
+	</select>
 </mapper>
 
 

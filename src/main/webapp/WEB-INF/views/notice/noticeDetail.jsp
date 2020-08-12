@@ -66,11 +66,11 @@ function popup(){
 						
 					</div>
 					<br>
-					<div class="card-body"style="text-align:center;">
+					<div class="card-body"style="text-align:center; margin-bottom: -200px;">
 						<span style="font-size:25px; display: inline-block;
 									text-align:left; vertical-align:middle;">
-									${vo.title }</span>
-						<br><br>
+									[${vo.category}] ${vo.title }</span>
+						<br><br><br>
 						<p>
 							<a href="#">
 								<span style="font-size:14px; display: inline-block;
@@ -84,6 +84,14 @@ function popup(){
 								| ${vo.readcount} 읽음
 							</span>
 						</p>
+					</div>
+					<div>
+						<span class="sp1">첨부파일</span> 
+						<span><a href
+			="<c:url value='/notice/download.do?boardNo=${vo.noticeNo}&fileName=${vo.fileName}'/>">
+						${fileInfo}
+						</a></span>
+						<span style="color:blue">${downInfo}</span>
 					</div>
 					<hr>					
 					

@@ -97,6 +97,14 @@ function pageProc(curPage){
 	color: orange;
 } 
 
+h6{
+	font-size: 1em;
+}
+
+#addressMain_section{
+	font-size: 1.25em;
+}
+
 </style>
 
 <section id="addressMain_section">

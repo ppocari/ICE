@@ -14,9 +14,12 @@
 	$(function() {
 		$("#accordion").accordion();
 		
-		$('form[name=organForm]').reset(function(){
+		$('input[type=reset]').click(function(){
+
+			
 			self.close();
-		}
+
+		});
 		
 
 		$('form[name=organForm]').submit(function(){
@@ -106,8 +109,8 @@ table {
 }
 
 #selectMenu {
-	width: 370px;
-	font-size: 0.6em;
+	width: 400px;
+	font-size: 0.8em;
 	
 }
 
@@ -165,6 +168,14 @@ table {
 	margin:2px;
 }
 
+#organ_inputs{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+article{
+	font-size:1.25em;
+}
 
 </style>
 </head>

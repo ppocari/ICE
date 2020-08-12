@@ -46,14 +46,12 @@
 	    width: 60%;
 	}
 	
-	
-	
+	.show{display: none;}
+	.hide{display: block;}	
 	
 </style>
-
 	
-<!-- bar 차트 -->	
-<!-- Begin Page Content -->
+	<!-- Begin Page Content -->
 	<div class="container-fluid">
 		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -69,33 +67,77 @@
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h5 class="m-0 font-weight-bold text-primary">월별 확인</h5>
 						<form method="post" id="workChart" action="<c:url value='/workRecord/workChart.do'/>">
-							<label>조회 할 날짜 : </label>
-							<input id="cmpMonth" name="cmpMonth">
+							<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
+							<label>연도</label>&nbsp;&nbsp;&nbsp;
+							<select id="year" name="year">
+								<option value="2019">2019년</option>
+								<option value="2020">2020년</option>
+							</select>
+							<label>월</label>&nbsp;&nbsp;&nbsp;
+							<select id="month" name="month">
+								<option value="01">1월</option>
+								<option value="02">2월</option>
+								<option value="03">3월</option>
+								<option value="04">4월</option>
+								<option value="05">5월</option>
+								<option value="06">6월</option>
+								<option value="07">7월</option>
+								<option value="08">8월</option>
+								<option value="09">9월</option>
+								<option value="10">10월</option>
+								<option value="11">11월</option>
+								<option value="12">12월</option>
+							</select>
 							<input type="submit" class="btn btn-primary" id="btSearch" value="조회">
 						</form>
   					</div>
-						<!-- 통계 API -->
-						<div id="ChartDiv1">
-							<div id="chartdiv1" style="height:100%;width:80%;"></div>	
-						</div>
-						<input type="hidden" id="avg" value="${avg }">
-						<input type="hidden" id="over" value="${over }">
-						<input type="hidden" id="under" value="${under }">
+					<!-- 통계 API -->
+					<div>
+						<button id="pie" class="btn btn-primary">원형 그래프 보기</button>
+						<button id="bar" class="btn btn-primary">막대 그래프 보기</button>
+					</div>
+					<div id="ChartDiv1">
+						<div id="chartdiv1" style="height:100%;width:80%;"></div>	
+					</div>
+					
+					<div id="ChartDiv2">
+						<div id="chartdiv2" style="height:100%;width:80%;"></div>	
+						
+					</div>
+					<input type="hidden" id="avg" value="${avg }">
+					<input type="hidden" id="over" value="${over }">
+					<input type="hidden" id="under" value="${under }">
 				</div>
 			</div>
 		</div>
 	</div>
+	
 <script>	
 $(function(){
 	var avg = Number($("#avg").val());
 	var over = Number($("#over").val());
 	var under = Number($("#under").val());
-	/* 
+	
 	// bar 차트	
-	var workOver = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	var workUnder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	var workAvg = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	$.jqplot('ChartDiv1',  [workOver,workUnder,workAvg], {
+	var workOver = [over];
+	var workUnder = [under];
+	var workAvg = [avg];
+	
+	$("#pie").click(function() {
+		$("#ChartDiv1").toggle(
+			function (){ $(this).addClass("show")},
+			function (){ $(this).addClass("hide")}
+		);
+	});
+
+	$("#bar").click(function() {
+		$("#ChartDiv2").toggle(
+				function (){ $(this).addClass("show")},
+				function (){ $(this).addClass("hide")}
+		);
+	});
+	 
+	$.jqplot('chartdiv2',  [workAvg,workUnder,workOver], {
 		seriesDefaults:{
 		// 바 그래프
 		renderer:$.jqplot.BarRenderer,	
@@ -105,7 +147,7 @@ $(function(){
 		axes: {
 		  xaxis: {
 		    renderer: $.jqplot.CategoryAxisRenderer,	
-		    ticks: ['1월', '2월', '3월', '4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		    ticks: ['해당 월'],
 		  }
 		},
 		//bar 색 변경
@@ -125,7 +167,7 @@ $(function(){
 		animateReplot : false, // 애니메이션 반복 설정
 		captureRightClick : true, // 오른쪽 마우스 클릭 이벤트
 	});	
-	 */
+	 
 	//원형 그래프
 	data1 = [[['정상', avg],['미달', under], ['초과', over]]];
     toolTip1 = ['정상', '미달', '초과'];
@@ -153,18 +195,6 @@ $(function(){
             },
         }
     );
-	
-	
-	
-	$("#cmpMonth").datepicker({
-        dateFormat:'yy-mm',
-           changeYear:true,
-           changeMonth:true,
-           dayNamesMin:['일','월','화','수','목','금','토'],
-           monthNamesShort: ['1월', '2월', '3월', '4월', '5월',
-           	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-     });	
-	
 	
 	function draw() {
 		var canvas = document.getElementById('canvas');
