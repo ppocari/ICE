@@ -26,7 +26,6 @@ import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
-import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 

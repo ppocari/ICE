@@ -37,7 +37,7 @@ public class PaylineController {
 	
 		int cnt = paymentService.insertPaymentM(memList, pldVo, fListVo);
 		
-		String msg="결재선 등록 실패!",url="/payment/write/sentpayList.do";
+		String msg="결재선 등록 실패!",url="/payment/write/close2.do";
 		if(cnt>0) {
 			msg="기안이 작성되었습니다!";
 		}

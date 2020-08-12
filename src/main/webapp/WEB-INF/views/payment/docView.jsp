@@ -112,6 +112,14 @@
 				</tr>
 				
 			</table>
+			<c:forEach var="fileVo" items="${fListVo }">
+			<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
+				<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+					id="fileName">
+					${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+				</a>
+			</c:if>
+			  </c:forEach>
 		</div>
 	</div>
 	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

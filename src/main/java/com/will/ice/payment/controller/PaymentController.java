@@ -241,13 +241,16 @@ public class PaymentController {
 			msg="임시보관함에 저장 되었습니다.";
 			if(fileURL!=null && !fileURL.isEmpty()) {
 				if(oldfileName!=null && !oldfileName.isEmpty()) {
-					String oldFileName=paymentService.getFile(pldVo.getDocNo()).getFileName();
-					String upPath 
+					List<PaymentfileVO> fListVo = paymentService.getFile(pldVo.getDocNo());
+					for(PaymentfileVO vo : fListVo) {
+						String oldFileName=vo.getFileName();
+						String upPath 
 						= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PAYMENT_FILE);
-					File file = new File(upPath, oldFileName);
-					if(file.exists()) {
-						boolean bool=file.delete();
-						logger.info("파일 삭제 여부: {}", bool);
+						File file = new File(upPath, oldFileName);
+						if(file.exists()) {
+							boolean bool=file.delete();
+							logger.info("파일 삭제 여부: {}", bool);
+						}
 					}
 				}
 			}
@@ -328,6 +331,11 @@ public class PaymentController {
 	@RequestMapping("/close.do")
 	public void close(){
 		logger.info("팝업 닫기");
+	}
+
+	@RequestMapping("/write/close2.do")
+	public void close2(){
+		logger.info("팝업 닫기2");
 	}
 	
 	@RequestMapping("/write/sentpayList.do") 
