@@ -105,30 +105,10 @@ public class ResourceUserController {
 	
 	@RequestMapping("/ajaxWrite.do")
 	@ResponseBody
-	public ScheduleVo ajaxWrite(@ModelAttribute ScheduleVo scheduleVo, @RequestParam int resNo,
-			HttpSession session) {
+	public ScheduleVo ajaxWrite( @RequestParam String pickStart, HttpSession session) {		
 		String memNo = (String) session.getAttribute("identNum");
-		scheduleVo.setMemNo(memNo);
-		logger.info("ajax 임시방편, 파라미터 scheduleVo={},memNo={}",scheduleVo,memNo);
 		
-		if(scheduleVo.getPlace().equals("1")) {
-			scheduleVo.setResourceId("a");
-			scheduleVo.setPlace("업무관련");
-		}else if(scheduleVo.getPlace().equals("2")) {
-			scheduleVo.setResourceId("b");
-			scheduleVo.setPlace("기타");
-		}else if(scheduleVo.getPlace().equals("3")) {
-			scheduleVo.setResourceId("c");
-			scheduleVo.setPlace("휴가,연차");
-		}else {
-			scheduleVo.setResourceId("d");
-			scheduleVo.setPlace("유연근무");
-		}
 		
-		int cnt = scheduleService.insertSchedule(scheduleVo);
-		logger.info("스케줄 등록 결과, cnt={}",cnt);
-		
-		ScheduleVo vo = scheduleService.selectRownum(memNo);
 		
 		return vo;
 	}

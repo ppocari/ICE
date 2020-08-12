@@ -8,7 +8,7 @@ CREATE TABLE schedule (
 	START_DAY VARCHAR2(100) NOT NULL, /* 스케줄 시작 날짜 */
 	END_DAY VARCHAR2(100) NOT NULL, /* 스케줄 끝날짜 */
 	PLACE VARCHAR2(100), /* 스케줄 장소 */
-	CONTENT VARCHAR2(100) /* 스케줄 내용 */
+	CONTENT VARCHAR2(100), /* 스케줄 내용 */
 	resourceId VARCHAR2(100) /* 리소스 아이디 */
 );
 

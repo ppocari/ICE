@@ -49,9 +49,9 @@ LED 지속광 : 고독스 sl200w * 1 / 고독스 sl60w × 2
 
 /* 아반떼
 인원: 4명
-가격?: ?1,376 ~ 2,454만원
-연료?: ?LPG,가솔린,디젤
-연비?: ?10.6 ~ 17.8km/l
+가격: 1,376 ~ 2,454만원
+연료: LPG,가솔린,디젤
+연비: 10.6 ~ 17.8km/l
 */
 -------------------------------------------------------------------------
 
@@ -61,9 +61,17 @@ insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/05 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), to_date('2020/08/05 13:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, '2020-08-01', '2020-08-02', 121920);
+
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/10 15:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 17:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+    to_date('2020/08/10 17:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);    
+insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/10 09:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/10 11:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/10 20:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/10 21:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+    
     
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 2, to_date('2020/08/10 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 

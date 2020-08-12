@@ -77,7 +77,11 @@ article{
 						<select name="rkNo">
 							<option value="">전체</option>
 							<c:forEach var="rk" items="${rkList }">
-								<option value="${rk.rkNo }">${rk.rkKind }</option>
+								<option value="${rk.rkNo }" 
+									<c:if test="${rk.rkNo == rmVo.rkNo }">
+										selected="selected"
+									</c:if>
+								>${rk.rkKind }</option>
 							</c:forEach>
 						</select>
 					</div>

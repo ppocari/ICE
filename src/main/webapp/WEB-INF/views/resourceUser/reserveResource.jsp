@@ -13,6 +13,7 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-common/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-daygrid/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
+
 <script type="text/javascript">
 	//들어오자 마자 일정 보여주기
 	var contextPath = "/ice";
@@ -141,7 +142,7 @@
       }, */
       
       //날짜클릭
-    /*   dateClick: function(arg) {
+      dateClick: function(arg) {
     	  $("#writeModal").css("visibility","visible");
     	  $("#frm").submit(function() {
     		  $.ajax({
@@ -169,10 +170,11 @@
   			});
   		}); 
         
-      }, */
+      }, 
+      
       
       //일정 보여주기
-/*       eventClick: function(info) {
+       eventClick: function(info) {
     	  	var dbTitle = info.event.title;
     	  	var dbId = info.event.id;
 		   	 $.ajax({
@@ -203,7 +205,7 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
     	    //borderColor 변경
     	    //info.el.style.borderColor = 'red';
     	    
-   	  }, */
+   	  }, 
       
       // 한국어 설정
       locale: 'ko'
@@ -223,13 +225,38 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	$('.writeClose').click(function() {
 		event.preventDefault();
 		 $("#writeModal").css("visibility","hidden");
+	}); //캘린더
+	
+	/* 예약 시 datepicker에서 날짜 선택 시 select 자동 처리  */
+	$('#startDay').change(function(){
+		var pickStart = alert($(this).val());
+		 $.ajax({
+				url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
+				type:"get",
+				data: pickStart ${rmVo.resNo}
+				datatype:"json",
+				success:function(res){
+					var content = res.content;
+					var startDay = res.startDay;
+					var endDay = res.endDay;
+					var place = res.place;
+					var memNo = res.memNo;
+				},
+				error:function(xhr, status, error){
+					alert(status + ", " + error);
+				}
+			});
+		
 	});
+	
+	
 	
 });
 </script>
 <style>
 
   body {
+  	text-align: center;
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
@@ -259,8 +286,8 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	.msgbox{
 		position: absolute;
-	    left: 33%;
-    	top: 30%;
+	    left: -30%;
+    	top: 20%;
 	    z-index: 5000;
 	    background: white;
 	    border: 1px solid gray;
@@ -329,6 +356,29 @@ article > div {
 	float:left;
 }
 
+.la_left  {
+	clear:both;
+	float: left;
+	width: 35%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	font-weight: bold;
+}
+
+.fl{
+	float:left;
+}
+
+#spanSubdesc{
+	text-align: left;
+	width: 200px;
+}
+
+.infobox{
+	width: 120px;
+	font-size: 0.9em;
+}
+
 </style>
 <section>
 	<article>
@@ -355,24 +405,27 @@ article > div {
 						</div>
 						<div class="divSection" id="divDesc">
 							<div>
-								<span>종류: ${rmVo.rkKind }</span>
-								<span id="spanResLocation">
-								</span>
+								<span class="la_left">종류:</span> 
+								<span class="fl">${rmVo.rkKind }</span>
 							</div>
 							<div>
-								<span>장소: ${rmVo.resLocation }</span>
-								<span id="spanResLocation">
-								</span>
+								<span class="la_left">장소: </span>
+								<span class="fl">${rmVo.resLocation }</span>
 							</div>
 							<div>
-								<span>상태: ${rmVo.resState }</span>
-								<span id="spanResState"></span>
+								<span class="la_left">상태: </span>
+								<span class="fl">${rmVo.resState }</span>
+								<span class="fl" id="spanResState"></span>
 							</div>
 							<div>
-								<span>자원설명: </span>
-								<p id="spanResSubdesc">
+								<span class="la_left">자원설명: </span>
+								<span id="spanSubdesc" class="fl">
+									<%
+										pageContext.setAttribute("newLine", "\r\n");
+									%>
 									
-								</p>
+									${fn:replace(rmVo.resSubdesc, newLine, '<br>')}
+								</span>
 							</div>
 						</div>
 					</div>
@@ -399,36 +452,141 @@ article > div {
 				    </div>
 					<div class="body">
 						<table>
-							<tr>
-								<td>
-									<select title="타입선" id="place" name="place" style="height: 28px;">
-										<option value="1">업무관련</option>
-										<option value="2">기타</option>
-										<option value="3">휴가/연차</option>
-										<option value="4">유연근무</option>
-									</select>
-									<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
-								</td>
-							</tr>
+							<tr><td>${rmVo.resName }</td></tr>
 							<tr>
 								<td>
 									<div id="schedulePicker">
-										<div style="float: left;">
+										<div>
 											<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
-												style="width: 192px" placeholder="시작일"/>
-											<div>STRAT</div>
-										</div>
-										<div style="float: right;">
+												placeholder="시작일"/>
+											<select>
+												<%-- <c:forEach begin="" end="">
+												
+												</c:forEach> --%>
+												<option>00:00~00:30</option>
+												<option>00:30~01:00</option>
+												<option>01:00~01:30</option>
+												<option>01:30~02:00</option>
+												<option>02:00~02:30</option>
+												<option>02:30~03:00</option>
+												<option>03:00~03:30</option>
+												<option>03:30~04:00</option>
+												
+												<option>04:00~04:30</option>
+												<option>04:30~05:00</option>
+												<option>05:00~05:30</option>
+												<option>05:30~06:00</option>
+												<option>06:00~06:30</option>
+												<option>06:30~07:00</option>
+												<option>07:00~07:30</option>
+												<option>07:30~08:00</option>
+												
+												<option>08:00~08:30</option>
+												<option>08:30~09:00</option>
+												<option>09:00~09:30</option>
+												<option>09:30~10:00</option>
+												<option>10:00~10:30</option>
+												<option>10:30~11:00</option>
+												<option>11:00~11:30</option>
+												<option>11:30~12:00</option>
+												
+												<option>12:00~12:30</option>
+												<option>12:30~13:00</option>
+												<option>13:00~13:30</option>
+												<option>13:30~14:00</option>
+												<option>14:00~14:30</option>
+												<option>14:30~15:00</option>
+												<option>15:00~15:30</option>
+												<option>15:30~16:00</option>
+												
+												<option>16:00~16:30</option>
+												<option>16:30~17:00</option>
+												<option>17:00~17:30</option>
+												<option>17:30~18:00</option>
+												<option>18:00~18:30</option>
+												<option>18:30~19:00</option>
+												<option>19:00~19:30</option>
+												<option>19:30~20:00</option>
+												
+												<option>20:00~20:30</option>
+												<option>20:30~21:00</option>
+												<option>21:00~21:30</option>
+												<option>21:30~22:00</option>
+												<option>22:00~22:30</option>
+												<option>22:30~23:00</option>
+												<option>23:00~23:30</option>
+												<option>23:30~00:00</option>
+												
+											</select>
+										<span> ~ </span>
 											<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
-												style="width: 192px" placeholder="종료일"/>
-											<div>END</div>
+												placeholder="종료일"/>
+											<select>
+												<%-- <c:forEach begin="" end="">
+												
+												</c:forEach> --%>
+												<option>00:00~00:30</option>
+												<option>00:30~01:00</option>
+												<option>01:00~01:30</option>
+												<option>01:30~02:00</option>
+												<option>02:00~02:30</option>
+												<option>02:30~03:00</option>
+												<option>03:00~03:30</option>
+												<option>03:30~04:00</option>
+												
+												<option>04:00~04:30</option>
+												<option>04:30~05:00</option>
+												<option>05:00~05:30</option>
+												<option>05:30~06:00</option>
+												<option>06:00~06:30</option>
+												<option>06:30~07:00</option>
+												<option>07:00~07:30</option>
+												<option>07:30~08:00</option>
+												
+												<option>08:00~08:30</option>
+												<option>08:30~09:00</option>
+												<option>09:00~09:30</option>
+												<option>09:30~10:00</option>
+												<option>10:00~10:30</option>
+												<option>10:30~11:00</option>
+												<option>11:00~11:30</option>
+												<option>11:30~12:00</option>
+												
+												<option>12:00~12:30</option>
+												<option>12:30~13:00</option>
+												<option>13:00~13:30</option>
+												<option>13:30~14:00</option>
+												<option>14:00~14:30</option>
+												<option>14:30~15:00</option>
+												<option>15:00~15:30</option>
+												<option>15:30~16:00</option>
+												
+												<option>16:00~16:30</option>
+												<option>16:30~17:00</option>
+												<option>17:00~17:30</option>
+												<option>17:30~18:00</option>
+												<option>18:00~18:30</option>
+												<option>18:30~19:00</option>
+												<option>19:00~19:30</option>
+												<option>19:30~20:00</option>
+												
+												<option>20:00~20:30</option>
+												<option>20:30~21:00</option>
+												<option>21:00~21:30</option>
+												<option>21:30~22:00</option>
+												<option>22:00~22:30</option>
+												<option>22:30~23:00</option>
+												<option>23:00~23:30</option>
+												<option>23:30~00:00</option>
+												
+											</select>
 										</div>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<textarea class="infobox" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">
+									<textarea id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">
 									
 									${scheduleVo.content }</textarea>
 								</td>
