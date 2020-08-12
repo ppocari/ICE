@@ -76,6 +76,12 @@
 		set readcount=readcount+1
 		where noticeNo=#{noticeNo}
 	</update>
+	
+	<update id="updateDownCount" parameterType="int">
+		update notice
+		set downcount = downcount+1
+		where noticeNo=#{noticeNo}
+	</update>
 </mapper>
 
 

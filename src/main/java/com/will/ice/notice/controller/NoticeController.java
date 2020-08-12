@@ -1,5 +1,7 @@
 package com.will.ice.notice.controller;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
@@ -58,19 +61,13 @@ public class NoticeController {
 		noticeVo.setMemNo(memNo);
 		logger.info("memNo 가져왔나? memNo={}",memNo);
 		
-		//첨부파일 없을때 null값 넣기
-		if(noticeVo.getFileName()==null || noticeVo.getOrFileName()==null
-				|| noticeVo.getFileName().isEmpty() || noticeVo.getOrFileName().isEmpty()) {
-			noticeVo.setFileName("0"); 
-			noticeVo.setOrFileName("0");
-		}
+		
 		
 		//메인여부 체크안할시 N
 				if(noticeVo.getMain()==null || noticeVo.getMain().isEmpty()) {
 					noticeVo.setMain("N");
 				}
 				
-		logger.info("공지사항 등록, 파라미터 vo={}, identNum={}", noticeVo, memNo);
 		
 		//파일 업로드
 		List<Map<String, Object>> list
@@ -82,13 +79,20 @@ public class NoticeController {
 		for(Map<String, Object> map : list) {
 			fileSize= (Long) map.get("fileSize");
 			fileName= (String) map.get("fileName");
-			orFileName= (String) map.get("orFileName");
+			orFileName= (String) map.get("originalFileName");
 		}
 		
 		noticeVo.setFileName(fileName);
 		noticeVo.setOrFileName(orFileName);
 		noticeVo.setFileSize(fileSize);
 		
+		logger.info("공지사항 등록, 파라미터 vo={}, identNum={}", noticeVo, memNo);
+		//첨부파일 없을때 null값 넣기
+		if(noticeVo.getFileName()==null || noticeVo.getFileName().isEmpty()) {
+			noticeVo.setFileName(""); 
+			noticeVo.setOrFileName("");
+		}
+				
 		int cnt=noticeService.insertNotice(noticeVo);
 		logger.info("공지사항 등록 결과, cnt={}", cnt);
 		
@@ -138,35 +142,6 @@ public class NoticeController {
 		return "notice/noticeList";
 	}
 	
-	
-	/*
-	 * @RequestMapping("/noticeList.do") public String noticeList(@ModelAttribute
-	 * SearchVO searchVo, Model model) { logger.info("글 목록 파라미터 searchVo",
-	 * searchVo);
-	 * 
-	 * //[1] PaginationInfo 생성 PaginationInfo pagingInfo = new PaginationInfo();
-	 * pagingInfo.setBlockSize(Utility.BLOCKSIZE);
-	 * pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
-	 * pagingInfo.setCurrentPage(searchVo.getCurrentPage());
-	 * 
-	 * //[2] SearchVo 에 값 셋팅
-	 * searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
-	 * searchVo.setRecordCountPerPage(Utility.RECORD_COUNT);
-	 * 
-	 * //2 List<NoticeVO> list=noticeService.selectAll(searchVo);
-	 * logger.info("글목록 결과, list.size="+list.size());
-	 * 
-	 * int totalRecord=noticeService.selectTotalRecord(searchVo);
-	 * logger.info("글목록, 전체 레코드 개수 : " + totalRecord);
-	 * 
-	 * pagingInfo.setTotalRecord(totalRecord);
-	 * 
-	 * //3 model.addAttribute("list", list); model.addAttribute("pagingInfo",
-	 * pagingInfo);
-	 * 
-	 * return "/notice/noticeList"; }
-	 */
-	
 	@RequestMapping("/noticeCountUpdate.do")
 	public String noticeCountUpdate(@RequestParam(defaultValue = "0") int noticeNo,
 			Model model) {
@@ -202,10 +177,23 @@ public class NoticeController {
 			return "common/message";
 		}
 		
-		NoticeVO vo = noticeService.selectByNo(noticeNo);
+		NoticeVO vo=noticeService.selectByNo(noticeNo);
 		logger.info("상세보기 조회 결과, vo={}", vo);
 		
+		String fileInfo="", downInfo="";
+		if(vo.getOrFileName()!=null &&
+				!vo.getOrFileName().isEmpty()) { 
+			float fileSize=Math.round(vo.getFileSize()/1024f*10)/10f;
+			fileInfo 
+				= Utility.getFileInfo(vo.getOrFileName(), request)
+				+ "( "+fileSize +"KB )";
+			
+			downInfo = "다운 : " + vo.getDowncount();
+		}
+		
 		model.addAttribute("vo", vo);
+		model.addAttribute("fileInfo", fileInfo);
+		model.addAttribute("downInfo", downInfo);
 		
 		return "notice/noticeDetail";
 	}
@@ -341,5 +329,33 @@ public class NoticeController {
 		logger.info("조회수 증가 결과, cnt={}", cnt);
 		
 		return "redirect:/notice/noticeDetail.do?noticeNo="+noticeNo;
+	}
+	
+	@RequestMapping("download.do")
+	public ModelAndView download( 
+		@RequestParam String fileName, HttpServletRequest request,
+		@ModelAttribute NoticeVO noticeVo, HttpSession session) {
+		String noticeNo = (String) session.getAttribute("noticeNo");
+		noticeVo.setNoticeNo(Integer.parseInt(noticeNo));
+		logger.info("noticeNo={}", noticeNo);	
+		//1
+		logger.info("다운로드 파라미터, no={}, fileName={}", noticeNo, fileName);
+		
+		//2
+		int cnt=noticeService.updateDownCount(Integer.parseInt(noticeNo));
+		
+		//다운로드 처리를 위한 페이지로 넘겨준다
+		String upPath
+		=fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
+		File file = new File(upPath, fileName);
+		
+		//3
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("file", file);
+		
+		//4
+		//ModelAndView(String viewName, Map<String, ?> model)
+		ModelAndView mav = new ModelAndView("NoticeDownloadView", map);
+		return mav;
 	}
 }

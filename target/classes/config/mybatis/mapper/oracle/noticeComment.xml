@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.mapper.oracle.noticeComment">
+	<insert id="commentInsert" parameterType="NoticeCommentVO" >
+        <selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select noticeComment_seq.nextval from dual
+		</selectKey>
+        INSERT INTO noticeComment (no, noticeNo, memNo, name, content)
+        VALUES(#{no}, #{noticeNo}, #{memNo},#{name},#{content}) 
+    </insert>
+    
+    
+    <select id="commentList" parameterType="NoticeCommentVO" resultType="NoticeCommentVO">
+    	select no, noticeNo, memNo, name, content, regdate
+    	from noticeComment 
+    	where noticeNo=#{noticeNo}
+    	order by no
+    </select> 
+    
+    <update id="commentUpdate" parameterType="NoticeCommentVO">
+    	update noticeComment
+    	set content=#{content}
+    	where no=#{no}
+    </update>
+    
+    <delete id="commentDelete" parameterType="int">
+    	delete from noticeComment
+    	where no=#{no}
+    </delete>
+    
+</mapper>
+
+
+
+
+
+
+
+
+
