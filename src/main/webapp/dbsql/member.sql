@@ -6,7 +6,7 @@
 CREATE TABLE member (
 	memNo VARCHAR2(50) NOT NULL, /* 사원번호 */
 	name VARCHAR2(50), /* 사원명 */
-	pwd VARCHAR2(50), /* 비밀번호 */
+	pwd VARCHAR2(100), /* 비밀번호 */
 	hp1 VARCHAR2(20), /* 전화번호1 */
 	hp2 VARCHAR2(20), /* 전화번호2 */
 	hp3 VARCHAR2(20), /* 전화번호3 */
