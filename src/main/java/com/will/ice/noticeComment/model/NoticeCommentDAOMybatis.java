@@ -21,12 +21,12 @@ public class NoticeCommentDAOMybatis implements NoticeCommentDAO{
 	}
 
 	@Override
-	public List<NoticeCommentVO> commentList(int noticeNo) {
+	public List<NoticeCommentViewVO> commentList(int noticeNo) {
 		return sqlSession.selectList(namespace+"commentList", noticeNo);
 	}
 
 	@Override
-	public int commentUpdate(NoticeCommentVO vo) {
+	public int commentUpdate(NoticeCommentViewVO vo) {
 		return sqlSession.update(namespace+"commentUpdate", vo);
 	}
 

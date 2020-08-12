@@ -16,12 +16,12 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 	}
 
 	@Override
-	public List<NoticeCommentVO> commentList(int noticeNo) {
+	public List<NoticeCommentViewVO> commentList(int noticeNo) {
 		return noticeCommentDao.commentList(noticeNo);
 	}
 
 	@Override
-	public int commentUpdate(NoticeCommentVO vo) {
+	public int commentUpdate(NoticeCommentViewVO vo) {
 		return noticeCommentDao.commentUpdate(vo);
 	}
 

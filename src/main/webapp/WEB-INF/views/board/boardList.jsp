@@ -29,14 +29,22 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	function pageP
-	roc(curPage){
-		$('input[name=currentPage]').val(curPage);
-		$('form[name=frmPage]').submit();
-	}
+function pageProc(curPage){
+	$('input[name=currentPage]').val(curPage);
+	$('form[name=frmPage]').submit();
+}
 
 </script>
 <!-- Begin Page Content -->
+
+<form action="<c:url value='/board/boardList.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}">	
+</form>
 
 <div class="container-fluid">
 
@@ -57,8 +65,6 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 600px;">
 				<!-- Card Header - Dropdown -->
-				<form name="boardSearch" method="post"  
-				action="<c:url value='/board/boardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">ICE 사내게시판</h6>
 						<a href="<c:url value='/board/boardWrite.do'/>">
@@ -119,7 +125,7 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						</div>
+						
 						
 						<div class="divPage" style="text-align: center; 
 							position: relative; top: 0px;"> 
@@ -156,34 +162,36 @@
 					
 					
 					<!-- 검색기능 -->
-					<div class="divSearch" style="text-align: center;">
-					   	<form name="frmSearch" method="post" 
-					   		action='<c:url value="/board/boardList.do"/>'>
-					        <select name="searchCondition">
-					            <option value="title" 
-					            	<c:if test="${param.searchCondition=='title' }">
-					            		selected="selected"
-					            	</c:if>
-					            >제목</option>
-					            <option value="content" 
-					            	<c:if test="${param.searchCondition=='content' }">
-					            		selected="selected"
-					            	</c:if>
-					            >내용</option>
-					            <option value="nickname" 
-					            	<c:if test="${param.searchCondition=='nickname' }">
-					            		selected="selected"
-					            	</c:if>
-					            >작성자</option>
-					        </select>   
-					        <input type="text" name="searchKeyword" title="검색어 입력"
-					        	value="${param.searchKeyword}">   
-							<input type="submit" value="검색">
-					    </form>
-					</div>		
-				</form>
-				
-				
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<div class="divSearch" class="search" style="margin-left: 10px;">
+						   	<form name="frmSearch" method="post" 
+						   		action='<c:url value="/board/boardList.do"/>'>
+						        <select name="searchCondition" class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+						            <option value="title" 
+						            	<c:if test="${param.searchCondition=='title' }">
+						            		selected="selected"
+						            	</c:if>
+						            >제목</option>
+						            <option value="content" 
+						            	<c:if test="${param.searchCondition=='content' }">
+						            		selected="selected"
+						            	</c:if>
+						            >내용</option>
+						            <option value="name" 
+						            	<c:if test="${param.searchCondition=='name' }">
+						            		selected="selected"
+						            	</c:if>
+						            >닉네임</option>
+						        </select>   
+						        <input type="text" class="form-control" name="searchKeyword" title="검색어 입력"
+						        	value="${param.searchKeyword}" style=" width: 180px; height: 30px; 
+						        	font-size: 13px; display: inline-block;">   
+								<input type="submit" class="btn btn-primary btn-sm" value="검색">
+						    </form>
+						</div>
+					</div>			
+				</div>
 			</div>
 		</div>
 	</div>
