@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.ice.address.model.AddressUtility;
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
+import com.will.ice.resource.model.ResKindVo;
 import com.will.ice.resource.model.ResManageSearchVO;
 import com.will.ice.resource.model.ResManageVO;
+import com.will.ice.resource.model.ResReserveVO;
 import com.will.ice.resource.model.ResourceService;
 import com.will.ice.schedule.model.ScheduleService;
 import com.will.ice.schedule.model.ScheduleVo;
@@ -91,7 +93,13 @@ public class ResourceUserController {
 		logger.info("자원예약신청 화면, 파라미터 resNo={}", resNo);
 		
 		ResManageVO rmVo = service.selectResManageOne(resNo);
+		logger.info("조회결과 rmVo={}",rmVo);
+
+		List<ResReserveVO> rvResNoList = service.selectReserveResNo(rmVo.getResNo());
+		logger.info("조회결과 rvResNoList.size={}",rvResNoList.size());
 		
+		
+		model.addAttribute("rvResNoList", rvResNoList);
 		model.addAttribute("rmVo", rmVo);
 	}
 	

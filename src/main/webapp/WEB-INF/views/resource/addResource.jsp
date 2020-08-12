@@ -7,6 +7,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
+  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript">
+$(function(){
+	$('input[type=reset]').click(function(){
+		self.close();
+	});
+});
+
+
+</script>
 <style type="text/css">
 
 .divForm fieldset {
@@ -43,6 +53,15 @@ article{
 					<div>
 						<label class="la_left">이미지 첨부</label>
 						<input type="file" name="upfile" id="upfile">
+					</div>
+					<div>
+						<label class="la_left">종류</label>
+						<select name="rkNo">
+							<option value="">전체</option>
+							<c:forEach var="rk" items="${rkList }">
+								<option value="${rk.rkNo }">${rk.rkKind }</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div>
 						<label class="la_left">장소</label>

@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>자원관리 수정 화면 보기</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
+  <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script type="text/javascript">
+$(function(){
+	$('input[type=reset]').click(function(){
+		self.close();
+	});
+});
+</script>
 
 <style type="text/css">
 
@@ -25,10 +33,6 @@
 
 .divForm span{
 	display: inline-block;
-}
-
-.divForm textarea {
-	border: none;
 }
 
 .textareaSize{
@@ -67,6 +71,15 @@ article{
 			        		<span class="sp1"></span>
 			        		<span style="color:green; font-weight: bold">첨부파일을 새로 지정할 경우 기존 파일 ${fileInfo }은 삭제됩니다.</span>
 			        	</c:if>
+					</div>
+					<div>
+						<label class="la_left">종류</label>
+						<select name="rkNo">
+							<option value="">전체</option>
+							<c:forEach var="rk" items="${rkList }">
+								<option value="${rk.rkNo }">${rk.rkKind }</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div>
 						<label class="la_left">장소</label>
