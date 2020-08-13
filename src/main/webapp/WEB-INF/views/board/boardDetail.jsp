@@ -47,6 +47,28 @@ $(function(){
 		}
 		
 	});
+	$('form[name=writeCommentForm]').submit(function() {
+		
+		if ($('#writeCon').val() == '') {
+			alert('내용을 입력하세요');
+			$('#writeCon').focus();
+			event.preventDefault();
+		}
+		if ($('#nickname').val() == '') {
+			alert('별명을 입력하세요');
+			$('#nickname').focus();
+			event.preventDefault();
+		}
+	});
+	
+	$('form[name=editCommentForm]').submit(function() {
+		
+		if ($('#editCon').val() == '') {
+			alert('내용을 입력하세요');
+			$('#editCon').focus();
+			event.preventDefault();
+		}
+	});
 });	
 
 </script>
@@ -99,14 +121,14 @@ $(function(){
 
 				<div
 					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<a href="<c:url value=''/>"> <input type="button" id="comBtn"
-						value="댓글쓰기">
-					</a> <a
-						href="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
-						<input type="button" value="수정">
-					</a> <a href="javascript:popup()"> <input type="button" value="삭제">
-					</a> <a href="<c:url value='/board/boardList.do'/>"> <input
-						type="button" value="목록">
+					<a href="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
+						<input type="button" class="btn btn-primary btn-sm" value="수정">
+					</a> 
+					<a href="javascript:popup()"> 
+						<input type="button" value="삭제" class="btn btn-primary btn-sm">
+					</a> 
+					<a href="<c:url value='/board/boardList.do'/>"> 
+						<input type="button" class="btn btn-primary btn-sm" value="목록">
 					</a>
 					<hr>
 
@@ -134,10 +156,14 @@ $(function(){
 										pattern="yyyy-MM-dd-HH:mm" />
 								</span>
 								<%-- <c:if test="${sessionScope.identNum} == ${comment.memNo }"> --%>
-									<button id="comEditBt" style="font-size: 9px;">수정</button>
-									<button id="comDelBt" style="font-size: 9px;">삭제</button>
+									<button id="comEditBt" style="font-size: 9px;" class="btn btn-primary btn-sm">수정</button>
+									<form name="DeleteCommentForm" method="post"
+										action="<c:url value='/boardComment/boardCommentDelete.do?no=${comment.no }'/>">
+										<button type="submit" id="comDelBt" style="font-size: 9px;" 
+										class="btn btn-primary btn-sm">삭제</button>
+									</form>
 										<div id="comEdit" style="display:none;">
-											<form name="EditCommentForm" method="post"
+											<form name="editCommentForm" method="post"
 												action="<c:url value='/boardComment/boardCommentEdit.do'/>">
 												
 												<input type="hidden" name="boardNo" value="${comment.boardNo }">
@@ -146,11 +172,11 @@ $(function(){
 												<div class="form-group">
 													${comment.nickname }<br>
 													<label for="exampleInputEmail2">내용</label> 
-													<input type="text"
+													<input type="text" id="editCon"
 														class="form-control" name="content" placeholder="내용을 입력하세요" 
 														value="${comment.content }">
 												</div>
-												<button type="submit" id="commentBt" class="btn btn-default">수정</button> 
+												<button type="submit" id="commentBt" class="btn btn-primary btn-sm">수정</button> 
 											</form>
 										</div>
 							<%-- 	</c:if> --%>
@@ -165,34 +191,33 @@ $(function(){
 								<input type="hidden" name="memNo" value="${vo.memNo }">
 								
 								<div class="form-group">
-									<label for="exampleInputName2">별명</label> 
-									<input type="text" name="nickname" class="form-control" id="nickname" placeholder="별명을 입력하세요.">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail2">내용</label> 
-									<input type="text"
+									<table class="table table-bordered table-hover" id="dynamicTable">
+										<colgroup>
+											<col style="width:10%;"/>
+											<col style="width:90%;"/>
+										</colgroup>
+										<thead/>
+										<tbody>
+											<tr class="align_center">
+												<td>별명</td>
+												<td>
+													<input type="text" name="nickname" class="form-control" id="nickname" placeholder="별명을 입력하세요.">
+												</td>
+											</tr>
+											<tr class="align_center">
+												<td>내용</td>
+												<td>
+													<input type="text" id="writeCon"
 										class="form-control" name="content" placeholder="내용을 입력하세요">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<button type="submit" id="commentBt" class="btn btn-primary btn-sm">댓글 등록</button> 
 								</div>
-								<button type="submit" id="commentBt" class="btn btn-default">댓글 등록</button> 
 							</form>
 						</div>
-	
 					</div>
-					
-					<!-- <div id="comDiv" style="">
-							위에있음 <input type="hidden" name="boardNo" value="boardNo">
-							<input type="hidden" name="memNo" value="memNo">
-							
-							<div class="form-group">
-								<label for="1">별명</label> 
-								<input type="text" class="form-control" 
-									id="nickname" placeholder="별명을 입력하세요.">
-								<label for="2">내용</label> 
-								<input type="email" class="form-control" 
-									id="content" placeholder="내용을 입력하세요">	
-								<button type="button" id="btnReply" class="btn btn-default">댓글 등록</button>	
-							</div>
-					</div> -->
 				</div>
 			</div>
 		</div>

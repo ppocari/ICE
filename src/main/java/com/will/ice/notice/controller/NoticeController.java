@@ -115,8 +115,7 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeList.do")
-	public String noticeList(@ModelAttribute SearchVO searchVo, Model model,
-			HttpSession session) {
+	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공지사항 실행");
 		logger.info("글 목록 파라미터 searchVo={}", searchVo);
 				
@@ -164,7 +163,7 @@ public class NoticeController {
 		
 		//3		
 		//4
-		return "notice/noticeList";/*"redirect:/reboard/detail.do?no="+no;*/
+		return "redirect:/notice/noticeDetail.do?noticeNo="+noticeNo;
 	}
 	
 	@RequestMapping("noticeDetail.do")
@@ -339,17 +338,14 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("download.do")
-	public ModelAndView download( 
-		@RequestParam String fileName, HttpServletRequest request,
-		@ModelAttribute NoticeVO noticeVo, HttpSession session) {
-		String noticeNo = (String) session.getAttribute("noticeNo");
-		noticeVo.setNoticeNo(Integer.parseInt(noticeNo));
+	public ModelAndView download(@RequestParam(defaultValue = "0")int noticeNo, 
+		@RequestParam String fileName, HttpServletRequest request) {
 		logger.info("noticeNo={}", noticeNo);	
 		//1
 		logger.info("다운로드 파라미터, no={}, fileName={}", noticeNo, fileName);
 		
 		//2
-		int cnt=noticeService.updateDownCount(Integer.parseInt(noticeNo));
+		int cnt=noticeService.updateDownCount(noticeNo);
 		
 		//다운로드 처리를 위한 페이지로 넘겨준다
 		String upPath

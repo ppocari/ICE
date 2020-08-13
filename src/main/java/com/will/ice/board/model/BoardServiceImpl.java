@@ -54,6 +54,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.updateBoard(vo);
 	}
 
+	@Override
+	public int updateVisited(int boardNo) {
+		return boardDao.updateVisited(boardNo);
+	}
+
 
 	
 }

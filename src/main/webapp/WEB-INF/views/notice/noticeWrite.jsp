@@ -22,6 +22,11 @@
 .search input {
 	width: 150px;
 }
+
+.note-editor.note-frame.card {
+    position: relative;
+    left: -31px;
+}
 </style>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -30,10 +35,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#main').click(function() {
-			alert('공지사항 메인 노출여부가 체크되었습니다.');
-		});
-
 		$('form[name=frmWrite]').submit(function() {
 			if ($('#title').val() == '') {
 				alert('제목을 입력하세요');
@@ -41,21 +42,13 @@
 				event.preventDefault();
 			}
 		});
-
-		/*
-		$('#nList').click(function(){
-			location.href
-				= "<c:url value='/notice/noticeList.do'/>"
-		});
-		
-		$('form[name=frmWrite]').submit(function(){
-			if($('#NOTI_TITLE').val()==''){
-				alert('제목을 입력하세요');
-				$('#NOTI_TITLE').focus();
+		$('#summernote').submit(function() {
+			if ($('#summernote').val() == '') {
+				alert('내용을 입력하세요');
+				$('#summernote').focus();
 				event.preventDefault();
 			}
 		});
-		 */
 	});
 </script>
 <!-- Begin Page Content -->
@@ -73,7 +66,7 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 ">
-			<div class="card shadow mb-4" style="height: 800px; weight: 500px;">
+			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"
 					action="<c:url value='/notice/noticeWrite.do'/>"
@@ -93,7 +86,7 @@
 								<td style="width: 20%;"><h6
 										class="m-0 font-weight-bold text-primary">분류</h6></td>
 								<td style="width: 80%; weight: 100px; width: 500px;">
-								<select	name="category" class="form-control">
+								<select	name="category" class="form-control" style="width:400px;">
 										<option value="전체">전체</option>
 										<option value="경영">경영</option>
 										<option value="회계">회계</option>
@@ -115,9 +108,10 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width: 80%; width: 500px;"><input type="text"
-									class="form-control" name="title" id="title"
-									style="width: 300px; font-size: 14px;"></td>
+								<td style="width: 80%; width: 500px;">
+									<input type="text"
+										class="form-control" name="title" id="title"
+										style="width: 400px; font-size: 14px;"></td>
 							</tr>
 						</table>
 
@@ -131,8 +125,8 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 								</td>
-								<td style="width: 80%;"><input type="file" id="upfile"
-									name="upfile" /> <br>
+								<td style="width: 80%;position: relative;left: 40px;">
+								<input type="file" id="upfile" name="upfile" /> <br>
 								<span>(최대 2M)</span></td>
 							</tr>
 						</table>
@@ -157,10 +151,8 @@
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<input type="submit" class="form-control btList" value="등록"
 							style="width: 52px; font-size: 13px;" /> 
-						<a href="<c:url value='/notice/noticeList.do'/>"> 
-							<input type="Button" class="form-control btList" id="nList" value="글목록"
-							style="width: 60px; font-size: 13px;" />
-						</a>
+						<input type="Button" class="form-control btList" id="nList" value="글목록"
+							style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/notice/noticeList.do"/>'"/>
 					</div>
 				</form>
 
