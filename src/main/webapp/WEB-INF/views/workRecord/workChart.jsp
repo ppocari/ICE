@@ -151,7 +151,7 @@ $(function(){
 		  }
 		},
 		//bar 색 변경
-		seriesColors:['#567cec', '#fb1a66', '#52e407'],
+		seriesColors:['#567cec', '#e74a3b', '#1cc88a'],
 		//배경색
 		grid:{
 			background:'#ffffff'
@@ -162,7 +162,7 @@ $(function(){
             looseZoom: true,
             showTooltip: true
         },
-		title:'출퇴근 통계 그래프',//제목
+		title:'막대 그래프',//제목
 		animate : true, // 애니메이션 설정
 		animateReplot : false, // 애니메이션 반복 설정
 		captureRightClick : true, // 오른쪽 마우스 클릭 이벤트
@@ -177,8 +177,8 @@ $(function(){
         {
 	    	height: 400,
 	        width: 400,
-            title: '출퇴근 통계 그래프', 
-            seriesColors:['#567cec', '#fb1a66', '#52e407'],
+            title: '원형 그래프', 
+            seriesColors:['#567cec', '#e74a3b', '#1cc88a'],
             seriesDefaults: {
                 shadow: false, 
                 renderer: jQuery.jqplot.PieRenderer, 
