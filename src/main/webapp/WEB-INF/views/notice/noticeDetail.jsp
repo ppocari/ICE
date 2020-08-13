@@ -35,16 +35,25 @@ function popup(){
 	window.open(url,name,option);
 }	
 
-/* $( function(){
-	$("#btDel").click(function(){   
-        var boardNo = $("#btDel_boardNo").val();
-        console.log(boardNo);
-        window.open('/ice/board/boardDelete.do?boardNo='+boardNo,'board',
-        'width=930,height=500,left=50,top=50,location=yes,resizable=yes');
-        
-     });  
-})*/
+$(function(){
+	$("#comEdit").hide();
 	
+	$("#comEditBt").click(function(){ 
+		if($("#comEdit").hide()){
+			$("#comEdit").slideDown();
+			$("#comWrite").slideUp();
+		}else{
+			$("#comEdit").toggle();
+			$("#comWrite").toggle();
+		}
+		
+	});
+	
+	$("#comDelBt").click(function(){
+		
+	});
+});	
+
 </script>
 <!-- Begin Page Content -->
 
@@ -104,16 +113,80 @@ function popup(){
 					
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<a href
-						="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
-							수정</a> |
-			        	<a href="javascript:popup()" >
-			        		삭제</a> |
-			        	<a href="<c:url value='/notice/noticeList.do'/>">
-			        		목록</a>	
+						<a href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
+						<input type="button" value="수정"></a> 
+						<a href="javascript:popup()"> 
+						<input type="button" value="삭제"></a> 
+						<a href="<c:url value='/notice/noticeList.do'/>"> 
+						<input type="button" value="목록"></a>
+						<hr>
 					</div>
 					
-				
+					<div style="overflow:scroll;">
+						<!-- 댓글 -->
+						<div class="card-body"
+							style="display: block; font-size: 13px; border: 2px solid #4e73df; border-radius: 10px;">
+							<div id="comInfo" style="">
+								<c:forEach var="comment" items="${list }">
+									<p>
+										<a href="#"> 
+											<span style="font-size: 12px; display: inline-block; 
+											text-align: left; vertical-align: middle;">
+											${comment.name}
+											</span>
+										</a> 
+										<span style="font-size: 13px; display: inline-block; 
+											text-align: left; vertical-align: middle;">
+											${comment.content}
+											</span>
+											<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
+											<fmt:formatDate value="${comment.regdate}"
+												pattern="yyyy-MM-dd-HH:mm" />
+										</span>
+										
+										<%-- <c:if test="${sessionScope.identNum} == ${comment.memNo }"> --%>
+											<button id="comEditBt" style="font-size: 9px;">수정</button>
+											<form name="DeleteCommentForm" method="post"
+												action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
+												<button type="" id="comDelBt" style="font-size: 9px;">삭제</button>
+											</form>
+												<div id="comEdit" style="display:none;">
+													<form name="EditCommentForm" method="post"
+														action="<c:url value='/noticeComment/noticeCommentEdit.do'/>">
+														
+														<input type="hidden" name="noticeNo" value="${comment.noticeNo }">
+														<input type="hidden" name="no" value="${comment.no }">
+														<input type="hidden" name="memNo" value="${comment.memNo }">
+														<div class="form-group">
+															<label for="exampleInputEmail2">내용</label> 
+															<input type="text"
+																class="form-control" name="content" placeholder="내용을 입력하세요" 
+																value="${comment.content }">
+														</div>
+														<button type="submit" id="commentBt" class="btn btn-default">수정</button> 
+													</form>
+												</div>
+										<%-- </c:if> --%>
+									</p>
+								</c:forEach>
+							</div>
+							
+							<div id="comWrite">
+								<form name="writeCommentForm" method="post"
+									action="<c:url value='/noticeComment/noticeCommentWrite.do'/>">
+									
+									<input type="hidden" name="noticeNo" value="${vo.noticeNo }">
+									<input type="hidden" name="memNo" value="${vo.memNo }">
+									<div class="form-group">
+										<label for="exampleInputEmail2">내용</label> 
+										<input type="text"
+											class="form-control" name="content" placeholder="내용을 입력하세요">
+									</div>
+									<button type="submit" id="commentBt" class="btn btn-default">댓글 등록</button> 
+								</form>
+							</div>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>

@@ -37,6 +37,15 @@
 </script>
 <!-- Begin Page Content -->
 
+<form action="<c:url value='/notice/noticeList.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}">	
+</form>
+
 <div class="container-fluid">
 
 	<!-- Page Heading -->
@@ -52,9 +61,7 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 						
 						<c:if test="${sessionScope.identNum == '999999' }">
@@ -157,27 +164,31 @@
 						
 						<!-- 검색기능 -->
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-							<div class="search" style="margin-left: 10px;">
-						        <select name="searchCondition" class="form-control" style=" width: 100px;
-									height: 30px; font-size: 13px; display: inline-block;">
-						            <option value="title" 
-						            	<c:if test="${param.searchCondition=='title' }">
-						            		selected="selected"
-						            	</c:if>
-						            >제목</option>
-						            <option value="content" 
-						            	<c:if test="${param.searchCondition=='content' }">
-						            		selected="selected"
-						            	</c:if>
-						            >내용</option>
-						        </select>   
-						        <input type="text" class="form-control" placeholder="검색어를 입력..."
-									style=" width: 180px; height: 30px; font-size: 13px; display: inline-block;">
-								<button type="submit" class="btn btn-primary btn-sm">검색</button>
+							<div class="divSearch" class="search" style="margin-left: 10px;">
+							   	<form name="frmSearch" method="post" 
+							   		action='<c:url value="/notice/noticeList.do"/>'>
+							        <select name="searchCondition" class="form-control" style=" width: 100px;
+										height: 30px; font-size: 13px; display: inline-block;">
+							            <option value="title" 
+							            	<c:if test="${param.searchCondition=='title' }">
+							            		selected="selected"
+							            	</c:if>
+							            >제목</option>
+							            <option value="content" 
+							            	<c:if test="${param.searchCondition=='content' }">
+							            		selected="selected"
+							            	</c:if>
+							            >내용</option>
+							        </select>   
+							        <input type="text" class="form-control" name="searchKeyword" title="검색어 입력"
+							        	value="${param.searchKeyword}" style=" width: 180px; height: 30px; 
+							        	font-size: 13px; display: inline-block;">   
+									<input type="submit" class="btn btn-primary btn-sm" value="검색">
+							    </form>
 							</div>
 						</div>	
 					</div>		
-				</form>
+				
 				
 				
 			</div>

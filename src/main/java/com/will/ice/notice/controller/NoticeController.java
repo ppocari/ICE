@@ -25,6 +25,9 @@ import com.will.ice.common.SearchVO;
 import com.will.ice.common.Utility;
 import com.will.ice.notice.model.NoticeService;
 import com.will.ice.notice.model.NoticeVO;
+import com.will.ice.noticeComment.model.NoticeCommentService;
+import com.will.ice.noticeComment.model.NoticeCommentVO;
+import com.will.ice.noticeComment.model.NoticeCommentViewVO;
 
 
 @Controller
@@ -37,6 +40,8 @@ public class NoticeController {
 	@Autowired private NoticeService noticeService;
 	
 	@Autowired private FileUploadUtil fileUploadUtil;
+	
+	@Autowired private NoticeCommentService noticeCommentService;
 	
 	@RequestMapping(value="/noticeWrite.do", method = RequestMethod.GET)
 	public void noticeWrite_get(@ModelAttribute NoticeVO noticeVo,
@@ -191,9 +196,13 @@ public class NoticeController {
 			downInfo = "다운 : " + vo.getDowncount();
 		}
 		
+		//댓글
+		List<NoticeCommentViewVO> list = noticeCommentService.commentList(noticeNo);
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("downInfo", downInfo);
+		model.addAttribute("list", list);
 		
 		return "notice/noticeDetail";
 	}

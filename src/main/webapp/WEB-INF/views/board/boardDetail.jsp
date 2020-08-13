@@ -37,19 +37,17 @@ function popup(){
 }	
 
 $(function(){
-	/* $("#comDiv").hide();
-	var flag = true;
+	$("#comEdit").hide();
 	
-	$("#comBtn").click(function(){ 
-		if(flag){//안보일때
-			$("#comDiv").slideDown();
-			flag= false;
+	$("#comEditBt").click(function(){ 
+		if($("#comEdit").hide()){
+			$("#comEdit").slideDown();
 		}else{
-			$("#comDiv").slideUp();
-			flag=true;
+			$("#comEdit").slideUp();
 		}
-	}); */
-});
+		
+	});
+});	
 
 </script>
 <!-- Begin Page Content -->
@@ -135,11 +133,27 @@ $(function(){
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
 								</span>
-								<c:if test="${sessionScope.identNum} == ${comment.memNo } \\ 
-									${sessionScope.identNum} == '999999'">
-									<button id="comBtn1" style="font-size: 9px;">수정</button>
-									<button id="comBtn1" style="font-size: 9px;">삭제</button>
-								</c:if>
+								<%-- <c:if test="${sessionScope.identNum} == ${comment.memNo }"> --%>
+									<button id="comEditBt" style="font-size: 9px;">수정</button>
+									<button id="comDelBt" style="font-size: 9px;">삭제</button>
+										<div id="comEdit" style="display:none;">
+											<form name="EditCommentForm" method="post"
+												action="<c:url value='/boardComment/boardCommentEdit.do'/>">
+												
+												<input type="hidden" name="boardNo" value="${comment.boardNo }">
+												<input type="hidden" name="no" value="${comment.no }">
+												<input type="hidden" name="memNo" value="${comment.memNo }">
+												<div class="form-group">
+													${comment.nickname }<br>
+													<label for="exampleInputEmail2">내용</label> 
+													<input type="text"
+														class="form-control" name="content" placeholder="내용을 입력하세요" 
+														value="${comment.content }">
+												</div>
+												<button type="submit" id="commentBt" class="btn btn-default">수정</button> 
+											</form>
+										</div>
+							<%-- 	</c:if> --%>
 							</p>
 						</c:forEach>
 						
@@ -147,8 +161,8 @@ $(function(){
 							<form name="writeCommentForm" method="post"
 								action="<c:url value='/boardComment/boardCommentWrite.do'/>">
 								
-								<input type="text" name="boardNo" value="${vo.boardNo }">
-								<input type="text" name="memNo" value="${vo.memNo }">
+								<input type="hidden" name="boardNo" value="${vo.boardNo }">
+								<input type="hidden" name="memNo" value="${vo.memNo }">
 								
 								<div class="form-group">
 									<label for="exampleInputName2">별명</label> 
