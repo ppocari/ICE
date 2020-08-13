@@ -111,6 +111,22 @@
 					</div>
 				</div>
 			</li>
+			
+			<!-- Nav Item - 인사관리 -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseTwo"
+				aria-expanded="true" aria-controls="collapseTwo"> <i
+					class="fas fa-fw fa-folder"></i> <span>인사관리</span>
+			</a>
+				<div id="collapseTwo" class="collapse"
+					aria-labelledby="headingThree" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="<c:url value="/insa/insaList.do" />">인사조회</a>
+						<a class="collapse-item" href="<c:url value="/insa/insaScore.do" />">승진관리</a>
+						
+					</div>
+				</div>
+			</li>
 
 			<!-- Nav Item - 전자결재 Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"

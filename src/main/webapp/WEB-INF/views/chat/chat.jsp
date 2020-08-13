@@ -41,7 +41,7 @@
 
 	function connect(){
 		//웹 소켓 연결
-		wsocket = new WebSocket("ws://192.168.0.34:8888/jeongjae/chat-ws");
+		wsocket = new WebSocket("<c:url value='/echo'/>");
 
 		//웹 소켓 이벤트 연결
 		wsocket.onopen = onOpen;
