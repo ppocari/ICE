@@ -57,4 +57,16 @@
 		select * from reskind
 		where rkno=#{rkNo}
 	</select>
+	<select id="selectAvailableHour" parameterType="resReserveVo" resultType="resReserveVo">
+		select * from
+		    (
+		    select rvno, resno, rvstart, rvend 
+		    from v_resreserve
+		    <![CDATA[ 
+		    where (rvstart > to_date(#{startDate}, 'YYYY-MM-DD') and rvstart < to_date(#{startDate}, 'YYYY-MM-DD') + 1)
+		    or (rvstart > to_date(#{startDate}, 'YYYY-MM-DD')-1 and rvend < to_date(#{startDate}, 'YYYY-MM-DD') + 1) ]]>
+		    )
+		where resno=#{resNo}
+		order by rvstart
+	</select>
 </mapper>
