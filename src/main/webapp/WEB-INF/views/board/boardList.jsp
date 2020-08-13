@@ -29,13 +29,22 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	function pageProc(curPage){
-		$('input[name=currentPage]').val(curPage);
-		$('form[name=frmPage]').submit();
-	}
+function pageProc(curPage){
+	$('input[name=currentPage]').val(curPage);
+	$('form[name=frmPage]').submit();
+}
 
 </script>
 <!-- Begin Page Content -->
+
+<form action="<c:url value='/board/boardList.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}">	
+</form>
 
 <div class="container-fluid">
 
@@ -54,10 +63,8 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 560px;">
+			<div class="card shadow mb-4" style="height: 600px;">
 				<!-- Card Header - Dropdown -->
-				<form name="boardSearch" method="post"  
-				action="<c:url value='/board/boardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">ICE 사내게시판</h6>
 						<a href="<c:url value='/board/boardWrite.do'/>">
@@ -65,12 +72,11 @@
 								<button type="button" class="btn btn-info">게시글작성</button>
 							</div>
 						</a>
-						
 					</div>
 					
 					<!-- Card Body -->
-					<div class="card-body" style="height: 400px">
-						<div class="chart-area" style=" height: 450px; font-size: 13px;" >
+<!-- 					<div class="card-body" style="height: 350px;"> -->
+						<div class="chart-area" style=" font-size: 13px;" >
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
@@ -118,80 +124,74 @@
 										</tr>
 									</c:forEach>
 								</tbody>
-						</table>
-										
+							</table>
+						
+						
+						<div class="divPage" style="text-align: center; 
+							position: relative; top: 0px;"> 
+							<!-- 페이지 번호 추가 -->		
+							<!-- 이전 블럭으로 이동 ◀ -->
+							<c:if test="${pagingInfo.firstPage>1 }">
+								<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})">
+									<img src="<c:url value='/resources/images/first.JPG'/>" 
+										alt="이전 블럭으로 이동">
+								</a>
+							</c:if> 
+							
+							<!-- [1][2][3][4][5][6][7][8][9][10] -->
+							<c:forEach var="i" begin="${pagingInfo.firstPage }" 
+								end="${pagingInfo.lastPage }">		
+								<c:if test="${i!=pagingInfo.currentPage }">
+									<a href="#" onclick="pageProc(${i})">[${i}]</a>			
+								</c:if>
+								<c:if test="${i==pagingInfo.currentPage }">
+									<span style="color:blue;font-weight:bold">${i}</span>			
+								</c:if>		
+							</c:forEach>
+								
+							<!-- 다음 블럭으로 이동 ▶ -->
+							<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+								<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})">
+									<img src="<c:url value='/resources/images/last.JPG'/>" 
+										alt="다음 블럭으로 이동">
+								</a>
+							</c:if>
+							<!--  페이지 번호 끝 -->
 						</div>
 					</div>
 					
-					<div class="divPage" style="text-align:center;">
-						<!-- 페이지 번호 추가 -->		
-						<!-- 이전 블럭으로 이동 ◀ -->
-						<c:if test="${pagingInfo.firstPage>1 }">
-							<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})">
-								<img src="<c:url value='/resources/images/first.JPG'/>" 
-									alt="이전 블럭으로 이동">
-							</a>
-						</c:if> 
-						
-						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<c:forEach var="i" begin="${pagingInfo.firstPage }" 
-							end="${pagingInfo.lastPage }">		
-							<c:if test="${i!=pagingInfo.currentPage }">
-								<a href="#" onclick="pageProc(${i})">[${i}]</a>			
-							</c:if>
-							<c:if test="${i==pagingInfo.currentPage }">
-								<span style="color:blue;font-weight:bold">${i}</span>			
-							</c:if>		
-						</c:forEach>
-							
-						<!-- 다음 블럭으로 이동 ▶ -->
-						<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
-							<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})">
-								<img src="<c:url value='/resources/images/last.JPG'/>" 
-									alt="다음 블럭으로 이동">
-							</a>
-						</c:if>
-						<!--  페이지 번호 끝 -->
-					</div>
 					
 					<!-- 검색기능 -->
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-						style="float:center;">
-						<%-- <div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
-								</c:forEach>
-							</select>
-						</div> --%>
-							<div id = "searchboard" style="">
-								<select class="form-control" style=" width: 100px;
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<div class="divSearch" class="search" style="margin-left: 10px;">
+						   	<form name="frmSearch" method="post" 
+						   		action='<c:url value="/board/boardList.do"/>'>
+						        <select name="searchCondition" class="form-control" style=" width: 100px;
 									height: 30px; font-size: 13px; display: inline-block;">
-								 	 <option>제목</option>
-								 	 <option>내용</option>
-									 <option>작성자</option>
-								</select>
-								<input type="text" class="form-control" placeholder="검색어를 입력..."
-									style=" width: 180px; height: 30px; font-size: 13px; display: inline-block;">
-								<button type="submit" class="btn btn-primary btn-sm">검색</button>
-							</div>
-					</div>		
-				</form>
-				
-				
+						            <option value="title" 
+						            	<c:if test="${param.searchCondition=='title' }">
+						            		selected="selected"
+						            	</c:if>
+						            >제목</option>
+						            <option value="content" 
+						            	<c:if test="${param.searchCondition=='content' }">
+						            		selected="selected"
+						            	</c:if>
+						            >내용</option>
+						            <option value="name" 
+						            	<c:if test="${param.searchCondition=='name' }">
+						            		selected="selected"
+						            	</c:if>
+						            >닉네임</option>
+						        </select>   
+						        <input type="text" class="form-control" name="searchKeyword" title="검색어 입력"
+						        	value="${param.searchKeyword}" style=" width: 180px; height: 30px; 
+						        	font-size: 13px; display: inline-block;">   
+								<input type="submit" class="btn btn-primary btn-sm" value="검색">
+						    </form>
+						</div>
+					</div>			
+				</div>
 			</div>
 		</div>
 	</div>

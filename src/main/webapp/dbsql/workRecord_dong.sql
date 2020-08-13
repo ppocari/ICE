@@ -1,6 +1,6 @@
 /* 근태관리 */
---DROP TABLE workRecord CASCADE CONSTRAINTS
---drop sequence workRecord_seq
+DROP TABLE workRecord CASCADE CONSTRAINTS;
+drop sequence workRecord_seq;
 
 /* 근태관리 */
 CREATE TABLE workRecord (
@@ -35,7 +35,7 @@ create sequence workRecord_seq
 increment by 1
 start with 1;
 
-
+/*
 insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
 values(workrecord_seq.nextval,111910,'09:00','17:00','출근','2020-08-01','2020-08');
 
@@ -49,7 +49,7 @@ insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_mo
 values(workrecord_seq.nextval,111910,'10:00','11:00','이상','2020-08-04','2020-08');
 
 select * from WORKRECORD;
-
+*/
 commit;
 
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.mapper.oracle.message">
+	<insert id="msgWrite_send_msg" parameterType="messageVO" >
+		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+			select message_seq.nextval from dual
+		</selectKey>
+		insert into message(msgno, msgstatus, msgcontent, sendmemno)
+		values(#{msgNo}, #{msgStatus}, #{msgContent}, #{sendMemNo} )
+	</insert>
+	
+	<insert id="msgWrite_send_msg_rec" parameterType="messageVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE" >
+			select message_rec_seq.nextval from dual
+		</selectKey>
+		insert into message_rec
+		values(#{no}, #{msgNo} , #{recMemNo})
+	</insert>
+	
+	<select id="msgSendList" parameterType="messageVO" resultType="messageVO">
+		select * from message_view
+		where sendmemno = #{sendMemNo}
+	</select>
+	
+	<select id="msgRecList" parameterType="messageVO" resultType="messageVO">
+		select * from message_view
+		where recmemno = #{recMemNo}
+	</select>
+
+</mapper>
+ 
+

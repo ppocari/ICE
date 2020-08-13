@@ -12,4 +12,5 @@ public interface NoticeDAO {
 	public NoticeVO selectByNo(int noticeNo);
 	public int deleteNotice(int noticeNo);
 	public int updateNotice(NoticeVO vo);
+	public int updateDownCount(int noticeNo);
 	}

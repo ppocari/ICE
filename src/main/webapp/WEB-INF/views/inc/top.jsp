@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -69,9 +70,11 @@
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="<c:url value='/main/main_admin.do'/>">
+			<c:set var="posCode" value="${sessionScope.posCode }" />
+			<a class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="<c:url value='/main/main_user.do'/>">
+				
+				<!-- <c:url value='/main/main_admin.do'/> -->
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -185,7 +188,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/spay/sListAll.do'/>">사내 식권 구매내역</a>
-							<a class="collapse-item" href="https://admin.iamport.kr/payments" target="_blank">환불 내역 및 상세데이터</a>
+							<!-- <a class="collapse-item" href="https://admin.iamport.kr/payments" target="_blank">환불 내역 및 상세데이터</a> -->
 						</div>
 
 					</div>
@@ -252,7 +255,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
-								href="<c:url value='#'/>">예약신청</a>
+								href="<c:url value='/resourceUser/resourceMain.do'/>">자원목록</a>
 							<a class="collapse-item"
 								href="<c:url value='#'/>">예약현황</a>
 						</div>
@@ -270,6 +273,7 @@
 				<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="<c:url value='/companyCard/MycomCard.do'/>">내 법인카드</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardList.do'/>">법인카드 조회</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardStatistic.do'/>">법인카드 통계</a>
 						<%
@@ -347,10 +351,9 @@
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='/message/messageWrite.do'/>">쪽지쓰기</a>
-							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">보낸쪽지함</a>
-							<a class="collapse-item" href="<c:url value='/message/messageList.do'/>">받은쪽지함</a>
-							<a class="collapse-item" href="<c:url value='#'/>">보관함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgWrite.do'/>">쪽지쓰기</a>
+							<a class="collapse-item" href="<c:url value='/message/msgSendList.do'/>">보낸쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgRecList.do'/>">받은쪽지함</a>
 							<a class="collapse-item" href="<c:url value='#'/>">휴지통</a>
 						</div>
 
@@ -561,7 +564,7 @@
 								</c:if>
 								<c:if test="${!empty sessionScope.memImg}">
 									<img class="img-profile rounded-circle"
-								src="<c:url value= '/resources/img/mypage/${sessionScope.mem_img}' />">
+								src="<c:url value= '/pd_images/${sessionScope.memImg}' />">
 								</c:if>
 								
 								 

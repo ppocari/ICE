@@ -232,6 +232,13 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 			$('#endDay').focus();
 		}
 	});
+	
+	function draw() {
+	  document.getElementById('canvas1');
+	  document.getElementById('canvas2');
+	  document.getElementById('canvas3');
+	  document.getElementById('canvas4');
+	}
 });
 </script>
 <style>
@@ -311,6 +318,33 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	    color: black;
 	}
 	
+	/*색깔별 내용*/
+	div#canvasDiv {
+	    position: absolute;
+	    margin-top: 10%;
+	    margin-left: 5%;
+	    width: 165px;
+	}
+	
+	canvas{
+		width: 50px;
+	    height: 50px;
+	    border: 1px solid;
+	}
+	#canvas1{
+	    background: #3788d8;
+	}
+	#canvas2{
+	    background: #008000;
+	}
+	#canvas3{
+	    background: #ff0000;
+	}
+	#canvas4{
+	    background: #ffa500;
+	}
+	
+	
 </style>
 
 <div class="row">
@@ -320,6 +354,13 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 			<!-- 스케줄 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">스케줄</h5>
+				</div>
+				<!-- 색깔별 내용 -->
+				<div id="canvasDiv">
+					<canvas id="canvas1"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">업무관련</label>	
+					<canvas id="canvas2"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">기타</label>	
+					<canvas id="canvas3"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">휴가</label>		
+					<canvas id="canvas4"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">유연근무</label>			
 				</div>
 				<!-- 캘린더 -->
 				<div class="calendar_back">
@@ -339,10 +380,10 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 							<tr>
 								<td>
 									<select title="타입선" id="place" class="form-control" name="place">
-										<option value="1">업무관련</option>
-										<option value="2">기타</option>
-										<option value="3">휴가/연차</option>
-										<option value="4">유연근무</option>
+										<option value="1" style="color:#3788d8">업무관련</option>
+										<option value="2" style="color:#008000">기타</option>
+										<option value="3" style="color:#ff0000">휴가/연차</option>
+										<option value="4" style="color:#ffa500">유연근무</option>
 									</select>
 									<input type="text" class="form-control" id="title" name="title" maxlength="100" 
 										placeholder="제목"/>

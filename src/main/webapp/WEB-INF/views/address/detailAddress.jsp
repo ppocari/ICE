@@ -34,6 +34,20 @@
 	width: 610px;
 	height: 100px;
 }
+
+.ml{
+	margin-left: 100px;
+}
+
+#add_inputs{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+article{
+	font-size:1.25em;
+}
+
 </style>
 <section>
 	<article>
@@ -43,12 +57,12 @@
 					주소록<span> > 상세보기 </span>
 				</h3>
 			</header>
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4">
 				<div class="divForm">
 					<form>
 						<fieldset>
 							<legend>기본 정보</legend>
-							<div>
+							<div class="ml">
 								<span class="la_left">이름</span>
 								<span class="etc clear">${adVo.name }</span>
 								<span class="la_right">전화번호</span>
@@ -60,7 +74,7 @@
 									</c:if>
 								</span>
 							</div>
-							<div>
+							<div class="ml">
 								<span class="la_left">이메일</span>
 								<span class="etc clear">
 									<c:if test="${!empty adVo.email1 }">
@@ -70,31 +84,31 @@
 								<span class="la_right">회사명</span>
 								<span class="etc clear">${adVo.company }</span>
 							</div>
-							<div>
+							<div class="ml">
 								<span class="la_left">부서</span>
 								<span class="etc clear">${adVo.deptName }</span>
 								<span class="la_right">직책</span>
 								<span class="etc clear">${adVo.posName }</span>
 							</div>
-							<div>
+							<div class="ml">
 								<span class="la_left">그룹</span>
 								<span class="etc clear">${adVo.groupName }</span>
 							</div>
 
 							<legend>추가 정보</legend>
-							<div>
+							<div class="ml">
 								<span class="la_left">주소</span>
 								<span class="etc clear">${adVo.homeAddress }</span>
 								<span class="la_right">홈페이지</span>
 								<span class="etc clear">${adVo.homePage }</span>
 							</div>
-							<div>
+							<div class="ml">
 								<span class="la_left">메신저</span>
 								<span class="etc clear">${adVo.messenger }</span>
 								<span class="la_right">SNS</span>
 								<span class="etc clear">${adVo.SNS }</span>
 							</div>
-							<div>
+							<div class="ml">
 								<span class="la_left">메모</span>
 								<span class="textareaSize">
 									<%

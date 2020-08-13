@@ -9,6 +9,8 @@ public class ResManageVO {
 
 	private Long resSize;
 	private String resOriginalImage;
+	private int rkNo;
+	private String rkKind;
 	private String resLocation;
 
 	private String resSubdesc;
@@ -50,6 +52,19 @@ public class ResManageVO {
 	public void setResOriginalImage(String resOriginalImage) {
 		this.resOriginalImage = resOriginalImage;
 	}
+	
+	public int getRkNo() {
+		return rkNo;
+	}
+	public void setRkNo(int rkNo) {
+		this.rkNo = rkNo;
+	}
+	public String getRkKind() {
+		return rkKind;
+	}
+	public void setRkKind(String rkKind) {
+		this.rkKind = rkKind;
+	}
 	public String getResLocation() {
 		return resLocation;
 	}
@@ -86,9 +101,10 @@ public class ResManageVO {
 	@Override
 	public String toString() {
 		return "ResManageVO [resNo=" + resNo + ", resName=" + resName + ", resImage=" + resImage + ", resSize="
-				+ resSize + ", resOriginalImage=" + resOriginalImage + ", resLocation=" + resLocation + ", resSubdesc="
-				+ resSubdesc + ", resRegdate=" + resRegdate + ", resState=" + resState + ", resIsDel=" + resIsDel + "]";
+				+ resSize + ", resOriginalImage=" + resOriginalImage + ", rkNo=" + rkNo + ", rkKind=" + rkKind
+				+ ", resLocation=" + resLocation + ", resSubdesc=" + resSubdesc + ", resRegdate=" + resRegdate
+				+ ", resState=" + resState + ", resIsDel=" + resIsDel + "]";
 
 	}
-
+	
 }

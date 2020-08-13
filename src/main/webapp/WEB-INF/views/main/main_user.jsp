@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -24,7 +26,11 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">TODAY</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">(년월일 시간분초)</div>
+                      <%
+                      	Date today = new Date();
+                      	SimpleDateFormat sdf_today = new SimpleDateFormat("yyyy년 MM월 dd일");
+                      %>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=sdf_today.format(today) %></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -38,15 +44,17 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">좋은 글귀 랜덤 보여주기</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">하하</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
+                <a href="<c:url value ='/companyCard/comCardList.do'/> ">
+	                  <div class="row no-gutters align-items-center">
+	                    <div class="col mr-2">
+	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">법인카드 </div>
+	                      <div class="h5 mb-0 font-weight-bold text-gray-800">조회 바로가기</div>
+	                    </div>
+	                    <div class="col-auto">
+	                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+	                    </div>
+	                  </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -55,24 +63,26 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">아직 안읽은 것</div>
-                        </div>
-                        <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
+                <a href=" ">
+	                  <div class="row no-gutters align-items-center">
+	                    <div class="col mr-2">
+	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류</div>
+	                      <div class="row no-gutters align-items-center">
+	                        <div class="col-auto">
+	                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">미결함 바로가기</div>
+	                        </div>
+	                        <div class="col">
+	                          <div class="progress progress-sm mr-2">
+	                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                    </div>
+	                    <div class="col-auto">
+	                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+	                    </div>
+	                  </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -81,15 +91,17 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
+                <a href="">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">쪽지</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">새로 온 쪽지</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">쪽지 쓰기</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
                     </div>
                   </div>
+                  </a>
                 </div>
               </div>
             </div>

@@ -53,6 +53,17 @@ $(function(){
 	float:right;
 	display:inline-block;
 }
+
+#add_inputs{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+article{
+	font-size:1.25em;
+}
+
+
 </style>
 <section>
 	<article>
@@ -63,7 +74,7 @@ $(function(){
 					<span id="addFromOrgan_span"><input type="button" id="addFromOrgan" value="조직도에서 추가하기"></span>
 				</h3>
 			</header>
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4">
 				<div class="divForm">
 					<form method="post" action="<c:url value='/address/addAddress.do'/>">
 						<fieldset>

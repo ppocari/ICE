@@ -124,6 +124,11 @@ function pageProc(curPage){
 	margin: 10px;
 }
 
+article{
+	font-size:1.25em;
+}
+
+
 </style>
 
 <section id="addressMain_section">

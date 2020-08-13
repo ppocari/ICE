@@ -88,8 +88,8 @@
 			<div class="card shadow mb-4" style="height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"
-					action="<c:url value='/notice/noticeWrite.do'/>">
-					<!-- enctype="multipart/form-data" -->
+					action="<c:url value='/notice/noticeWrite.do'/>"
+					enctype="multipart/form-data">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<a href="<c:url value='/notice/noticeList.do'/>">
