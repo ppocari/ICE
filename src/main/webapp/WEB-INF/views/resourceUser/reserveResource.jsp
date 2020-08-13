@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="../inc/top.jsp" %>
 
 <link href="<c:url value='/resources/fullcalendar/packages/core/main.css'/>" rel='stylesheet' />
@@ -13,17 +13,17 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-common/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-daygrid/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
+
 <script type="text/javascript">
 	//들어오자 마자 일정 보여주기
 	var contextPath = "/ice";
 	var dataset = [
-		<c:forEach var="citem" items="${list}">
+		<c:forEach var="resNo" items="${rvResNoList}">
 			{
-				title:'<c:out value="${citem.title}"/>',
-				start:'<c:out value="${citem.startDay}"/>',
-				end:'<c:out value="${citem.endDay}"/>',
-				id:'<c:out value="${citem.schNo}"/>',
-				resourceId:'<c:out value="${citem.resourceId}"/>'
+				title:'<c:out value="${resNo.deptName}"/>',
+				start:'<c:out value="${resNo.rvStart}"/>',
+				end:'<c:out value="${resNo.rvEnd}"/>',
+				resourceId:'<c:out value="${resNo.rkNo}"/>'
 			},
 		</c:forEach>
 	];
@@ -53,7 +53,7 @@
       },
       
       //일정 버튼 추가하기
-      customButtons: {
+     /*  customButtons: {
           add_event: {
               text: '일정추가',
               click: function() {
@@ -64,7 +64,7 @@
 	          				url:"<c:url value='/resourceUser/ajaxWrite.do'/>",
 	          				type:"get",
 	          				data:{
-								resNo:27
+								resNo:5
 							},
 	          				datatype:"json",
 	          				data: $(this).serializeArray(),
@@ -86,7 +86,7 @@
 	          		}); 
               }
           }
-      },
+      }, */
       
       header: {
         left: 'prev,next today',
@@ -104,14 +104,11 @@
 
       //// uncomment this line to hide the all-day slot
       //allDaySlot: false,
-		
-      resources: [
-        { id: 'a', title: 'Room A' , color:'orange'},
-        { id: 'b', title: 'Room B', eventColor: 'green' , textColor: 'red'},
-        { id: 'c', title: 'Room C', eventColor: 'red' ,color:'orange'},
-        { id: 'd', title: 'Room D', eventColor: 'orange' }
+	
+  	   resources: [
+        { id: '${rmVo.rkNo}', title: '${rmVo.resName}', eventColor: 'orange'}
       ],
-  	
+     
       //일정보여주기
       events: dataset,
       
@@ -126,9 +123,6 @@
         $.ajax({
 				url:"<c:url value='/resourceUser/ajaxWrite.do'/>",
 				type:"get",
-				data:{
-					resNo:27
-				},
 				datatype:"json",
 				data: $(this).serializeArray(),
 				success:function(res){
@@ -155,7 +149,7 @@
   				url:"<c:url value='/resourceUser/ajaxWrite.do'/>",
   				type:"get",
   				data:{
-					resNo:27
+					resNo:5
 				},
   				datatype:"json",
   				data: $(this).serializeArray(),
@@ -176,10 +170,11 @@
   			});
   		}); 
         
-      },
+      }, 
+      
       
       //일정 보여주기
-      eventClick: function(info) {
+       eventClick: function(info) {
     	  	var dbTitle = info.event.title;
     	  	var dbId = info.event.id;
 		   	 $.ajax({
@@ -201,16 +196,16 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 					}
 				});
 		   	 
-		   	 /*
+		   	 
 		   	window.open(contextPath+'/schedule/detailSchedule.do','detailSC',
 			'width=500,height=500,left=0,top=0,location=yes,resizable=yes');
-		   	 */
+		   	 
     	  	//$("#modal-title").text(dbTitle);
     	  	
     	    //borderColor 변경
     	    //info.el.style.borderColor = 'red';
     	    
-   	  },
+   	  }, 
       
       // 한국어 설정
       locale: 'ko'
@@ -230,13 +225,38 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	$('.writeClose').click(function() {
 		event.preventDefault();
 		 $("#writeModal").css("visibility","hidden");
+	}); //캘린더
+	
+	/* 예약 시 datepicker에서 날짜 선택 시 select 자동 처리  */
+	$('#startDay').change(function(){
+		var pickStart = alert($(this).val());
+		 $.ajax({
+				url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
+				type:"get",
+				data: pickStart ${rmVo.resNo}
+				datatype:"json",
+				success:function(res){
+					var content = res.content;
+					var startDay = res.startDay;
+					var endDay = res.endDay;
+					var place = res.place;
+					var memNo = res.memNo;
+				},
+				error:function(xhr, status, error){
+					alert(status + ", " + error);
+				}
+			});
+		
 	});
+	
+	
 	
 });
 </script>
 <style>
 
   body {
+  	text-align: center;
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
@@ -249,8 +269,8 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 
 	.calendar_back{
 		background: white;
-		width: 55%;
-		margin: 0 auto;
+		float:left;
+		text-align: center;
 	}
 	
     .fc-day-top.fc-sat.fc-past { color:#0000FF; }     	/* 토요일 */
@@ -266,8 +286,8 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	.msgbox{
 		position: absolute;
-	    left: 33%;
-    	top: 30%;
+	    left: -30%;
+    	top: 20%;
 	    z-index: 5000;
 	    background: white;
 	    border: 1px solid gray;
@@ -309,74 +329,119 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	#calendar{
 		width: 500px;
-		height: 450px;
 		display: inline-block;
-		float:left;
 		border: 1px solid lightgray;
 	}
 	
 	#resDetailDiv {
 		text-align:center;
-		width: 40%;
 		margin: 20px;
-		float:left;
-		border: 1px solid lightgray;
 	}
 	
 	.fc-license-message{
 		visibility: hidden;
 	}
+	
+	#spanResImage{
+		width:250px; 
+		height:250px; 
+		border: 1px solid lightgray;
+	}
+	
+	#RESbottom{
+	clear:both;
+}
+
+article > div {
+	float:left;
+}
+
+.la_left  {
+	clear:both;
+	float: left;
+	width: 35%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	font-weight: bold;
+}
+
+.fl{
+	float:left;
+}
+
+#spanSubdesc{
+	text-align: left;
+	width: 200px;
+}
+
+.infobox{
+	width: 120px;
+	font-size: 0.9em;
+}
+
 </style>
 <section>
 	<article>
 	<!-- Area Chart -->
-	<div class="col-xl-12 " >
+	<div class="col-xl-6 " >
 		<div class="card shadow mb-4" style="fit-content">
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 				<h5 class="m-0 font-weight-bold text-primary">자원 예약신청</h5>
 			</div>
-			<div id="detailAll">
 			
-		
-			<!-- 자원 상세보기 -->
-			<div id="resDetailDiv">
-				<div>
-					<span>${rmVo.resName }</span>
-				</div>
-				<div class="divSection" id="divResName">
-					<span id="spanResName"></span>
-				</div>
-				<div id="divContent">
-					<div class="divSection" id="divImage">
-					<img width="250" height="250" id="spanResImage" style="border: 1px solid lightgray" 
-						src="<c:url value='/resource_file/${rmVo.resImage}'/>">
+				<!-- 자원 상세보기 -->
+				<div id="resDetailDiv">
+					<div>
+						<span>${rmVo.resName }</span>
 					</div>
-					<div class="divSection" id="divDesc">
-						<div>
-							<span>장소: ${rmVo.resLocation }</span>
-							<span id="spanResLocation">
-							</span>
+					<div class="divSection" id="divResName">
+						<span id="spanResName"></span>
+					</div>
+					<div id="divContent">
+						<div class="divSection" id="divImage">
+							<c:if test="${!empty rmVo.resImage }">
+								<img id="spanResImage" src="<c:url value='/resource_file/${rmVo.resImage}'/>">
+							</c:if>
 						</div>
-						<div>
-							<span>상태: ${rmVo.resState }</span>
-							<span id="spanResState"></span>
-						</div>
-						<div>
-							<span>자원설명: ${rmVo.resSubdesc }</span>
-							<p id="spanResSubdesc">
-								
-							</p>
+						<div class="divSection" id="divDesc">
+							<div>
+								<span class="la_left">종류:</span> 
+								<span class="fl">${rmVo.rkKind }</span>
+							</div>
+							<div>
+								<span class="la_left">장소: </span>
+								<span class="fl">${rmVo.resLocation }</span>
+							</div>
+							<div>
+								<span class="la_left">상태: </span>
+								<span class="fl">${rmVo.resState }</span>
+								<span class="fl" id="spanResState"></span>
+							</div>
+							<div>
+								<span class="la_left">자원설명: </span>
+								<span id="spanSubdesc" class="fl">
+									<%
+										pageContext.setAttribute("newLine", "\r\n");
+									%>
+									
+									${fn:replace(rmVo.resSubdesc, newLine, '<br>')}
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-			
+		</div>
+		<div class="col-xl-6 " >
+			<div class="card shadow mb-4" style="fit-content">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">자원 예약신청</h5>
+				</div>
 				<!-- 캘린더 -->
 				<div class="calendar_back" >
 					<div id='calendar'></div>
 				</div>
-			</div>
+				
 				<!-- 스케줄등록모델 -->
 				<!-- style="display: none;" -->
 				<div id="writeModal" class="msgbox" style="visibility: hidden;">
@@ -387,36 +452,143 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 				    </div>
 					<div class="body">
 						<table>
-							<tr>
-								<td>
-									<select title="타입선" id="place" name="place" style="height: 28px;">
-										<option value="1">업무관련</option>
-										<option value="2">기타</option>
-										<option value="3">휴가/연차</option>
-										<option value="4">유연근무</option>
-									</select>
-									<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
-								</td>
-							</tr>
+							<tr><td>${rmVo.resName }</td></tr>
 							<tr>
 								<td>
 									<div id="schedulePicker">
-										<div style="float: left;">
+										<div>
 											<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
-												style="width: 192px" placeholder="시작일"/>
-											<div>STRAT</div>
-										</div>
-										<div style="float: right;">
+												placeholder="시작일"/>
+											<select>
+												<%-- <c:forEach begin="" end="">
+												
+												</c:forEach> --%>
+												<option>00:00~00:30</option>
+												<option>00:30~01:00</option>
+												<option>01:00~01:30</option>
+												<option>01:30~02:00</option>
+												<option>02:00~02:30</option>
+												<option>02:30~03:00</option>
+												<option>03:00~03:30</option>
+												<option>03:30~04:00</option>
+												
+												<option>04:00~04:30</option>
+												<option>04:30~05:00</option>
+												<option>05:00~05:30</option>
+												<option>05:30~06:00</option>
+												<option>06:00~06:30</option>
+												<option>06:30~07:00</option>
+												<option>07:00~07:30</option>
+												<option>07:30~08:00</option>
+												
+												<option>08:00~08:30</option>
+												<option>08:30~09:00</option>
+												<option>09:00~09:30</option>
+												<option>09:30~10:00</option>
+												<option>10:00~10:30</option>
+												<option>10:30~11:00</option>
+												<option>11:00~11:30</option>
+												<option>11:30~12:00</option>
+												
+												<option>12:00~12:30</option>
+												<option>12:30~13:00</option>
+												<option>13:00~13:30</option>
+												<option>13:30~14:00</option>
+												<option>14:00~14:30</option>
+												<option>14:30~15:00</option>
+												<option>15:00~15:30</option>
+												<option>15:30~16:00</option>
+												
+												<option>16:00~16:30</option>
+												<option>16:30~17:00</option>
+												<option>17:00~17:30</option>
+												<option>17:30~18:00</option>
+												<option>18:00~18:30</option>
+												<option>18:30~19:00</option>
+												<option>19:00~19:30</option>
+												<option>19:30~20:00</option>
+												
+												<option>20:00~20:30</option>
+												<option>20:30~21:00</option>
+												<option>21:00~21:30</option>
+												<option>21:30~22:00</option>
+												<option>22:00~22:30</option>
+												<option>22:30~23:00</option>
+												<option>23:00~23:30</option>
+												<option>23:30~00:00</option>
+												
+											</select>
+										<span> ~ </span>
 											<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
-												style="width: 192px" placeholder="종료일"/>
-											<div>END</div>
+												placeholder="종료일"/>
+											<select>
+												<%-- <c:forEach begin="" end="">
+												
+												</c:forEach> --%>
+												<option>00:00~00:30</option>
+												<option>00:30~01:00</option>
+												<option>01:00~01:30</option>
+												<option>01:30~02:00</option>
+												<option>02:00~02:30</option>
+												<option>02:30~03:00</option>
+												<option>03:00~03:30</option>
+												<option>03:30~04:00</option>
+												
+												<option>04:00~04:30</option>
+												<option>04:30~05:00</option>
+												<option>05:00~05:30</option>
+												<option>05:30~06:00</option>
+												<option>06:00~06:30</option>
+												<option>06:30~07:00</option>
+												<option>07:00~07:30</option>
+												<option>07:30~08:00</option>
+												
+												<option>08:00~08:30</option>
+												<option>08:30~09:00</option>
+												<option>09:00~09:30</option>
+												<option>09:30~10:00</option>
+												<option>10:00~10:30</option>
+												<option>10:30~11:00</option>
+												<option>11:00~11:30</option>
+												<option>11:30~12:00</option>
+												
+												<option>12:00~12:30</option>
+												<option>12:30~13:00</option>
+												<option>13:00~13:30</option>
+												<option>13:30~14:00</option>
+												<option>14:00~14:30</option>
+												<option>14:30~15:00</option>
+												<option>15:00~15:30</option>
+												<option>15:30~16:00</option>
+												
+												<option>16:00~16:30</option>
+												<option>16:30~17:00</option>
+												<option>17:00~17:30</option>
+												<option>17:30~18:00</option>
+												<option>18:00~18:30</option>
+												<option>18:30~19:00</option>
+												<option>19:00~19:30</option>
+												<option>19:30~20:00</option>
+												
+												<option>20:00~20:30</option>
+												<option>20:30~21:00</option>
+												<option>21:00~21:30</option>
+												<option>21:30~22:00</option>
+												<option>22:00~22:30</option>
+												<option>22:30~23:00</option>
+												<option>23:00~23:30</option>
+												<option>23:30~00:00</option>
+												
+											</select>
 										</div>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<textarea class="infobox" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
+									<textarea id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">
+									
+									${scheduleVo.content }</textarea>
 								</td>
 							</tr>
 						</table>
@@ -431,4 +603,6 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 		</div>
 	</article>
 </section>
-<%@include file="../inc/bottom.jsp" %>
+<div id="RESbottom">
+<%@include file="../inc/bottom.jsp"%>
+</div>

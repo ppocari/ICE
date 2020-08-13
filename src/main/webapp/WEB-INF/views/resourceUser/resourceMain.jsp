@@ -40,8 +40,10 @@ $(function(){
 		var resLocation;
 		var resSubdesc;
 		var resRegdate;
-		var resState;
+		/* var resState; */
 		var resIsDel;
+		var rkNo;
+		var rkKind;
 		
 		$(function(){
 			$.ajax({
@@ -67,9 +69,7 @@ $(function(){
 					}
 					if(res.resSubdesc!=null && res.resSubdesc.length!=0) {
 						resSubdesc=res.resSubdesc;
-						
-						resSubdesc.replace('\r\n', '<br>');
-						
+						resSubdesc=resSubdesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
 					}
 					if(res.resImage!=null && res.resImage.length!=0) {
 						resImageVar="<c:url value='/resource_file/"+resImage+"'/>";
@@ -83,7 +83,12 @@ $(function(){
 					if(res.resIsDel!=null && res.resIsDel.length!=0) {
 						resIsDel=res.resIsDel;
 					}
-				
+					if(res.rkNo!=null && res.rkNo.length!=0) {
+						rkNo=res.rkNo;
+						rkKind=res.rkKind;
+					}
+					
+					
 				/* 	var str="";
 						str+="번호 : " + res.resNo+"<br>";
 						str+="이름 : " + res.resName+"<br>";
@@ -95,18 +100,19 @@ $(function(){
 					$('#spanResName').html('');
 					$('#divImage').html('');
 					$('#spanResLocation').html('');
-					$('#spanResState').html('');
+					/* $('#spanResState').html(''); */
 					$('#spanResSubdesc').html('');
+					$('#spanRkKind').html('');
 
-					
 					$('#btEdit').attr('name', resNo);
 					$('#spanResName').html(resName);
 					if(res.resImage!=null && res.resImage.length!=0) {
 						$('#divImage').html('<img width="250" height="250" id="spanResImage" style="border: 1px solid lightgray" src="'+resImageVar+'">');
 					}
 					$('#spanResLocation').html(resLocation);
-					$('#spanResState').html(resState);
+					/* $('#spanResState').html(resState); */
 					$('#spanResSubdesc').html(resSubdesc);
+					$('#spanRkKind').html(rkKind);
 					
 					/* 수정버튼 처리 */
 					$('#btReserve').click(function(){
@@ -255,6 +261,10 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
+							<th>종류
+								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
+								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
+							</th>
 							<th>장소
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
@@ -272,8 +282,9 @@ article{
 										<img src="<c:url value='/resources/img/file.gif'/>" alt="파일유무표시 이미지"> 
 									</c:if>
 								</td>
+								<td>${rm.rkKind }</td>
 								<td>${rm.resLocation }</td>
-								<td>${rm.resState }</td>
+								<%-- <td>${rm.resState }</td> --%>
 								<td><button onclick="resReserve(${rm.resNo})">예약신청</button></td>
 							</tr>
 						</c:forEach>
@@ -329,14 +340,19 @@ article{
 								</div>
 								<div class="divSection" id="divDesc">
 									<div>
+										<span>종류: </span>
+										<span id="spanRkKind">
+										</span>
+									</div>
+									<div>
 										<span>장소: </span>
 										<span id="spanResLocation">
 										</span>
 									</div>
-									<div>
+								<!-- 	<div>
 										<span>상태: </span>
 										<span id="spanResState"></span>
-									</div>
+									</div> -->
 									<div>
 										<span>자원설명: </span>
 										<p id="spanResSubdesc">

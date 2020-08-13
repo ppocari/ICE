@@ -23,6 +23,7 @@ import com.will.ice.address.model.AddressUtility;
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.Utility;
+import com.will.ice.resource.model.ResKindVo;
 import com.will.ice.resource.model.ResManageSearchVO;
 
 import com.will.ice.resource.model.ResManageVO;
@@ -110,6 +111,11 @@ public class ResourceController {
 
 		logger.info("파라미터 memNo={}", memNo);
 
+		
+		List<ResKindVo> rkList= service.selectResKind();
+		logger.info("자원관리 등록 화면 rkList.size={}", rkList.size());
+		
+		model.addAttribute("rkList", rkList);
 
 		return "resource/addResource";
 
@@ -169,12 +175,16 @@ public class ResourceController {
 		logger.info("자원관리 수정 화면");
 		
 		ResManageVO rmVo= service.selectResManageOne(resNo);
+		logger.info("자원관리 수정 기존 rmVo={}", rmVo);
+		
+		List<ResKindVo> rkList=service.selectResKind();
 		
 		String fileInfo
 		=Utility.getFileInfo(rmVo.getResOriginalImage(), request);
 
-		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("rmVo", rmVo);
+		model.addAttribute("rkList", rkList);
+		model.addAttribute("fileInfo", fileInfo);
 		
 	
 	}

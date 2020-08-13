@@ -1,6 +1,19 @@
 drop table resreserve cascade constraints;
 drop table resmanage cascade constraints;
-drop table location cascade constraints;
+DROP TABLE resKind CASCADE CONSTRAINTS;
+
+/* 자원종류 */
+CREATE TABLE resKind (
+	rkNo NUMBER NOT NULL, /* 자원종류번호 */
+	rkKind VARCHAR2(45) NOT NULL /* 자원종류 */
+);
+
+ALTER TABLE resKind
+	ADD
+		CONSTRAINT PK_resKind
+		PRIMARY KEY (
+			rkNo
+		);
 
 /* 자원예약 */
 CREATE TABLE resReserve (
@@ -9,7 +22,7 @@ CREATE TABLE resReserve (
 	rvStart DATE NOT NULL, /* 자원예약 시작시간 */
 	rvEnd DATE NOT NULL, /* 자원예약 끝시간 */
 	rvReason VARCHAR2(1000), /* 자원예약 이유 */
-	rvConfirm VARCHAR2(10), /* 자원승인여부 */
+	rvConfirm VARCHAR2(10) default 'w', /* 자원승인여부 */
 	rvRegdate DATE DEFAULT sysdate, /* 자원예약일 */
 	memNo VARCHAR2(50) NOT NULL /* 사원번호 */
 );
@@ -28,6 +41,7 @@ CREATE TABLE resManage (
 	resImage VARCHAR2(300), /* 이미지파일명 */
 	resSize NUMBER, /* 파일사이즈 */
 	resOriginalImage VARCHAR2(300), /* 변경전이미지파일명 */
+	rkNo NUMBER, /* 자원종류번호 */
 	resLocation VARCHAR2(200), /* 장소 */
 	resSubdesc VARCHAR2(2000), /* 자원부가설명 */
 	resRegdate DATE DEFAULT sysdate, /* 자원등록일 */

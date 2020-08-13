@@ -41,4 +41,19 @@ public class ResourceServiceImpl implements ResourceService {
 		return dao.selectTotalRecord();
 	}
 
+	@Override
+	public List<ResKindVo> selectResKind() {
+		return dao.selectResKind();
+	}
+
+	@Override
+	public List<ResReserveVO> selectReserveResNo(int resNo) {
+		return dao.selectReserveResNo(resNo);
+	}
+
+	@Override
+	public ResKindVo selectReserveKind(int rkNo) {
+		return dao.selectReserveKind(rkNo);
+	}
+
 }
