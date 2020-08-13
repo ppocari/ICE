@@ -30,8 +30,6 @@
 				event.preventDefault();
 			}
 			
-			
-			
 		});
 		
 	
@@ -42,6 +40,7 @@
 	         monthNames:['1월','2월','3월','4월','5월','6월',
 	            '7월','8월','9월','10월','11월','12월']
 		} );
+		
 		
 		
 	});
@@ -64,29 +63,8 @@
 		var NmemPosiName = $("#memPosi option:selected").html();
 		
 		var NmemSalary = $("#memSalary").val();
-		var String_NmemSalary = numberFormat(NmemSalary);
 		
-		if(NmemNo.length == 0 || NmemName.length == 0 || NmemSsn1.length == 0 || NmemSsn2.length == 0 ||
-				NmemHiredate.length == 0|| NmemDepart.length == 0 || NmemPosi.length == 0 || NmemSalary.length == 0){
-			alert("모든 정보를 입력해주세요");
-			return false;
-		}		
-		
-		
-		if(NmemNo.length !=6){
-			alert("사원번호는 부서코드+직급코드 6자리 입니다")
-			return false;
-		}
-		if(NmemSsn1.length !=6){
-			alert("주민번호 앞은 6자리 입니다")
-			return false;
-		}
-		if(NmemSsn2.length !=7){
-			alert("주민번호 뒤는 7자리 입니다")
-			return false;
-		}
-	
-	
+					
 		str += '<tr>';
 		str += '<td><input type="text" name="memItems['+idx+'].memNo" class="registerTable" value="' +NmemNo+ '"/></td>';
 		str += '<td><input type="text" name="memItems['+idx+'].name" class="registerTable" value="' +NmemName+ '"/></td>';
@@ -94,13 +72,12 @@
 		str += '<td><input type="text" name="memItems['+idx+'].hiredate" class="registerTable" value="' +NmemHiredate+ '"/></td>';
 		str += '<td><input type="text" class="registerTable" value="' +NmemDepartName+ '"/></td>';
 		str += '<td><input type="text" class="registerTable" value="' +NmemPosiName+ '"/></td>';
-		str += '<td><input type="text" class="registerTable" value="' +String_NmemSalary+ '만원"/></td>';
+		str += '<td><input type="text" name="memItems['+idx+'].salary" class="registerTable" value="' +NmemSalary+ '"/></td>';
 		
 		str += '<input type="hidden" name="memItems['+idx+'].pwd" class="registerTable" value="' +NmemSsn1+ '"/>';
 		str += '<input type="hidden" name="memItems['+idx+'].ssn2" class="registerTable" value="' +NmemSsn2+ '"/>';
 		str += '<input type="hidden" name="memItems['+idx+'].deptCode" class="registerTable" value="' +NmemDepart+ '"/>';
 		str += '<input type="hidden" name="memItems['+idx+'].posCode" class="registerTable" value="' +NmemPosi+ '"/>';
-		str += '<input type="hidden" name="memItems['+idx+'].salary" class="registerTable" value="' +NmemSalary+ '"/>';
 		str += '</tr>';
 					
 		 
@@ -113,18 +90,13 @@
 		$("#memSsn1").val('');
 		$("#memSsn2").val('');
 		$("#memHiredate").val('');
-		
-		$("#memDepart option:eq(0)").prop("selected", true);
-		$("#memPosi option:eq(0)").prop("selected", true);
-		
+		$("#memDepart").val('');
+		$("#memPosi").val('');
 		$("#memSalary").val('');
 		
 		idx = idx + 1;
 		}
 	
-	function numberFormat(inputNumber) {
-		   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
 		
 		
 		
@@ -148,7 +120,7 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 ">
-			<div class="card shadow mb-4" style="height: fit-content;">
+			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post" action="<c:url value='/member/memWrite.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -158,7 +130,7 @@
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style="overflow: scroll; overflow-x: scroll; height: 630px;">
+						<div class="chart-area" style="overflow: scroll; ">
 
 
 							<table class="table table-bordered" id="dynamicTable">
@@ -180,7 +152,7 @@
 						
 						
 						<span style="font-weight: bold; font-size: 1.1em;" class="register_text form-control">정보입력</span> 
-						<input type="text" placeholder="사원번호 " id="memNo" class="register_text form-control">
+						<input type="text" placeholder="사원번호" id="memNo" class="register_text form-control">
 						<input type="text" placeholder="이름" id="memName" class="register_text form-control"> 
 						<input type="text" placeholder="주민번호 앞" id="memSsn1" class="register_text form-control"> 
 						<input type="text" placeholder="주민번호 뒤" id="memSsn2" class="register_text form-control"> 
