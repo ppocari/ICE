@@ -109,7 +109,7 @@ public class ResourceUserController {
 		String memNo = (String) session.getAttribute("identNum");
 		
 		
-		
+		ScheduleVo vo = new ScheduleVo();
 		return vo;
 	}
 	

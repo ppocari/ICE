@@ -29,7 +29,7 @@
 
 </head>
 
-<body class="bg-gradient-primary-log">
+<body class="bg-gradient-primary-log-admin">
 
 	<div class="container">
 

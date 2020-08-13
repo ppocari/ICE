@@ -1,7 +1,7 @@
 /* 사원 */
-/*DROP TABLE member 
+DROP TABLE member 
 	CASCADE CONSTRAINTS;
-*/
+
 /* 사원 */
 CREATE TABLE member (
 	memNo VARCHAR2(50) NOT NULL, /* 사원번호 */
@@ -62,6 +62,9 @@ ALTER TABLE member
 			deptCode
 		);
 		
+insert into member(memNo, name, pwd, hiredate, deptcode, poscode, salary)
+values('999999', '박관리', '123', '2009-01-02','999','999' , '4000');
+
 
 
 create view mypage_mem
