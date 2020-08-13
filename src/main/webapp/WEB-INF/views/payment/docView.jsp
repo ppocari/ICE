@@ -112,7 +112,9 @@
 				</tr>
 				
 			</table>
-			<c:forEach var="fileVo" items="${fListVo }">
+			
+		</div>
+	</div><c:forEach var="fileVo" items="${fListVo }">
 			<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
 				<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
 					id="fileName">
@@ -120,8 +122,6 @@
 				</a>
 			</c:if>
 			  </c:forEach>
-		</div>
-	</div>
 	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<form class="form-inline" name="confirmFrm" method="post" enctype="multipart/form-data">
 			<div class="form-group" id="commentDiv">&nbsp;

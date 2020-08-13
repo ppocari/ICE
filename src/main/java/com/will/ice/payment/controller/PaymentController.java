@@ -158,7 +158,7 @@ public class PaymentController {
 	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
 	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
 			Model model,@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request,HttpSession session,@RequestParam String keep,
-			@RequestParam String oldfileName) {
+			@RequestParam(required = false) String oldfileName) {
 		//임시보관함에서 결재선 등록시
 		String identNum = (String)session.getAttribute("identNum");
 		pldVo.setKeep(Integer.parseInt(keep));
@@ -205,7 +205,7 @@ public class PaymentController {
 	@RequestMapping("/write/imsyEdit.do")
 	public String imsyEdit(@ModelAttribute PaylinedocVO pldVo,HttpSession session,
 			Model model,@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request,
-			@RequestParam String oldfileName) {
+			@RequestParam(required = false) String oldfileName) {
 		//임시보관함에서 임시보관
 		String identNum = (String)session.getAttribute("identNum");
 		pldVo.setWritememNo(identNum);
