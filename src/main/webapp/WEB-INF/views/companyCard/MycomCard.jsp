@@ -53,7 +53,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">법인카드 조회</h1>
+		<h1 class="h3 mb-0 text-gray-800">내 법인카드 조회</h1>
 
 		<a href="#"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -74,35 +74,11 @@
 						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							 >조회</button>
 						</div>
 						
 					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<div class="search" style="margin-left: 10px;">
-							<label for="deptCode" style="margin-right: 20px;">부서별 조회</label>
-							<select name="deptCode">
-								<!-- option 반복 -->
-								<option value="">전체</option>
-								<c:forEach var="deptvo" items="${deptList }">
-									<option value="${deptvo.deptCode }" 
-										<c:if test="${dpdvo.deptCode == deptvo.deptCode }">
-											selected="selected"
-										</c:if>
-										>${deptvo.deptName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="search">
-							<label for="posCode" style="margin-right: 20px;">직급별 조회</label>
-							<select name="posCode">
-								<!-- option 반복 -->
-								<option value="">전체</option>
-								<c:forEach var="posvo" items="${ posList }">
-									<option value="${posvo.posCode }">${posvo.posName }</option>
-								</c:forEach>
-							</select>
-						</div>
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">						
 						<div class="search" style="margin-right: 20px;">
 							<label for="price1" style="margin-right: 20px;">금액별</label>
 							<input type="text" name="price1" value="${dpdvo.price1 }"> ~

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,10 +46,21 @@ public class CompanyCardController {
 
 	@Autowired private FileUploadUtil fileUploadUtil;
 
+	@RequestMapping(value="/comCardList.do", method = RequestMethod.GET)
+	public void comCardList_get( Model model) {
+		logger.info("법인카드 조회 dpdvo={}");
+
+		List<DepartmentVO> deptList = etcService.DeptAll();
+		List<PositionVO> posList = etcService.PosAll();
 
 
-	@RequestMapping("/comCardList.do")
-	public void comCardList(@ModelAttribute Depart_posi_dateVO dpdvo, Model model) {
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("posList", posList);
+
+	}
+
+	@RequestMapping(value="/comCardList.do", method = RequestMethod.POST)
+	public void comCardList_post(@ModelAttribute Depart_posi_dateVO dpdvo, Model model) {
 		logger.info("법인카드 조회 dpdvo={}",dpdvo);
 
 		List<DepartmentVO> deptList = etcService.DeptAll();
@@ -174,5 +186,17 @@ public class CompanyCardController {
 
 
 
+	@RequestMapping("/MycomCard.do")
+	public void MycomCardList(@ModelAttribute Depart_posi_dateVO dpdvo, 
+			HttpSession session ,Model model) {
+
+		dpdvo.setMemNo((String)session.getAttribute("identNum"));
+		logger.info("법인카드 조회 dpdvo={}",dpdvo);
+		List<ComcardVO> list = comcardService.selectListComcard(dpdvo);
+		
+		model.addAttribute("list", list);
+
+
+	}
 
 }

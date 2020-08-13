@@ -68,12 +68,12 @@ ALTER TABLE companyBoard_recommend
 			recNo
 		);
 
-/*
+
 drop table boardComment;
 drop table companyBoard_recommend;
 drop table board;
 drop sequence board_seq;
-*/
+
 /* 사내게시판 */
 CREATE TABLE board (
 	boardNo NUMBER NOT NULL, /* 게시글번호 */

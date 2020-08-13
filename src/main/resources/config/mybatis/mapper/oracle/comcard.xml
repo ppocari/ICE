@@ -42,6 +42,10 @@
 			<![CDATA[
 			and price < #{price2} ]]>
 		</if>
+		<if test="memNo !=null and memNo != ''">
+			<![CDATA[
+			and memno = #{memNo} ]]>
+		</if>
 	</select>
 	
 	<insert id="insertCCMulti" parameterType="ComcardVO">

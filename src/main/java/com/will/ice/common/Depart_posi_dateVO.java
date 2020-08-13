@@ -13,6 +13,8 @@ public class Depart_posi_dateVO {
 
 	private String useplace;
 	
+	private String memNo;
+	
 	public String getDeptCode() {
 		return deptCode;
 	}
@@ -88,13 +90,25 @@ public class Depart_posi_dateVO {
 	public void setUseplace(String useplace) {
 		this.useplace = useplace;
 	}
+	
+	
+
+	public String getMemNo() {
+		return memNo;
+	}
+
+	public void setMemNo(String memNo) {
+		this.memNo = memNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Depart_posi_dateVO [deptCode=" + deptCode + ", posCode=" + posCode + ", hiredate1=" + hiredate1
 				+ ", hiredate2=" + hiredate2 + ", usedate1=" + usedate1 + ", usedate2=" + usedate2 + ", price1="
-				+ price1 + ", price2=" + price2 + ", useplace=" + useplace + "]";
+				+ price1 + ", price2=" + price2 + ", useplace=" + useplace + ", memNo=" + memNo + "]";
 	}
+
+	
 
 	
 	

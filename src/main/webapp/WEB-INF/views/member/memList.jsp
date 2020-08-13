@@ -78,7 +78,7 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4" style="height: fit-content;">
 				<!-- Card Header - Dropdown -->
 				<!-- 페이징 처리를 위한 form 시작-->
 				<form name="frmPage" method="post" 
@@ -128,7 +128,7 @@
 			
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
+						<div  style="overflow: scroll; overflow-x: scroll; height: 570px;">
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
@@ -136,7 +136,6 @@
 									<tr>
 										<th>사원번호</th>
 										<th>이름</th>
-										<th>비밀번호</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
@@ -152,7 +151,6 @@
 										<tr id = "edit_tr${i}">
 											<td id = "edit_td${i}">${vo.memNo }</td>
 											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
 											<td>
 												 <c:set var = "hiredate"  value = "${fn:substring(vo.hiredate,0,10)}" />
 												${ hiredate }

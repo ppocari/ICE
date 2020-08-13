@@ -1,12 +1,6 @@
-<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<jsp:include page="../inc/top.jsp" />
-
+<%@include file="../inc/top.jsp"%>
 <style type="text/css">
 .data {
 	position: relative;
@@ -128,17 +122,17 @@ input#mypageEdit {
 }
 
 #mypage_div1 {
-	float: left;
-	
+	float: left;	
 	text-align: center;
     width: 250px;
-    margin-right: 150px;
+    margin-right: 70px;
 }
 
 #mypage_div2 {
 	float: left;
 	
 }
+
 
 </style>
 <script type="text/javascript"
@@ -224,43 +218,35 @@ input#mypageEdit {
 
 	});//doc
 </script>
+
 <!-- Begin Page Content -->
-
 <div class="container-fluid">
-
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">마이페이지</h1>
 	</div>
-
 	<!-- Content Row -->
-
 	<div class="row">
-
 		<!-- Area Chart -->
 		<div class="col-xl-9 ">
-			<div class="card shadow mb-4" style="height: fit-content;">
-				<!-- Card Header - Dropdown -->
-				<!-- 페이징 처리를 위한 form 시작-->
-				<form name="frmPage" method="post"
-					action="<c:url value='/member/memList.do'/>">
-					<div
-						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">내 정보</h6>
+			<div class="card shadow mb-4">
+				<div class="row">
+					<!-- Area Chart -->
+					<div class="col-xl-12 ">
+						<div class="card shadow mb-4" style="height: fit-content;">
+							<form name="mypageFrm" id="mypageFrm" method="post"
+								enctype="multipart/form-data"
+								action="<c:url value='/mypage/mypage.do'/>">
+								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">내 정보</h6>
+									<div id="btnSubmit">
+										<input type="submit" class="btn btn-primary" id="mypageEdit"
+											value="수정하기">
+									</div>
 
-						<div style="float: right">
-							<button class="btn btn-primary" id="mypageEdit">수정하기</button>
-							
-						</div>
-					</div>
-
-
-					<!-- 페이징 처리 form 끝 -->
-
-					<!-- Card Body -->
-					<div class="card-body">
-						<div class="chart-area" >
-							<div id="mypage_div1">
+								</div>
+								<div class="card-body">
+								<div id="mypage_div1">
 									<div class="noimg1">
 										<c:if test="${empty vo.proFileURL}">
 											<img alt="" src="<c:url value='/resources/img/noimg.png'/>">
@@ -272,7 +258,7 @@ input#mypageEdit {
 										</c:if>
 									</div>
 									<div class="imgbt">
-										<label for = "imgUP">*120 X 150</label><br>
+										<p>*120 X 150</p>
 										<input type="file" value="사진변경" name="imgUP" class="img_ch">
 									</div>
 								</div>
@@ -293,10 +279,9 @@ input#mypageEdit {
 											readonly>
 									</div>
 									<div class="form-group">
-										<label for="salary">연봉</label> 
-										<input type="text"
+										<label for="salary">연봉</label> <input type="text"
 											class="form-control" id="salary" readonly name="salary"
-											value="<fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원">
+											value="${vo.salary }">
 									</div>
 									<div class="form-group">
 										<label for="name">이름</label> <input type="text"
@@ -373,32 +358,27 @@ input#mypageEdit {
 											name="pwd" id="pwd" class="form-control">
 									</div>
 									<div class="pwd-area form-group">
-										<label for="pwd2">비밀번호 확인</label> 
-										<input type="Password" name="pwd2" id="pwd2" class="form-control">
+										<label for="pwd2">비밀번호 확인</label> <input type="Password"
+											name="pwd2" id="pwd2" class="form-control">
 									</div>
 									<div id="result">
-										<p id="result_p" style="margin-left: 150px;" ></p>
+										<p id="result_p" style="text-align: right"></p>
 									</div>
 
 
 								</div>
+							</div>
 
 
+							</form>
 
 						</div>
 					</div>
-				</form>
-
-
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
-
 
 <!-- /.container-fluid -->
 <div></div>
@@ -407,4 +387,3 @@ input#mypageEdit {
 <!-- End of Main Content -->
 
 <jsp:include page="../inc/bottom.jsp" />
-
