@@ -359,6 +359,136 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 		
 	});
 	
+	/* 예약 시 datepicker에서 날짜 선택 시 select 자동 처리2  */
+	$('#startHour').change(function(){
+		var pick = $(this).val();
+		var no = ${rmVo.resNo};
+		
+		alert('pick='+pick+", no="+ no);
+		
+		 $.ajax({
+				url:"<c:url value='/resourceUser/ajaxDatePicker.do'/>",
+				type:"get",
+				data:{ pickStart:pick, resNo:no },
+				datatype:"json",
+				success:function(res){
+					/*  $("#startHour option[id='hour2.0']").prop("disabled", true); */
+		            $.each(res , function(i){
+
+		            	var pcikParts = pick.split('-');
+						
+		            	//pick를 date형식으로 바꾸기 -> pickDate
+			            pickDate = new Date(pcikParts[0], parseInt(pcikParts[1], 10) - 1, pcikParts[2]);
+	
+		            	//pick날짜와 날짜비교를 위해 
+		            	//pick과 vrStart와 vrEnd를 날짜단위로 환산함.
+						var pickTime=pickDate.getTime()/1000/(60*60*24);
+		            	var startTime=res[i].rvStart/1000/(60*60*24);
+		            	var endTime=res[i].rvEnd/1000/(60*60*24);
+		            	
+		            	//pick과 vrStart의 차이, pick과 endTime의 차이
+		            	var startGap=startTime-pickTime;
+		            	var endGap=endTime-pickTime;
+		            	
+		            	//disabled하려고 하는 id인 'hour숫자'를 얻기 위해 시간,분을 얻음. 
+		            	var startDate = new Date(res[i].rvStart);
+		            	var endDate = new Date(res[i].rvEnd);
+      							/*alert('year is ' + date.getFullYear());
+      							alert('hour is ' + date.getHours());
+      							alert('minute is ' + date.getMinutes()); */
+      							
+      							
+      							/* var abc='hour700';
+      							$('#startHour option[id='+abc+']').prop('disabled',true); */
+      							
+      							
+         					if(startGap < 0 && endGap > 1) { //시작날짜 < 선택날짜, 끝날짜 > 선택날짜 ~ ~ 
+		            		//모든 startid가 disabled
+							
+		            		
+	            			/* 	$('#startHour option[id=hour100]').prop('disable',true);
+	            				$('#startHour option[id=hour2000]').prop('disable',true);
+	            				$('#startHour option[id=hour1500]').prop('disable',true); */
+		            		
+		            	/* 	alert("모든 실행~!") */
+		            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+	            			for(var i=0;i<48;i++){
+	            				arrHourId[i]='hour'+50*i;
+	            			}
+	            			for(var i=0;i<48;i++){
+	            				$('#startHour option[id='+arrHourId[i]+']').prop('disabled',true);
+	            			}
+	            			
+		            	}else if(startGap < 0 && endGap <=1){ //시작날짜가 걸친 경우 ~ |
+		            		//0~시작시간
+		            		
+		            		var endId=endDate.getHours()*100;
+		            		if(startDate.getMinutes()==30){
+		            			endId=endId+50;
+		            		}
+		            		
+		            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+		            		/* alert("0~시작 실행!, endId ="+endId);  */
+		            		
+		            		for(var i=0;i<endId/50;i++){
+	            				arrHourId[i]='hour'+50*i;
+	            			}
+		            		
+	            			for(var i=0;i<endId/50;i++){
+	            				$('#startHour option[id='+arrHourId[i]+']').prop('disabled',true);
+	            			}
+		            		
+		            	}else if(startGap >=0 && endGap <=1) { //선택날짜 내 시작날짜, 끝날짜가 들어감 | |
+		            		//시작~끝
+		            		var startId=startDate.getHours()*100;
+		            		var endId=endDate.getHours()*100;
+		            		
+		            		if(startDate.getMinutes()==30){
+		            			startId=startId+50;
+		            		}
+		            		if(endDate.getMinutes()==30){
+		            			endId=endId+50;
+		            		}
+		            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+		            		
+		            		for(var i=0;i<(endId-startId)/50;i++){
+	            				arrHourId[i]='hour'+(startId+i*50);
+	            			}
+		            		
+		            		for(var i=0;i<(endId-startId)/50;i++){
+		            			$('#startHour option[id='+arrHourId[i]+']').prop('disabled',true);
+	            			}
+	            			
+		            	}else if(startGap >=0 && endGap > 1){ //끝날짜가 걸친 경우 | ~
+		            		//시작~24
+		            		var startId=startDate.getHours()*100;
+		            		
+		            		if(startDate.getMinutes()==30){
+		            			startId=startId+50;
+		            		}
+		            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+		            		/* alert("시작~24 실행!, startId ="+ startId); */
+		            		
+		            		for(var i=0;i<(2400-startId)/50;i++){
+	            				arrHourId[i]='hour'+(startId+50*i);
+	            			}
+	            			for(var i=0;i<(2400-startId)/50;i++){
+	            				$('#startHour option[id='+arrHourId[i]+']').prop('disabled',true);
+	            					
+	            			}
+	            		}
+		            		
+						
+		           });
+		            
+				},
+				error:function(xhr, status, error){
+					alert(status + ", " + error);
+				}
+			}); 
+		
+	});
+	
 	
 	
 });
@@ -396,8 +526,8 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	.msgbox{
 		position: absolute;
-	    left: -30%;
-    	top: 20%;
+	    left: 10%;
+    	top: 10%;
 	    z-index: 5000;
 	    background: white;
 	    border: 1px solid gray;
