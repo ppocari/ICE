@@ -240,10 +240,10 @@ public class WorkRecordController {
 			logger.info("ym={}",ym);
 			vo.setCmpMonth(ym);
 			
-			vo.setCmpStatus("퇴근(미달)");
+			vo.setCmpStatus("지각");
 			int under = workService.selectMonthCount(vo);
 			
-			vo.setCmpStatus("퇴근(초과)");
+			vo.setCmpStatus("초과근무");
 			int over = workService.selectMonthCount(vo);
 			
 			vo.setCmpStatus("퇴근");
