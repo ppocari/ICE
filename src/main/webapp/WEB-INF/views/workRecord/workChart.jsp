@@ -13,6 +13,8 @@
 
 
 <style type="text/css">
+	/*차트*/
+	
 	#divChart{
 		float: left;
 	}
@@ -33,6 +35,12 @@
 		width: 50px;
 	}
 	
+	/*바 차트*/
+	div#chartdiv2 {
+	    margin-left: 50%;
+	    margin-top: -25%;
+	}
+	
 	/*툴팁*/
 	table.jqplot-table-legend{
 		width: 30%;
@@ -42,104 +50,226 @@
 		width: 100%;
 	}
 	
-	.card.shadow.mb-4 {
-	    width: 60%;
-	}
-	
-	.show{display: none;}
-	.hide{display: block;}	
-	
 </style>
 	
-	<!-- Begin Page Content -->
-	<div class="container-fluid">
-		<!-- Page Heading -->
-		<div class="d-sm-flex align-items-center justify-content-between mb-4">
-			<h1 class="h3 mb-0 text-gray-800">근태 통계확인</h1>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">근태관리 통계</h1>
+	</div>
+	<div><span id="name">${userName}님</span></div>
+	<!-- Content Row -->
+	<div class="row">
+		<!-- Area Chart -->
+		<div class="col-xl-12">
+			<div class="card shadow mb-4" style="fit-content">
+				<!-- 근태관리 조회 -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">월별 확인 - 그래프</h5>
+					<form method="post" id="workChart" name="workChart" action="<c:url value='/workRecord/workChart.do'/>">
+						<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
+						<label>연도</label>&nbsp;&nbsp;&nbsp;
+						<select id="year" name="year">
+							<option value="2019"
+								<c:if test="${year=='2019'}">
+								selected
+								</c:if>
+							>2019년</option>
+							<option value="2020"
+								<c:if test="${year=='2020'}">
+								selected
+								</c:if>
+							>2020년</option>
+						</select>
+						<label>월</label>&nbsp;&nbsp;&nbsp;
+						<select id="month" name="month">
+							<option value="01"
+								<c:if test="${month=='01'}">
+								selected
+								</c:if>
+							>1월</option>
+							<option value="02"
+								<c:if test="${month=='02'}">
+								selected
+								</c:if>
+							>2월</option>
+							<option value="03"
+								<c:if test="${month=='03'}">
+								selected
+								</c:if>
+							>3월</option>
+							<option value="04"
+								<c:if test="${month=='04'}">
+								selected
+								</c:if>
+							>4월</option>
+							<option value="05"
+								<c:if test="${month=='05'}">
+								selected
+								</c:if>
+							>5월</option>
+							<option value="06"
+								<c:if test="${month=='06'}">
+								selected
+								</c:if>
+							>6월</option>
+							<option value="07"
+								<c:if test="${month=='07'}">
+								selected
+								</c:if>
+							>7월</option>
+							<option value="08"
+								<c:if test="${month=='08'}">
+								selected
+								</c:if>
+							>8월</option>
+							<option value="09"
+								<c:if test="${month=='09'}">
+								selected
+								</c:if>
+							>9월</option>
+							<option value="10"
+								<c:if test="${month=='10'}">
+								selected
+								</c:if>
+							>10월</option>
+							<option value="11"
+								<c:if test="${month=='11'}">
+								selected
+								</c:if>
+							>11월</option>
+							<option value="12"
+								<c:if test="${month=='12'}">
+								selected
+								</c:if>
+							>12월</option>
+						</select>
+						<input type="submit" class="btn btn-primary" id="btSearch" value="조회">
+					</form>
+ 					</div>
+				<!-- 통계 API -->
+				<div id="ChartDiv">
+					<div id="chartdiv1" style="height:100%; width:40%; "></div>	
+					<div id="chartdiv2" style="height:400px; width:40%; position: absolute;"></div>	
+				</div>
+				
+				
+				
+				<input type="hidden" id="avg" value="${avg }">
+				<input type="hidden" id="over" value="${over }">
+				<input type="hidden" id="under" value="${under }">
+				
+			</div>
 		</div>
-		<div><span id="name">${userName}님</span></div>
-		<!-- Content Row -->
-		<div class="row">
-			<!-- Area Chart -->
-			<div class="col-xl-12 " >
-				<div class="card shadow mb-4" style="fit-content">
-					<!-- 근태관리 조회 -->
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h5 class="m-0 font-weight-bold text-primary">월별 확인</h5>
-						<form method="post" id="workChart" action="<c:url value='/workRecord/workChart.do'/>">
-							<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
-							<label>연도</label>&nbsp;&nbsp;&nbsp;
-							<select id="year" name="year">
-								<option value="2019">2019년</option>
-								<option value="2020">2020년</option>
-							</select>
-							<label>월</label>&nbsp;&nbsp;&nbsp;
-							<select id="month" name="month">
-								<option value="01">1월</option>
-								<option value="02">2월</option>
-								<option value="03">3월</option>
-								<option value="04">4월</option>
-								<option value="05">5월</option>
-								<option value="06">6월</option>
-								<option value="07">7월</option>
-								<option value="08">8월</option>
-								<option value="09">9월</option>
-								<option value="10">10월</option>
-								<option value="11">11월</option>
-								<option value="12">12월</option>
-							</select>
-							<input type="submit" class="btn btn-primary" id="btSearch" value="조회">
-						</form>
-  					</div>
-					<!-- 통계 API -->
-					<div>
-						<button id="pie" class="btn btn-primary">원형 그래프 보기</button>
-						<button id="bar" class="btn btn-primary">막대 그래프 보기</button>
-					</div>
-					<div id="ChartDiv1">
-						<div id="chartdiv1" style="height:100%;width:80%;"></div>	
-					</div>
-					
-					<div id="ChartDiv2">
-						<div id="chartdiv2" style="height:100%;width:80%;"></div>	
-						
-					</div>
-					<input type="hidden" id="avg" value="${avg }">
-					<input type="hidden" id="over" value="${over }">
-					<input type="hidden" id="under" value="${under }">
+	</div>
+</div>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+	<!-- Content Row -->
+	<div class="row">
+		<!-- Area Chart -->
+		<div class="col-xl-12 " >
+			<div class="card shadow mb-4" style="fit-content;">
+				<!-- 근태관리 조회 -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">월별 확인 - 테이블</h5>
+					<form method="post" id="workTable" name="workTable" action="<c:url value='/workRecord/workChart.do'/>">
+					</form>
+					<input type="submit" class="btn btn-primary" id="btTable" value="테이블 보기">
+				</div>
+				<!-- 조회시 테이블 생성 -->
+				<div id="table" style="height: 300px; overflow:auto;">
+					<div id="ajaxTable"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+</div>
 <script>	
+//조회시 차트
+function makeList(xmlStr){
+	var str = "<table class='table table-bordered table-hover'>";
+		str += "<tr style='background:gray; color:white;'><th>오늘날짜</th>";
+		str += "<th>출근시간</th>";
+		str += "<th>퇴근시간</th>";
+		str += "<th>근무상태</th></tr>";
+		
+	if(xmlStr==''){
+		str += "<tr><td colspan='4' style='text_align:center'>해당 날짜에 근태 기록이 없습니다.</td></tr>";
+		str += "</table>";
+		$("#ajaxTable").html(str);
+		
+		return;
+	}else{
+		$(xmlStr).each(function(idx, item){
+			var cmpRegdate = item.cmpRegdate;
+			var cmpIn = item.cmpIn;
+			var cmpOut = item.cmpOut;
+			var cmpStatus = item.cmpStatus;
+			
+			str += "<tr>";
+			str += "<td>"+cmpRegdate+"</td>";
+			str += "<td>"+cmpIn+"</td>";			
+			str += "<td>"+cmpOut+"</td>";	
+			if(cmpStatus == '초과근무'){
+				str += "<td style='color:green';>"+cmpStatus+"</td>";			
+			}
+			if(cmpStatus == '지각'){
+				str += "<td style='color:red';>"+cmpStatus+"</td>";			
+			}
+			if(cmpStatus == '퇴근'){
+				str += "<td>"+cmpStatus+"</td>";			
+			}
+			str += "</tr>"; 	
+		});
+		
+		str += "</table>";
+		
+		$("#ajaxTable").html(str);
+	}
+}
+
 $(function(){
+	$("#btTable").click(function(){
+		if($(this).val()=="테이블 보기"){
+			$(this).val("테이블 닫기");
+			$("#ajaxTable").css("display","block");
+		}else{
+			$(this).val("테이블 보기");
+			$("#ajaxTable").css("display","none");
+		}
+		
+		var year = $("#year option:selected").val();
+		var month = $("#month option:selected").val();
+
+		event.preventDefault();
+		$.ajax({
+			url:"/ice/workRecord/searchWork.do?month="+month+"&year="+year+"",
+			type:"get",
+			datatype:"json",
+			success:function(res){
+				makeList(res);	
+			},
+			error:function(xhr, status, error){
+				alert(status + ", " + error);
+			}
+		});
+	});
+	
+	
 	var avg = Number($("#avg").val());
 	var over = Number($("#over").val());
 	var under = Number($("#under").val());
 	
-	// bar 차트	
+	var workAvg = [avg];
 	var workOver = [over];
 	var workUnder = [under];
-	var workAvg = [avg];
-	
-	$("#pie").click(function() {
-		$("#ChartDiv1").toggle(
-			function (){ $(this).addClass("show")},
-			function (){ $(this).addClass("hide")}
-		);
-	});
-
-	$("#bar").click(function() {
-		$("#ChartDiv2").toggle(
-				function (){ $(this).addClass("show")},
-				function (){ $(this).addClass("hide")}
-		);
-	});
 	 
+	// bar 차트	
 	$.jqplot('chartdiv2',  [workAvg,workUnder,workOver], {
 		seriesDefaults:{
-		// 바 그래프
 		renderer:$.jqplot.BarRenderer,	
 		rendererOptions: { fillToZero: true },	
 		  pointLabels: { show: true }	
@@ -147,7 +277,7 @@ $(function(){
 		axes: {
 		  xaxis: {
 		    renderer: $.jqplot.CategoryAxisRenderer,	
-		    ticks: ['해당 월'],
+		    ticks: [$("#month option:selected").val()],
 		  }
 		},
 		//bar 색 변경
@@ -195,17 +325,6 @@ $(function(){
             },
         }
     );
-	
-	function draw() {
-		var canvas = document.getElementById('canvas');
-			if (canvas.getContext) {
-				var ctx = canvas.getContext('2d');
-				
-				ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-				ctx.fillRect(25, 25, 100, 100);
-				
-			}
-	}
 });	
 </script>	
 <%@include file="../inc/bottom.jsp"%>

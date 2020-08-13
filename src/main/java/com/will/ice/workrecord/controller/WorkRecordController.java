@@ -252,6 +252,8 @@ public class WorkRecordController {
 			model.addAttribute("under",under);
 			model.addAttribute("over",over);
 			model.addAttribute("avg",avg);
+			model.addAttribute("year",year);
+			model.addAttribute("month",month);
 		}
 
 	}
