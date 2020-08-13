@@ -14,7 +14,7 @@
 	
 	<update id="updateEmployee" parameterType="MypageVO">
 		update member
-		set name=#{name} , pwd=#{pwd} , hp1=#{hp1} , hp2=#{hp2} , hp3=#{hp3} ,
+		set name=#{name}, hp1=#{hp1} , hp2=#{hp2} , hp3=#{hp3} ,
 			email1=#{email1} , email2=#{email2} , gender=#{gender} ,
 			zipcode=#{zipcode} , addr=#{addr} , addrDetail=#{addrDetail} ,
 			proFileURL=#{proFileURL} , originalFileName=#{originalFileName} ,

@@ -1,6 +1,6 @@
 /* 辟怕包府 */
---DROP TABLE workRecord CASCADE CONSTRAINTS
---drop sequence workRecord_seq
+DROP TABLE workRecord CASCADE CONSTRAINTS;
+drop sequence workRecord_seq;
 
 /* 辟怕包府 */
 CREATE TABLE workRecord (

@@ -42,6 +42,13 @@
 				$("#result_p").text("비밀번호가 일치합니다");
 			}
 		});
+		
+		/* var pwd = $('#pwd').val();
+		var pwd2 = $('#pwd2').val();
+		if(pwd != pwd2){
+			alert("비밀번호가 일치 하지 않습니다.")
+			event.preventDefault();
+		} */
 
 	});
 </script>
