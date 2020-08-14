@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,10 +23,15 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
+                	
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">TODAY</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">(년월일 시간분초)</div>
+                      <%
+                      	Date today = new Date();
+                      	SimpleDateFormat sdf_today = new SimpleDateFormat("yyyy년 MM월 dd일");
+                      %>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=sdf_today.format(today) %></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
