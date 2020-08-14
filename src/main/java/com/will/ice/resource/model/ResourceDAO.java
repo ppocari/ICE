@@ -18,4 +18,5 @@ public interface ResourceDAO {
 	//자원예약
 	List<ResReserveVO> selectReserveResNo(int resNo);
 	ResKindVo selectReserveKind(int rkNo);
+	List<ResReserveVO> selectAvailableHour(ResReserveVO rsVo);
 }

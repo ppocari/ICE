@@ -16,4 +16,6 @@ $('#summernote').summernote({
     focus: true, 
     lang : 'ko-KR'
 });
+
+
 </script>

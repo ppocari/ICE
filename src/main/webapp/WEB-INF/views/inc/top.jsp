@@ -115,28 +115,6 @@
 				</div>
 			</li>
 
-			<!-- Nav Item - 전자결재 Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseThree"
-				aria-expanded="true" aria-controls="collapseThree"> <i
-					class="fas fa-fw fa-folder"></i> <span>전자결재</span>
-			</a>
-				<div id="collapseThree" class="collapse"
-					aria-labelledby="headingThree" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
-						
-						<%-- <div class="collapse-divider"></div>
-						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
-						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
-						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a> --%>
-					</div>
-				</div>
-			</li>
 
 			<!-- Nav Item - 자원관리-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="#"

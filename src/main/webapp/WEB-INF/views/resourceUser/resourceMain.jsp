@@ -273,7 +273,6 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>수정</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
 							<tr>
