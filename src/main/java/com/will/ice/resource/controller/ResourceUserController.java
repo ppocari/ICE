@@ -1,5 +1,9 @@
 package com.will.ice.resource.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,17 +107,22 @@ public class ResourceUserController {
 		model.addAttribute("rmVo", rmVo);
 	}
 	
-	@RequestMapping("/ajaxWrite.do")
+	/* 예약 시 datepicker에서 날짜 선택 시 select 자동 처리  */
+	@RequestMapping("/ajaxDatePicker.do")
 	@ResponseBody
-	public ScheduleVo ajaxWrite( @RequestParam String pickStart, HttpSession session) {		
-		String memNo = (String) session.getAttribute("identNum");
+	public List<ResReserveVO> ajaxWrite( @RequestParam String pickStart, @RequestParam int resNo) {		
+		logger.info("예약 시 datepicker에서 날짜 선택 시 select 자동 처리, 파라미터 pickStart={}, resNo={}", pickStart, resNo);
 		
+		//ResReserveVo에 셋팅
+		ResReserveVO seVo = new ResReserveVO(resNo, pickStart);
 		
-		ScheduleVo vo = new ScheduleVo();
-		return vo;
+
+		List<ResReserveVO> hourList = service.selectAvailableHour(seVo);
+		logger.info("hourList={}", hourList.size());
+		
+		return hourList;
+
 	}
+}
 	
-	/*
-	 * HttpSession session=(HttpSession) request.getSession(); String
-	 * memNo=(String)session.getAttribute("idenNum");
-	 */}
+	
