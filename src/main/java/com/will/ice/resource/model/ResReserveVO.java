@@ -25,12 +25,13 @@ public class ResReserveVO {
 	public ResReserveVO() {
 		super();
 	}
-	
+
 	public ResReserveVO(int resNo, String startDate) {
 		super();
 		this.resNo = resNo;
 		this.startDate = startDate;
 	}
+
 
 	public int getResNo() {
 		return resNo;
@@ -62,27 +63,22 @@ public class ResReserveVO {
 	public void setRvNo(int rvNo) {
 		this.rvNo = rvNo;
 	}
+	
 	public Timestamp getRvStart() {
 		return rvStart;
 	}
+
 	public void setRvStart(Timestamp rvStart) {
 		this.rvStart = rvStart;
 	}
+
 	public Timestamp getRvEnd() {
 		return rvEnd;
 	}
+
 	public void setRvEnd(Timestamp rvEnd) {
 		this.rvEnd = rvEnd;
 	}
-	
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
 
 	public String getRvReason() {
 		return rvReason;
@@ -127,12 +123,21 @@ public class ResReserveVO {
 		this.posName = posName;
 	}
 
+	
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
 	@Override
 	public String toString() {
 		return "ResReserveVO [resNo=" + resNo + ", resName=" + resName + ", rkNo=" + rkNo + ", rkKind=" + rkKind
-				+ ", rvNo=" + rvNo + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd + ", startDate=" + startDate
-				+ ", rvReason=" + rvReason + ", rvConfirm=" + rvConfirm + ", rvRegdate=" + rvRegdate + ", memNo="
-				+ memNo + ", name=" + name + ", deptName=" + deptName + ", posName=" + posName + "]";
+				+ ", rvNo=" + rvNo + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd + ", rvReason=" + rvReason + 
+				", rvConfirm=" + rvConfirm + ", rvRegdate=" + rvRegdate + ", memNo="+ memNo + 
+				", name=" + name + ", deptName=" + deptName + ", posName=" + posName + "]";
 	}
 	
 }

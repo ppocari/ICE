@@ -57,8 +57,9 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<ResReserveVO> selectAvailableHour(ResReserveVO rsVo) {
-		return dao.selectAvailableHour(rsVo);
+	public List<ResReserveVO> selectStartAvailableHour(ResReserveVO rsVo) {
+		return dao.selectStartAvailableHour(rsVo);
 	}
+
 
 }

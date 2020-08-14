@@ -466,8 +466,14 @@ article > div {
 							<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
 								placeholder="시작일"/>
 							<select id="startHour">
-								<c:forEach var="pop" items="${popList }">
-									
+								<c:set var="hId" value="0"/>
+								<c:set var="hour" value="0"/>
+								<c:forEach begin="1" end="24">
+									<option id="hour${hId}" value="${hour }:00" >${hour }:00</option>
+									<option id="hour${hId +50 }" value="${hour }:30">${hour }:30</option>
+										
+									<c:set var="hId" value="${hId +100 }"/>
+									<c:set var="hour" value="${hour +1 }"/>
 								</c:forEach>
 							</select>
 						<span> ~ </span>

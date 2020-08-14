@@ -91,7 +91,7 @@ public class ResourceUserController {
 		return "resourceUser/resourceMain";
 	}
 	
-	@RequestMapping("/reserveResource.do")
+	@RequestMapping("/addReservation.do")
 	public void reserve_get(@RequestParam int resNo, HttpServletRequest request,
 			Model model) {
 		logger.info("자원예약신청 화면, 파라미터 resNo={}", resNo);
@@ -107,18 +107,21 @@ public class ResourceUserController {
 		model.addAttribute("rmVo", rmVo);
 	}
 	
-	/* 예약 시 datepicker에서 날짜 선택 시 select 자동 처리  */
-	@RequestMapping("/ajaxDatePicker.do")
+	/* 시작 날짜 선택 시 시작 select 자동 처리  */
+	@RequestMapping("/ajaxStartPicker.do")
 	@ResponseBody
-	public List<ResReserveVO> ajaxWrite( @RequestParam String pickStart, @RequestParam int resNo) {		
-		logger.info("예약 시 datepicker에서 날짜 선택 시 select 자동 처리, 파라미터 pickStart={}, resNo={}", pickStart, resNo);
+	public List<ResReserveVO> ajaxStart(@RequestParam String pickStart, @RequestParam int resNo) {		
+		logger.info("시작 날짜 선택 시 select 자동 처리, 파라미터 resNo={}, pickStart={}", resNo, pickStart);
 		
 		//ResReserveVo에 셋팅
 		ResReserveVO seVo = new ResReserveVO(resNo, pickStart);
 		
-		List<ResReserveVO> hourList = service.selectAvailableHour(seVo);
+		List<ResReserveVO> hourList = service.selectStartAvailableHour(seVo);
 		logger.info("hourList={}", hourList.size());
-		
+		for(ResReserveVO vo : hourList) {
+			logger.info("vo.getRvStart()="+vo.getRvStart());
+			logger.info("vo.getRvEnd()="+vo.getRvEnd());
+		}
 		return hourList;
 	}
 }

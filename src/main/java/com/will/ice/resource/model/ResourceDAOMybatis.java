@@ -63,9 +63,8 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	}
 
 	@Override
-	public List<ResReserveVO> selectAvailableHour(ResReserveVO rsVo) {
-		return sqlSession.selectList(namespace+"selectAvailableHour", rsVo);
+	public List<ResReserveVO> selectStartAvailableHour(ResReserveVO rsVo) {
+		return sqlSession.selectList(namespace+"selectStartAvailableHour", rsVo);
 	}
 
-	
 }
