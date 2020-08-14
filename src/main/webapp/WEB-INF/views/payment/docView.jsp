@@ -11,7 +11,7 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	body{overflow: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
+	body{overflow-x: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
 </style>
 <script type="text/javascript">
 	function checkReject(){
@@ -73,21 +73,19 @@
 							<td>${vo.posName }</td>
 						</tr>
 						<tr>
-							<c:if test="${!empty plList2}">
+							<c:if test="${!empty comVo}">
 							<c:if test="${!empty vo.payDate}">
-								<c:forEach var="vo2" items="${plList2 }">
 								<td>
+								<c:forEach var="vo2" items="${comVo }">
 									<c:if test="${!empty vo2.signName}">
+									<c:if test="${vo.memNo == vo2.memNo}">
 										<img alt="서명" src="<c:url value='/sign_file/${vo2.signName }'/>" width="60%">
+									</c:if>
 									</c:if>
 									<c:if test="${empty vo2.signName}">
 										반려
 									</c:if>
-								</td>
 								</c:forEach>
-							</c:if>
-							<c:if test="${empty vo.payDate}">
-								<td>
 								</td>
 							</c:if>
 							</c:if>
@@ -112,16 +110,14 @@
 				</tr>
 				
 			</table>
-			<c:forEach var="fileVo" items="${fListVo }">
-			<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
-				<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
-					id="fileName">
-					${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
-				</a>
-			</c:if>
-			  </c:forEach>
 		</div>
 	</div>
+	<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
+		<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+			id="fileName" style="margin-left: 2%;">
+			${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+		</a>
+	</c:if>
 	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<form class="form-inline" name="confirmFrm" method="post" enctype="multipart/form-data">
 			<div class="form-group" id="commentDiv">&nbsp;

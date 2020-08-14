@@ -104,8 +104,8 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	}
 
 	@Override
-	public List<PaymentfileVO> getFile(int docNo) {
-		return sqlSession.selectList(namespace+"getFile",docNo);
+	public PaymentfileVO getFile(int docNo) {
+		return sqlSession.selectOne(namespace+"getFile",docNo);
 	}
 
 	@Override
@@ -173,5 +173,11 @@ public class PaymentDAOMybatis implements PaymentDAO{
 	public List<CommentviewVO> selectComment(int docNo) {
 		return sqlSession.selectList(namespace+"selectComment",docNo);
 	}
+
+	@Override
+	public int updatePaylinePg(int docNo) {
+		return sqlSession.update(namespace+"updatePaylinePg",docNo);
+	}
+
 
 }

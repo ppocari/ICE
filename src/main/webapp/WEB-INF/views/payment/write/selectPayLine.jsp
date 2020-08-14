@@ -101,7 +101,7 @@
 				<div id="payline3">
 					<button type="submit" class="btn btn-default" id="btSavePayLine">저장</button>
 					<button type="button" class="btn btn-default" id="btCancel"
-						onclick="history.go(-1)">취소</button>
+						onclick="<c:url value='/payment/close.do' />">취소</button>
 				</div>
 			</form>
 		</div>

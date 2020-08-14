@@ -1,7 +1,6 @@
 package com.will.ice.common;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,8 +42,7 @@ public class FileUploadUtil {
 	public List<Map<String, Object>> fileUpload(
 			HttpServletRequest request,  int pathGb) {
 		//파일 업로드 처리 메서드		
-		MultipartHttpServletRequest multiReq 
-		= (MultipartHttpServletRequest) request;
+		MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
 	
 		List<Map<String, Object>> resultList
 			=new ArrayList<Map<String,Object>>();
@@ -70,47 +68,6 @@ public class FileUploadUtil {
 				File file = new File(upPath, fileName);
 				try {
 					tempFile.transferTo(file);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				logger.info("업로드 처리되었습니다.");
-				
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("fileSize", fileSize);
-				map.put("fileName", fileName);
-				map.put("originalFileName", originalFName);
-				resultList.add(map);
-			}
-		}//while
-		
-		return resultList;
-	}
-	
-	public List<Map<String, Object>> fileUploadMulti(MultipartFile[] upfile,
-			MultipartHttpServletRequest multiReq, int pathGb) {
-		//파일 업로드 처리 메서드		
-		
-		List<Map<String, Object>> resultList
-			=new ArrayList<Map<String,Object>>();
-		
-		for(int i=0; i<upfile.length; i++) {
-			//=> 업로드된 파일을 임시파일 형태로 제공
-			
-			//업로드 한 경우에 파일크기, 이름 구하기
-			if(!upfile[i].isEmpty()) {
-				String originalFName = upfile[i].getOriginalFilename();
-				long fileSize=upfile[i].getSize();
-				
-				//변경된 파일 명 구하기
-				String fileName=getUniqueFileName(originalFName);
-				
-				//업로드 처리
-				String upPath = getUploadPath(multiReq, pathGb);
-				File file = new File(upPath, fileName);
-				try {
-					upfile[i].transferTo(file);
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

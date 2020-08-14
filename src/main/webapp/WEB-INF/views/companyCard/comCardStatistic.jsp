@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="../inc/top.jsp" />
 
@@ -27,43 +28,109 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
 <script type="text/javascript">
-	$(function(){
-		
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
+	 $(function(){
+			$( "input[name=usedate1]" ).datepicker({
+				dateFormat:'yy-mm-dd',
+		         changeYear:true,
+		         changeMonth:true,
+		         dayNamesMin:['일','월','화','수','목','금','토'],
+		         monthNames:['1월','2월','3월','4월','5월','6월',
+		            '7월','8월','9월','10월','11월','12월']
+			} );
 			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				},
-				error:function(xhr, status, error){
-					alert(status +", "+error);
-				}
+			$( "input[name=usedate2]" ).datepicker({
+				dateFormat:'yy-mm-dd',
+		         changeYear:true,
+		         changeMonth:true,
+		         dayNamesMin:['일','월','화','수','목','금','토'],
+		         monthNames:['1월','2월','3월','4월','5월','6월',
+		            '7월','8월','9월','10월','11월','12월']
+			} );
 			
-			})
+			$('#deptS').click(function(){
+				$.ajax({
+					url:"<c:url value='/comCardStatistic.do'/>",
+					type:"post",
+					data:"flag=dept",
+					success:function(res){
+						alert("부서별 조회");
+					},
+					error:function(xhr, status, error){
+						alert(status+", "+error);
+					}
+				});
+			});
 			
+			$('#posS').click(function(){
+				$.ajax({
+					url:"<c:url value='/comCardStatistic.do'/>",
+					type:"post",
+					data:"flag=pos",
+					success:function(res){
+						alert("직급별 조회");
+					},
+					error:function(xhr, status, error){
+						alert(status+", "+error);
+					}
+				});
+			});
 		});
-		
-		
-	});
+ 
+ 
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+	      var data = new google.visualization.DataTable();
+	      
+	      <c:forEach var="vo" items="${list}">
+		      data.addColumn('number', vo.getDeptName());
+	      </c:forEach>
 	
+	      data.addRows([
+	        [1,  37.8, 80.8, 41.8],
+	        [2,  30.9, 69.5, 32.4],
+	        [3,  25.4,   57, 25.7],
+	        [4,  11.7, 18.8, 10.5],
+	        [5,  11.9, 17.6, 10.4],
+	        [6,   8.8, 13.6,  7.7],
+	        [7,   7.6, 12.3,  9.6],
+	        [8,  12.3, 29.2, 10.6],
+	        [9,  16.9, 42.9, 14.8],
+	        [10, 12.8, 30.9, 11.6],
+	        [11,  5.3,  7.9,  4.7],
+	        [12,  6.6,  8.4,  5.2],
+	        [13,  4.8,  6.3,  3.6],
+	        [14,  4.2,  6.2,  3.4]
+	      ]);
+	
+	      var options = {
+	        chart: {
+	          title: '법인카드 통계',
+	          subtitle: '부서별 검색자료'
+	        },
+	        width: 900,
+	        height: 500,
+	        axes: {
+	          x: {
+	            0: {side: 'top'}
+	          }
+	        }
+	      };
+	
+	      var chart = new google.charts.Line(document.getElementById('line_top_x'));
+	
+	      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+    
 </script>
+
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
-
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">법인카드 통계</h1>
@@ -77,89 +144,40 @@
 
 	<div class="row">
 
-		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4" style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
+				
+					<form name="memRegisterFrm" method="post">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
+						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
 						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							<button type="submit" class="btn btn-info" formaction="<c:url value='/companyCard/comCardList.do'/> "
+							 >조회</button>
 						</div>
 						
 					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">						
 						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
-								</c:forEach>
-							</select>
+							<button type="submit" class="btn btn-info" id="deptS">부서별 조회</button>
 						</div>
 						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
-								<!-- option 반복 -->
-								<option>전체</option>
-								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
-								</c:forEach>
-							</select>
+							<button type="submit" class="btn btn-info" id="posS">직급별 조회</button>
 						</div>
 						<div class="search" style="margin-right: 20px;">
-							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<label for="usedate1" style="margin-right: 20px;">사용일별</label>
+							<input type="text" name="usedate1" id="usedate1" value="${dpdvo.usedate1 }"> ~
+							<input type="text" name="usedate2" id="usedate2" value="${dpdvo.usedate2 }">
 						</div>
+						
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
-							<table class="table table-bordered table-hover" id="dynamicTable">
-								<thead>
-									<tr>
-										<th>사원번호</th>
-										<th>이름</th>
-										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
-										<th>입사일</th>
-										<th>부서명</th>
-										<th>직급</th>
-										<th>계약연봉</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody">
-									<!-- 반복시작 -->
-										
-									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.memNo }</td>
-											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
-											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
-										</tr>
-									</c:forEach>
-								</tbody>
-						</table>
-										
+						<div id="line_top_x">
+						
 						</div>
 					</div>		
 				</form>
-				
 				
 			</div>
 		</div>

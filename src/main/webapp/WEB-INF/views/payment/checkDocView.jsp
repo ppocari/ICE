@@ -90,14 +90,12 @@
 		</div>
 	</div>
 	<div id="CDVlastDiv">
-		<c:forEach var="fileVo" items="${fListVo }">
 			<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
 				<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
 					id="fileName">
 					${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
 				</a>
 			</c:if>
-		</c:forEach>
 		<c:if test="${param.flag=='imsy'}">
 			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'"style="position: relative; right: 2%;top:-7px;">
 				결재선 지정

@@ -1,9 +1,9 @@
 package com.will.ice.companyCard.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.ice.accode.model.AccodeService;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
-
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.companyCard.model.ComCardFileVO;
-
 import com.will.ice.companyCard.model.ComCardListVO;
 import com.will.ice.companyCard.model.ComcardSerchVO;
 import com.will.ice.companyCard.model.ComcardService;
@@ -122,8 +120,6 @@ public class CompanyCardController {
 			
 			model.addAttribute("list", ccsList);
 		}
-		
-		
 
 		
 
@@ -196,7 +192,30 @@ public class CompanyCardController {
 		
 		model.addAttribute("list", list);
 
-
+	}
+	
+	@RequestMapping(value="/comCardStatistic.do",method = RequestMethod.GET)
+	public void comCardStatistic_get() {
+		logger.info("통계화면 보여주기");
 	}
 
+	@RequestMapping(value="/comCardStatistic.do",method = RequestMethod.POST)
+	@ResponseBody
+	public List<ComcardVO> comCardStatistic(@ModelAttribute Depart_posi_dateVO dpdvo, Model model,
+			@RequestParam(required=false) String flag) {
+		logger.info("통계 flag={}",flag);
+		
+		//기본(날짜별)
+		List<ComcardVO> list = null;
+		
+		if(flag.equals("dept")) {//부서별
+			list = comcardService.selectByDept();
+		}else if(flag.equals("pos")) {//직급별
+			list = comcardService.selectByPos();
+		}
+
+		//model.addAttribute("dpdvo", dpdvo);
+		return list;
+	}
+	
 }

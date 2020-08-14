@@ -1,7 +1,6 @@
 package com.will.ice.payment.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.will.ice.common.FileUploadUtil;
@@ -33,12 +30,10 @@ import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
-import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
 import com.will.ice.payment.model.PaymentviewVO;
-import com.will.ice.paymentfile.model.PaymentfileListVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Controller
@@ -54,31 +49,25 @@ public class PaymentController {
 	@Autowired private FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
-	public String insertPaydoc(@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request,
-			@ModelAttribute PaylinedocVO pldVo, Model model ,HttpSession session) {
+	public String insertPaydoc(@ModelAttribute PaylinedocVO pldVo, Model model ,HttpServletRequest request,HttpSession session) {
 		String identNum=(String)session.getAttribute("identNum");
 		pldVo.setWritememNo(identNum);
 		logger.info("기안작성=>완료함, pldVo={}",pldVo);
 		
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUploadMulti(upfile, request, fileUploadUtil.PATH_PAYMENT_FILE);
-		List<PaymentfileVO> fileListDB = new ArrayList<PaymentfileVO>(); 
-
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
 		String fileURL="",originalFileName="";long fileSize=0;
 		if(fileList!=null) {
 			for(Map<String, Object> map : fileList) {
 				fileURL=(String) map.get("fileName");
 				fileSize=(Long)map.get("fileSize");
 				originalFileName = (String)map.get("originalFileName");
-				
-				PaymentfileVO fileVo = new PaymentfileVO(); 
-				fileVo.setFileName(fileURL);
-				fileVo.setOriginalFileName(originalFileName);
-				fileVo.setFileSize(fileSize);
-				
-				fileListDB.add(fileVo);
 			}
 		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
 		
 		MemberVO memVo = memService.selectMember(identNum);
 		List<MemberVO> memlist = 
@@ -89,7 +78,7 @@ public class PaymentController {
 		model.addAttribute("memlist",memlist);
 		model.addAttribute("update",update);
 		model.addAttribute("pldVo",pldVo);
-		model.addAttribute("fileListDB",fileListDB);
+		model.addAttribute("fileVo",fileVo);
 		
 		return "payment/write/selectPayLine";
 	}
@@ -102,8 +91,8 @@ public class PaymentController {
 		logger.info("기안 목록 보여주기,사원번호={}",identNum);
 		
 		List<DoctypeVO> doctypelist = doctypeService.selectAll();
-		List<PaymentfileVO> fListVo = paymentService.getFile(docNo);
-		logger.info("첨부된 파일,fileVo={}",fListVo);
+		PaymentfileVO fileVo = paymentService.getFile(docNo);
+		logger.info("첨부된 파일,fileVo={}",fileVo);
 		MemberVO memVo = memService.selectMember(identNum);
 		List<DocformVO> formlist = docformService.selectAllForm();
 		
@@ -112,38 +101,33 @@ public class PaymentController {
 		
 		model.addAttribute("memVo",memVo);
 		model.addAttribute("formlist",formlist);
-		model.addAttribute("fListVo",fListVo);
+		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("doctypelist",doctypelist);
 		model.addAttribute("payVo",payVo);
 	}
 	
 	@RequestMapping("/write/imsyInsert.do")
-	public String imsyInsert(@ModelAttribute PaylinedocVO pldVo,HttpSession session,Model model,@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request) {
+	public String imsyInsert(@ModelAttribute PaylinedocVO pldVo,HttpSession session,Model model,HttpServletRequest request) {
 		String identNum = (String)session.getAttribute("identNum");
 		pldVo.setWritememNo(identNum);
 		logger.info("기안작성=>임시보관함, pldVo={}",pldVo);
 		
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUploadMulti(upfile, request, fileUploadUtil.PATH_PAYMENT_FILE);
-		List<PaymentfileVO> fileListDB = new ArrayList<PaymentfileVO>(); 
-
+		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		
 		String fileURL="",originalFileName="";long fileSize=0;
-		if(fileList!=null) {
-			for(Map<String, Object> map : fileList) {
-				fileURL=(String) map.get("fileName");
-				fileSize=(Long)map.get("fileSize");
-				originalFileName = (String)map.get("originalFileName");
-				
-				PaymentfileVO fileVo = new PaymentfileVO(); 
-				fileVo.setFileName(fileURL);
-				fileVo.setOriginalFileName(originalFileName);
-				fileVo.setFileSize(fileSize);
-				
-				fileListDB.add(fileVo);
-			}
+		for(Map<String, Object> map : fileList) {
+			fileURL=(String) map.get("fileName");
+			fileSize=(Long)map.get("fileSize");
+			originalFileName = (String)map.get("originalFileName");
 		}
+		
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
 
-		int cnt = paymentService.insertImsyPay(pldVo,fileListDB);
+		int cnt = paymentService.insertImsyPay(pldVo,fileVo);
 		String msg="임시보관 저장 실패!",url="/payment/write/imsyBox.do";
 		if(cnt>0) {
 			msg="임시보관함에 저장 되었습니다.";
@@ -157,7 +141,7 @@ public class PaymentController {
 
 	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
 	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
-			Model model,@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request,HttpSession session,@RequestParam String keep,
+			Model model,HttpServletRequest request,HttpSession session,@RequestParam String keep,
 			@RequestParam String oldfileName) {
 		//임시보관함에서 결재선 등록시
 		String identNum = (String)session.getAttribute("identNum");
@@ -173,28 +157,25 @@ public class PaymentController {
 		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
 
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUploadMulti(upfile, request, fileUploadUtil.PATH_PAYMENT_FILE);
-		List<PaymentfileVO> fileListDB = new ArrayList<PaymentfileVO>(); 
-
-		String fileURL="",originalFileName="";long fileSize=0;
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
 		if(fileList!=null) {
 			for(Map<String, Object> map : fileList) {
 				fileURL=(String) map.get("fileName");
-				fileSize=(Long)map.get("fileSize");
 				originalFileName = (String)map.get("originalFileName");
-				
-				PaymentfileVO fileVo = new PaymentfileVO(); 
-				fileVo.setFileName(fileURL);
-				fileVo.setOriginalFileName(originalFileName);
-				fileVo.setFileSize(fileSize);
-				
-				fileListDB.add(fileVo);
+				fileSize=(Long)map.get("fileSize");
 			}
 		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
 
 		int update=1;
 		model.addAttribute("oldfileName",oldfileName);
-		model.addAttribute("fileListDB",fileListDB);
+		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("memlist",memlist);
 		model.addAttribute("update",update);
 		model.addAttribute("pldVo",pldVo);
@@ -204,8 +185,7 @@ public class PaymentController {
 	
 	@RequestMapping("/write/imsyEdit.do")
 	public String imsyEdit(@ModelAttribute PaylinedocVO pldVo,HttpSession session,
-			Model model,@RequestParam("upfile") MultipartFile[] upfile,MultipartHttpServletRequest request,
-			@RequestParam String oldfileName) {
+			Model model,HttpServletRequest request,@RequestParam String oldfileName) {
 		//임시보관함에서 임시보관
 		String identNum = (String)session.getAttribute("identNum");
 		pldVo.setWritememNo(identNum);
@@ -215,42 +195,36 @@ public class PaymentController {
 		
 		int cnt=0;
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUploadMulti(upfile, request, fileUploadUtil.PATH_PAYMENT_FILE);
-		List<PaymentfileVO> fileListDB = new ArrayList<PaymentfileVO>(); 
-
-		String fileURL="",originalFileName="";long fileSize=0;
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
 		if(fileList!=null) {
 			for(Map<String, Object> map : fileList) {
 				fileURL=(String) map.get("fileName");
-				fileSize=(Long)map.get("fileSize");
 				originalFileName = (String)map.get("originalFileName");
-				
-				PaymentfileVO fileVo = new PaymentfileVO(); 
-				fileVo.setFileName(fileURL);
-				fileVo.setOriginalFileName(originalFileName);
-				fileVo.setFileSize(fileSize);
-				
-				fileListDB.add(fileVo);
+				fileSize=(Long)map.get("fileSize");
 			}
 		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
 		
-		cnt = paymentService.updatePaydoc(pldVo,fileListDB,oldfileName);
+		cnt = paymentService.updatePaydoc(pldVo,fileVo,oldfileName);
 		
 		String msg="임시보관 저장 실패!",url="/payment/close.do";
 		if(cnt>0) {
 			msg="임시보관함에 저장 되었습니다.";
 			if(fileURL!=null && !fileURL.isEmpty()) {
 				if(oldfileName!=null && !oldfileName.isEmpty()) {
-					List<PaymentfileVO> fListVo = paymentService.getFile(pldVo.getDocNo());
-					for(PaymentfileVO vo : fListVo) {
-						String oldFileName=vo.getFileName();
-						String upPath 
+					String oldFileName=paymentService.getFile(pldVo.getDocNo()).getFileName();
+					String upPath 
 						= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PAYMENT_FILE);
-						File file = new File(upPath, oldFileName);
-						if(file.exists()) {
-							boolean bool=file.delete();
-							logger.info("파일 삭제 여부: {}", bool);
-						}
+					File file = new File(upPath, oldFileName);
+					if(file.exists()) {
+						boolean bool=file.delete();
+						logger.info("파일 삭제 여부: {}", bool);
 					}
 				}
 			}
@@ -299,10 +273,11 @@ public class PaymentController {
 		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
 		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
-		List<PaymentfileVO> fListVo = paymentService.getFile(docNo);
+		PaymentfileVO fileVo = paymentService.getFile(docNo);
+		logger.info("첨부파일 fileVo={}",fileVo);
 		
 		model.addAttribute("payVo",payVo);
-		model.addAttribute("fListVo",fListVo);
+		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("plList",plList);
 		model.addAttribute("plList2",plList2);
 	}
@@ -332,10 +307,9 @@ public class PaymentController {
 	public void close(){
 		logger.info("팝업 닫기");
 	}
-
 	@RequestMapping("/write/close2.do")
 	public void close2(){
-		logger.info("팝업 닫기2");
+		logger.info("팝업 닫기");
 	}
 	
 	@RequestMapping("/write/sentpayList.do") 

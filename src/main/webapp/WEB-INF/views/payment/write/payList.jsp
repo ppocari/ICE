@@ -49,7 +49,7 @@
 			<h6 class="m-0 font-weight-bold text-primary">새 문서 작성하기</h6>
 		</div>
 	<div id="writewholeDiv">
-		<form name="writepayInfoFrm" method="post" enctype="multipart/form-data" style="color: black;">
+		<form name="writepayInfoFrm" method="post" style="color: black;" enctype="multipart/form-data">
 			<label for="docNo" id="writelabel1">문서 번호</label> 
 				<input type="text" class="form-control" id="writedocNo" readonly="readonly"
 					placeholder="작성중">
@@ -82,7 +82,7 @@
 			</select>
 		<c:import url="/payment/summer.do"></c:import>
 		<label for="upfile" id="writelabel8">첨부파일</label>
-		<input multiple="multiple" type="file" class="form-control" id="writeupfile" name="upfile">
+		<input type="file" class="form-control" id="writeupfile" name="upfile">
 			<select class="form-control" id="writetypeNo" name="typeNo" style="width: 200px;">
 				<!-- 반복 시작 -->
 					<c:forEach var="doctypeVo" items="${doctypelist }">

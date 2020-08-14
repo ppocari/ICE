@@ -91,4 +91,15 @@
 		where filename = #{fileName}
 	</select>
 
+	<select id="selectByDept" resultType="ComcardVO">
+		select deptName,sum(price) from comcard_mem_acc
+		where acccode is not null
+		group by deptName
+	</select>
+
+	<select id="selectByPos" resultType="ComcardVO">
+		select posCode,sum(price) from comcard_mem_acc
+		where acccode is not null
+		group by posCode;
+	</select>
 </mapper>

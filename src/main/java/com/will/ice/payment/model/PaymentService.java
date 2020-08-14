@@ -9,23 +9,22 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
-import com.will.ice.paymentfile.model.PaymentfileListVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 public interface PaymentService {
 	/* ---------------기안함------------------- */
 	List<PaylistViewVO> selectSent(PaymentSearchVO paysearchVo);
 	List<PaymentviewVO> selectImsy(PaymentSearchVO paysearchVo);
-	int insertPaymentM(String[] memList, PaylinedocVO pldVo, PaymentfileListVO fListVo);
+	int insertPaymentM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo);
 	PaymentviewVO selectDocument(int docNo);
 	List<ChkDocumentviewVO> selectPayLine(int docNo);
 	List<DocumentviewVO> selectPayLine2(int docNo);
 	int deletePayLine(int docNo);
 	List<MemberVO> selectAllMem(int poscode);
-	int insertImsyPay(PaylinedocVO pldVo,List<PaymentfileVO> fileListDB);
-	int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileListVO fListVo,String oldfileName);
-	List<PaymentfileVO> getFile(int docNo);
-	int updatePaydoc(PaylinedocVO pldVo,List<PaymentfileVO> fileListDB,String oldfileName);
+	int insertImsyPay(PaylinedocVO pldVo,PaymentfileVO fileVo);
+	int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo,String oldfileName);
+	PaymentfileVO getFile(int docNo);
+	int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName);
 	
 	/* ---------------결재함------------------- */
 	List<PaylistViewVO> selectUndecided2(PaymentSearchVO paysearchVo,List<Integer> docNolist);
