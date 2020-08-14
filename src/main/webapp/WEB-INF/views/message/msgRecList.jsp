@@ -29,8 +29,16 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	
-	
+	$(function(){
+		$("#dynamicTbody tr").click(function(){
+			var no = $(this).children(0).val();
+			alert(no);
+			
+			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
+			'width=780,height=600,left=50,top=50,location=yes,resizable=yes');	
+			
+		});		
+	});
 </script>
 <!-- Begin Page Content -->
 
@@ -97,10 +105,7 @@
 
 	
 						<a href="<c:url value='/message/messageWrite.do'/>">
-							<div>
-								<button type="button"  style="float: right; font-size:13px;" class="btn btn-info"
-								 >쪽지작성</button>
-							</div>
+							<button type="button"  style="float: right; font-size:13px;" class="btn btn-info">쪽지작성</button>
 						</a>
 						
 					</div>
@@ -111,7 +116,7 @@
 						<div class="chart-area" style="overflow: scroll; height:420px;">
 
 
-							<table class="table table-bordered table-condensed" id="dynamicTable">
+							<table class="table table-bordered table-condensed table-hover" id="dynamicTable">
 								<colgroup>
 									<col style="width:5%;"/>
 									<col style="width:15%;"/>
@@ -124,15 +129,17 @@
 											<input type="checkbox" id="checkAll" value="option1">
 										</th>
 										<th scope="col">읽기 여부</th>
-										<th scope="col">받을 사람</th>
+										<th scope="col">보낸 사람</th>
 										<th scope="col">내용</th>
 										<th scope="col">보낸 날짜</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 게시판 내용 반복문시작 -->
+									<c:set var="i" value="${1 }" />
 									<c:forEach var="msgvo" items="${msgList }">
-										<tr class="align_center">
+										<tr class="align_center" id="msgRecList${i }" >
+											<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}">
 											<td>
 												<input type="checkbox" id="inlineCheckbox1" value="option1">
 											</td>
@@ -158,6 +165,8 @@
 												pattern="yyyy-MM-dd"/> 
 											</td>
 										</tr>
+										
+										<c:set var="i" value="${ i+1 }" />
 									</c:forEach>
 								</tbody>
 						</table>

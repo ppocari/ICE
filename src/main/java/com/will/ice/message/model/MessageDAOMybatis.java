@@ -38,6 +38,11 @@ public class MessageDAOMybatis implements MessageDAO{
 		return sqlsession.selectList(namespace+"msgRecList", msgVO);
 	}
 
+	@Override
+	public MessageVO msgSelecyByno(int no) {
+		return sqlsession.selectOne(namespace+"msgSelecyByno", no);
+	}
+
 	
 	
 	

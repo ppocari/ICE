@@ -10,4 +10,6 @@ public interface MessageDAO {
 	List<MessageVO> msgSendList(MessageVO msgVO);
 	
 	List<MessageVO> msgRecList(MessageVO msgVO);
+	
+	MessageVO msgSelecyByno(int no);
 }

@@ -47,7 +47,7 @@
 			var loc_num = $(this).next().val();
 			console.log(loc_num);
 			window.open('/ice/companyCard/Accode.do?loc_num='+loc_num,'companyCard',
-			'width=930,height=500,left=50,top=50,location=yes,resizable=yes');
+			'width=1000,height=600,left=50,top=50,location=yes,resizable=yes');
 			
 		});
 		
@@ -133,7 +133,7 @@
 										<th style="width: 7%">카드사</th>
 										<th style="width: 15%">카드번호</th>
 										<th style="width: 8%">사원이름</th>
-										<th style="width: 10%">계정코드</th>
+										<th style="width: 10%">계정제목</th>
 										<th style="width: 13%">사용처</th>
 										<th style="width: 10%">사용금액</th>
 										<th style="width: 10%">사용일</th>
@@ -163,8 +163,9 @@
 													<input style="width: 100px;" type="hidden" name="accItems[${i}].name"  value="${vo.name }" />
 												</td>
 												<td>
-													<input type="text" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" style="width: 100px;" > 
+													<input type="text" id="acccode_name${i }" class="acccode" value="" name="accItems[${i}].accCode_name" style="width: 100px;" > 
 													<input type="hidden" value="${i}" id="edit_td${i}">
+													<input type="hidden" id="acccode${i }" class="acccode" value="" name="accItems[${i}].accCode" style="width: 100px;" > 
 												</td>
 												<td>${vo.usePlace }
 													<input type="hidden" name="accItems[${i}].usePlace"  value="${vo.usePlace }" />

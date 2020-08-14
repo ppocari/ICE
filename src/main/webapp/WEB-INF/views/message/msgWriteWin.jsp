@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
+<%@ include file="../inc/all_css_js.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
@@ -78,15 +78,4 @@
 </div>
 
 
-
-
-
-
-<!-- /.container-fluid -->
-<div></div>
-<div></div>
-
-<!-- End of Main Content -->
-
-<jsp:include page="../inc/bottom.jsp" />
 

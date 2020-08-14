@@ -28,6 +28,12 @@
 		select * from message_view
 		where recmemno = #{recMemNo}
 	</select>
+	
+	<select id="msgSelecyByno" parameterType="int" resultType="messageVO">
+		select * from message_view
+		where no = #{no}
+	
+	</select>
 
 </mapper>
  
