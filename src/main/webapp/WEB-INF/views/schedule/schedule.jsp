@@ -320,15 +320,18 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	/*색깔별 내용*/
 	div#canvasDiv {
-	    position: absolute;
+	    position: fixed;
 	    margin-top: 10%;
 	    margin-left: 5%;
 	    width: 165px;
+	    border: 1px solid gray;
+	    padding: 10px;
+	    background: #fcf8e3;
 	}
 	
 	canvas{
-		width: 50px;
-	    height: 50px;
+		width: 30px;
+	    height: 30px;
 	    border: 1px solid;
 	}
 	#canvas1{
@@ -357,10 +360,18 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 				</div>
 				<!-- 색깔별 내용 -->
 				<div id="canvasDiv">
-					<canvas id="canvas1"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">업무관련</label>	
-					<canvas id="canvas2"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">기타</label>	
-					<canvas id="canvas3"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">휴가</label>		
-					<canvas id="canvas4"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">유연근무</label>			
+					<div>
+						<canvas id="canvas1"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">업무관련</label>	
+					</div>
+					<div>
+						<canvas id="canvas2"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">기타</label>	
+					</div>
+					<div>
+						<canvas id="canvas3"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">휴가</label>		
+					</div>
+					<div>
+						<canvas id="canvas4"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">유연근무</label>			
+					</div>
 				</div>
 				<!-- 캘린더 -->
 				<div class="calendar_back">
