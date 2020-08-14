@@ -51,7 +51,6 @@ public class PaymentServiceImpl implements PaymentService{
 			logger.info("isFile={}",isf);
 		}
 		
-		if(fileListDB!=null && !fileListDB.isEmpty()) {
 		for(PaymentfileVO fileVo : fileListDB) {
 			logger.info("첨부파일 fileVo={}",fileVo);
 			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
@@ -61,7 +60,6 @@ public class PaymentServiceImpl implements PaymentService{
 				int isf = paymentDao.isFile(pldVo);
 				logger.info("파일저장 ={},isFile={}",cnf,isf);
 			}
-		}
 		}
 		
 		for(int i=memList.length-1; i>-1; i--) {
@@ -115,22 +113,21 @@ public class PaymentServiceImpl implements PaymentService{
 			}
 			int isf = paymentDao.isFile(pldVo);
 			logger.info("isFile={}",isf);
-		}	
+		}
 		
-		if(fileListDB!=null && !fileListDB.isEmpty()) {
-			for(PaymentfileVO fileVo : fileListDB) {
-				fileVo.setDocNo(pldVo.getDocNo());
-				if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
-					if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
-						paymentDao.updateFile(fileVo);
-					}else {											//없으면 새로저장
-						paymentDao.saveFile(fileVo);
-					}
-					pldVo.setHasFile("Y");
-					paymentDao.isFile(pldVo);
+		for(PaymentfileVO fileVo : fileListDB) {
+			fileVo.setDocNo(pldVo.getDocNo());
+			if(fileVo.getFileName()!=null&&!fileVo.getFileName().isEmpty()) {
+				if(oldfileName2!=null && !oldfileName2.isEmpty()) {//원파일있으면수정
+					paymentDao.updateFile(fileVo);
+				}else {											//없으면 새로저장
+					paymentDao.saveFile(fileVo);
 				}
+				pldVo.setHasFile("Y");
+				paymentDao.isFile(pldVo);
 			}
 		}
+		
 		for(int i=memList.length-1; i>-1; i--) {
 			pldVo.setGetmemNo(memList[i]);
 			cnt += paymentDao.insertPayline(pldVo);

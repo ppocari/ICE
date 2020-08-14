@@ -70,7 +70,7 @@ public class DocumentController {
 		List<DocformVO> formList = formlistVo.getFormItems();
 		int cnt = docformService.deleteFormMulti(formList);
 		
-		String msg="문서 양식 삭제 실패!", url="/payment/write/setForm.do";
+		String msg="문서 양식 삭제 실패!", url="/payment/close.do";
 		if(cnt>0) {
 			msg="문서 양식 삭제되었습니다.";
 		}
