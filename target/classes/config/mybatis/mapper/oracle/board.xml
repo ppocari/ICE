@@ -24,10 +24,10 @@
 				recommend, category, isMain, filePath,
 			    (sysdate-regdate)*24 as newImgTerm
 			    from board
-		        <!-- <if test="searchKeyword!=null and searchKeyword !=''">
+		        <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 
 		        			|| #{searchKeyword} || '%'
-		        </if> -->
+		        </if>
 		        order by boardNo desc
 		    )A    
 		)
