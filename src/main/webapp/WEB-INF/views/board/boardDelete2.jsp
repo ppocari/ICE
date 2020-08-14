@@ -3,50 +3,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<style>
-.table td {
-	width: 90px;
-}
-
-.table .registerTable {
-	width: 90px;
-	border: 1px solid white;
-}
-
-.register_text {
-	width: 110px;
-}
-.search input{
-	width:150px;
-}
-
-
 </style>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-$(function(){
-	$("form[name=frmDelete]").submit(function(){
-		if($('#pwd').val().length<1){
-			alert('비밀번호를 입력하세요');
-			$('#pwd').focus();
-			event.preventDefault();
-		}else{
-			if(!confirm('삭제하시겠습니까?')){
-				event.preventDefault();
-			}
-		}
-		
-	});
+function boardDelete(){
+	var input=prompt("회원 비밀번호를 입력하세요","회원 비밀번호 입력");
 	
-	$("form[name=btList]").click(function(){
-		
-	});
-	
-});	
+	if(input == )
+}	
 </script>
 <!-- Begin Page Content -->
 

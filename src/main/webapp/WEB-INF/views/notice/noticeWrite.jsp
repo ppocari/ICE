@@ -42,13 +42,6 @@
 				event.preventDefault();
 			}
 		});
-		$('#summernote').submit(function() {
-			if ($('#summernote').val() == '') {
-				alert('내용을 입력하세요');
-				$('#summernote').focus();
-				event.preventDefault();
-			}
-		});
 	});
 </script>
 <!-- Begin Page Content -->
@@ -125,7 +118,7 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 								</td>
-								<td style="width: 80%;position: relative;left: 40px;">
+								<td style="width: 80%;">
 								<input type="file" id="upfile" name="upfile" /> <br>
 								<span>(최대 2M)</span></td>
 							</tr>

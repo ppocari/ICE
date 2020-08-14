@@ -26,7 +26,6 @@ import com.will.ice.common.Utility;
 import com.will.ice.notice.model.NoticeService;
 import com.will.ice.notice.model.NoticeVO;
 import com.will.ice.noticeComment.model.NoticeCommentService;
-import com.will.ice.noticeComment.model.NoticeCommentVO;
 import com.will.ice.noticeComment.model.NoticeCommentViewVO;
 
 
@@ -69,9 +68,9 @@ public class NoticeController {
 		
 		
 		//메인여부 체크안할시 N
-				if(noticeVo.getMain()==null || noticeVo.getMain().isEmpty()) {
-					noticeVo.setMain("N");
-				}
+		if(noticeVo.getMain()==null || noticeVo.getMain().isEmpty()) {
+			noticeVo.setMain("N");
+		}
 				
 		
 		//파일 업로드
@@ -287,24 +286,22 @@ public class NoticeController {
 		
 		logger.info("공지사항 수정, 파라미터 vo={}, identNum={}", noticeVo);
 		
-		/*
 		//파일 업로드
 		List<Map<String, Object>> list
 			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PDS);
 		
-		String NOTI_FILENAME="", NOTI_ORFILENAME="";
-		long NOTI_FILESIZE=0;
+		String fileName="", orFileName="";
+		long fileSize=0;
 		
 		for(Map<String, Object> map : list) {
-			NOTI_FILESIZE= (Long) map.get("NOTI_FILESIZE");
-			NOTI_FILENAME= (String) map.get("NOTI_FILENAME");
-			NOTI_ORFILENAME= (String) map.get("NOTI_ORFILENAME");
+			fileSize= (Long) map.get("fileSize");
+			fileName= (String) map.get("fileName");
+			orFileName= (String) map.get("originalFileName");
 		}
 		
-		noticeVo.setNOTI_FILENAME(NOTI_FILENAME);
-		noticeVo.setNOTI_ORFILENAME(NOTI_ORFILENAME);
-		noticeVo.setNOTI_FILESIZE(NOTI_FILESIZE);
-		*/
+		noticeVo.setFileName(fileName);
+		noticeVo.setOrFileName(orFileName);
+		noticeVo.setFileSize(fileSize);
 		
 		int cnt=noticeService.updateNotice(noticeVo);
 		logger.info("공지사항 수정 결과, cnt={}", cnt);
@@ -337,12 +334,11 @@ public class NoticeController {
 		return "redirect:/notice/noticeDetail.do?noticeNo="+noticeNo;
 	}
 	
-	@RequestMapping("download.do")
+	@RequestMapping("/download.do")
 	public ModelAndView download(@RequestParam(defaultValue = "0")int noticeNo, 
 		@RequestParam String fileName, HttpServletRequest request) {
-		logger.info("noticeNo={}", noticeNo);	
 		//1
-		logger.info("다운로드 파라미터, no={}, fileName={}", noticeNo, fileName);
+		logger.info("다운로드 파라미터, noticeNo={}, fileName={}", noticeNo, fileName);
 		
 		//2
 		int cnt=noticeService.updateDownCount(noticeNo);

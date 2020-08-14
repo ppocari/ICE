@@ -69,7 +69,14 @@ $(function(){
 			event.preventDefault();
 		}
 	});
+	
 });	
+	function del(boardNo) {
+		var chk = confirm("정말 삭제하시겠습니까?");
+		if(chk) {
+			window.location.href= "<c:url value='/board/delete.do?boardNo='/>"+boardNo;
+		}
+	}
 
 </script>
 <!-- Begin Page Content -->
@@ -102,10 +109,13 @@ $(function(){
 						<a href="#"> <span
 							style="font-size: 14px; display: inline-block; text-align: left; vertical-align: middle;">
 								${vo.nickname }</span>
-						</a><br> <span style="vertical-algin: middle; opacity: .4;">
-							2020-08-06 <%-- <fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/> --%>
-						</span> <span style="vertical-algin: middle; opacity: .4;"> |
-							${vo.visited } 읽음 </span>
+						</a><br> 
+						<span style="vertical-algin: middle; opacity: .4;">
+							<fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/> 
+						</span> 
+						<span style="vertical-algin: middle; opacity: .4;"> 
+							| ${vo.visited } 읽음
+						</span>
 					</p>
 				</div>
 				<hr>
@@ -124,8 +134,9 @@ $(function(){
 					<a href="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
 						<input type="button" class="btn btn-primary btn-sm" value="수정">
 					</a> 
+						<input type="button" id="delBorBt" name="delBorBt" value="삭제" class="btn btn-primary btn-sm"
+						onclick="del(${vo.boardNo})">
 					<a href="javascript:popup()"> 
-						<input type="button" value="삭제" class="btn btn-primary btn-sm">
 					</a> 
 					<a href="<c:url value='/board/boardList.do'/>"> 
 						<input type="button" class="btn btn-primary btn-sm" value="목록">
@@ -154,14 +165,14 @@ $(function(){
 									<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
-								</span>
-								<%-- <c:if test="${sessionScope.identNum} == ${comment.memNo }"> --%>
-									<button id="comEditBt" style="font-size: 9px;" class="btn btn-primary btn-sm">수정</button>
+								<c:if test="${sessionScope.identNum == comment.memNo }">
 									<form name="DeleteCommentForm" method="post"
 										action="<c:url value='/boardComment/boardCommentDelete.do?no=${comment.no }'/>">
+										<input text="button" id="comEditBt" style="font-size: 9px; width: 38px;" class="btn btn-primary btn-sm" value="수정">
 										<button type="submit" id="comDelBt" style="font-size: 9px;" 
 										class="btn btn-primary btn-sm">삭제</button>
 									</form>
+								</c:if>
 										<div id="comEdit" style="display:none;">
 											<form name="editCommentForm" method="post"
 												action="<c:url value='/boardComment/boardCommentEdit.do'/>">
@@ -170,16 +181,31 @@ $(function(){
 												<input type="hidden" name="no" value="${comment.no }">
 												<input type="hidden" name="memNo" value="${comment.memNo }">
 												<div class="form-group">
-													${comment.nickname }<br>
-													<label for="exampleInputEmail2">내용</label> 
-													<input type="text" id="editCon"
-														class="form-control" name="content" placeholder="내용을 입력하세요" 
-														value="${comment.content }">
+													<hr>
+													댓글 내용 수정<br>
+														<table class="table table-borderless" id="dynamicTable">
+															<colgroup>
+																<col style="width:10%;"/>
+																<col style="width:90%;"/>
+															</colgroup>
+															<thead/>
+															<tbody style="font-size:11px;">
+																<tr class="align_center">
+																	<td>
+																		<input type="text" id="editCon" style="width: 420px; font-size: 12px;"
+																			class="form-control" name="content" placeholder="내용을 입력하세요" 
+																			value="${comment.content }">
+																	</td>
+																	<td>
+																		<button type="submit" style="font-size: 9px;" id="commentBt" class="btn btn-primary btn-sm">수정</button> 
+																	</td> 
+																</tr>
+															</tbody>
+														</table>
 												</div>
-												<button type="submit" id="commentBt" class="btn btn-primary btn-sm">수정</button> 
 											</form>
 										</div>
-							<%-- 	</c:if> --%>
+								</span>
 							</p>
 						</c:forEach>
 						
@@ -189,31 +215,32 @@ $(function(){
 								
 								<input type="hidden" name="boardNo" value="${vo.boardNo }">
 								<input type="hidden" name="memNo" value="${vo.memNo }">
-								
+								<hr>
+								댓글 입력<br>
 								<div class="form-group">
-									<table class="table table-bordered table-hover" id="dynamicTable">
+									<table class="table table-borderless" id="dynamicTable">
 										<colgroup>
-											<col style="width:10%;"/>
-											<col style="width:90%;"/>
+											<col style="width:80%;"/>
+											<col style="width:20%;"/>
 										</colgroup>
 										<thead/>
-										<tbody>
+										<tbody style="font-size:11px;">
 											<tr class="align_center">
-												<td>별명</td>
 												<td>
-													<input type="text" name="nickname" class="form-control" id="nickname" placeholder="별명을 입력하세요.">
+													<input type="text" name="nickname" class="form-control" id="nickname" placeholder="별명을 입력하세요."
+													style="width: 120px; font-size: 11px;">
 												</td>
 											</tr>
 											<tr class="align_center">
-												<td>내용</td>
 												<td>
-													<input type="text" id="writeCon"
+													<input type="text" id="writeCon" style="width: 420px; font-size: 12px;"
 										class="form-control" name="content" placeholder="내용을 입력하세요">
 												</td>
-											</tr>
+												<td>
+													<input type="submit" id="commentBt" class="btn btn-primary btn-sm" value="등록">
+												</td> 
 										</tbody>
 									</table>
-									<button type="submit" id="commentBt" class="btn btn-primary btn-sm">댓글 등록</button> 
 								</div>
 							</form>
 						</div>

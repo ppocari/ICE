@@ -12,7 +12,7 @@ CREATE TABLE board (
 	memNo VARCHAR2(50), /* 사원번호 */
 	nickname VARCHAR2(50), /* 별명 */
 	content CLOB, /* 글내용 */
-	regdate DATE DEFAULT sysdate, /* 등록일 */
+	regdate DATE DEFAULT sysdate NOT NULL, /* 등록일 */
 	visited NUMBER DEFAULT 0, /* 조회수 */
 	recommend NUMBER DEFAULT 0, /* 추천 */
 	category VARCHAR2(10), 
