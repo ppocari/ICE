@@ -14,7 +14,6 @@
 
 <style type="text/css">
 	/*차트*/
-	
 	#divChart{
 		float: left;
 	}
@@ -155,11 +154,9 @@
 				</div>
 				
 				
-				
 				<input type="hidden" id="avg" value="${avg }">
 				<input type="hidden" id="over" value="${over }">
 				<input type="hidden" id="under" value="${under }">
-				
 			</div>
 		</div>
 	</div>
