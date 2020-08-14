@@ -72,6 +72,12 @@ insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/10 20:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
     to_date('2020/08/10 21:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
     
+     insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/09 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/10 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+    insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/10 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/11 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
     
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 2, to_date('2020/08/10 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
@@ -79,6 +85,7 @@ values(rvno_seq.nextval, 2, to_date('2020/08/10 07:00:00', 'YYYY/MM/DD hh24:Mi:S
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 3, to_date('2020/08/10 12:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
     to_date('2020/08/10 14:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+
 
 
 
