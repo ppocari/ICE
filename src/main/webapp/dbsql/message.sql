@@ -6,6 +6,11 @@ DROP TABLE message_rec
 DROP TABLE message 
 	CASCADE CONSTRAINTS;
 
+drop sequence message_seq;
+drop sequence message_rec_seq;
+
+DROP VIEW message_view;
+
 /* 받는사람 */
 
 
@@ -67,3 +72,25 @@ ALTER TABLE message
 		REFERENCES MEMBER (
 			MEMNO
 		);
+		
+create view message_view
+as
+select mr.NO, mem.name as recname , mr.RECMEMNO ,m.* , memb.name as sendname
+from message_rec mr join message m
+on mr.MSGNO = m.MSGNO
+join member mem
+on mem.memno = mr.RECMEMNO
+join member memb
+on memb.memno = m.sendmemno;
+
+select * from message_view;
+
+create sequence message_rec_seq
+start with 100
+increment by 1;
+
+
+create sequence message_seq
+start with 1
+increment by 1;
+

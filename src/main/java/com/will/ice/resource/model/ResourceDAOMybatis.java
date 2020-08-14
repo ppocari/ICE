@@ -14,6 +14,7 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	
 	private String namespace="com.mybatis.mapper.oracle.resource.";
 
+	//자원관리
 	@Override
 	public List<ResManageVO> selectResManage(ResManageSearchVO rmsVo) {
 		return sqlSession.selectList(namespace+"selectResManage", rmsVo);
@@ -43,5 +44,23 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	public int selectTotalRecord() {
 		return sqlSession.selectOne(namespace+"selectTotalRecord");
 	}
+
+	
+	//자원예약
+	@Override
+	public List<ResKindVo> selectResKind() {
+		return sqlSession.selectList(namespace+"selectResKind");
+	}
+
+	@Override
+	public List<ResReserveVO> selectReserveResNo(int resNo) {
+		return sqlSession.selectList(namespace+"selectReserveResNo", resNo);
+	}
+
+	@Override
+	public ResKindVo selectReserveKind(int rkNo) {
+		return sqlSession.selectOne(namespace+"selectReserveKind", rkNo);
+	}
+
 	
 }

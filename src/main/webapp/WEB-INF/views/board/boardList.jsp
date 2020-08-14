@@ -29,14 +29,22 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	function pageP
-	roc(curPage){
-		$('input[name=currentPage]').val(curPage);
-		$('form[name=frmPage]').submit();
-	}
+function pageProc(curPage){
+	$('input[name=currentPage]').val(curPage);
+	$('form[name=frmPage]').submit();
+}
 
 </script>
 <!-- Begin Page Content -->
+
+<form action="<c:url value='/board/boardList.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}">	
+</form>
 
 <div class="container-fluid">
 
@@ -55,79 +63,79 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 600px;">
+			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
-				<form name="boardSearch" method="post"  
-				action="<c:url value='/board/boardList.do'/> ">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">ICE 사내게시판</h6>
 						<a href="<c:url value='/board/boardWrite.do'/>">
-							<div style="float: right">
-								<button type="button" class="btn btn-info">게시글작성</button>
-							</div>
+							<button type="button" class="btn btn-info" style="float: right;">
+							게시글작성</button>
 						</a>
 					</div>
 					
 					<!-- Card Body -->
 <!-- 					<div class="card-body" style="height: 350px;"> -->
-						<div class="chart-area" style=" font-size: 13px;" >
+						<div class="chart-area" style="height: 450px; font-size: 13px;">
 
-
-							<table class="table table-bordered table-hover" id="dynamicTable">
-								<colgroup>
-									<col style="width:5%;"/>
-									<col style="width:50%;"/>
-									<col style="width:15%;"/>
-									<col style="width:15%;"/>
-									<col style="width:25%;"/>
-								</colgroup>
-								<thead>
-									<tr style="height:0px">
-										<th scope="col">no</th>
-										<th scope="col">제목</th>
-										<th scope="col">작성자</th>
-										<th scope="col">작성일</th>
-										<th scope="col">조회수</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody">
-									<!-- 게시판 내용 반복문시작 -->
-									<c:forEach var="vo" items="${list }">
-										<tr class="align_center">
-											<td>${vo.boardNo}</td>
-											<td class="align_left">
-												<!-- 24시간 공지사항  new 이미지-->
-												<c:if test="">
-													<img>
-												</c:if>
-												
-												<a href="<c:url value='/board/boardDetail.do?boardNo=${vo.boardNo }'/>">
-													<!-- 제목보여주기 길면 일부 -->
-													<c:if test="${fn:length(vo.title)>30 }">
-														${fn:substring(vo.title, 0, 30)} ...
-													</c:if>
-													<c:if test="${fn:length(vo.title)<=30 }">
-														${vo.title}
-													</c:if>
-												</a>
-											</td>
-											<td>${vo.nickname }</td>
-											<td><fmt:formatDate value="${vo.regdate}"
-												pattern="yyyy-MM-dd-HH:mm"/></td>
-											<td>${vo.visited}</td>
+							<div style="width:98%;margin-left: 1%;margin-top: 1%;">
+								<table class="table table-bordered table-hover" id="dynamicTable">
+									<colgroup>
+										<col style="width:5%;"/>
+										<col style="width:50%;"/>
+										<col style="width:15%;"/>
+										<col style="width:15%;"/>
+										<col style="width:25%;"/>
+									</colgroup>
+									<thead>
+										<tr style="height:0px">
+											<th scope="col">no</th>
+											<th scope="col">제목</th>
+											<th scope="col">작성자</th>
+											<th scope="col">작성일</th>
+											<th scope="col">조회수</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+
+									</thead>
+									<tbody id="dynamicTbody">
+										<!-- 게시판 내용 반복문시작 -->
+										<c:forEach var="vo" items="${list }">
+											<tr class="align_center">
+												<td>${vo.boardNo}</td>
+												<td class="align_left">
+													<a href="<c:url value='/board/boardCountUpdate.do?boardNo=${vo.boardNo }'/>">
+														<!-- 제목보여주기 길면 일부 -->
+														<c:if test="${fn:length(vo.title)>30 }">
+															${fn:substring(vo.title, 0, 30)} ...
+														</c:if>
+														<c:if test="${fn:length(vo.title)<=30 }">
+															${vo.title}
+														</c:if>
+													</a>
+													<!-- 24시간 공지사항  new 이미지-->
+													<c:if test="${vo.newImgTerm<24 }">
+														<img src="<c:url value='/resources/img/new.gif' />" 
+															alt="new이미지">
+													</c:if>
+												</td>
+												<td>${vo.nickname }</td>
+												<td style="font-size:10px;">
+													<fmt:formatDate pattern="yyyy-MM-dd-HH:mm"
+													value="${vo.regdate}"/>
+												</td>
+												<td>${vo.visited}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+
 						
-						<div class="divPage" style="text-align: center; 
-							position: relative; top: 0px;"> 
+						<div class="divPage" style="text-align: center;">
 							<!-- 페이지 번호 추가 -->		
 							<!-- 이전 블럭으로 이동 ◀ -->
 							<c:if test="${pagingInfo.firstPage>1 }">
 								<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})">
-									<img src="<c:url value='/resources/images/first.JPG'/>" 
+									<img src="<c:url value='/resources/img/first.JPG'/>" 
 										alt="이전 블럭으로 이동">
 								</a>
 							</c:if> 
@@ -146,7 +154,7 @@
 							<!-- 다음 블럭으로 이동 ▶ -->
 							<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
 								<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})">
-									<img src="<c:url value='/resources/images/last.JPG'/>" 
+									<img src="<c:url value='/resources/img/last.JPG'/>" 
 										alt="다음 블럭으로 이동">
 								</a>
 							</c:if>
@@ -156,34 +164,36 @@
 					
 					
 					<!-- 검색기능 -->
-					<div class="divSearch" style="text-align: center;">
-					   	<form name="frmSearch" method="post" 
-					   		action='<c:url value="/board/boardList.do"/>'>
-					        <select name="searchCondition">
-					            <option value="title" 
-					            	<c:if test="${param.searchCondition=='title' }">
-					            		selected="selected"
-					            	</c:if>
-					            >제목</option>
-					            <option value="content" 
-					            	<c:if test="${param.searchCondition=='content' }">
-					            		selected="selected"
-					            	</c:if>
-					            >내용</option>
-					            <option value="nickname" 
-					            	<c:if test="${param.searchCondition=='nickname' }">
-					            		selected="selected"
-					            	</c:if>
-					            >작성자</option>
-					        </select>   
-					        <input type="text" name="searchKeyword" title="검색어 입력"
-					        	value="${param.searchKeyword}">   
-							<input type="submit" value="검색">
-					    </form>
-					</div>		
-				</form>
-				
-				
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<div class="divSearch" class="search" style="margin-left: 10px;">
+						   	<form name="frmSearch" method="post" 
+						   		action='<c:url value="/board/boardList.do"/>'>
+						        <select name="searchCondition" class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+						            <option value="title" 
+						            	<c:if test="${param.searchCondition=='title' }">
+						            		selected="selected"
+						            	</c:if>
+						            >제목</option>
+						            <option value="content" 
+						            	<c:if test="${param.searchCondition=='content' }">
+						            		selected="selected"
+						            	</c:if>
+						            >내용</option>
+						            <option value="name" 
+						            	<c:if test="${param.searchCondition=='name' }">
+						            		selected="selected"
+						            	</c:if>
+						            >닉네임</option>
+						        </select>   
+						        <input type="text" class="form-control" name="searchKeyword" title="검색어 입력"
+						        	value="${param.searchKeyword}" style=" width: 180px; height: 30px; 
+						        	font-size: 13px; display: inline-block;">   
+								<input type="submit" class="btn btn-primary btn-sm" value="검색">
+						    </form>
+						</div>
+					</div>			
+				</div>
 			</div>
 		</div>
 	</div>

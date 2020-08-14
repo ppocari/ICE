@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
+
 <link rel="stylesheet" type="text/css" 
 	href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -44,6 +45,8 @@ $(function(){
 		var resRegdate;
 		var resState;
 		var resIsDel;
+		var rkNo;
+		var rkKind;
 		
 		$(function(){
 			$.ajax({
@@ -69,9 +72,7 @@ $(function(){
 					}
 					if(res.resSubdesc!=null && res.resSubdesc.length!=0) {
 						resSubdesc=res.resSubdesc;
-						
-						resSubdesc.replace('\r\n', '<br>');
-						
+						resSubdesc=resSubdesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
 					}
 					if(res.resImage!=null && res.resImage.length!=0) {
 						resImageVar="<c:url value='/resource_file/"+resImage+"'/>";
@@ -84,6 +85,10 @@ $(function(){
 					}
 					if(res.resIsDel!=null && res.resIsDel.length!=0) {
 						resIsDel=res.resIsDel;
+					}
+					if(res.rkNo!=null && res.rkNo.length!=0) {
+						rkNo=res.rkNo;
+						rkKind=res.rkKind;
 					}
 				
 				/* 	var str="";
@@ -99,6 +104,7 @@ $(function(){
 					$('#spanResLocation').html('');
 					$('#spanResState').html('');
 					$('#spanResSubdesc').html('');
+					$('#spanRkKind').html('');
 
 					
 					$('#btEdit').attr('name', resNo);
@@ -109,6 +115,7 @@ $(function(){
 					$('#spanResLocation').html(resLocation);
 					$('#spanResState').html(resState);
 					$('#spanResSubdesc').html(resSubdesc);
+					$('#spanRkKind').html(rkKind);
 					
 					/* 수정버튼 처리 */
 					$('#btEdit').click(function(){
@@ -273,6 +280,10 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
+							<th>종류
+								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
+								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
+							</th>
 							<th>장소
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
@@ -292,6 +303,7 @@ article{
 										<img src="<c:url value='/resources/img/file.gif'/>" alt="파일유무표시 이미지"> 
 									</c:if>
 								</td>
+								<td>${rm.rkKind }</td>
 								<td>${rm.resLocation }</td>
 								<td>${rm.resState }</td>
 								<td><button onclick="resEdit(${rm.resNo})">수정</button></td>
@@ -351,6 +363,11 @@ article{
 								<!-- 이미지 -->
 								</div>
 								<div class="divSection" id="divDesc">
+									<div>
+										<span>종류: </span>
+										<span id="spanRkKind">
+										</span>
+									</div>
 									<div>
 										<span>장소: </span>
 										<span id="spanResLocation">

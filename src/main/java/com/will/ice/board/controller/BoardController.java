@@ -43,8 +43,7 @@ public class BoardController {
 	
 
 	@RequestMapping("/boardList.do")
-	public String boardList(@ModelAttribute SearchVO searchVo, Model model,
-			BoardVO boardVo) {
+	public String boardList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("사내게시판 실행 ");
 
 		logger.info("글 목록 파라미터 searchVo={}",searchVo);
@@ -242,5 +241,27 @@ public class BoardController {
 		model.addAttribute("url", url);
 
 		return "common/message";
+	}
+	
+	@RequestMapping("/boardCountUpdate.do")
+	public String boardCountUpdate(@RequestParam(defaultValue = "0") int boardNo,
+			Model model) {
+		//1
+		logger.info("조회수 증가, 파라미터 no={}", boardNo);
+		if(boardNo==0) {
+			model.addAttribute("msg", "잘못된 url 입니다.");
+			model.addAttribute("url", "/board/boardList.do");
+			
+			return "common/message";
+		}
+		
+		//2
+		int cnt=boardService.updateVisited(boardNo);
+		logger.info("조회수 증가 결과, cnt={}", cnt);
+		
+		
+		//3		
+		//4
+		return "redirect:/board/boardDetail.do?boardNo="+boardNo;
 	}
 }

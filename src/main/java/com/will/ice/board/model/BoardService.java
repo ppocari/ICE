@@ -12,4 +12,5 @@ public interface BoardService {
 	public boolean checkPwd(int boardNo, String pwd);
 	public int deleteBoard(int boardNo);
 	public int updateBoard(BoardVO vo);
+	public int updateVisited(int boardNo);
 }

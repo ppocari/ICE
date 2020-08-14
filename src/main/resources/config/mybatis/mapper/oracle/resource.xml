@@ -4,11 +4,14 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.resource">
 
+
+	<!-- 자원관리 -->
+
 	<select id="selectResManage" parameterType="ResManageSearchVO" resultType="resManageVo">
 	select * from(
 		select rownum as RNUM, A.*
 		from (
-		   	select * from resmanage
+		   	select * from v_resmanage
 		    order by resname
 		)A
 	)
@@ -18,17 +21,22 @@
 	</select>
 	
 	<select resultType="int" id="selectTotalRecord">
-		select count(*) from resmanage 
+		select count(*) from v_resmanage 
+	</select>
+	
+	<select id="selectResKind" resultType="resKindVo">
+		select * from resKind
 	</select>
 
 	
 	<insert id="insertResManage" parameterType="resManagevo">
-	insert into resmanage(resno, resname, resimage, ressize, reslocation, resoriginalimage, ressubdesc)
-	values(resno_seq.nextval, #{resName}, #{resImage}, #{resSize}, #{resLocation}, #{resOriginalImage}, #{resSubdesc})
+
+	insert into resmanage(resno, resname, resimage, ressize, reslocation, resoriginalimage, rkNo, ressubdesc)
+	values(resno_seq.nextval, #{resName}, #{resImage}, #{resSize}, #{resLocation}, #{resOriginalImage}, #{rkNo}, #{resSubdesc})
 
 	</insert>
 	<select id="selectResManageOne" parameterType="int" resultType="resManageVo">
-		select * from resManage 
+		select * from v_resManage 
 		where resNo=#{resNo}
 	</select>
 	<update id="updateResource" parameterType="resManageVo">
@@ -37,10 +45,21 @@
 		<if test="resImage!=null and resImage!=''">
 		, resimage=#{resImage}, ressize=#{resSize}, resoriginalimage=#{resOriginalImage}
 		</if>
-		, reslocation=#{resLocation}, ressubdesc=#{resSubdesc}
+		, reslocation=#{resLocation}, ressubdesc=#{resSubdesc}, rkNo=#{rkNo}
 		where resno=#{resNo}
 	</update>
 	<delete parameterType="int" id="deleteResManage">
 		delete from resmanage where resNo=#{resNo} 
 	</delete>
+	
+	
+	<!-- 자원예약 -->
+	<select id="selectReserveResNo" parameterType="int" resultType="resReserveVo">
+		select * from v_resreserve
+		where resno=#{resNo}
+	</select>
+	<select id="selectReserveKind" parameterType="int" resultType="resKindVo">
+		select * from reskind
+		where rkno=#{rkNo}
+	</select>
 </mapper>

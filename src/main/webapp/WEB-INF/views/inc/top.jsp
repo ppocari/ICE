@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -69,9 +70,11 @@
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="<c:url value='/main/main_admin.do'/>">
+			<c:set var="posCode" value="${sessionScope.posCode }" />
+			<a class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="<c:url value='/main/main_user.do'/>">
+				
+				<!-- <c:url value='/main/main_admin.do'/> -->
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -128,28 +131,6 @@
 				</div>
 			</li>
 
-			<!-- Nav Item - 전자결재 Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseThree"
-				aria-expanded="true" aria-controls="collapseThree"> <i
-					class="fas fa-fw fa-folder"></i> <span>전자결재</span>
-			</a>
-				<div id="collapseThree" class="collapse"
-					aria-labelledby="headingThree" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">결재함</h6>
-						<a class="collapse-item" href="<c:url value="#" />">미결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">기결함</a>
-						<a class="collapse-item" href="<c:url value="#" />">반려함</a>
-						
-						<%-- <div class="collapse-divider"></div>
-						<h6 class="collapse-header">기안함</h6>
-						<a class="collapse-item" href="<c:url value='/payment/write/payList.do' />">기안상신함</a>
-						<a class="collapse-item" href="<c:url value='/payment/write/imsyBox.do' />">임시보관함</a>
-						<a class="collapse-item" href="<c:url value='/payment/write/sentpayList.do' />">기안완료함</a> --%>
-					</div>
-				</div>
-			</li>
 
 			<!-- Nav Item - 자원관리-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -201,7 +182,7 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/spay/sListAll.do'/>">사내 식권 구매내역</a>
-							<a class="collapse-item" href="https://admin.iamport.kr/payments" target="_blank">환불 내역 및 상세데이터</a>
+							<!-- <a class="collapse-item" href="https://admin.iamport.kr/payments" target="_blank">환불 내역 및 상세데이터</a> -->
 						</div>
 
 					</div>
@@ -286,6 +267,7 @@
 				<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item" href="<c:url value='/companyCard/MycomCard.do'/>">내 법인카드</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardList.do'/>">법인카드 조회</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardStatistic.do'/>">법인카드 통계</a>
 						<%
@@ -576,7 +558,7 @@
 								</c:if>
 								<c:if test="${!empty sessionScope.memImg}">
 									<img class="img-profile rounded-circle"
-								src="<c:url value= '/resources/img/mypage/${sessionScope.mem_img}' />">
+								src="<c:url value= '/pd_images/${sessionScope.memImg}' />">
 								</c:if>
 								
 								 

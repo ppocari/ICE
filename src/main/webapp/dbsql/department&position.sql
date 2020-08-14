@@ -82,6 +82,13 @@ insert into department
 values('141', '¸¶ÄÉÆÃ');
 
 insert into department
+values('151', '°³¹ßÆÀ');
+
+insert into department
+values('161', '»ı»êÆÀ');
+
+
+insert into department
 values('999', 'Àü»êÆÀ');	
 
 

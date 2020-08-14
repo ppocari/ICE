@@ -120,7 +120,7 @@
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style="overflow: scroll; overflow-x: scroll; height: 630px;">
+						<div  style="overflow: scroll; overflow-x: scroll; height: 570px;">
 							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1770px;">
 								<thead>
 									<tr>

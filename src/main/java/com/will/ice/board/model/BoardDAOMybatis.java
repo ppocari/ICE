@@ -53,4 +53,9 @@ public class BoardDAOMybatis implements BoardDAO{
 		return sqlSession.update(namespace+"updateBoard", vo);
 	}
 
+	@Override
+	public int updateVisited(int boardNo) {
+		return sqlSession.update(namespace+"updateVisited", boardNo);
+	}
+
 }

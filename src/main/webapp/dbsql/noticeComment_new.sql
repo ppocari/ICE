@@ -1,13 +1,21 @@
 /* 공지사항댓글 */
+--drop table noticeComment;
 CREATE TABLE noticeComment (
 	no NUMBER NOT NULL, /* 댓글번호 */
 	noticeNo NUMBER, /* 게시글번호 */
 	memNo VARCHAR2(50), /* 사원번호 */
-	name VARCHAR2(50) NOT NULL, /* 사원명 */
+	name VARCHAR2(50), /* 사원명 */
 	content CLOB NOT NULL, /* 내용 */
 	regdate DATE DEFAULT sysdate /* 작성일 */
 );
 
+create view noticeCommentView
+as
+select c.No,c.noticeNo,c.MEMNO,m.name, c.content, c.regdate from 
+noticeComment c join member m
+on c.memNo = m.memNo;
+
+--drop sequence noticeComment_seq;
 create sequence noticeComment_seq
 start with 1
 increment by 1;
@@ -57,3 +65,7 @@ ALTER TABLE noticeComment
 		REFERENCES MEMBER (
 			MEMNO
 		);
+		
+commit;
+
+select * from noticeComment;

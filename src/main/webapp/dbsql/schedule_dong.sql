@@ -1,6 +1,6 @@
 
 /* 스케줄 */
---drop table schedule;
+drop table schedule;
 CREATE TABLE schedule (
 	SCHNO NUMBER NOT NULL, /* 스케줄 번호 */
 	MEMNO VARCHAR2(50) NOT NULL, /* 사원번호 */
