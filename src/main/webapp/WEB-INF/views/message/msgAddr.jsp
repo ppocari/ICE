@@ -62,23 +62,38 @@
  		$("#goRight").click(function(){
  			//#result_msgAddrGroup > li:nth-child(1) > input[type=checkbox]
  			var people = $("#result_msgAddrGroup input[type=checkbox]:checked");
+ 			
 			var str = "";
+			var strSplit = "";
 			for( var i=0; i<people.length; i++){
 				str += $(people[i]).val()+",";
+				console.log(str);
+							
 			}
 			
-			$.ajax({
-				url:'<c:url value="/message/msgAddr_group.do" />',
-				type:"get",
-				data: "people="+ str,
-				dataType: 'json',
-				success:function(res){
-					
-				}
+			strSplit = str.split(",");
+			var str_new = "";
+			for( var s in strSplit){
+				str_new  = strSplit[s];
+					console.log(s);
+					console.log(str_new);
 				
-			});
-			$("#checked_msgAddrPeop").val(str);
+				$("#ui_msgAddrPeop").each(function(idx, item){
+					var exist = $(this).children(idx).val();
+					console.log(exist);
+					console.log(exist);
+					if(exist != str_new){
+						$("#result_MAG"+str_new).clone().appendTo("#ui_msgAddrPeop");
+					}
+				});
+				
+			}
+				
+			
+		
  		});
+ 		
+ 		
  		
  		$("#checked_complete").click(function(){
  			
@@ -100,7 +115,7 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-6 " style="margin-top: 30px;">
+		<div class="col-xl-7 " style="margin-top: 30px;">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="msgAddrFrm" method="post" action="<c:url value='/message/msgClose.do' />">
@@ -117,10 +132,11 @@
 								<th>주소록 그룹</th> 
 								<th style="width: 40%">검색</th>
 								<th style="width: 40%" rowspan="2">
-									<input id="checked_msgAddrPeop" >
+									<input id="checked_msgAddrPeop" > 
+										<ul class="list-group" id="ui_msgAddrPeop" >
 										
 										
-									
+										</ul>
 									<input type="button" value="선택완료" id="checked_complete">
 								</th>	 
 							
@@ -138,7 +154,7 @@
 								</td>
 								<td>
 									<div id="search_msgAddrGroup">
-										<ul id="result_msgAddrGroup" style="width: 90%;   height: 320px; padding-left: 0px;">
+										<ul id="result_msgAddrGroup" style="width: 80%;   height: 320px; padding-left: 0px; overflow:scroll">
 										
 										</ul>
 									</div>
