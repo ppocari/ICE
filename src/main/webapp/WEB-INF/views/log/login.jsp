@@ -31,7 +31,7 @@
 
 <body class="bg-gradient-primary-log">
 	<a href="<c:url value='/log/login_admin.do' />"><i class="fas fa-user-cog" 
-		style="color:#0079ff; font-size:30px; float: right; margin: 20px "></i>
+		style="color:white; font-size:30px; float: right; margin: 20px "></i>
 	</a>
 	<div class="container">
 

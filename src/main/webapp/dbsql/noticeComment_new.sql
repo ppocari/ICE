@@ -1,5 +1,5 @@
 /* 공지사항댓글 */
---drop table noticeComment;
+drop table noticeComment;
 CREATE TABLE noticeComment (
 	no NUMBER NOT NULL, /* 댓글번호 */
 	noticeNo NUMBER, /* 게시글번호 */

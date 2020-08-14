@@ -117,10 +117,12 @@ public class ResourceUserController {
 		ResReserveVO seVo = new ResReserveVO(resNo, pickStart);
 		
 
+
 		List<ResReserveVO> hourList = service.selectAvailableHour(seVo);
 		logger.info("hourList={}", hourList.size());
 		
 		return hourList;
+
 
 	}
 }
