@@ -165,7 +165,6 @@ public class LoginController {
 				msg="해당 아이디가 존재하지 않습니다.";
 			}
 
-
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 

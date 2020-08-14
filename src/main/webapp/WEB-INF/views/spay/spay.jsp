@@ -68,13 +68,21 @@
 						<label>할인 : 10%</label><br>
 					</c:if>
 					<c:if test="${sVo.TICQUANTITY < 10}">
-						<label>할인 : 0%</label><br>
 					</c:if>
 					
 					<hr>
 					<label>구매자	: ${memVo.name }</label><br>
-					<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
-					<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+					<c:if test="${!empty memVo.hp1}">
+						<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
+					</c:if>
+					<c:if test="${empty memVo.hp1}">
+					</c:if>
+					<c:if test="${!empty memVo.email1}">
+						<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+					</c:if>					
+					<c:if test="${empty memVo.email1}">
+					</c:if>					
+					
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
 					<label>결제 금액 : <fmt:formatNumber value="${sale }" 

@@ -1,6 +1,9 @@
 package com.will.ice.member.model;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.will.ice.common.Depart_posi_dateVO;
 
 public interface MemberService {
@@ -18,10 +21,7 @@ public interface MemberService {
 	
 		int logCheck(String memNo, String pwd);
 		
-		
 		MemberVO selectMember(String userid);
-		
-		
 		
 		List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo);
 
@@ -33,6 +33,7 @@ public interface MemberService {
 
 		int newPwd(MemberVO memVo);
 
-		
+		String selectPwd(String memNo);
 
+		
 }

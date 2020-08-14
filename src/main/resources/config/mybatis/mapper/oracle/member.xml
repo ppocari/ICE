@@ -6,7 +6,7 @@
 	<select id="selectPwd" parameterType="string"  resultType="string">
 		select pwd from mypage_mem
 		where memno = #{memNo} and firedate is null 
-		</select>
+	</select>
 
 	<select id="selectMember" parameterType="string" resultType="MemberVO">
 		select * from mypage_mem
@@ -49,8 +49,6 @@
 		where memno = #{memNo} 
 	</update>
 	
-	
-	
 	<update id="deleteSelectMember" parameterType="memberVO">
 		update member
 		set firedate = #{firedate}
@@ -63,4 +61,11 @@
 		set pwd = #{pwd}
 		where memno = #{memNo}
 	</update>
+	
+	<update id="setPwd" parameterType="int">
+		update member
+		set pwd = #{pwd}
+		where memno = #{memNo}
+	</update>
+	
 </mapper>

@@ -1,7 +1,9 @@
 package com.will.ice.member.model;
 
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,14 +113,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.newPwd(memVo);
 	}
 
+	@Override
+	public String selectPwd(String memNo) {
+		return memberDao.selectPwd(memNo);
+	}
 
-	
 
-	
-
-	
-	
-	
-	
 	
 }
