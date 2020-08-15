@@ -1,16 +1,16 @@
-/* ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ */
+/* ±ÙÅÂ°ü¸® */
 -- DROP TABLE workRecord CASCADE CONSTRAINTS;
 -- drop sequence workRecord_seq;
 
-/* ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ */
+/* ±ÙÅÂ°ü¸® */
 CREATE TABLE workRecord (
-	CMP_NO NUMBER NOT NULL, /* ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ ï¿½ï¿½È£ */
-	MEMNO VARCHAR2(50), /* ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
-	CMP_IN VARCHAR2(30), /* ï¿½ï¿½Ù½Ã°ï¿½ */
-	CMP_OUT VARCHAR(30), /* ï¿½ï¿½Ù½Ã°ï¿½ */
-	CMP_STATUS VARCHAR2(50), /* ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ */
-	CMP_REGDATE VARCHAR(30) DEFAULT sysdate, /* ï¿½ï¿½ï¿½ç³¯Â¥ */
-	CMP_MONTH VARCHAR2(30) /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ */
+	CMP_NO NUMBER NOT NULL, /* ±ÙÅÂ°ü¸® ¹øÈ£ */
+	MEMNO VARCHAR2(50), /* »ç¿ø¹øÈ£ */
+	CMP_IN VARCHAR2(30), /* Ãâ±Ù½Ã°£ */
+	CMP_OUT VARCHAR(30), /* Åð±Ù½Ã°£ */
+	CMP_STATUS VARCHAR2(50), /* ±ÙÅÂ»óÅÂ */
+	CMP_REGDATE VARCHAR(30) DEFAULT sysdate, /* ÇöÀç³¯Â¥ */
+	CMP_MONTH VARCHAR2(30) /* ÇöÀç ¿ù */
 );
 
 
@@ -33,25 +33,9 @@ ALTER TABLE workRecord
 
 create sequence workRecord_seq
 increment by 1
-start with 1;
+start with 122;
 
-
-
-/*
-insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
-values(workrecord_seq.nextval,111910,'09:00','17:00','ï¿½ï¿½ï¿½','2020-08-01','2020-08');
-
-insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
-values(workrecord_seq.nextval,111910,'09:00','17:00','ï¿½ï¿½ï¿½','2020-08-02','2020-08');
-
-insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
-values(workrecord_seq.nextval,111910,'09:00','17:00','ï¿½ï¿½ï¿½','2020-08-03','2020-08');
-
-insert into workRecord(cmp_no,memNo,cmp_in,cmp_out,cmp_status,cmp_regdate,cmp_month)
-values(workrecord_seq.nextval,111910,'10:00','11:00','ï¿½Ì»ï¿½','2020-08-04','2020-08');
-
-select * from WORKRECORD;
-*/
+-- insert => dbsql => dong_workData.sql
 
 commit;
 

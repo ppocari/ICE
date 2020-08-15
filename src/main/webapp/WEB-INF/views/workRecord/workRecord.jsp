@@ -111,11 +111,14 @@
 				str += "<td>"+cmpRegdate+"</td>";
 				str += "<td>"+cmpIn+"</td>";			
 				str += "<td>"+cmpOut+"</td>";	
-				if(cmpStatus == '초과근무'){
-					str += "<td style='color:green';>"+cmpStatus+"</td>";			
-				}
 				if(cmpStatus == '지각'){
 					str += "<td style='color:red';>"+cmpStatus+"</td>";			
+				}
+				if(cmpStatus == '반차'){
+					str += "<td style='color:orange';>"+cmpStatus+"</td>";			
+				}
+				if(cmpStatus == '초과근무'){
+					str += "<td style='color:green';>"+cmpStatus+"</td>";			
 				}
 				if(cmpStatus == '퇴근'){
 					str += "<td>"+cmpStatus+"</td>";			
@@ -204,27 +207,20 @@
 							<c:if test="${vo.cmpStatus == '지각'}">
 								<td id="status">지각</td>
 							</c:if>
+							<c:if test="${vo.cmpStatus == '반차'}">
+								<td id="status">반차</td>
+							</c:if>
 							<c:if test="${vo.cmpStatus == '초과근무'}">
 								<td id="status">초과근무</td>
 							</c:if>
 							<c:if test="${vo.cmpStatus == '퇴근'}">
 								<td id="status">퇴근</td>
 							</c:if>
-							<c:if test="${vo.cmpStatus != '퇴근' &&
-										vo.cmpStatus != '초과근무' &&
-										vo.cmpStatus != '지각'}">
-								<td id="status">출근</td>
-							</c:if>
 							<!-- 지각시간 -->
 							<c:if test="${result < 0}">
 								<td id="status" style="color: red">
 									${fn:substring(result,0,2)}시 ${fn:substring(result,2,5)}분
 								</td>
-							</c:if>
-							
-							<!-- 정상 퇴근 -->
-							<c:if test="${vo.cmpStatus == '퇴근'}">
-								<td></td>
 							</c:if>
 						</tr>
 					</c:if>

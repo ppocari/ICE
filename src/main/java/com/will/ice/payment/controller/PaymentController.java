@@ -30,7 +30,6 @@ import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.document.model.DocumentviewVO;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
-import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payment.model.PaylinedocVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
@@ -221,7 +220,7 @@ public class PaymentController {
 				if(oldfileName!=null && !oldfileName.isEmpty()) {
 					String oldFileName=paymentService.getFile(pldVo.getDocNo()).getFileName();
 					String upPath 
-						= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
+						= fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PAYMENT_FILE);
 					File file = new File(upPath, oldFileName);
 					if(file.exists()) {
 						boolean bool=file.delete();
@@ -306,6 +305,10 @@ public class PaymentController {
 	
 	@RequestMapping("/close.do")
 	public void close(){
+		logger.info("팝업 닫기");
+	}
+	@RequestMapping("/write/close2.do")
+	public void close2(){
 		logger.info("팝업 닫기");
 	}
 	

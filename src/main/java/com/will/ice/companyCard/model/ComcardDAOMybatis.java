@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
-import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Repository
 public class ComcardDAOMybatis implements ComcardDAO{
@@ -62,6 +61,16 @@ public class ComcardDAOMybatis implements ComcardDAO{
 	@Override
 	public List<ComcardVO> selectUnUseComcardByFile(String fileName) {
 		return sqlsession.selectList(namespace+"selectUnUseComcardByFile", fileName);
+	}
+
+
+	@Override
+	public List<CartVO> selectByDept() {
+		return sqlsession.selectList(namespace+"selectByDept");
+	}
+	@Override
+	public List<CartVO> selectByPos() {
+		return sqlsession.selectList(namespace+"selectByPos");
 	}
 
 }

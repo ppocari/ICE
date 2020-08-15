@@ -2,8 +2,10 @@ package com.will.ice.companyCard.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,10 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.ice.accode.model.AccodeService;
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
-
 import com.will.ice.common.FileUploadUtil;
+import com.will.ice.companyCard.model.CartVO;
 import com.will.ice.companyCard.model.ComCardFileVO;
-
 import com.will.ice.companyCard.model.ComCardListVO;
 import com.will.ice.companyCard.model.ComcardSerchVO;
 import com.will.ice.companyCard.model.ComcardService;
@@ -122,8 +123,6 @@ public class CompanyCardController {
 			
 			model.addAttribute("list", ccsList);
 		}
-		
-		
 
 		
 
@@ -196,7 +195,69 @@ public class CompanyCardController {
 		
 		model.addAttribute("list", list);
 
-
+	}
+	
+	@RequestMapping(value="/comCardStatistic.do",method = RequestMethod.GET)
+	public void comCardStatistic_get() {
+		logger.info("통계화면 보여주기");
 	}
 
+	@RequestMapping(value="/comCardStatistic.do",method = RequestMethod.POST)
+	public String deptStatistic(@ModelAttribute Depart_posi_dateVO dpdvo, Model model,
+			@RequestParam(required=false) String flag) {
+		logger.info("통계처리 flag={}",flag);
+		
+		String result = "";
+		
+		List<CartVO> list = null;
+		if(flag.equals("dept")) {
+			list = comcardService.selectByDept();
+			for(CartVO vo : list) {
+				result += "['" + vo.getDeptName() + "', "+vo.getPrice() +"],";
+			}
+		}else if(flag.equals("pos")) {
+			list = comcardService.selectByPos();
+			for(CartVO vo : list) {
+				String posName="";
+				switch (vo.getPosCode()) {
+				case "919":
+				case "920":
+					posName="경리";
+					break;
+				case "910":
+				case "911":
+				case "912":
+					posName="사원";
+					break;
+				case "930":
+					posName="과장";
+					break;
+				case "940":
+					posName="차장";
+					break;
+				case "950":
+					posName="부장";
+					break;
+				case "960":
+					posName="이사";
+					break;
+				case "999":
+					posName="관리자";
+					break;
+				default:
+					break;
+				}
+				result += "['" + posName + "', "+vo.getPrice() +"],";
+			}
+		}
+	
+		logger.info("result={}",result);
+
+		model.addAttribute("result",result);
+		
+		return "companyCard/comCardStatistic";
+	}
+
+	
+	
 }

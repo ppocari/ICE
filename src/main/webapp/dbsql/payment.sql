@@ -314,10 +314,12 @@ select * from paymentline;
 
 select * from paylistview;
 select * from docview;
+select * from chkdocview;
 select * from paymentview;
 
 select * from position;
 select * from department;
 select * from member;
+select * from payComment;
 
 commit;

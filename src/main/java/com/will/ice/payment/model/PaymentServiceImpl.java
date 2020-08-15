@@ -15,6 +15,7 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
+import com.will.ice.paymentfile.model.PaymentfileListVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Service
@@ -180,7 +181,8 @@ public class PaymentServiceImpl implements PaymentService{
 		//읽지 않았으면 delete
 		if(notRead) {
 			cnt = paymentDao.deletePayLine(docNo);
-			int a = paymentDao.updateImsy(docNo);
+			paymentDao.updatePaylinePg(docNo);
+			paymentDao.updateImsy(docNo);
 		}else {
 			cnt = -1;
 		}
@@ -208,12 +210,11 @@ public class PaymentServiceImpl implements PaymentService{
 			paysearchVo.setDocNo(docNo);
 			logger.info("paysearchVo={}",paysearchVo);
 			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-			logger.info("PaylistViewVO={}",vo);
+			logger.info("vo.getGmemNo()={}",vo.getGmemNo());
+			logger.info("paysearchVo.getIdentNum()={}",paysearchVo.getIdentNum());
 			
-			if(vo!=null) {
-				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-					list.add(vo);
-				}
+			if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+				list.add(vo);
 			}
 		}
 		
@@ -277,5 +278,4 @@ public class PaymentServiceImpl implements PaymentService{
 	public List<CommentviewVO> selectComment(int docNo) {
 		return paymentDao.selectComment(docNo);
 	}
-
 }

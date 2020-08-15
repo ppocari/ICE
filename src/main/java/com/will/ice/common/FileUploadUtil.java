@@ -42,8 +42,7 @@ public class FileUploadUtil {
 	public List<Map<String, Object>> fileUpload(
 			HttpServletRequest request,  int pathGb) {
 		//파일 업로드 처리 메서드		
-		MultipartHttpServletRequest multiReq 
-		= (MultipartHttpServletRequest) request;
+		MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
 	
 		List<Map<String, Object>> resultList
 			=new ArrayList<Map<String,Object>>();
