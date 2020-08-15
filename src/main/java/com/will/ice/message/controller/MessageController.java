@@ -126,4 +126,22 @@ public class MessageController {
 		 
 		 model.addAttribute("msgList", msgList);
 	}
+	
+	@RequestMapping(value="/msgRecDetail.do", method = RequestMethod.GET)
+	public void msgRecDetail(@RequestParam int no, HttpSession session, Model model) {
+		logger.info("받은 쪽지함 실행 no={}", no);
+		
+		MessageVO msgvo = msgService.msgSelecyByno(no);
+		logger.info("받은 쪽지함 실행 msgvo={}", msgvo);
+		
+		model.addAttribute("msgvo", msgvo);
+		
+	}
+	
+	@RequestMapping(value="/msgWriteWin", method = RequestMethod.GET)
+	public void msgWriteWin() {
+		logger.info("msgWrite.do 쪽지보내기 실행");
+		
+	}
+	
 }

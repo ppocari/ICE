@@ -58,8 +58,14 @@
 			});
  		});
  		
- 		
  		$("#goRight").click(function(){
+ 			
+ 		});
+ 			
+ 		
+ 		
+ 		
+ 		/* $("#goRight").click(function(){
  			//#result_msgAddrGroup > li:nth-child(1) > input[type=checkbox]
  			var people = $("#result_msgAddrGroup input[type=checkbox]:checked");
  			
@@ -73,33 +79,60 @@
 			
 			strSplit = str.split(",");
 			var str_new = "";
+			
+			var existSplit = "";
 			for( var s in strSplit){
 				str_new  = strSplit[s];
 					console.log(s);
 					console.log(str_new);
 				
 				$("#ui_msgAddrPeop").each(function(idx, item){
-					var exist = $(this).children(idx).val();
+					var exist = $(this).children(idx).val()+",";
 					console.log(exist);
 					console.log(exist);
-					if(exist != str_new){
-						$("#result_MAG"+str_new).clone().appendTo("#ui_msgAddrPeop");
+					
+					existSplit = exist.split(",");
+					for( var e in existSplit){
+						if(existSplit[e] != str_new){
+							$("#result_MAG"+str_new).clone().appendTo("#ui_msgAddrPeop");
+						}
 					}
+					
 				});
 				
 			}
 				
 			
 		
- 		});
+ 		}); */
  		
  		
  		
  		$("#checked_complete").click(function(){
+ 			//#result_msgAddrGroup > li:nth-child(1) > input[type=checkbox]
+ 			var people = $("#result_msgAddrGroup input[type=checkbox]:checked");
+			var str = "";
+			for( var i=0; i<people.length; i++){
+				str += $(people[i]).val()+",";
+			}
+			
+			$.ajax({
+				url:'<c:url value="/message/msgAddr_group.do" />',
+				type:"get",
+				data: "people="+ str,
+				dataType: 'json',
+				success:function(res){
+					
+				}
+				
+			});
+			
+			$("#checked_msgAddrPeop").val(str);
  			
- 			var people = $("#checked_msgAddrPeop").val();
  			
- 			$(opener.document).find("#recMemNo").val(people);
+ 			var peopleList = $("#checked_msgAddrPeop").val();
+ 			
+ 			$(opener.document).find("#recMemNo").val(peopleList);
 			self.close();		
  		});
  	});
@@ -121,7 +154,8 @@
 				<form name="msgAddrFrm" method="post" action="<c:url value='/message/msgClose.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">쪽지 주소록</h6>
-						
+						<input type="button" value="선택완료" id="checked_complete" class="btn btn-success">
+						<input type="hidden" id="checked_msgAddrPeop"  > 
 					</div>
 					
 					<!-- Card Body -->
@@ -129,16 +163,13 @@
 					<div class="card-body" style="text-align: center">
 						<table >
 							<tr style="height: 70px;" >
-								<th>주소록 그룹</th> 
-								<th style="width: 40%">검색</th>
-								<th style="width: 40%" rowspan="2">
-									<input id="checked_msgAddrPeop" > 
-										<ul class="list-group" id="ui_msgAddrPeop" >
+								<th style="width: 37%">주소록 그룹</th> 
+								<th style="width: 63%">검색</th>
+								<!-- <th style="width: 40%" rowspan="2">
+									
 										
-										
-										</ul>
-									<input type="button" value="선택완료" id="checked_complete">
-								</th>	 
+									
+								</th> -->	 
 							
 							</tr>
 							<tr>
@@ -158,10 +189,10 @@
 										
 										</ul>
 									</div>
-									<div id="search_move_msgAddrGroup">
+									<%-- <div id="search_move_msgAddrGroup">
 										<input type="button" id="goRight" class="btn btn-success" value=" > " style="margin-bottom: 5px"><br>
 										<input type="button" id="goLeft" class="btn btn-success" value=" < ">
-									</div>
+									</div> --%>
 								
 								</td>
 							</tr>

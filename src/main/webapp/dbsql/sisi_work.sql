@@ -254,8 +254,9 @@ values(message_rec_seq.nextval, '111910', 1);
 select * from v_address;
 
 commit;
-drop view message_view;
+--drop view message_view;
 
+--rollback;
 create view message_view
 as
 select mr.NO, mem.name as recname , mr.RECMEMNO ,m.* , memb.name as sendname
@@ -267,6 +268,7 @@ join member memb
 on memb.memno = m.sendmemno;
 
 select * from message_view;
+
 
 create sequence message_rec_seq
 start with 100
@@ -283,3 +285,6 @@ drop sequence message_rec_seq;
 insert into message(msgno, msgstatus, msgcontent, sendmemno)
 		values(message_seq.nextval, 'n', 'hi', '111910' );
 
+
+
+select * from SpayView ;

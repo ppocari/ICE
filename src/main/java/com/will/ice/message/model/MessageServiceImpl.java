@@ -57,5 +57,10 @@ public class MessageServiceImpl implements MessageService {
 		return msgDao.msgRecList(msgVO);
 	}
 
+	@Override
+	public MessageVO msgSelecyByno(int no) {
+		return msgDao.msgSelecyByno(no);
+	}
+
 	
 }

@@ -10,5 +10,5 @@ public interface MessageService {
 
 	List<MessageVO> msgRecList(MessageVO msgVO);
 
-	
+	MessageVO msgSelecyByno(int no);
 }
