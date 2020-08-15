@@ -79,6 +79,7 @@
 			<where>
 				imsy='N'
 				and memNo=#{identNum}
+				and progress!='reject'
 				<if test="searchKeyword!=null and searchKeyword!=''">
 					and title=#{searchKeyword}
 				</if>
@@ -126,7 +127,7 @@
 		select * from mypage_mem
 		<![CDATA[
 			where trunc(poscode,-1)>trunc(#{poscode},-1)]]>
-			and poscode!='999'
+			and poscode!='999' and poscode!='920'
 		order by poscode desc
 	</select>
 	
@@ -135,17 +136,27 @@
 		where docNo=#{docNo}
 	</select>
 	
-	<select id="selectPayLine" parameterType="int" resultType="documentviewVo">
-		select * from docview where docNo=#{docNo}
+	<select id="selectPayLine" parameterType="int" resultType="chkDocumentviewVo">
+		select * from chkdocView where docNo=#{docNo}
+		order by poscode desc
+	</select>
+	
+	<select id="countFile" parameterType="int" resultType="int">
+		select count(*) from paymentfile where docNo=#{docNo}
+	</select>
+	
+	<select id="selectPayLine2" parameterType="int" resultType="DocumentviewVo">
+		select * from docView where docNo=#{docNo}
+		order by poscode desc
 	</select>
 	
 	<select id="getFile" parameterType="int" resultType="paymentfileVo">
-		select * from paymentfile
+		select * from paymentFile
 		where docNo=#{docNo}
 	</select>
 	
 	<update id="updateFile" parameterType="paymentfileVo">
-		update paymentfile
+		update paymentFile
 		set fileName=#{fileName},originalFileName=#{originalFileName},filesize=#{fileSize}
 		where docNo=#{docNo}
 	</update>
@@ -154,7 +165,7 @@
 		select * from (
 			select * from PAYLISTVIEW
 			<where>
-				docNo=#{docNo}
+				docNo=#{docNo} and progress='waiting' or progress='ongoing'
 				and PAYDATE is null
 				<if test="searchKeyword!=null and searchKeyword!=''">
 					and title=#{searchKeyword}
@@ -170,7 +181,7 @@
 				</if>
 				<![CDATA[
 					and sysdate < expirydate+1
-					order by gmemNo
+					order by substr(gmemNo,3,3) 
 				]]>
 			</where>
 		)
@@ -216,6 +227,38 @@
 	
 	<select id="selectSign" parameterType="int" resultType="paycommentVo">
 		select * from paycomment
+		where docNo=#{docNo}
+	</select>
+	
+	<select id="selectDecided" parameterType="paymentSearchVo" resultType="paylistviewVo">
+		select * from paylistView
+		where progress=#{progress}
+		and gmemNo=#{identNum}
+		<if test="searchKeyword!=null and searchKeyword!=''">
+			and title=#{searchKeyword}
+		</if>
+		<if test="searchCondition!=null and searchCondition!=''">
+			and typeNo=#{searchCondition}
+		</if>
+		<if test="startDay!=null and startDay!=''">
+			and to_date(WRITEDATE)>=to_date(#{startDay})
+		</if>
+		<if test="endDay!=null and endDay!=''">
+			<![CDATA[and to_date(writedate) < to_date(#{endDay})+1]]>
+		</if>
+		<![CDATA[
+			and sysdate < expirydate+1
+			order by docNo desc
+		]]>
+	</select>
+	
+	<select id="selectRejected" parameterType="paymentSearchVo" resultType="paymentViewVo">
+		select * from paymentView
+		where memNo=#{identNum} and progress=#{progress}
+	</select>
+	
+	<select id="selectComment" parameterType="int" resultType="commentviewVo">
+		select * from commentView
 		where docNo=#{docNo}
 	</select>
 </mapper>

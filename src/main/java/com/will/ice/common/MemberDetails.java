@@ -11,17 +11,17 @@ public abstract class MemberDetails extends SearchVO implements UserDetails {
 	 */
 	protected static final long serialVersionUID = 1L;
 	protected String type;
-	protected String officialNo;
+	protected String MemNo;
 	protected String name;
 
 	public abstract String getType();
-	
-	public String getOfficialNo() {
-		return officialNo;
+
+	public String getMemNo() {
+		return MemNo;
 	}
 
-	public void setOfficialNo(String officialNo) {
-		this.officialNo = officialNo;
+	public void setMemNo(String memNo) {
+		MemNo = memNo;
 	}
 
 	public String getName() {

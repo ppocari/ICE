@@ -5,6 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+
 <title>채팅</title>
 </head>
 <body>	
@@ -41,18 +45,18 @@
 
 	function connect(){
 		//웹 소켓 연결
-		wsocket = new WebSocket("ws://192.168.0.34:8888/jeongjae/chat-ws");
+		let sock = new SockJS("http://localhost:9090/chat/chat/");
 
 		//웹 소켓 이벤트 연결
-		wsocket.onopen = onOpen;
-		wsocket.onmessage = onMessage;
-		wsocket.onclose = onClose;
+		sock.onopen = onOpen;
+		sock.onmessage = onMessage;
+		sock.onclose = onClose;
 
 	}
 
 	function close(){
 		//연결해제
-		wsocket.close();
+		sock.close();
 	}
 
 	//웹 소켓에 메시지를 전송하는 메소드
