@@ -57,8 +57,27 @@
           add_event: {
               text: '일정추가',
               click: function() {
-            	  window.open(contextPath+'/schedule/writeSchedule_button.do','wirteSC',
-           			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
+            	  $("#writeModal").css("visibility","visible");
+	            	  $("#frm").submit(function() {
+	            		  $.ajax({
+	          				url:"<c:url value='/schedule/ajaxWrite.do'/>",
+	          				type:"post",
+	          				datatype:"json",
+	          				data: $(this).serializeArray(),
+	          				success:function(res){
+	          					calendar.addEvent({
+	          	                      title: res.title,
+	          	                      start: res.startDay,
+	          	                      end: res.endDay,
+	          	                      id: res.schNo,
+	          	                      allDay: false
+	          	                    });
+	          				},
+	          				error:function(xhr, status, error){
+	          					alert(status + ", " + error);
+	          				}
+	          			});
+	          		}); 
               }
           }
       },
@@ -91,6 +110,7 @@
       events: dataset,
       
  	  //드래그
+ 	  /*
       select: function(arg) {
         console.log(
           'select',
@@ -98,18 +118,49 @@
           arg.endStr,
           arg.resource ? arg.resource.id : '(no resource)'
         );
-        window.open(contextPath+'/schedule/writeSchedule_select.do?startDay='+arg.startStr+'&endDay='+arg.endStr,'wirteSC',
-			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
-
+        $.ajax({
+				url:"<c:url value='/schedule/ajaxWrite.do'/>",
+				type:"post",
+				datatype:"json",
+				data: $(this).serializeArray(),
+				success:function(res){
+					calendar.addEvent({
+	                      title: res.title,
+	                      start: res.startDay,
+	                      end: res.endDay,
+	                      allDay: false
+	                    });
+	                    alert('일정이 추가되었습니다!');
+				},
+				error:function(xhr, status, error){
+					alert(status + ", " + error);
+				}
+			});
       },
       
       //날짜클릭
       dateClick: function(arg) {
-    	  window.open(contextPath+'/schedule/writeSchedule_date.do?startDay='+arg.dateStr+'&endDay='+arg.dateStr,'wirteSC',
- 			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
-        	
+    	$.ajax({
+			url:"<c:url value='/schedule/ajaxWrite.do'/>",
+			type:"post",
+			datatype:"json",
+			data: $(this).serializeArray(),
+			success:function(res){
+				calendar.addEvent({
+                      title: res.title,
+                      start: res.startDay,
+                      end: res.endDay,
+                      allDay: false
+                    });
+                    alert('일정이 추가되었습니다!');
+			},
+			error:function(xhr, status, error){
+				alert(status + ", " + error);
+			}
+		});
+        
       },
-      
+      */
       
       
       //일정 보여주기
@@ -133,7 +184,17 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 					error:function(xhr, status, error){
 						alert(status + ", " + error);
 					}
-			});
+				});
+		   	 
+		   	 /*
+		   	window.open(contextPath+'/schedule/detailSchedule.do','detailSC',
+			'width=500,height=500,left=0,top=0,location=yes,resizable=yes');
+		   	 */
+    	  	//$("#modal-title").text(dbTitle);
+    	  	
+    	    //borderColor 변경
+    	    //info.el.style.borderColor = 'red';
+    	    
    	  },
       
       // 한국어 설정
@@ -142,6 +203,36 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
     calendar.render();
   });
   
+  $("#schedulePicker input").datepicker({
+      dateFormat:'yy-mm-dd',
+         changeYear:true,
+         changeMonth:true,
+         dayNamesMin:['일','월','화','수','목','금','토'],
+         monthNamesShort: ['1월', '2월', '3월', '4월', '5월',
+         	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+   });
+	
+	$('.btn-danger').click(function() {
+		event.preventDefault();
+		$('#writeModal').hide();
+	});
+	
+	$(".btn-primary").click(function() {
+		if($('#title').val() == ''){
+		event.preventDefault();
+		alert("제목을 작성해주세요!");
+		$('#title').focus();
+		}else if($('#startDay').val() == ''){
+			event.preventDefault();
+			alert("시작일을 정해주세요!");
+			$('#startDay').focus();
+		}else if($('#endDay').val() == ''){
+			event.preventDefault();
+			alert("종료일을 정해주세요!");
+			$('#endDay').focus();
+		}
+	});
+	
 	function draw() {
 	  document.getElementById('canvas1');
 	  document.getElementById('canvas2');
@@ -199,6 +290,34 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	    text-align: center;
 	}
 	
+	/*일정쓰기*/
+	div#writeModal {
+	    line-height: 30px;
+	}
+	
+	/*일정확인*/
+	div#modal {
+	    width: 20%;
+	    height: 35%;
+	}
+	
+	div#modal_button {
+	    margin-top: 64%;
+	    margin-left: 15%;
+	}
+	
+	#modal_button button {
+	    width: 80px;
+	}
+	
+	div#modal-title {
+	    font-size: 2em;
+	}
+	
+	.fc-content {
+	    color: black;
+	}
+	
 	/*색깔별 내용*/
 	div#canvasDiv {
 	    position: fixed;
@@ -230,10 +349,7 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 	
 	
 </style>
-<input type="hidden" value="${vo.title}">
-<input type="hidden" value="${vo.startDay}">
-<input type="hidden" value="${vo.endDay}">
-<input type="hidden" value="${vo.schNo}">
+
 <div class="row">
 	<!-- Area Chart -->
 	<div class="col-xl-12 " >
@@ -260,6 +376,58 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 				<!-- 캘린더 -->
 				<div class="calendar_back">
 					<div id='calendar'></div>
+				</div>
+				
+				<!-- 스케줄등록모델 -->
+				<!-- style="display: none;" -->
+				<div id="writeModal" class="msgbox" style="visibility: hidden;">
+				<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
+				<form id="frm">
+					<div class="head">
+						<span>스케줄 등록</span>
+				    </div>
+					<div class="body">
+						<table>
+							<tr>
+								<td>
+									<select title="타입선" id="place" class="form-control" name="place">
+										<option value="1" style="color:#3788d8">업무관련</option>
+										<option value="2" style="color:#008000">기타</option>
+										<option value="3" style="color:#ff0000">휴가/연차</option>
+										<option value="4" style="color:#ffa500">유연근무</option>
+									</select>
+									<input type="text" class="form-control" id="title" name="title" maxlength="100" 
+										placeholder="제목"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="schedulePicker">
+										<div style="float: left;">
+											<input name="startDay" id="startDay" class="form-control" value="${scheduleVo.scheduleStart }" 
+												placeholder="시작일"/>
+											<div>STRAT</div>
+										</div>
+										<div style="float: right;">
+											<input name="endDay" id="endDay" class="form-control" value="${scheduleVo.scheduleEnd }" 
+												placeholder="종료일"/>
+											<div>END</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<textarea class="form-control" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
+								</td>
+							</tr>
+						</table>
+						<div style="text-align: center;">
+							<button class="btn btn-primary">저장</button>
+							<button class="btn btn-danger">취소</button>
+						</div>
+					</div>
+				</form>
 				</div>
 			</div>
 		</div>
