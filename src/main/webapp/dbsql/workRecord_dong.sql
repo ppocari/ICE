@@ -33,7 +33,7 @@ ALTER TABLE workRecord
 
 create sequence workRecord_seq
 increment by 1
-start with 1;
+start with 122;
 
 -- insert => dbsql => dong_workData.sql
 

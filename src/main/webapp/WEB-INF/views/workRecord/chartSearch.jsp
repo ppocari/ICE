@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<form method="post" id="workChart" name="workChart" action="<c:url value='/workRecord/workChart.do'/>">
+<form method="post" id="workChart" name="workChart" action="<c:url value='/main/userChart.do'/>">
 	<img alt="" src="<c:url value='/resources/img/workRecord/circle.jpg'/>">
 	<label>연도</label>&nbsp;&nbsp;&nbsp;
 	<select id="year" name="year">

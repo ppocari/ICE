@@ -14,24 +14,8 @@
 
 <style type="text/css">
 	/*차트*/
-	#divChart{
-		float: left;
-	}
-	
-	#divWorkColor{
-		float: left;
-	}
-	
 	.jqplot-pie-series.jqplot-data-label{
 		color: white;
-	}
-	
-	canvas.jqplot-pieRenderer-highlight-canvas{
-		width: 20%;
-	}
-	
-	.jqplot-cursor-tooltip{
-		width: 50px;
 	}
 	
 	/*바 차트*/
@@ -157,6 +141,7 @@
 				<input type="hidden" id="avg" value="${avg }">
 				<input type="hidden" id="over" value="${over }">
 				<input type="hidden" id="under" value="${under }">
+				<input type="hidden" id="half" value="${half }">
 			</div>
 		</div>
 	</div>
@@ -172,8 +157,6 @@
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">월별 확인 - 테이블</h5>
-					<form method="post" id="workTable" name="workTable" action="<c:url value='/workRecord/workChart.do'/>">
-					</form>
 					<input type="submit" class="btn btn-primary" id="btTable" value="테이블 보기">
 				</div>
 				<!-- 조회시 테이블 생성 -->
@@ -185,47 +168,50 @@
 	</div>
 </div>
 <script>	
-//조회시 차트
+//테이블 데이터 
 function makeList(xmlStr){
-	var str = "<table class='table table-bordered table-hover'>";
-		str += "<tr style='background:gray; color:white;'><th>오늘날짜</th>";
-		str += "<th>출근시간</th>";
-		str += "<th>퇴근시간</th>";
-		str += "<th>근무상태</th></tr>";
-		
-	if(xmlStr==''){
-		str += "<tr><td colspan='4' style='text_align:center'>해당 날짜에 근태 기록이 없습니다.</td></tr>";
-		str += "</table>";
-		$("#ajaxTable").html(str);
-		
-		return;
-	}else{
-		$(xmlStr).each(function(idx, item){
-			var cmpRegdate = item.cmpRegdate;
-			var cmpIn = item.cmpIn;
-			var cmpOut = item.cmpOut;
-			var cmpStatus = item.cmpStatus;
+		var str = "<table class='table table-bordered table-hover'>";
+			str += "<tr style='background:gray; color:white;'><th>오늘날짜</th>";
+			str += "<th>출근시간</th>";
+			str += "<th>퇴근시간</th>";
+			str += "<th>근무상태</th></tr>";
 			
-			str += "<tr>";
-			str += "<td>"+cmpRegdate+"</td>";
-			str += "<td>"+cmpIn+"</td>";			
-			str += "<td>"+cmpOut+"</td>";	
-			if(cmpStatus == '초과근무'){
-				str += "<td style='color:green';>"+cmpStatus+"</td>";			
-			}
-			if(cmpStatus == '지각'){
-				str += "<td style='color:red';>"+cmpStatus+"</td>";			
-			}
-			if(cmpStatus == '퇴근'){
-				str += "<td>"+cmpStatus+"</td>";			
-			}
-			str += "</tr>"; 	
-		});
-		
-		str += "</table>";
-		
-		$("#ajaxTable").html(str);
-	}
+		if(xmlStr==''){
+			str += "<tr><td colspan='4' style='text_align:center'>해당 날짜에 근태 기록이 없습니다.</td></tr>";
+			str += "</table>";
+			$("#ajaxTable").html(str);
+			
+			return;
+		}else{
+			$(xmlStr).each(function(idx, item){
+				var cmpRegdate = item.cmpRegdate;
+				var cmpIn = item.cmpIn;
+				var cmpOut = item.cmpOut;
+				var cmpStatus = item.cmpStatus;
+				
+				str += "<tr>";
+				str += "<td>"+cmpRegdate+"</td>";
+				str += "<td>"+cmpIn+"</td>";			
+				str += "<td>"+cmpOut+"</td>";	
+				if(cmpStatus == '지각'){
+					str += "<td style='color:red';>"+cmpStatus+"</td>";			
+				}
+				if(cmpStatus == '반차'){
+					str += "<td style='color:orange';>"+cmpStatus+"</td>";			
+				}
+				if(cmpStatus == '초과근무'){
+					str += "<td style='color:green';>"+cmpStatus+"</td>";			
+				}
+				if(cmpStatus == '퇴근'){
+					str += "<td>"+cmpStatus+"</td>";			
+				}
+				str += "</tr>"; 	
+			});
+			
+			str += "</table>";
+			
+			$("#ajaxTable").html(str);
+		}
 }
 
 $(function(){
@@ -259,13 +245,15 @@ $(function(){
 	var avg = Number($("#avg").val());
 	var over = Number($("#over").val());
 	var under = Number($("#under").val());
+	var half = Number($("#half").val());
 	
 	var workAvg = [avg];
 	var workOver = [over];
 	var workUnder = [under];
+	var workHalf = [half];
 	 
 	// bar 차트	
-	$.jqplot('chartdiv2',  [workAvg,workUnder,workOver], {
+	$.jqplot('chartdiv2',  [workAvg,workUnder,workOver,workHalf], {
 		seriesDefaults:{
 		renderer:$.jqplot.BarRenderer,	
 		rendererOptions: { fillToZero: true },	
@@ -278,7 +266,7 @@ $(function(){
 		  }
 		},
 		//bar 색 변경
-		seriesColors:['#567cec', '#e74a3b', '#1cc88a'],
+		seriesColors:['#567cec', '#e74a3b', '#1cc88a','#f6c23e'],
 		//배경색
 		grid:{
 			background:'#ffffff'
@@ -296,8 +284,8 @@ $(function(){
 	});	
 	 
 	//원형 그래프
-	data1 = [[['정상', avg],['미달', under], ['초과', over]]];
-    toolTip1 = ['정상', '미달', '초과'];
+	data1 = [[['정상', avg],['지각', under], ['초과', over], ['반차',half]]];
+    toolTip1 = ['정상', '지각', '초과','반차'];
  
     jQuery.jqplot('chartdiv1', 
         data1,
@@ -305,7 +293,7 @@ $(function(){
 	    	height: 400,
 	        width: 400,
             title: '원형 그래프', 
-            seriesColors:['#567cec', '#e74a3b', '#1cc88a'],
+            seriesColors:['#567cec', '#e74a3b', '#1cc88a','#f6c23e'],
             seriesDefaults: {
                 shadow: false, 
                 renderer: jQuery.jqplot.PieRenderer, 
@@ -316,7 +304,7 @@ $(function(){
                 location: 'e',
                 renderer: $.jqplot.EnhancedPieLegendRenderer,
                 rendererOptions: {
-                    numberColumns: 3,
+                    numberColumns: 4,
                     toolTips: toolTip1
                 }
             },
