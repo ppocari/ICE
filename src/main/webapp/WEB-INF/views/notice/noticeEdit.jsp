@@ -43,14 +43,8 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-	
-	$('#main').click(function() {
-		alert('공지사항 메인 노출여부가 체크되었습니다.');
-	});
+
 });
-	
-	
-	
 </script>
 <!-- Begin Page Content -->
 
@@ -58,7 +52,7 @@ $(function(){
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+		<h1 class="h3 mb-0 text-gray-800">공지사항 수정</h1>
 	</div>
 
 	<!-- Content Row -->
@@ -67,29 +61,19 @@ $(function(){
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
+			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmEdit" method="post"  
-					action="<c:url value='/notice/noticeEdit.do'/>">
-					<!-- enctype="multipart/form-data" -->
+					action="<c:url value='/notice/noticeEdit.do'/>"
+					enctype="multipart/form-data">
 					
-					<input type="hidden" name="noticeNo" value="${param.noticeNo }">
+					<input type="text" name="noticeNo" value="${param.noticeNo }">
+					<input type="text" name="fileName" value="${vo.orFileName }">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<tr>
-							<th>
-								<h6 class="m-0 font-weight-bold text-primary">공지사항 수정</h6>
-							</th>
-							<td>
-								<a href="<c:url value='/notice/noticeList.do'/>">
-									<div>
-										<button type="button" class="btn btn-info"
-										 >공지사항 목록</button>
-									</div>
-								</a>
-							</td>
-						</tr>
-						
+						<a href="<c:url value='/notice/noticeList.do'/>">
+							<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+						</a>
 					</div>
 					
 					<!-- 분류 -->
@@ -98,8 +82,8 @@ $(function(){
 						<tr>
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
-							<td style="width:80%; weight:100px;">
-								<select name="category" class="form-control">
+							<td style="width: 80%; weight: 100px; width: 500px;">
+								<select name="category" class="form-control" style="width:400px;">
 									<option value="전체">전체</option>
 									<option value="경영">경영</option>
 									<option value="회계">회계</option>
@@ -108,7 +92,7 @@ $(function(){
 								</select> 
 								<input type="checkbox" name="main" id="main"
 								 	value="Y"> 
-								<span>사내게시판 메인 등록</span>
+								<span>공지사항 메인 등록</span>
 							</td>
 						</tr>
 						</table>
@@ -122,10 +106,10 @@ $(function(){
 								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width:80%;">
+								<td style="width:80%; width: 500px;">
 									<input type="text" class="form-control" 
 									name="title" id="title" value="${vo.title }"
-									style="width: 300px; font-size: 14px;">
+									style="width: 400px; font-size: 14px;">
 								</td>
 							</tr>
 						</table>
@@ -140,9 +124,15 @@ $(function(){
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 								</td>
-								<td style="width: 80%;"><input type="file" id="fileName"
-									name="upfile" value="${vo.fileName }"/> <br>
-								<span>(최대 2M)</span></td>
+								<td style="width: 80%;">
+									<input type="file" id="fileName"
+									name="upfile" value="${vo.orFileName}"/> <br>
+									<c:if test="${!empty vo.orFileName }">
+							            <span class="sp1"></span>
+							            <span style="color:green;font-weight: bold">
+							            	첨부파일을 새로 지정할 경우 기존 파일 ${fileInfo }는 삭제됩니다.</span>
+						            </c:if>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -163,11 +153,10 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록"/>
-            			<a href="<c:url value='/board/boardList.do'/>">
-            				<input type = "Button" class="form-control btList" id="nList" value="글목록" 
-            				style="width: 60px; font-size: 13px;"/>
-            			</a>
+						<input type = "submit" class="form-control" value="등록"
+							style="width: 52px; font-size: 13px;"/>
+            			<input type="Button" class="form-control btList" id="nList" value="글목록"
+							style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/notice/noticeList.do"/>'"/>
 					</div>
 				</form>
 				

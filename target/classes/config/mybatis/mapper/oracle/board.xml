@@ -20,9 +20,9 @@
 		(
 		    select rownum as RNUM, A.*
 		    from(
-		        select boardNo, title, memNo, regdate, nickname, content, visited,
+		        select boardNo, title, memNo, REGDATE, nickname, content, visited,
 				recommend, category, isMain, filePath,
-			    (sysdate-regdate)*24 as newImgTerm
+			    (sysdate-REGDATE)*24 as newImgTerm
 			    from board
 		        <if test="searchKeyword!=null and searchKeyword !=''">
 		        	where ${searchCondition} like '%' 

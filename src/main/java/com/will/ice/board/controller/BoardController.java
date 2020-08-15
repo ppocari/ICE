@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -136,6 +137,7 @@ public class BoardController {
 		
 		//댓글 불러오기 
 		List<BoardCommentVO> list = boardCommentService.commentList(boardNo);
+		logger.info("댓글목록 조회 결과, list={}", list);
 				
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
@@ -156,6 +158,15 @@ public class BoardController {
 
 		return "board/boardDelete";
 	}
+
+	
+	@RequestMapping("/delete.do")
+	public String delete(@RequestParam(defaultValue = "0") int boardNo) {
+		logger.info("삭제처리 파라미터 boardNo={}", boardNo);
+		boardService.deleteBoard(boardNo);
+		return "redirect:/board/boardList.do";
+	} 
+	
 
 	@RequestMapping(value="boardDelete.do", method=RequestMethod.POST)
 	public String boardDelete_post(@RequestParam(defaultValue = "0") String boardNo,

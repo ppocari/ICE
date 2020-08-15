@@ -1,6 +1,6 @@
 package com.will.ice.board.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class BoardVO {
 	private int boardNo;
@@ -8,7 +8,7 @@ public class BoardVO {
 	private String memNo; 
 	private String nickname;
 	private String content;
-	private Timestamp regdate; 
+	private Timestamp regdate;
 	private int visited;
 	private int recommend;
 	private String category;

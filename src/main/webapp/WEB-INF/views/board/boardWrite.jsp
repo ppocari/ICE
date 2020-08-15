@@ -154,7 +154,7 @@ $(function(){
 						<input type = "submit" class="form-control" value="등록" 
 							style="width: 52px; font-size: 13px;"/>
           				<input type = "Button" class="form-control btList" id="nList"
-          					style="width: 60px; font-size: 13px;" 
+          					style="width: 60px; font-size: 13px;" value="목록"
           					onclick="location.href='<c:url value='/board/boardList.do'/>'"/>
 					</div>
 				</form>

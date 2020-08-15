@@ -57,10 +57,6 @@ $(function(){
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">사내게시판 수정</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -69,7 +65,7 @@ $(function(){
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
+			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmEdit" method="post"  
 					action="<c:url value='/board/boardEdit.do'/>"
@@ -84,10 +80,8 @@ $(function(){
 							</th>
 							<td>
 								<a href="<c:url value='/board/boardList.do'/>">
-									<div>
-										<button type="button" class="btn btn-info"
-										 >사내게시판 목록</button>
-									</div>
+									<button type="button" class="btn btn-info"
+									 >사내게시판</button>
 								</a>
 							</td>
 						</tr>
@@ -100,15 +94,12 @@ $(function(){
 						<tr>
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
-							<td style="width:80%; weight:100px;">
+							<td style="width: 80%; weight: 100px; width: 500px;">
 								<select name="category" class="form-control">
 									<option value="전체">전체</option>
 									<option value="잡담">잡담</option>
 									<option value="동아리">동아리</option>
 								</select> 
-								<input type="checkbox" name="isMain" id="isMain"
-								 	value="Y"> 
-								<span>사내게시판 메인 등록</span>
 							</td>
 						</tr>
 						</table>
@@ -122,9 +113,10 @@ $(function(){
 								<td style="width:20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width:80%;">
+								<td style="width:80%; width: 500px;">
 									<input type="text" class="form-control" 
-									name="title" id="title" value="${vo.title }">
+									name="title" id="title" value="${vo.title }"
+									style="width: 400px; font-size: 14px;">
 								</td>
 							</tr>
 						</table>
@@ -141,7 +133,8 @@ $(function(){
 								</td>
 								<td style="width:80%;">
 									<input type="text" class="form-control" 
-									name="nickname" id="nickname" value="${vo.nickname }">
+									name="nickname" id="nickname" value="${vo.nickname }"
+									style="width: 400px; font-size: 14px;">
 								</td>
 							</tr>
 						</table> 
@@ -163,10 +156,10 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록"/>
-            			<a href="<c:url value='/board/boardList.do'/>">
-            				<input type = "Button" class="form-control btList" id="nList"value="글목록"  />
-            			</a>
+						<input type = "submit" class="form-control" value="등록"
+							style="width: 52px; font-size: 13px;"/>
+            			<input type="Button" class="form-control btList" id="nList" value="글목록"
+							style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/board/boardList.do"/>'"/>
 					</div>
 				</form>
 				
