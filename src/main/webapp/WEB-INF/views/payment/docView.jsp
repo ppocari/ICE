@@ -11,7 +11,7 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	body{overflow-x: hidden;}#cancelBt,#acceptBt{background-color: #4e73df; color:white;position:relative;left:80px;}#headerDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
+	body{overflow-x: hidden;}#cancelBt,#acceptBt{background-color: #0079ff; color:white;position:relative;left:80px;}#headerDiv{background-color: #0079ff; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#headerDiv p{padding-left: 8px;padding-top: 8px;}#docType{font-weight: 600;text-align: center;}#title,#content{text-align: left;}#content{height: 50%;}#comment{width:400px;}.center{text-align: center;background-color: #f8f9fc;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
 </style>
 <script type="text/javascript">
 	function checkReject(){

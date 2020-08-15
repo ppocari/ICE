@@ -49,8 +49,6 @@
 		where memno = #{memNo} 
 	</update>
 	
-	
-	
 	<update id="deleteSelectMember" parameterType="memberVO">
 		update member
 		set firedate = #{firedate}
