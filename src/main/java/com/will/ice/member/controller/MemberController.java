@@ -70,6 +70,9 @@ public class MemberController {
 
 		}catch (Exception e) {
 			e.printStackTrace();
+			String msg = "사원번호 중복!", url = "/member/memWrite.do";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
 		}
 
 		return "/common/message";

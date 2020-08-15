@@ -53,8 +53,7 @@
 		
 		$("#dynamicTbody tr").click(function(){
 			var acccode = $(this).children().eq(0).text();
-			alert(acccode);
-			alert("#acccode"+loc_num);
+
 			$(opener.document).find("#acccode"+loc_num).val(acccode);
 			self.close();
 		});

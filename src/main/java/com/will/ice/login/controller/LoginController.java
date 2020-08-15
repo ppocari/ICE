@@ -76,7 +76,8 @@ public class LoginController {
 					url = "/member/memPwd.do";
 				}else {
 					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-					url ="/main/main_account.do";
+					url = "/main/main_user.do";
+					/* url ="/main/main_account.do"; */
 				}
 			}else {
 				//과장 이상

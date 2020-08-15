@@ -18,12 +18,14 @@
 .register_text {
 	width: 110px;
 }
-.search input{
-	width:150px;
+
+.search input {
+	width: 150px;
 }
 
-.div{
-	font-size:13px;
+.note-editor.note-frame.card {
+    position: relative;
+    left: -31px;
 }
 </style>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -59,10 +61,6 @@ $(function(){
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">사내게시판 작성</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -71,7 +69,7 @@ $(function(){
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 800px; weight:500px;" >
+			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"  
 					action="<c:url value='/board/boardWrite.do'/>"
@@ -88,7 +86,8 @@ $(function(){
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
 						<tr>
-							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
+							<td style="width:20%;"><h6 
+									class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
 							<td style="width:80%; weight:100px; width:500px;">
 								<select name="category" class="form-control" style=>
@@ -114,7 +113,7 @@ $(function(){
 								</td>
 								<td style="width:80%; width:500px;">
 									<input type="text" class="form-control" 
-									name="title" id="title" style="width:300px; font-size:14px;">
+									name="title" id="title" style="width:400px; font-size:14px;">
 								</td>
 							</tr>
 						</table>
@@ -130,7 +129,7 @@ $(function(){
 								</td>
 								<td style="width:80%; width:500px;">
 									<input type="text" class="form-control" 
-									name="nickname" id="nickname" style="width:300px; font-size:14px;">
+									name="nickname" id="nickname" style="width:400px; font-size:14px;">
 								</td>
 							</tr>
 						</table>
@@ -154,10 +153,9 @@ $(function(){
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<input type = "submit" class="form-control" value="등록" 
 							style="width: 52px; font-size: 13px;"/>
-            			<a href="<c:url value='/board/boardList.do'/>">
-            				<input type = "Button" class="form-control btList" id="nList"
-            					value="글목록" style="width: 60px; font-size: 13px;"/>
-            			</a>
+          				<input type = "Button" class="form-control btList" id="nList"
+          					style="width: 60px; font-size: 13px;" 
+          					onclick="location.href='<c:url value='/board/boardList.do'/>'"/>
 					</div>
 				</form>
 				

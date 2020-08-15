@@ -14,15 +14,15 @@ public class BoardVO {
 	private String category;
 	private String isMain;
 	private String filePath;
+	private int newImgTerm;
 	
-	private int comCount;
 
 	
-	public int getComCount() {
-		return comCount;
+	public int getNewImgTerm() {
+		return newImgTerm;
 	}
-	public void setComCount(int comCount) {
-		this.comCount = comCount;
+	public void setNewImgTerm(int newImgTerm) {
+		this.newImgTerm = newImgTerm;
 	}
 	public int getBoardNo() {
 		return boardNo;
@@ -95,8 +95,8 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [boardNo=" + boardNo + ", title=" + title + ", memNo=" + memNo + ", nickname=" + nickname
 				+ ", content=" + content + ", regdate=" + regdate + ", visited=" + visited + ", recommend=" + recommend
-				+ ", category=" + category + ", isMain=" + isMain + ", filePath=" + filePath + ", comCount=" + comCount
-				+ "]";
+				+ ", category=" + category + ", isMain=" + isMain + ", filePath=" + filePath + ", newImgTerm="
+				+ newImgTerm + "]";
 	}
 	
 }

@@ -12,4 +12,5 @@ public interface BoardDAO {
 	public String selectPwd(int boardNo);	
 	public int deleteBoard(int boardNo);
 	public int updateBoard(BoardVO vo);
+	public int updateVisited(int boardNo);
 }

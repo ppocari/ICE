@@ -105,7 +105,6 @@
 									<tr>
 										<th>사원번호</th>
 										<th>이름</th>
-										<th>비밀번호</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
@@ -117,7 +116,6 @@
 										<tr class="registerTableTR">
 											<td><input value="${vo.memNo }" name ="memNo" readonly="readonly"></td>
 											<td><input value="${vo.name }" name ="name" ></td>
-											<td><input value="${vo.pwd }" name ="pwd" readonly="readonly"></td>
 											<td>		 
 												<input value="${ vo.hiredate }" name="hiredate">
 												
