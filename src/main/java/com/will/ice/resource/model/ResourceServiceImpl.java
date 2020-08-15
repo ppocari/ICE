@@ -61,5 +61,36 @@ public class ResourceServiceImpl implements ResourceService {
 		return dao.selectStartAvailableHour(rsVo);
 	}
 
+	@Override
+	public ResReserveVO selectEndAvailableHour(ResReserveVO rsVo) {
+		return dao.selectEndAvailableHour(rsVo);
+	}
+
+	@Override
+	public int insertResReserve(ResReserveVO rsVo) {
+		return dao.insertResReserve(rsVo);
+	}
+
+	@Override
+	public List<ResReserveVO> selectReserve(ResReserveSearchVO rss) {
+		return dao.selectReserve(rss);
+	}
+
+
+	@Override
+	public int selectReserveCount() {
+		return dao.selectReserveCount();
+	}
+
+	@Override
+	public int updateConfirmReserve(ResKindVo rkVo) {
+		return dao.updateConfirmReserve(rkVo);
+	}
+
+	@Override
+	public int updateNoReasonReserve(ResKindVo rkVo) {
+		return dao.updateNoReasonReserve(rkVo);
+	}
+
 
 }

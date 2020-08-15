@@ -1,5 +1,6 @@
 package com.will.ice.resource.controller;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -91,7 +94,7 @@ public class ResourceUserController {
 		return "resourceUser/resourceMain";
 	}
 	
-	@RequestMapping("/addReservation.do")
+	@RequestMapping(value="/addReservation.do", method = RequestMethod.GET)
 	public void reserve_get(@RequestParam int resNo, HttpServletRequest request,
 			Model model) {
 		logger.info("자원예약신청 화면, 파라미터 resNo={}", resNo);
@@ -119,10 +122,66 @@ public class ResourceUserController {
 		List<ResReserveVO> hourList = service.selectStartAvailableHour(seVo);
 		logger.info("hourList={}", hourList.size());
 		for(ResReserveVO vo : hourList) {
+			logger.info("vo.getRvNo()="+vo.getRvNo());
 			logger.info("vo.getRvStart()="+vo.getRvStart());
 			logger.info("vo.getRvEnd()="+vo.getRvEnd());
 		}
 		return hourList;
+	}
+	
+	/* 시작 시간 선택 시 끝 날짜 및 select 자동 처리  */
+	@RequestMapping("/ajaxEndPicker.do")
+	@ResponseBody
+	public ResReserveVO ajaxEnd(@RequestParam String pickStart, @RequestParam int resNo) {		
+		logger.info("시작 시간 선택 시 끝 날짜 및 select 자동 처리, 파라미터 resNo={}, pickStart={}", resNo, pickStart);
+		
+		//ResReserveVo에 셋팅
+		ResReserveVO seVo = new ResReserveVO(resNo, pickStart);
+		
+		ResReserveVO rsVo = service.selectEndAvailableHour(seVo);
+		if(rsVo!=null) {
+			logger.info("rsVo.getRvStart()="+rsVo.getRvStart());
+		}
+		
+		return rsVo;
+	}
+	
+	@RequestMapping(value="/addReservation.do", method = RequestMethod.POST)
+	public String reserve_post(@ModelAttribute ResReserveVO rsVo, HttpServletRequest request,
+			Model model) {
+		
+		 HttpSession session= request.getSession(); 
+		 String memNo=(String)session.getAttribute("identNum");
+		rsVo.setMemNo(memNo);
+		
+		logger.info("자원예약 신청 처리, rsVo={}", rsVo);
+		
+		String startStr= rsVo.getStartDate();
+		startStr+=" "+rsVo.getStartHour()+":00";
+		String endStr=rsVo.getEndDate();
+		endStr+=" "+rsVo.getEndHour()+":00";
+		
+		Timestamp rvStart=  Timestamp.valueOf(startStr);
+		Timestamp rvEnd=  Timestamp.valueOf(endStr);
+
+		rsVo.setRvStart(rvStart);
+		rsVo.setRvEnd(rvEnd);
+		
+		int cnt= service.insertResReserve(rsVo);
+		String msg="자원예약 신청 실패하였습니다.";
+		String url="/resourceUser/addReservation.do?resNo="+rsVo.getResNo();
+		
+		if(cnt>0) {
+			logger.info("자원예약 신청 처리 완료!");
+			msg="자원예약 신청이 접수되었습니다.";
+			url="/resourceUser/resourceMain.do";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+		
 	}
 }
 	

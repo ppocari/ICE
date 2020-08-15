@@ -81,82 +81,110 @@
 	      			'width=450,height=650,left=500,top=200,location=yes,resizable=yes'); */
 	      			
 	      		/* 시작 날짜 선택 시 시작 select 자동 처리  */
+	      		
 					$('#startDay').change(function(){
 					var pick = $(this).val();
 					var no = ${rmVo.resNo};
 					
-					alert('pick='+pick+", no="+ no);
+					$('#endDay').val(pick);
 					
-					$('#startHour option').prop('disabled',false);
 					$('#startHour option').removeAttr("selected");
+					$('#startHour option').prop('disabled',false);
+					
+					$('#endHour option').removeAttr("selected");
+					$('#endHour option').prop('disabled',false);
+					
+					$('.fullRv').prop('disabled',true);
+					$('.canRv').prop('selected',true);
 					
 					 $.ajax({
 							url:"<c:url value='/resourceUser/ajaxStartPicker.do'/>",
 							type:"get",
 							data:{ pickStart:pick, resNo:no },
 							datatype:"json",
+							async: false,
 							success:function(res){
 								var count=0; //총 arrHourId[i]가 몇 번 돌아가는지, 첫번째를 찾기 위함.
 					            $.each(res , function(i){
 					            	//pick를 date형식으로 바꾸기 -> pickDate
 						            var pickDate = new Date(pick);
-				
+					            	pickDate.setHours(0);
 					            	var startDate = new Date(res[i].rvStart);
 					            	var endDate = new Date(res[i].rvEnd);
-			      							
-			         				if(startDate.getDate() < pickDate.getDate() && endDate.getDate() > pickDate.getDate() ) { //시작날짜 < 선택날짜, 끝날짜 > 선택날짜 ~ ~ 
-					            		//모든 startid가 disabled
+			      					
+					            	var py=pickDate.getYear();
+					            	var sy=startDate.getYear();
+					            	var ey=endDate.getYear();
+					            	
+					            	var pmon=pickDate.getMonth();
+					            	var smon=startDate.getMonth();
+					            	var emon=endDate.getMonth();
+					            	
+					            	var pd = pickDate.getDate();
+					            	var sd = startDate.getDate();
+					            	var ed = endDate.getDate();
+					            	var sh = startDate.getHours();
+					            	var eh = endDate.getHours();
+					            	var sm = startDate.getMinutes();
+					            	var em = endDate.getMinutes();
+					            	
+			         				if((sy!=py || ey!=py) || //년도가 다름
+			         					(smon!=pmon || emon!=pmon) || //월이 다름
+			         					(sd==pd && sh==0 && sm==0 && ed != pd) || // 같은 월 중 시작일 <= 기준일 < 완료일
+			         					(sd != pd && ed==pd+1 && eh==0 && em==0) || // 같은 월 중 시작일 < 기준일 <= 완료일
+			         					(sd < pd && ed > pd+1)) { //같은 월 중 시작일 < 기준일 < 완료일
+			         					//남은 else if들은 시작일 <= 기준일 <=완료일
+					            		//사용불가만 보여주게
 					            		
-					            		/* 	alert("모든 실행~!") */
-					            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
-					            		for(var idx=0;idx<48;i++){
-					            			arrHourId[idx]='hour'+50*i;
-				            			}
-					            		for(var idx=0;idx<48;idx++){
-				            				$('#startHour option[id='+arrHourId[idx]+']').prop('disabled',true);
-				            			}
-				            			
-					            	}else if(startDate.getDate() < pickDate.getDate()){ //시작날짜가 걸친 경우 ~ |
-					            		//0~시작시간
+					            		$('.startOption').prop('disabled',true);
+					            		$('.endOption').prop('disabled',true);
+					            		$('.fullRv').prop('disabled',false);
+					            		$('.fullRv').prop('selected',true);
 					            		
+					            	}else if(sd != pd || (sd==pd && sh==0 && sm==0)){ //시작날짜가 걸친 경우 ~ |
+					            	//0~끝
+					            	
 					            		var endId=endDate.getHours()*100;
 					            		if(startDate.getMinutes()==30){
 					            			endId=endId+50;
 					            		}
 					            		
 					            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
-					            		/* alert("0~시작 실행!, endId ="+endId);  */
 					            		
 					            		for(var idx=0;idx<endId/50;idx++){
-				            				arrHourId[idx]='hour'+50*i;
+					            			arrHourId[idx]='hour'+50*idx;
 				            			}
 					            		
 					            		for(var idx=0;idx<endId/50;idx++){
 				            				$('#startHour option[id='+arrHourId[idx]+']').prop('disabled',true);
-				            				if(i==0 && count==0 && idx==endId/50-1) {
-				            					$('#startHour option[id='+arrHourId[idx]+']').next().attr('selected','selected');
-				            				}
+				            				$('#endHour option[id='+arrHourId[idx]+']').prop('disabled',true);
 				            			}
+					            		$('.canRv').prop('selected',true);
+					            		$('.fullRv').prop('disabled',true);
 					            		
-					            	}else if(endDate.getDate() > pickDate.getDate()){ //끝날짜가 걸친 경우 | ~
+					            	}else if(ed != pd || (ed==pd+1 && eh==0 && em==0)){ //끝날짜가 걸친 경우 | ~
 					            		//시작~24
+					            	
 					            		var startId=startDate.getHours()*100;
 					            		
 					            		if(startDate.getMinutes()==30){
 					            			startId=startId+50;
 					            		}
 					            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
-					            		/* alert("시작~24 실행!, startId ="+ startId); */
 					            		
 					            		for(var idx=0;idx<(2400-startId)/50;idx++){
 				            				arrHourId[idx]='hour'+(startId+50*idx);
 				            			}
 					            		for(var idx=0;idx<(2400-startId)/50;idx++){
 				            				$('#startHour option[id='+arrHourId[idx]+']').prop('disabled',true);
+				            				$('#endHour option[id='+arrHourId[idx]+']').prop('disabled',true);
 				            					
 				            			}
+					            		$('.canRv').prop('selected',true);
+					            		$('.fullRv').prop('disabled',true);
 				            		}else{ //선택날짜 내 시작날짜, 끝날짜가 들어감 | |
 					            		//시작~끝
+				            		
 					            		var startId=startDate.getHours()*100;
 					            		var endId=endDate.getHours()*100;
 					            		
@@ -174,7 +202,10 @@
 					            		
 					            		for(var idx=0;idx<(endId-startId)/50;idx++){
 					            			$('#startHour option[id='+arrHourId[idx]+']').prop('disabled',true);
+					            			$('#endHour option[id='+arrHourId[idx]+']').prop('disabled',true);
 				            			}
+					            		$('.fullRv').prop('disabled',true);
+					            		$('.canRv').prop('selected',true);
 					            	}
 					            		
 			         				count++;
@@ -204,19 +235,24 @@
 	         	'6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 		});
 		
-		$('.writeClose').click(function() {
+		$('#writeClose').click(function() {
 			event.preventDefault();
 			$("#writeModal").css("visibility","hidden");
 		}); 
 		
 		/* 시작 시간 선택 시 끝 select 자동 처리  */
+		//같은 날로 날짜 자동 input 시키고, 무조건 가장 가까운 미래의 일정 1개를 가져와서 
+		//같은 년, 월, 일이라면, 시작부터 그 날 끝까지 못하게
+		//그 날에 없다면 기본 2시간 select 시키기
 		$('#startHour').change(function(){
 			var pick1=$('#startDay').val(); //시작 날짜 '2020-08-12'
 			var pick2=$(this).val(); //시작 시간 '7:30'
 			var pick=pick1 + ' ' + pick2; //'2020-08-12 7:30'
 			var no = ${rmVo.resNo};
 			
-			/* alert('pick='+pick+", no="+ no); */
+			
+			$('#endHour option').removeAttr("selected");
+			$('#endHour option').prop('disabled',false);
 			
 			$.ajax({
 				url:"<c:url value='/resourceUser/ajaxEndPicker.do'/>",
@@ -224,31 +260,59 @@
 				data:{ pickStart:pick, resNo:no },
 				datatype:"json",
 				success:function(res){
-			       	var pickParts = pick.split(' '); //'2020-08-12' 와 '7:30'으로 나뉨
-			       	var pickDateParts = pickParts[0].split('-'); //'2020', '08', '12'
-			      	var pickTimeParts = pickParts[1].split(':'); // '7', '30'
-			       	alert(pickDateParts);
-			      	alert(pickTimeParts);
-			            	
-			       	var pickDate =  new Date(pickDateParts[0], parseInt(pickDateParts[1], 10) - 1, pickDateParts[2], 
-			    	pickTimeParts[0], pickTimeParts[1], '00');
-			        var endDate = new Date(res.rvStart);
-			            	
-			        /* alert('date is ' + date.getDate());
-					alert('hour is ' + date.getHours());
-					alert('minute is ' + date.getMinutes()); 
-			       	*/
-					if(pickDate.getFullYear()==endDate.getFullYear() && 
-					pickDate.getMonth() ==endDate.getMonth() &&
-					pickDate.getDate() ==endDate.getDate()) { //두 날짜가 같다면
-					//끝 날짜는 해당 날짜와 같게
-					//pickDate (시작) 시간 + 30 ~ endDate 까지 보이게만
-								
-					}else{ //두 날짜가 다르다면
-					//끝 날짜는 해당 날짜와 같게
-					}
-			            	 
-			            	 
+			       	var pickDate = new Date(pick);
+			        var startDate = new Date(res.rvStart);
+			        
+			        var py=pickDate.getYear();
+	            	var sy=startDate.getYear();
+	            	
+	            	var pmon=pickDate.getMonth();
+	            	var smon=startDate.getMonth();
+	            	
+	            	var pd = pickDate.getDate();
+	            	var ph = pickDate.getHours();
+	            	var pm = pickDate.getMinutes();
+	            	var sd = startDate.getDate();
+	            	var sh = startDate.getHours();
+	            	var sm = startDate.getMinutes();
+	            	
+	            	
+	            	//같은 년, 월, 일이라면, 시작부터 그 날 끝까지 못하게
+	            	var startId=pickDate.getHours()*100;
+            		if(pm==30){
+            			startId=startId+50;
+            		}
+            		
+            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+            		
+            		
+            		for(var idx=0;idx<startId/50;idx++){
+            			arrHourId[idx]='hour'+50*idx;
+        			}
+            		
+            		for(var idx=0;idx<startId/50;idx++){
+        				$('#endHour option[id='+arrHourId[idx]+']').prop('disabled',true);
+        			}
+	        		
+	            	if(sy==py && smon==pmon && sd==pd) {
+	            		//시작~24
+		            	
+	            		var startId=startDate.getHours()*100;
+	            		
+	            		if(startDate.getMinutes()==30){
+	            			startId=startId+50;
+	            		}
+	            		var arrHourId = new Array(); //disabled하려는 id를 담는 배열.
+	            		
+	            		for(var idx=0;idx<(2400-startId)/50;idx++){
+            				arrHourId[idx]='hour'+(startId+50*idx);
+            			}
+	            		for(var idx=0;idx<(2400-startId)/50;idx++){
+            				$('#endHour option[id='+arrHourId[idx]+']').prop('disabled',true);
+            					
+            			}
+	            	}
+	            	
 				}, //success
 				
 				error:function(xhr, status, error){
@@ -293,7 +357,7 @@
 	
 	.msgbox{
 		position: absolute;
-	    left: 10%;
+	    left: -10%;
     	top: 10%;
 	    z-index: 5000;
 	    background: white;
@@ -452,9 +516,10 @@ article > div {
 				<!-- style="display: none;" -->
 				<div id="writeModal" class="msgbox" style="visibility: hidden;">
 				<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
-				<form id="frm">
+				<form id="frm" method="post" action="<c:url value='/resourceUser/addReservation.do'/>">
+				<input name="resNo" type="hidden" value="${rmVo.resNo }">
 	<div class="head">
-		<span>등록 폼</span>
+		<span>자원 예약</span>
     </div>
 	<div class="body">
 		<table>
@@ -463,48 +528,48 @@ article > div {
 				<td>
 					<div id="schedulePicker">
 						<div>
-							<input name="startDay" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
+							<input name="startDate" id="startDay" class="infobox" value="${scheduleVo.scheduleStart }"
 								placeholder="시작일"/>
-							<select id="startHour">
+							<select id="startHour" name="startHour">
+								<option class="startOption canRv">시간선택</option>
 								<c:set var="hId" value="0"/>
 								<c:set var="hour" value="0"/>
 								<c:forEach begin="1" end="24">
-									<option id="hour${hId}" value="${hour }:00" >${hour }:00</option>
-									<option id="hour${hId +50 }" value="${hour }:30">${hour }:30</option>
+									<option class="startOption" id="hour${hId}" value="${hour }:00" >${hour }:00</option>
+									<option class="startOption" id="hour${hId +50 }" value="${hour }:30">${hour }:30</option>
 										
 									<c:set var="hId" value="${hId +100 }"/>
 									<c:set var="hour" value="${hour +1 }"/>
 								</c:forEach>
+								<option class="fullRv">예약불가</option>
 							</select>
 						<span> ~ </span>
-							<input name="endDay" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
+							<input name="endDate" id="endDay" class="infobox" value="${scheduleVo.scheduleEnd }"
 								placeholder="종료일"/>
-							<select id="endHour">
+							<select id="endHour" name="endHour">
+								<option class="endOption canRv">시간선택</option>
 								<c:set var="hId" value="0"/>
 								<c:set var="hour" value="0"/>
 								<c:forEach begin="1" end="24">
-									<option id="hour${hId +50 }" value="${hour }:30">${hour }:30</option>
-									<option id="hour${hId+100 }" value="${hour +1}:00">${hour +1}:00</option>
+									<option class="endOption" id="hour${hId }" value="${hour }:30">${hour }:30</option>
+									<option class="endOption" id="hour${hId+50 }" value="${hour +1}:00">${hour +1}:00</option>
 									
 									<c:set var="hId" value="${hId +100 }"/>
 									<c:set var="hour" value="${hour + 1 }"/>
 								</c:forEach>
+								<option class="fullRv">예약불가</option>
 							</select>
 						</div>
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<textarea id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">
-					
-					${scheduleVo.content }</textarea>
-				</td>
-			</tr>
 		</table>
+		<div>
+			<textarea id="content" name="rvReason" style="width: 400px;height: 200px;" placeholder="예약이유"></textarea>
+		</div>
 		<div style="text-align: center;">
-			<button class="writeBtn">저장</button>
-			<button class="writeClose">Close</button>
+			<input type="submit" value="예약신청">
+			<input id="writeClose" type="reset" value="취소">
 		</div>
 	</div>
 </form>

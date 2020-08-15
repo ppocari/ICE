@@ -17,5 +17,12 @@ public interface ResourceService {
 	List<ResReserveVO> selectReserveResNo(int resNo);
 	ResKindVo selectReserveKind(int rkNo);
 	List<ResReserveVO> selectStartAvailableHour(ResReserveVO rsVo);
+	ResReserveVO selectEndAvailableHour(ResReserveVO rsVo);
+	int insertResReserve(ResReserveVO rsVo);
 	
+	//자원 예약 처리
+	List<ResReserveVO> selectReserve(ResReserveSearchVO rss);
+	int selectReserveCount();
+	int updateConfirmReserve(ResKindVo rkVo);
+	int updateNoReasonReserve(ResKindVo rkVo);
 }

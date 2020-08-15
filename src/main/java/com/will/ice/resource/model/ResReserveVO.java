@@ -9,9 +9,15 @@ public class ResReserveVO {
 	private String rkKind;
 	
 	private int rvNo;
+	
+	private String startDate;
+	private String endDate;
+	private String startHour;
+	private String endHour;
+	
 	private Timestamp rvStart;
 	private Timestamp rvEnd;
-	private String startDate;
+	private String pickDate;
 	
 	private String rvReason;
 	private String rvConfirm;
@@ -26,10 +32,10 @@ public class ResReserveVO {
 		super();
 	}
 
-	public ResReserveVO(int resNo, String startDate) {
+	public ResReserveVO(int resNo, String pickDate) {
 		super();
 		this.resNo = resNo;
-		this.startDate = startDate;
+		this.pickDate = pickDate;
 	}
 
 
@@ -132,12 +138,46 @@ public class ResReserveVO {
 		this.startDate = startDate;
 	}
 
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStartHour() {
+		return startHour;
+	}
+
+	public void setStartHour(String startHour) {
+		this.startHour = startHour;
+	}
+
+	public String getEndHour() {
+		return endHour;
+	}
+
+	public void setEndHour(String endHour) {
+		this.endHour = endHour;
+	}
+
+	public String getPickDate() {
+		return pickDate;
+	}
+
+	public void setPickDate(String pickDate) {
+		this.pickDate = pickDate;
+	}
+
 	@Override
 	public String toString() {
 		return "ResReserveVO [resNo=" + resNo + ", resName=" + resName + ", rkNo=" + rkNo + ", rkKind=" + rkKind
-				+ ", rvNo=" + rvNo + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd + ", rvReason=" + rvReason + 
-				", rvConfirm=" + rvConfirm + ", rvRegdate=" + rvRegdate + ", memNo="+ memNo + 
-				", name=" + name + ", deptName=" + deptName + ", posName=" + posName + "]";
+				+ ", rvNo=" + rvNo + ", startDate=" + startDate + ", endDate=" + endDate + ", startHour=" + startHour
+				+ ", endHour=" + endHour + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd + ", pickDate=" + pickDate
+				+ ", rvReason=" + rvReason + ", rvConfirm=" + rvConfirm + ", rvRegdate=" + rvRegdate + ", memNo="
+				+ memNo + ", name=" + name + ", deptName=" + deptName + ", posName=" + posName + "]";
 	}
+	
 	
 }

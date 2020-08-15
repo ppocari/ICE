@@ -147,6 +147,8 @@
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
 								href="<c:url value='/resource/resourceMain.do'/>">자원관리</a>
+							<a class="collapse-item"
+								href="<c:url value='/resource/manageReserve.do'/>">예약처리</a>
 						</div>
 
 					</div>
