@@ -1,9 +1,6 @@
 package com.will.ice.companyCard.model;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.will.ice.common.DateSearchVO;
 import com.will.ice.common.Depart_posi_dateVO;
-import com.will.ice.member.model.MemberServiceImpl;
-import com.will.ice.member.model.MemberVO;
-import com.will.ice.paymentfile.model.PaymentfileVO;
 
 
 @Service
@@ -84,6 +78,14 @@ public class ComcardServiceImpl implements ComcardService{
 		return comcardDAO.selectUnUseComcardByFile(fileName);
 	}
 
+	@Override
+	public List<CartVO> selectByDept() {
+		return comcardDAO.selectByDept();
+	}
+	@Override
+	public List<CartVO> selectByPos() {
+		return comcardDAO.selectByPos();
+	}
 
 
 

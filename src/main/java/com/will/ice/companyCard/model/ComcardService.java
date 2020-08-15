@@ -1,6 +1,5 @@
 package com.will.ice.companyCard.model;
 
-import java.io.File;
 import java.util.List;
 
 import com.will.ice.common.DateSearchVO;
@@ -10,7 +9,6 @@ public interface ComcardService {
 
 	List<ComcardVO> selectUnUseComcard(DateSearchVO search_dsvo);
 	List<ComcardVO> selectListComcard(Depart_posi_dateVO dpdvo);
-
 
 
 	ComcardVO selectNoComcard(int comcard_no);
@@ -26,5 +24,6 @@ public interface ComcardService {
 	
 	List<ComcardVO> selectUnUseComcardByFile(String fileName);
 
-
+	List<CartVO> selectByDept();
+	List<CartVO> selectByPos();
 }

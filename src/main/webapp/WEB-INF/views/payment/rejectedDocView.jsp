@@ -55,21 +55,19 @@
 							<td>${vo.posName }</td>
 						</tr>
 						<tr>
-							<c:if test="${!empty plList2}">
+							<c:if test="${!empty comVo}">
 							<c:if test="${!empty vo.payDate}">
-								<c:forEach var="vo2" items="${plList2 }">
 								<td>
+								<c:forEach var="vo2" items="${comVo }">
 									<c:if test="${!empty vo2.signName}">
+									<c:if test="${vo.memNo == vo2.memNo}">
 										<img alt="서명" src="<c:url value='/sign_file/${vo2.signName }'/>" width="60%">
+									</c:if>
 									</c:if>
 									<c:if test="${empty vo2.signName}">
 										반려
 									</c:if>
-								</td>
 								</c:forEach>
-							</c:if>
-							<c:if test="${empty vo.payDate}">
-								<td>
 								</td>
 							</c:if>
 							</c:if>
@@ -96,12 +94,17 @@
 			</table>
 		</div>
 	</div>
+	<c:if test="${!empty fileVo.fileName }">&nbsp;&nbsp;&nbsp;
+		<a href="<c:url value='/payment/download.do?docNo=${fileVo.docNo }&fileName=${fileVo.fileName }' />" 
+			id="fileName">
+			${fileVo.originalFileName} (<fmt:formatNumber value="${fileVo.fileSize/1024}" pattern="###.#"/>KB)
+		</a>
+	</c:if>
 	<div id="lastDiv" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<table class="table table-bordered" style="width: 75%;margin-left:0px;">
 			<c:if test="${!empty commentList }">
 			<c:forEach var="cVo" items="${commentList }">
 			<tr>
-				<td class="center" width="5%">${cVo.commentNo }</td>
 				<td width="15%">${cVo.name }</td>
 				<td width="60%" style="text-align: left;">${cVo.content }</td>
 				<td width="20%">
@@ -111,7 +114,9 @@
 			</c:forEach>
 			</c:if>
 		</table>
-		<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="background-color: #4e73df; color:white;"/>
+		<c:if test="${param.d !='1' }">
+			<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="background-color: #4e73df; color:white;"/>
+		</c:if>
 	</div>
 	</div>
 	</div>

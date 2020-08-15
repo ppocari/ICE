@@ -50,14 +50,14 @@
 <!-- Begin Page Content -->
 
 <div class="container-fluid">
-
+	<form name="memRegisterFrm" method="post">
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">내 법인카드 조회</h1>
 
-		<a href="#"
+		<button type="submit" formaction="<c:url value='/myCorpCardList.do'/>"
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i>Excel 파일 다운로드</a>
+			class="fas fa-download fa-sm text-white-50"></i>Excel 파일 다운로드</button>
 	</div>
 
 	<!-- Content Row -->
@@ -68,12 +68,11 @@
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/companyCard/comCardList.do'/> ">
+				
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
 						<div style="float: right">
-							<button type="submit" class="btn btn-info"
+							<button type="submit" class="btn btn-info" formaction="<c:url value='/companyCard/comCardList.do'/> "
 							 >조회</button>
 						</div>
 						
@@ -141,12 +140,12 @@
 										
 						</div>
 					</div>		
-				</form>
 				
 				
 			</div>
 		</div>
 	</div>
+	</form>
 </div>
 
 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="../../inc/top.jsp" %>
+<%@include file="../../inc/top.jsp"%>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
@@ -107,7 +107,7 @@
 		<!-- 반복 시작 -->
 			<c:if test="${!empty list }">
 				<c:forEach var="vo" items="${list }">
-					<tr onclick="window.open('../docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+					<tr onclick="window.open('../rejectedDocView.do?docNo=${vo.docNo}&d=1','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
 						<td>
 							<a class="DdocNoInfo">
 								${vo.docNo }

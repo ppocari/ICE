@@ -174,4 +174,10 @@ public class PaymentDAOMybatis implements PaymentDAO{
 		return sqlSession.selectList(namespace+"selectComment",docNo);
 	}
 
+	@Override
+	public int updatePaylinePg(int docNo) {
+		return sqlSession.update(namespace+"updatePaylinePg",docNo);
+	}
+
+
 }

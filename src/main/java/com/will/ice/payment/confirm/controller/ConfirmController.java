@@ -26,7 +26,6 @@ import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
-import com.will.ice.payment.model.PaymentVO;
 import com.will.ice.payment.model.PaymentviewVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
@@ -108,8 +107,9 @@ public class ConfirmController {
 		
 		List<PaycommentVO> signList = paymentService.selectSign(docNo);
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
-		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
+		List<CommentviewVO> comVo = paymentService.selectComment(docNo);
 		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
+		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
 		PaymentfileVO fileVo = paymentService.getFile(docNo);
 		logger.info("첨부파일 fileVo={}",fileVo);
@@ -117,6 +117,7 @@ public class ConfirmController {
 		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList2",plList2);
+		model.addAttribute("comVo",comVo);
 		model.addAttribute("plList",plList);
 		model.addAttribute("fileVo",fileVo);
 	}
@@ -131,17 +132,19 @@ public class ConfirmController {
 		List<PaycommentVO> signList = paymentService.selectSign(docNo);
 		PaymentviewVO payVo = paymentService.selectDocument(docNo);
 		List<DocumentviewVO> plList2 = paymentService.selectPayLine2(docNo);
+		List<CommentviewVO> comVo = paymentService.selectComment(docNo);
 		List<ChkDocumentviewVO> plList = paymentService.selectPayLine(docNo);
 		logger.info("결재선, 파라미터 plList={}",plList.size());
-		PaymentfileVO fileVo = paymentService.getFile(docNo);
-		logger.info("첨부파일 fileVo={}",fileVo);
+		PaymentfileVO fListVo = paymentService.getFile(docNo);
+		logger.info("첨부파일 fListVo={}",fListVo);
 		
 		model.addAttribute("commentList",commentList);
 		model.addAttribute("signList",signList);
 		model.addAttribute("payVo",payVo);
 		model.addAttribute("plList2",plList2);
 		model.addAttribute("plList",plList);
-		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("comVo",comVo);
+		model.addAttribute("fListVo",fListVo);
 	}
 	
 	@RequestMapping("/approve.do")

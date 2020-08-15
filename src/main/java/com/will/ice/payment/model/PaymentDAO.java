@@ -32,6 +32,7 @@ public interface PaymentDAO {
 	int isFile(PaylinedocVO pldVo);
 	PaymentfileVO getFile(int docNo);
 	int updateFile(PaymentfileVO fileVo);
+	int updatePaylinePg(int docNo);
 	
 	/* 결재함 */
 	PaylistViewVO selectUndecided(PaymentSearchVO paysearchVo);
