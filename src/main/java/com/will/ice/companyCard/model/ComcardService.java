@@ -24,6 +24,6 @@ public interface ComcardService {
 	
 	List<ComcardVO> selectUnUseComcardByFile(String fileName);
 
-	List<ComcardVO> selectByDept();
-	List<ComcardVO> selectByPos();
+	List<CartVO> selectByDept();
+	List<CartVO> selectByPos();
 }

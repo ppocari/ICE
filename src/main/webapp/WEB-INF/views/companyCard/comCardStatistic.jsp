@@ -50,63 +50,24 @@
 		            '7월','8월','9월','10월','11월','12월']
 			} );
 			
-			$('#deptS').click(function(){
-				$.ajax({
-					url:"<c:url value='/comCardStatistic.do'/>",
-					type:"post",
-					data:"flag=dept",
-					success:function(res){
-						alert("부서별 조회");
-					},
-					error:function(xhr, status, error){
-						alert(status+", "+error);
-					}
-				});
+			$("#deptS").click(function(){
+				$('#flag').val("dept");
 			});
-			
-			$('#posS').click(function(){
-				$.ajax({
-					url:"<c:url value='/comCardStatistic.do'/>",
-					type:"post",
-					data:"flag=pos",
-					success:function(res){
-						alert("직급별 조회");
-					},
-					error:function(xhr, status, error){
-						alert(status+", "+error);
-					}
-				});
+			$("#posS").click(function(){
+				$('#flag').val("pos");
 			});
 		});
  
  
-      google.charts.load('current', {'packages':['line']});
+      google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-	      var data = new google.visualization.DataTable();
-	      
-	      <c:forEach var="vo" items="${list}">
-		      data.addColumn('number', vo.getDeptName());
-	      </c:forEach>
-	
-	      data.addRows([
-	        [1,  37.8, 80.8, 41.8],
-	        [2,  30.9, 69.5, 32.4],
-	        [3,  25.4,   57, 25.7],
-	        [4,  11.7, 18.8, 10.5],
-	        [5,  11.9, 17.6, 10.4],
-	        [6,   8.8, 13.6,  7.7],
-	        [7,   7.6, 12.3,  9.6],
-	        [8,  12.3, 29.2, 10.6],
-	        [9,  16.9, 42.9, 14.8],
-	        [10, 12.8, 30.9, 11.6],
-	        [11,  5.3,  7.9,  4.7],
-	        [12,  6.6,  8.4,  5.2],
-	        [13,  4.8,  6.3,  3.6],
-	        [14,  4.2,  6.2,  3.4]
-	      ]);
-	
+    	  var data = google.visualization.arrayToDataTable([ 
+    		  ['Sort', 'Price'], 
+    		  ${result} 
+   		 ]);
+
 	      var options = {
 	        chart: {
 	          title: '법인카드 통계',
@@ -114,16 +75,12 @@
 	        },
 	        width: 900,
 	        height: 500,
-	        axes: {
-	          x: {
-	            0: {side: 'top'}
-	          }
-	        }
+	        
 	      };
 	
-	      var chart = new google.charts.Line(document.getElementById('line_top_x'));
+	      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 	
-	      chart.draw(data, google.charts.Line.convertOptions(options));
+	      chart.draw(data, options);
     }
     
 </script>
@@ -148,32 +105,29 @@
 			<div class="card shadow mb-4" style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
 				<!-- Card Header - Dropdown -->
 				
-					<form name="memRegisterFrm" method="post">
+					<form name="memRegisterFrm" method="post" action="<c:url value='/companyCard/comCardStatistic.do'/>">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
-						<div style="float: right">
-							<button type="submit" class="btn btn-info" formaction="<c:url value='/companyCard/comCardList.do'/> "
-							 >조회</button>
-						</div>
-						
-					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">						
 						<div class="search" style="margin-left: 10px;">
 							<button type="submit" class="btn btn-info" id="deptS">부서별 조회</button>
 						</div>
 						<div class="search">
 							<button type="submit" class="btn btn-info" id="posS">직급별 조회</button>
-						</div>
-						<div class="search" style="margin-right: 20px;">
-							<label for="usedate1" style="margin-right: 20px;">사용일별</label>
-							<input type="text" name="usedate1" id="usedate1" value="${dpdvo.usedate1 }"> ~
-							<input type="text" name="usedate2" id="usedate2" value="${dpdvo.usedate2 }">
+							<input type="hidden" name="flag" id="flag" value="">
 						</div>
 						
 					</div>
+					<%--<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">						
+						 <div class="search" style="margin-right: 20px;">
+							<label for="usedate1" style="margin-right: 20px;">사용일별</label>
+							<input type="text" name="usedate1" id="usedate1" value="${dpdvo.usedate1 }"> ~
+							<input type="text" name="usedate2" id="usedate2" value="${dpdvo.usedate2 }">
+						</div> 
+						
+					</div>--%>
 					<!-- Card Body -->
 					<div class="card-body">
-						<div id="line_top_x">
+						<div id="piechart">
 						
 						</div>
 					</div>		

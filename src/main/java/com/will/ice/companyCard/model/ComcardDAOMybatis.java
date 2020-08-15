@@ -65,11 +65,11 @@ public class ComcardDAOMybatis implements ComcardDAO{
 
 
 	@Override
-	public List<ComcardVO> selectByDept() {
+	public List<CartVO> selectByDept() {
 		return sqlsession.selectList(namespace+"selectByDept");
 	}
 	@Override
-	public List<ComcardVO> selectByPos() {
+	public List<CartVO> selectByPos() {
 		return sqlsession.selectList(namespace+"selectByPos");
 	}
 

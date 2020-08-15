@@ -11,7 +11,7 @@
 <script src="<c:url value = "/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <style type="text/css">
-	#CDV{overflow: hidden;}.center{text-align: center;background-color: #f8f9fc;}#docType{font-weight: 600;text-align: center;}#CDVcancelBt,#cancelBt{background-color: #4e73df; color:white;position: relative;left: 56%;top: -7px;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
+	#CDV{overflow: hidden;}.center{text-align: center;background-color: #f8f9fc;}#docType{font-weight: 600;text-align: center;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}div#tableDiv table {float: left;}#paylineTable table:first-of-type{margin-right: 20px;}
 </style>
 </head>
 <body id="CDV">
@@ -97,12 +97,12 @@
 				</a>
 			</c:if>
 		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'"style="position: relative; right: 2%;top:-7px;">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -72%;top:-7px;background-color: #4e73df; color:white;">
 				결재선 지정
 			</button>
 		</c:if>
 		<c:if test="${param.flag!='imsy'}">
-			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: 2%;top:-7px;">
+			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -72%;top:-7px;background-color: #4e73df; color:white;">
 				결재상신 취소
 			</button>
 		</c:if>

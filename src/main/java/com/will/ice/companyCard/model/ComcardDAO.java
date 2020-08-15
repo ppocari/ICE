@@ -10,7 +10,6 @@ public interface ComcardDAO {
 	List<ComcardVO> selectUnUseComcard(DateSearchVO search_dsvo);
 	List<ComcardVO> selectListComcard(Depart_posi_dateVO dpdvo);
 	
-	
 	ComcardVO selectNoComcard(int comcard_no);
 	
 	int insertCCMulti(ComcardVO ccvo);
@@ -23,6 +22,6 @@ public interface ComcardDAO {
 	
 	List<ComcardVO> selectUnUseComcardByFile(String fileName);
 	
-	List<ComcardVO> selectByDept();
-	List<ComcardVO> selectByPos();
+	List<CartVO> selectByDept();
+	List<CartVO> selectByPos();
 }	

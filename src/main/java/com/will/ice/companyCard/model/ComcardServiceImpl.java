@@ -79,11 +79,11 @@ public class ComcardServiceImpl implements ComcardService{
 	}
 
 	@Override
-	public List<ComcardVO> selectByDept() {
+	public List<CartVO> selectByDept() {
 		return comcardDAO.selectByDept();
 	}
 	@Override
-	public List<ComcardVO> selectByPos() {
+	public List<CartVO> selectByPos() {
 		return comcardDAO.selectByPos();
 	}
 
