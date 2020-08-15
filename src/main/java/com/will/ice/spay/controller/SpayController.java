@@ -195,8 +195,9 @@ public class SpayController {
 	}
 	
 	@RequestMapping(value = "/excelDown.do")
-	public void excelDown(@ModelAttribute DateSearchVO dateSearchVo,
-			HttpServletResponse response) throws Exception {
+	@ResponseBody
+	public String excelDown(@ModelAttribute DateSearchVO dateSearchVo,
+			HttpServletResponse response, Model model) throws Exception {
 
 		logger.info("엑셀에 넣을 날짜 파라미터, dateSearchVo={}",dateSearchVo);
 		
@@ -221,91 +222,109 @@ public class SpayController {
 	    List<SpayViewVO> list=spayService.selectSpayViewAll(dateSearchVo);
 		logger.info("엑셀에 넣기전 결과 list.size={}", list.size());
 		
-	    // 워크북 생성
-	    Workbook wb = new HSSFWorkbook();
-	    Sheet sheet = wb.createSheet("결제된 목록");
-	    Row row = null;
-	    Cell cell = null;
-	    int rowNo = 0;
-
-	    // 테이블 헤더용 스타일
-	    CellStyle headStyle = wb.createCellStyle();
-
-	    // 가는 경계선을 가집니다.
-	    headStyle.setBorderTop(BorderStyle.THIN);
-	    headStyle.setBorderBottom(BorderStyle.THIN);
-	    headStyle.setBorderLeft(BorderStyle.THIN);
-	    headStyle.setBorderRight(BorderStyle.THIN);
-
-	    // 데이터는 가운데 정렬합니다.
-	    headStyle.setAlignment(HorizontalAlignment.CENTER);
-
-	    // 데이터용 경계 스타일 테두리만 지정
-	    CellStyle bodyStyle = wb.createCellStyle();
-	    bodyStyle.setBorderTop(BorderStyle.THIN);
-	    bodyStyle.setBorderBottom(BorderStyle.THIN);
-	    bodyStyle.setBorderLeft(BorderStyle.THIN);
-	    bodyStyle.setBorderRight(BorderStyle.THIN);
-
-	    // 헤더 생성
-	    row = sheet.createRow(rowNo++);
-        cell = row.createCell(0);
-        cell.setCellValue("사원번호");
-        
-        cell = row.createCell(1);
-        cell.setCellValue("이름");
-        
-        cell = row.createCell(2);
-        cell.setCellValue("수량");
-
-        cell = row.createCell(3);
-        cell.setCellValue("가격");
-        
-        cell = row.createCell(4);
-        cell.setCellValue("번호");
-        
-        cell = row.createCell(5);
-        cell.setCellValue("구매시각");
-
-	    // 데이터 부분 생성
-	    SpayViewVO vo;
-        for(int rowIdx=0; rowIdx < list.size(); rowIdx++) {
-            vo = list.get(rowIdx);
-            String hp = vo.getHP1()+"-"+vo.getHP2()+"-"+vo.getHP3();
-	        row = sheet.createRow(rowNo++);
+		String msg="데이터가 없습니다!", url="/spay/sListAll.do";
+		if(list.size()!=0) {
+			
+			// 워크북 생성
+		    Workbook wb = new HSSFWorkbook();
+		    Sheet sheet = wb.createSheet("결제된 목록");
+		    Row row = null;
+		    Cell cell = null;
+		    int rowNo = 0;
+	
+		    // 테이블 헤더용 스타일
+		    CellStyle headStyle = wb.createCellStyle();
+	
+		    // 가는 경계선을 가집니다.
+		    headStyle.setBorderTop(BorderStyle.THIN);
+		    headStyle.setBorderBottom(BorderStyle.THIN);
+		    headStyle.setBorderLeft(BorderStyle.THIN);
+		    headStyle.setBorderRight(BorderStyle.THIN);
+	
+		    // 데이터는 가운데 정렬합니다.
+		    headStyle.setAlignment(HorizontalAlignment.CENTER);
+	
+		    // 데이터용 경계 스타일 테두리만 지정
+		    CellStyle bodyStyle = wb.createCellStyle();
+		    bodyStyle.setBorderTop(BorderStyle.THIN);
+		    bodyStyle.setBorderBottom(BorderStyle.THIN);
+		    bodyStyle.setBorderLeft(BorderStyle.THIN);
+		    bodyStyle.setBorderRight(BorderStyle.THIN);
+	
+		    // 헤더 생성
+		    row = sheet.createRow(rowNo++);
+	        cell = row.createCell(0);
+	        cell.setCellValue("사원번호");
 	        
-	        SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
+	        cell = row.createCell(1);
+	        cell.setCellValue("이름");
 	        
-	        int sum = vo.getTICQUANTITY()*vo.getTICPRICE();
-	        Timestamp time = vo.getTICREGDATE();
-    		String Time = formatter.format ( time );
-	      	        
-            cell = row.createCell(0);
-            cell.setCellValue(vo.getMEMNO());
-            
-            cell = row.createCell(1);
-            cell.setCellValue(vo.getNAME());
-            
-            cell = row.createCell(2);
-            cell.setCellValue(vo.getTICQUANTITY());
-            
-            cell = row.createCell(3);
-            cell.setCellValue(sum);
-
-            cell = row.createCell(4);
-            cell.setCellValue(hp);
-            
-            cell = row.createCell(5);
-            cell.setCellValue(Time);
-	    }
-
-	    // 컨텐츠 타입과 파일명 지정
-	    response.setContentType("ms-vnd/excel");
-	    response.setHeader("Content-Disposition", "attachment;filename=buyticket.xls");
-
-	    // 엑셀 출력
-	    wb.write(response.getOutputStream());
-	    wb.close();
+	        cell = row.createCell(2);
+	        cell.setCellValue("수량");
+	
+	        cell = row.createCell(3);
+	        cell.setCellValue("가격");
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue("번호");
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue("구매시각");
+	
+		    // 데이터 부분 생성
+		    SpayViewVO vo;
+	        for(int rowIdx=0; rowIdx < list.size(); rowIdx++) {
+	            vo = list.get(rowIdx);
+	            String hp = vo.getHP1();
+	            if(hp==null) {
+	            	hp="";
+	            }else {
+	            	hp = vo.getHP1()+"-"+vo.getHP2()+"-"+vo.getHP3();
+	            }
+	            
+	            row = sheet.createRow(rowNo++);
+		        
+		        SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss", Locale.KOREA );
+		        
+		        int sum = vo.getTICQUANTITY()*vo.getTICPRICE();
+		        Timestamp time = vo.getTICREGDATE();
+	    		String Time = formatter.format ( time );
+		      	        
+	            cell = row.createCell(0);
+	            cell.setCellValue(vo.getMEMNO());
+	            
+	            cell = row.createCell(1);
+	            cell.setCellValue(vo.getNAME());
+	            
+	            cell = row.createCell(2);
+	            cell.setCellValue(vo.getTICQUANTITY());
+	            
+	            cell = row.createCell(3);
+	            cell.setCellValue(sum);
+	
+	            cell = row.createCell(4);
+	            cell.setCellValue(hp);
+	            
+	            cell = row.createCell(5);
+	            cell.setCellValue(Time);
+		    }
+	
+		    // 컨텐츠 타입과 파일명 지정
+		    response.setContentType("ms-vnd/excel");
+		    response.setHeader("Content-Disposition", "attachment;filename=buyticket.xls");
+	
+		    // 엑셀 출력
+		    wb.write(response.getOutputStream());
+		    wb.close();
+		
+		}else{
+			msg="데이터가 없습니다!";
+		}		  
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+	
+		return "common/message";
 	}
 	
 }

@@ -79,7 +79,7 @@
 									</form>
 									<hr>
 									<div class="text-center">
-										<a class="small" href="forgot-password.html">Forgot
+										<a class="small" href="<c:url value='/log/findPwd.do'/>">Forgot
 											Password?</a>
 									</div>
 

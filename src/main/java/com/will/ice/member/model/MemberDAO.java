@@ -8,8 +8,8 @@ import com.will.ice.common.Depart_posi_dateVO;
 public interface MemberDAO {
 	
 	String selectPwd(String memNo);
-	MemberVO selectMember(String userid);
 	
+	MemberVO selectMember(String userid);
 	
 	int registerMulti(MemberVO memberVO);
 	
@@ -20,4 +20,5 @@ public interface MemberDAO {
 	List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo);
 	
 	int newPwd(MemberVO memVo);
+	
 }

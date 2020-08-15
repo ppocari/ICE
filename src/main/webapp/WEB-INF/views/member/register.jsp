@@ -19,7 +19,6 @@
 }
 </style>
 <script type="text/javascript">
-<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
 	$(function(){
 		
 		$("form[name=memRegisterFrm]").submit(function(){
@@ -51,12 +50,9 @@
 			$('form[name=frmList]').submit();
 		});	
 		
-		
-		
 		$("#memHiredate").datepicker();
 	});
 	
-
 	function memberTableCreate(){
 		var tc = new Array();
 		var str = '';
@@ -82,7 +78,6 @@
 					
 		$("#dynamicTable").append(str);
 		
-					
 		$("#memNo").val('');
 		$("#mamName").val('');
 		$("#memPwd").val('');
@@ -93,9 +88,7 @@
 		$("#memPosi").val('');
 		$("#memSalary").val('');
 		}
-=======
 	
->>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
 </script>
 <!-- Begin Page Content -->
 
@@ -118,19 +111,16 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
-<<<<<<< HEAD:src/main/webapp/WEB-INF/views/member/register.jsp
-				<form name="memRegisterFrm" method="post" action="<c:url value='/member/register.do' />">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+				<form name="memRegisterFrm" method="post"
+					action="<c:url value='/member/register.do' />">
+					<div
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">사원등록</h6>
-						<button type="submit" class="btn btn-info"
-							 style="float: right">사원정보 반영하기</button>
-							 	
+						<button type="submit" class="btn btn-info" style="float: right">사원정보 반영하기</button>
 					</div>
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll; ">
-
-
+						<div class="chart-area" style="overflow: scroll;">
 							<table class="table table-bordered" id="dynamicTable">
 								<thead>
 									<tr>
@@ -147,51 +137,36 @@
 								<tbody id="dynamicTbody">
 
 								</tbody>
-						</table>
-						
-						
-						<span style="font-weight: bold; font-size: 1.1em;">정보입력</span> 
-						<input type="text" placeholder="사원번호" id="memNo" class="register_text">
-						<input type="text" placeholder="이름" id="mamName" class="register_text"> 
-						<input type="text" placeholder="비밀번호" id="memPwd" class="register_text"> 
-						<input type="text" placeholder="입사일" id="memHiredate" class="register_text"> 
-						<input type="text" placeholder="부서명" id="memDepart" class="register_text"> 
-						<input type="text" placeholder="직급" id="memPosi" class="register_text">
-						<input type="text" placeholder="계약연봉" id="memSalary" class="register_text">
-						<input type="button" class="btn btn-info" onclick="memberTableCreate()"
-						class="register_text" value="입력">
-						
+							</table>
+
+							<span style="font-weight: bold; font-size: 1.1em;">정보입력</span> <input
+								type="text" placeholder="사원번호" id="memNo" class="register_text">
+							<input type="text" placeholder="이름" id="mamName"
+								class="register_text"> <input type="text"
+								placeholder="비밀번호" id="memPwd" class="register_text"> <input
+								type="text" placeholder="입사일" id="memHiredate"
+								class="register_text"> <input type="text"
+								placeholder="부서명" id="memDepart" class="register_text">
+							<input type="text" placeholder="직급" id="memPosi"
+								class="register_text"> <input type="text"
+								placeholder="계약연봉" id="memSalary" class="register_text">
+							<input type="button" class="btn btn-info"
+								onclick="memberTableCreate()" class="register_text" value="입력">
+
 						</div>
 					</div>
-						
-=======
-				<form name="frm" action="<c:url value ='/member/memWrite.do'/>"
-					method="post">
-
-					<input type="text"  name="memNo"> 
-					<input type="text"  name="pwd"> 
-					<input type=text name="name" /> 
-					<input type=text name="deptCode"  />
-					<input type=text name="posCode" />
-					<input type=text name="hiredate"  />
-					<input type=text name="salary"  /> 
-					
-
-
-					<input type="submit" value="전송"> 
->>>>>>> parent of d253f43... sisi:src/main/webapp/WEB-INF/views/etc/register.jsp
+					<form name="frm" action="<c:url value ='/member/memWrite.do'/>" method="post">
+						<input type="text" name="memNo"> <input type="text"
+							name="pwd"> <input type=text name="name" /> <input
+							type=text name="deptCode" /> <input type=text name="posCode" />
+						<input type=text name="hiredate" /> <input type=text
+							name="salary" /> <input type="submit" value="전송">
+					</form>
 				</form>
-
-
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
-
 
 <!-- /.container-fluid -->
 <div></div>

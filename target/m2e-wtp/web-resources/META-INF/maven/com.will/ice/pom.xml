@@ -165,9 +165,9 @@
 		</dependency>
 
 		<!-- oracle -->
-		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId>
-			<version>11.1.0.7.0</version> </dependency> <dependency> <groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId> <version>12.1.0.1-atlassian-hosted</version>
+		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
+			<version>11.1.0.7.0</version> </dependency> <dependency> <groupId>com.oracle</groupId> 
+			<artifactId>ojdbc6</artifactId> <version>12.1.0.1-atlassian-hosted</version> 
 			</dependency> -->
 
 		<dependency>
@@ -205,7 +205,7 @@
 
 
 		<!-- 화면에서 ajax처리시 Map처리 가능 -->
-		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId>
+		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-core-asl</artifactId> 
 			<version>1.9.13</version> </dependency> -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -215,14 +215,14 @@
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>2.9.0.pr4</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.0.pr4</version>
 		</dependency>
 
 		<!-- Jackson -->
-		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId>
-			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId>
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-annotations</artifactId> 
+			<version>2.7.5</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
 			<artifactId>jackson-core</artifactId> <version>2.7.5</version> </dependency> -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -268,6 +268,12 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.5.6</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -282,25 +288,37 @@
 			<version>4.3.4.RELEASE</version>
 		</dependency>
 
-
-		<!-- Spring Security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>3.2.3.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>3.2.3.RELEASE</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.3.RELEASE</version>
+		</dependency>
+
+		<!--스프링시큐리티 web 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<!--스프링시큐리티 core 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		<!--스프링시큐리티 config 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+		
+		<!-- email -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.2</version>
 		</dependency>
 		
 		<dependency>
@@ -312,8 +330,8 @@
 
 	</dependencies>
 	<repositories>
-		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url>
-			</repository> <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name>
+		<!-- <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> <url>http://maven.jahia.org/maven2</url> 
+			</repository> <repository> <id>oracle</id> <name>ORACLE JDBC Repository</name> 
 			<url>https://maven.atlassian.com/3rdparty/</url> </repository> -->
 
 		<repository>

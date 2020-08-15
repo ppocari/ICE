@@ -53,15 +53,22 @@
 						<label>상품명 : 식권 ${vo.TICQUANTITY }장</label><br>
 						<label>결제수단 : Card</label><br>
 						<label>구매자	: ${memVo.name }</label><br>
+						<c:if test="${!empty memVo.hp1}">
 						<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
-						<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+						</c:if>
+						<c:if test="${empty memVo.hp1}">
+						</c:if>
+						<c:if test="${!empty memVo.email1}">
+							<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+						</c:if>					
+						<c:if test="${empty memVo.email1}">
+						</c:if>	
 						
 						<!-- 10장이상이면 할인 -->
 						<c:if test="${vo.TICQUANTITY >=10}">
 							<label>할인 : 10%</label><br>
 						</c:if>
 						<c:if test="${vo.TICQUANTITY < 10}">
-							<label>할인 : 0%</label><br>
 						</c:if>
 					<hr>
 					<div class="p-3" style="text-align: center;">
