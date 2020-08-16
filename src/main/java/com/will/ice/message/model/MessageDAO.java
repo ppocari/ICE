@@ -12,4 +12,11 @@ public interface MessageDAO {
 	List<MessageVO> msgRecList(MessageVO msgVO);
 	
 	MessageVO msgSelecyByno(int no);
+	
+	int msgUpdateRead(int msgNo);
+	int updateDelteMsg(int msgNo);
+	int msgREALDeleteByNo(int no);
+	int msgREALDeleteByMsgNo(int msgNo);
+	List<MessageVO> selectMsgTrash(String recMemNo);
+	int msgDelBack(int msgNo);
 }

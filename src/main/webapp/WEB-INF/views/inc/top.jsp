@@ -242,6 +242,26 @@
 				</div>
 			</li>
 
+			<!-- Nav Item -게시판-->		
+			<li class="nav-item"><a class="nav-link collapsed" href="#"
+				data-toggle="collapse" data-target="#collapseNine"
+				aria-expanded="true" aria-controls="collapseNine"> <i
+					class="fas fa-fw fa-folder"></i> <span>쪽지</span>
+			</a>
+				<div id="collapseNine" class="collapse" aria-labelledby="headingNine"
+					data-parent="#accordionSidebar" >
+					<div class="bg-white py-2 collapse-inner rounded">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<a class="collapse-item" href="<c:url value='/message/msgWrite.do'/>">쪽지쓰기</a>
+							<a class="collapse-item" href="<c:url value='/message/msgSendList.do'/>">보낸쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgRecList.do'/>">받은쪽지함</a>
+							<a class="collapse-item" href="<c:url value='/message/msgTrash.do'/>">휴지통</a>
+						</div>
+
+					</div>
+				</div>
+			</li>
+			
 			<!-- Nav Item - 자원관리-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseFour"
@@ -303,23 +323,12 @@
 				</div>
 			</li>
 			
-			<!-- Nav Item - 식권결제-->		
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseSeven"
-				aria-expanded="true" aria-controls="collapseSeven"> <i
-					class="fas fa-fw fa-folder"></i> <span>식권결제</span>
-			</a>
-				<div id="collapseSeven" class="collapse" aria-labelledby="headingSeven"
-					data-parent="#accordionSidebar" >
-					<div class="bg-white py-2 collapse-inner rounded">
-						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='/spay/sbuy.do'/>">결제</a>
-							<a class="collapse-item" href="<c:url value='/spay/sList.do'/>">사용내역</a>
-						</div>
-
-					</div>
-				</div>
+			<!-- Nav Item -스케줄-->		
+			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
+				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
+				</a>
 			</li>
+			
 			
 			<!-- Nav Item -게시판-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
@@ -339,31 +348,26 @@
 				</div>
 			</li>
 			
-			<!-- Nav Item -게시판-->		
+			
+			
+			
+			<!-- Nav Item - 식권결제-->		
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseNine"
-				aria-expanded="true" aria-controls="collapseNine"> <i
-					class="fas fa-fw fa-folder"></i> <span>쪽지</span>
+				data-toggle="collapse" data-target="#collapseSeven"
+				aria-expanded="true" aria-controls="collapseSeven"> <i
+					class="fas fa-fw fa-folder"></i> <span>식권결제</span>
 			</a>
-				<div id="collapseNine" class="collapse" aria-labelledby="headingNine"
+				<div id="collapseSeven" class="collapse" aria-labelledby="headingSeven"
 					data-parent="#accordionSidebar" >
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='/message/msgWrite.do'/>">쪽지쓰기</a>
-							<a class="collapse-item" href="<c:url value='/message/msgSendList.do'/>">보낸쪽지함</a>
-							<a class="collapse-item" href="<c:url value='/message/msgRecList.do'/>">받은쪽지함</a>
-							<a class="collapse-item" href="<c:url value='#'/>">휴지통</a>
+							<a class="collapse-item" href="<c:url value='/spay/sbuy.do'/>">결제</a>
+							<a class="collapse-item" href="<c:url value='/spay/sList.do'/>">사용내역</a>
 						</div>
 
 					</div>
 				</div>
 			</li>
-			<!-- Nav Item -스케줄-->		
-			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/schedule/schedule.do'/>"> 
-				<i class="fas fa-fw fa-folder"></i> <span>스케줄</span>
-				</a>
-			</li>
-
 			
 			<%
 				}

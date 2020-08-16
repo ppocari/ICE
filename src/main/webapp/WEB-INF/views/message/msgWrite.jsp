@@ -57,16 +57,15 @@
 							<label for="recMemNo">받는 사람</label>
 							<!-- <input name="reciMsgMe" id="reciMsgMe" type="checkbox">
 							<label for="reciMsgMe">내게 쓰기</label> -->
-							<input type="text" id="recMemNo" name="recMemNo" style="width: 280px;"  placeholder="여러 명은 쉼표(,) 또는 세미콜론(;) 구분 (최대 10 명)">
+							<input type="text" id="recMemNo" name="recMemNo" style="width: 280px;"  placeholder="여러 명은 쉼표(,) 또는 세미콜론(;) 구분 (최대 10 명)"
+							value="${param.memNo }">
 							<input type="button" class="btn btn-success"  id = "openAddrMsg" value="주소록">
 							<input type="hidden" id = "openAddrMsg_memNo" name = "sendMemNo" value="${sessionScope.identNum }">
 						</div>
 					</div>
 					<!-- Card Body -->
 					<div class="card-body" style="text-align: center">
-						<textarea style="width: 98%;  height: 320px;" id="msgContent" name="msgContent">
-						
-						</textarea>
+						<textarea style="width: 98%;  height: 320px;" id="msgContent" name="msgContent"></textarea>
 					</div>
 						
 				</form>

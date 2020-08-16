@@ -246,6 +246,16 @@ where memno =121930;
 select * from message_rec;
 select * from message;
 
+
+
+insert into message(msgno, msgstatus, msgcontent, sendmemno)
+		values(message_seq.nextval, 'Y', '반가워', '121920' );
+		
+insert into message_rec
+		values(message_rec_seq.nextval, 3 , '111910');
+
+
+
 select * from member;
 
 insert into message_rec
@@ -269,6 +279,10 @@ on memb.memno = m.sendmemno;
 
 select * from message_view;
 
+
+update message_view
+set msgstatus = 'Y'
+where no = 100;
 
 create sequence message_rec_seq
 start with 100

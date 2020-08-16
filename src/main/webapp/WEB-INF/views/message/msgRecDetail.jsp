@@ -9,6 +9,17 @@
 <%@ include file="../inc/all_css_js.jsp" %>
   
 </head>
+<script type="text/javascript">
+	$(function(){
+		$("form[name=msgRecDetailFrm]").click(function(){
+			var memNo = $("#recMemNo").val();
+			
+			opener.location.href="/ice/message/msgWriteReply.do?memNo="+memNo; 
+			self.close();
+
+		});
+	});
+</script>
 <body>
 	<!-- Begin Page Content -->
 
@@ -19,21 +30,23 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-6 " style="margin-top: 30px;">
-			<div class="card shadow mb-4" style="height: 500px;">
+		<div class="col-xl-3 " style="margin-top: 30px;">
+			<div class="card shadow mb-4" style="height: 380px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="get" action="<c:url value='/message/msgWriteWin.do' />">
+				<form name="msgRecDetailFrm" method="post" action="<c:url value='/message/msgWrite.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">받은 쪽지 </h6>
-						<button type="submit" class="btn btn-primary" id = "sengMsg">답장쓰기 </button>
-						<input text="hidden" value="${msgvo.sendMemNo }" name="recMemNo">
+						<div>
+							<label for="sendName">보낸 사람:  ${msgvo.sendName }</label>
+							<input type="hidden" value="${msgvo.sendMemNo }" name="recMemNo" id="recMemNo">
+							
+							<button type="submit" class="btn btn-primary" id = "sengMsg">답장쓰기 </button>
+						</div>
 					</div>
 					
 					<!-- Card Body -->
 					<div class="card-body" style="text-align: center">
-						<textarea style="width: 98%;  height: 320px;" readonly="readonly" id="msgContent" name="msgContent">
-							${msgvo.msgContent }
-						</textarea>
+						<textarea style="width: 98%;  height: 270px;" readonly="readonly" id="msgContent" name="msgContent">${msgvo.msgContent }</textarea>
 					</div>
 						
 				</form>

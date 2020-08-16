@@ -43,6 +43,36 @@ public class MessageDAOMybatis implements MessageDAO{
 		return sqlsession.selectOne(namespace+"msgSelecyByno", no);
 	}
 
+	@Override
+	public int msgUpdateRead(int msgNo) {
+		return sqlsession.update(namespace+"msgUpdateRead", msgNo);
+	}
+
+	@Override
+	public int updateDelteMsg(int msgNo) {
+		return sqlsession.update(namespace+"updateDelteMsg", msgNo);
+	}
+
+	@Override
+	public int msgREALDeleteByNo(int no) {
+		return sqlsession.delete(namespace+"msgREALDeleteByNo", no);
+	}
+	
+	@Override
+	public int msgREALDeleteByMsgNo(int msgNo) {
+		return sqlsession.delete(namespace+"msgREALDeleteByMsgNo", msgNo);
+	}
+
+	@Override
+	public List<MessageVO> selectMsgTrash(String recMemNo) {
+		return sqlsession.selectList(namespace+"selectMsgTrash", recMemNo);
+	}
+
+	@Override
+	public int msgDelBack(int msgNo) {
+		return sqlsession.update(namespace+"msgUpdateRead", msgNo);
+	}
+
 	
 	
 	
