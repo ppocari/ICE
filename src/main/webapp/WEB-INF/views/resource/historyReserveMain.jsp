@@ -24,18 +24,6 @@ function pageProc(curPage){
 	$('form[name=frmPage]').submit();
 }
 
-/* 신청 처리 */
-function handleReserve(rvNo, mode) {
-	if(mode == 'no') {
-	var message = prompt("예약신청 거절의 이유를 적어주세요.");
-		if(message!=null){
-			location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"&message="+message+"'/>";
-		}
-	}else if(mode == 'yes') {
-		location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"'/>";
-	}
-}
-
 </script>
 
 <style type="text/css">
@@ -129,20 +117,46 @@ article{
 
 <section>
 	<article>
-	<!-- post방식으로 페이징 처리 -->
-	<form action="<c:url value='/resource/manageReserve.do'/>" 
-		name="frmPage" method="post">
-		<input type="hidden" name="currentPage">
-	</form>
+		<!-- post방식으로 페이징 처리 -->
+		<form action="<c:url value='/resource/historyReserveMain.do'/>" 
+			name="frmPage" method="post">
+			<input type="hidden" name="currentPage">
+			<input type="hidden" name="rvState" 
+				value="${param.rvState}">	
+		</form>
+		
 		<header>
 			<h3>
-				예약처리<span></span>
+				이용현황 > 전체 <span></span>
 			</h3>
 		</header>
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">예약신청목록</h6>
+					<h6 class="m-0 font-weight-bold text-primary">자원이용현황</h6>
+					<div style="text-align: right;">
+						<span>상태</span>
+						<form name="frmSearch" method="post" action='<c:url value="/resource/historyReserveMain.do"/>'>
+							<select name="rvState">
+								<option value="" 
+									<c:if test="${param.rvState=='' }">
+					            		selected="selected"
+					            	</c:if>
+								>전체</option>
+								<option value="yes"
+									<c:if test="${param.rvState=='yes' }">
+		            					selected="selected"
+		            				</c:if>
+								>승인</option>
+								<option value="no"
+									<c:if test="${param.rvState=='no' }">
+					            		selected="selected"
+					            	</c:if>
+								>거절</option>
+							</select>
+							<input type="submit" value="검색">
+						</form>
+					</div>
 				</div>
 				<div id="tableDivForm">
 					<table id="tableForm">
@@ -155,8 +169,8 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>이용예약시간</th>
-							<th>신청부서
+							<th>이용시간</th>
+							<th>이용부서
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
@@ -164,18 +178,24 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>승인</th>
-							<th>거절</th>
+							<th>상태</th>
 						</tr>
 						<c:forEach var="rs" items="${rsList }">
 							<tr>
-								<td class="goDetail" id="${rs.resNo }">${rs.resName }</td>
-								<td>${rs.rkKind }</td>
+								<td class="goDetail" id="${rs.resNo }">
+								<a href="<c:url value='/resource/historyResName.do?resNo=${rs.resNo }'/>">${rs.resName }</a></td>
+								<td><a href="<c:url value='/resource/historyResKind.do?rkNo=${rs.rkNo}'/>">${rs.rkKind }</a></td>
 								<td>${rs.startDate } ${rs.startHour } ~ ${rs.endDate } ${rs.endHour }</td>
 								<td>${rs.deptName }</td>
 								<td>${rs.name}</td>
-								<td><button onclick="handleReserve(${rs.rvNo}, 'yes')">승인</button></td>
-								<td><button onclick="handleReserve(${rs.rvNo }, 'no')">거절</button></td>
+								<td>
+									<c:if test="${rs.rvState == 'yes' }">
+										승인
+									</c:if>
+									<c:if test="${rs.rvState == 'no' }">
+										거절
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -216,6 +236,4 @@ article{
 	</article>
 </section>
 
-<div id="RESbottom">
 <%@include file="../inc/bottom.jsp"%>
-</div>

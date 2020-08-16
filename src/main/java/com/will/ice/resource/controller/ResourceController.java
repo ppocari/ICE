@@ -23,12 +23,13 @@ import com.will.ice.address.model.AddressUtility;
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.Utility;
-import com.will.ice.resource.model.ResKindVo;
+import com.will.ice.resource.model.ResKindVO;
 import com.will.ice.resource.model.ResManageSearchVO;
 import com.will.ice.resource.model.ResManageVO;
 import com.will.ice.resource.model.ResReserveSearchVO;
 import com.will.ice.resource.model.ResReserveVO;
 import com.will.ice.resource.model.ResourceService;
+import com.will.ice.resource.model.StringIntVo;
 
 @Controller
 @RequestMapping("/resource")
@@ -108,7 +109,7 @@ public class ResourceController {
 		
 		logger.info("파라미터 memNo={}", memNo);
 		
-		List<ResKindVo> rkList= service.selectResKind();
+		List<ResKindVO> rkList= service.selectResKind();
 		logger.info("자원관리 등록 화면 rkList.size={}", rkList.size());
 		
 		model.addAttribute("rkList", rkList);
@@ -168,7 +169,7 @@ public class ResourceController {
 		ResManageVO rmVo= service.selectResManageOne(resNo);
 		logger.info("자원관리 수정 기존 rmVo={}", rmVo);
 		
-		List<ResKindVo> rkList=service.selectResKind();
+		List<ResKindVO> rkList=service.selectResKind();
 		
 		String fileInfo
 		=Utility.getFileInfo(rmVo.getResOriginalImage(), request);
@@ -280,6 +281,8 @@ public class ResourceController {
 	@RequestMapping("/manageReserve.do") 
 	public void manageReserve_get(@ModelAttribute ResReserveSearchVO rssVo, Model model) {
 		
+		logger.info("예약처리 페이지");
+		
 		//[1] PaginationInfo 
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
@@ -289,10 +292,11 @@ public class ResourceController {
 		//[2] SearchVo 
 		rssVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
 		rssVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		rssVo.setRvState("wait");
 		logger.info("db 처리 전 rssVo={}", rssVo);
 		
-		List<ResReserveVO> rsList=service.selectReserve(rssVo);
-		logger.info("자원예약 처리 화면, rsList={}", rsList);
+		List<ResReserveVO> rsList=service.selectReserveCondition(rssVo);
+		logger.info("자원예약 처리 화면, rsList={}", rsList.size());
 		
 		for(ResReserveVO rsVo : rsList) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -308,7 +312,7 @@ public class ResourceController {
 			rsVo.setEndHour(endArr[1]);
 		}
 		
-		int totalRecord=service.selectReserveCount(); 
+		int totalRecord=service.selectReserveCountCondition(rssVo); 
 		logger.info("전체 레코드 : " +	totalRecord);
 
 		pagingInfo.setTotalRecord(totalRecord);
@@ -324,26 +328,36 @@ public class ResourceController {
 				@RequestParam (required = false) String message) {
 		logger.info("예약 신청 처리, rvNo={}, mode={}", rvNo, mode);
 		//원래 새 VO를 만들어야 하지만, 파라미터의 타입을 모두 가진 ResKindVo를 대신 임시로 씀.
-		ResKindVo handleVo = new ResKindVo();
-		handleVo.setRkNo(rvNo);
-		handleVo.setRkKind(mode);
+		StringIntVo handleVo = new StringIntVo();
+		handleVo.setNo(rvNo);
+		handleVo.setText(mode);
 		
-		int cnt=service.updateConfirmReserve(handleVo);
+		int cnt=service.updateReserveState(handleVo);
 		
-		if(message!=null && !message.isEmpty()) {
-			logger.info("거절 메세지 파라미터, message={}", message);
-			ResKindVo reasonVo = new ResKindVo();
-			reasonVo.setRkNo(rvNo);
-			reasonVo.setRkKind(message);
-			int count=service.updateNoReasonReserve(reasonVo);
-			if(count>0) {
-				logger.info("거절 메세지 저장 완료!");
-			}
-		}
+		String url="/resource/manageReserve.do"; //실패, 성공 무관
+		String msg="";
 		
-		String url="/resource/manageReserve.do", msg="예약신청 승인처리를 실패하였습니다.";
 		if(cnt>0) {
-			msg="예약신청 처리 되었습니다.";
+			//예약 승인
+			if(message==null || message.isEmpty()) {
+				logger.info("예약신청이 승인 처리됨!");
+				msg="신청이 승인 처리 되었습니다.";
+			}
+			//예약 거절
+			else {
+				logger.info("거절 메세지 파라미터, message={}", message);
+				StringIntVo reasonVo = new StringIntVo();
+				reasonVo.setNo(rvNo);
+				reasonVo.setText(message);
+				int count=service.updateReserveNoReason(reasonVo);
+				if(count>0) {
+					logger.info("예약신청이 거절 처리됨!");
+					msg="신청이 거절 처리 되었습니다.";
+				}
+			
+			}
+		}else {
+			msg="신청 처리가 실패하였습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
@@ -351,4 +365,166 @@ public class ResourceController {
 		
 		return "common/message";
 	}
+	
+	@RequestMapping("/historyReserveMain.do") 
+	public void historyReserveMain(@ModelAttribute ResReserveSearchVO rssVo, Model model) {
+		
+		//[1] PaginationInfo 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(rssVo.getCurrentPage());
+
+		//[2] SearchVo 
+		rssVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		rssVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		logger.info("db 처리 전 rssVo={}", rssVo);
+		
+		List<ResReserveVO> rsList=service.selectReserveCondition(rssVo);
+		logger.info("자원예약 처리 화면, rsList={}", rsList.size());
+		
+		for(ResReserveVO rsVo : rsList) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			String rvStart  = dateFormat.format(rsVo.getRvStart());
+			String rvEnd  = dateFormat.format(rsVo.getRvEnd());
+			
+			String[] startArr=rvStart.split(" ");
+			String[] endArr=rvEnd.split(" ");
+			
+			rsVo.setStartDate(startArr[0]);
+			rsVo.setStartHour(startArr[1]);
+			rsVo.setEndDate(endArr[0]);
+			rsVo.setEndHour(endArr[1]);
+		}
+		
+		int totalRecord=service.selectReserveCountCondition(rssVo); 
+		logger.info("전체 레코드 : " +	totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//3 
+		model.addAttribute("pagingInfo", pagingInfo);
+		model.addAttribute("rsList", rsList);
+		
+	}
+	
+	@RequestMapping("/historyResName.do")
+	public void historyResName(@ModelAttribute ResReserveSearchVO rssVo, 
+			@RequestParam int resNo, Model model) {
+		logger.info("자원명별 자원이용현황, rssVo={}", rssVo);
+		
+		//페이징 처리를 위한 - rvResNoList 구하기
+		//[1] PaginationInfo 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(rssVo.getCurrentPage());
+
+		//[2] SearchVo 
+		rssVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		rssVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		rssVo.setSearchNumber(resNo);
+		rssVo.setRvState("yes");
+		logger.info("db 처리 전 rssVo={}", rssVo);
+		
+		List<ResReserveVO> rvResNoList= service.selectReserveResNoHistory(rssVo);
+		logger.info("자원명별 자원이용현황 조회 결과, rvResNoList={}", rvResNoList.size());
+		for(ResReserveVO rsVo : rvResNoList) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			String rvStart  = dateFormat.format(rsVo.getRvStart());
+			String rvEnd  = dateFormat.format(rsVo.getRvEnd());
+			
+			String[] startArr=rvStart.split(" ");
+			String[] endArr=rvEnd.split(" ");
+			
+			rsVo.setStartDate(startArr[0]);
+			rsVo.setStartHour(startArr[1]);
+			rsVo.setEndDate(endArr[0]);
+			rsVo.setEndHour(endArr[1]);
+		}
+		
+		//전체 레코드 수를 구하기 - pagingInfo
+		StringIntVo siVo=new StringIntVo(resNo, rssVo.getRvState());
+		
+		int totalRecord=service.selectReserveResNoHistoryCount(siVo); 
+		logger.info("전체 레코드 : " +	totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//달력 resource의 Id를 위해서 - resVo
+		ResManageVO resVo= service.selectResManageOne(rssVo.getSearchNumber());
+		logger.info("달력 resource의 Id : resVo={}" +	resVo);
+		
+		
+		
+		//달력을 위해서
+		List<ResReserveVO> rsCal = service.selectResNoCalendar(resNo);
+		logger.info("달력 전체보기: rsCal={}" +	rsCal);
+		
+		model.addAttribute("rsCal", rsCal);
+		model.addAttribute("resVo", resVo);
+		model.addAttribute("pagingInfo", pagingInfo);
+		model.addAttribute("rvResNoList", rvResNoList);
+		
+		
+	}
+	
+	@RequestMapping("/historyResKind.do")
+	public void historyResKind(@ModelAttribute ResReserveSearchVO rssVo, 
+			@RequestParam int rkNo, Model model) {
+		logger.info("자원 종류별 자원이용현황, rssVo={}", rssVo);
+		
+		//[1] PaginationInfo 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(rssVo.getCurrentPage());
+		
+		//[2] SearchVo 
+		rssVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		rssVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		rssVo.setSearchNumber(rkNo);
+		rssVo.setRvState("yes");
+		logger.info("db 처리 전 rssVo={}", rssVo);
+		
+		List<ResReserveVO> rvRkNoList= service.selectReserveRkNoHistory(rssVo);
+		logger.info("자원 종류별 자원이용현황 조회 결과, rvRkNoList={}", rvRkNoList.size());
+		for(ResReserveVO rsVo : rvRkNoList) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			String rvStart  = dateFormat.format(rsVo.getRvStart());
+			String rvEnd  = dateFormat.format(rsVo.getRvEnd());
+			
+			String[] startArr=rvStart.split(" ");
+			String[] endArr=rvEnd.split(" ");
+			
+			rsVo.setStartDate(startArr[0]);
+			rsVo.setStartHour(startArr[1]);
+			rsVo.setEndDate(endArr[0]);
+			rsVo.setEndHour(endArr[1]);
+		}
+		
+		StringIntVo siVo=new StringIntVo(rssVo.getSearchNumber(), rssVo.getRvState());
+		
+		int totalRecord=service.selectReserveRkNoHistoryCount(siVo); 
+		logger.info("전체 레코드 : " +	totalRecord);
+		
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		//달력 resource의 Id를 위해서
+		List<ResManageVO> rmList =service.selectReserveKind(rkNo);
+		logger.info("달력 resource의 Id : rmList={}" +	rmList.size());
+		
+		//달력 전체보기를 위해서
+		List<ResReserveVO> rsCal = service.selectRkNoCalendar(rkNo);
+		logger.info("달력 전체보기: rsCal={}" +	rsCal);
+		
+		model.addAttribute("rsCal", rsCal);
+		model.addAttribute("rmList", rmList);
+		model.addAttribute("pagingInfo", pagingInfo);
+		model.addAttribute("rvRkNoList", rvRkNoList);
+		
+		
+	}
+	
+		
 }

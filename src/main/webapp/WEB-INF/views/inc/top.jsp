@@ -149,6 +149,8 @@
 								href="<c:url value='/resource/resourceMain.do'/>">자원관리</a>
 							<a class="collapse-item"
 								href="<c:url value='/resource/manageReserve.do'/>">예약처리</a>
+							<a class="collapse-item"
+								href="<c:url value='/resource/historyReserveMain.do'/>">이용현황</a>
 						</div>
 
 					</div>
@@ -254,9 +256,10 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item"
-								href="<c:url value='/resourceUser/resourceMain.do'/>">자원목록</a>
+								href="<c:url value='/resourceUser/resourceMain.do'/>">예약신청</a>
 							<a class="collapse-item"
-								href="<c:url value='#'/>">예약현황</a>
+								href="<c:url value='/resourceUser/showMyReserve.do'/>">예약현황</a>
+	
 						</div>
 
 					</div>
