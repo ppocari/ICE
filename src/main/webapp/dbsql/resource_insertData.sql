@@ -57,36 +57,54 @@ LED 지속광 : 고독스 sl200w * 1 / 고독스 sl60w × 2
 
 select * from resreserve;
 
-insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 1, to_date('2020/08/05 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), to_date('2020/08/05 13:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
-insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 1, '2020-08-01', '2020-08-02', 121920);
+delete from resreserve;
 
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 1, to_date('2020/08/10 15:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 17:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);    
+values(rvno_seq.nextval, 1, to_date('2020/08/05 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), to_date('2020/08/08 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+  
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 1, to_date('2020/08/10 09:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 11:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+values(rvno_seq.nextval, 1, to_date('2020/08/10 10:30:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/10 12:30:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/10 20:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 21:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+    to_date('2020/08/10 21:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
     
      insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/09 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+    to_date('2020/08/10 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
     insert into resreserve(rvno, resno, rvstart, rvend, memno)
 values(rvno_seq.nextval, 1, to_date('2020/08/10 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
     to_date('2020/08/11 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
     
+        insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/11 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/12 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+        insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/12 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/12 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+        insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/12 23:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/12 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+        insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/12 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/12 01:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
+ insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/08/10 19:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/10 20:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+    
+     insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2020/06/29 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2020/08/2 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+    
+     insert into resreserve(rvno, resno, rvstart, rvend, memno)
+values(rvno_seq.nextval, 1, to_date('2018/01/05 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+    to_date('2019/12/21 00:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 111910);
+    
 insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 2, to_date('2020/08/10 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
+values(rvno_seq.nextval, 1, to_date('2020/08/10 07:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
     to_date('2020/08/10 09:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
-insert into resreserve(rvno, resno, rvstart, rvend, memno)
-values(rvno_seq.nextval, 3, to_date('2020/08/10 12:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 
-    to_date('2020/08/10 14:00:00', 'YYYY/MM/DD hh24:Mi:SS'), 141930);
 
-
-
+select * from resreserve;
+delete from resreserve where rvno=53;
 
 ----------------------------------------------------------------------------

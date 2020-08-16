@@ -114,12 +114,6 @@ $(function(){
 					$('#spanResSubdesc').html(resSubdesc);
 					$('#spanRkKind').html(rkKind);
 					
-					/* 수정버튼 처리 */
-					$('#btReserve').click(function(){
-						location.href='<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>'
-						/* window.open('<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>', 'addRes', 
-						'width=600, height=500, left=800, top=200, location=yes, resizable=yes'); */
-					});
 				},
 				error:function(xhr, status, error) {
 					alert(status+", "+error);
@@ -134,7 +128,7 @@ $(function(){
 
 /* 예약신청 */
 function resReserve(resNo) {
-	location.href='<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>'
+	location.href='<c:url value="/resourceUser/addReservation.do?resNo='+resNo+'"/>'
 	/* window.open('<c:url value="/resourceUser/reserveResource.do?resNo='+resNo+'"/>', 'addRes', 
 	'width=600, height=500, left=800, top=200, location=yes, resizable=yes'); */
 	
