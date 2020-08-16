@@ -9,14 +9,7 @@
 <script src="<c:url value = "/resources/vendor/jquery/jquery.min.js"/>"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <style type="text/css">
-#IF{overflow: hidden;}
-#IFformNo,#IFformName{width:200px;}
-#IFheaderDiv{background-color: #4e73df; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}
-#IFheaderDiv p{padding-left: 8px;padding-top: 8px;}
-#IFbtwriteForm{background-color: #4e73df; color:white;}.note-editor.note-frame.card {position: relative;top: 0;}
-#IFsummerDiv{padding-top: 10px;padding-bottom: 10px;}
-#IFformDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 13px;text-align: center;}
-
+#IF{overflow: hidden;}#IFformNo,#IFformName{width:200px;}#IFheaderDiv{background-color: #0079ff; color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#IFheaderDiv p{padding-left: 8px;padding-top: 8px;}#IFbtwriteForm{background-color: #0079ff; color:white;}.note-editor.note-frame.card {position: relative;top: 0;}#IFsummerDiv{padding-top: 10px;padding-bottom: 10px;}#IFformDiv{border: 1px solid #dedede; width: 95%; padding: 10px 10px 10px 10px;margin-left: 18px;margin-top: 13px;text-align: center;}
 </style>
 </head>
 <body id="IF">

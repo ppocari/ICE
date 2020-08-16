@@ -46,7 +46,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
-                <a href="<c:url value ='/companyCard/comCardList.do'/> ">
+                <a href="<c:url value ='/companyCard/comCardList.do'/> " style="text-decoration: none;">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
 	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">법인카드 </div>
@@ -65,7 +65,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
-                <a href=" ">
+                <a href="<c:url value='/payment/confirm/undecided.do' />" style="text-decoration: none;">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
 	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류</div>
@@ -93,7 +93,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
-                <a href="">
+                <a href="" style="text-decoration: none;">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">쪽지</div>
@@ -181,29 +181,36 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">미결 문서</h6>
                 </div>
                 <div class="card-body">
-                  <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                  <table id="UDpayTable" class="table table-hover" style="overflow: scroll;height: 150px;">
+					<thead>
+						<tr>
+							<th width="20%;">문서종류</th>
+							<th width="20%;">작성자</th>
+							<th>제목</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- 반복 시작 -->
+						<c:if test="${!empty list }">
+							<c:forEach var="vo" items="${list }">
+								<tr onclick="window.open('../payment/docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+									<td>${vo.typeName }</td>
+									<td>${vo.name }</td>
+									<td>${vo.title }</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty list }">
+							<tr>
+								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+							</tr>
+						</c:if>
+						<!-- 반복 끝 -->
+					</tbody>
+				</table>
                 </div>
               </div>
 

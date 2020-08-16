@@ -97,12 +97,12 @@
 				</a>
 			</c:if>
 		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -72%;top:-7px;background-color: #4e73df; color:white;">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -87%;top:-7px;background-color: #0079ff; color:white;">
 				결재선 지정
 			</button>
 		</c:if>
 		<c:if test="${param.flag!='imsy'}">
-			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -72%;top:-7px;background-color: #4e73df; color:white;">
+			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -87%;top:-7px;background-color: #0079ff; color:white;">
 				결재상신 취소
 			</button>
 		</c:if>
