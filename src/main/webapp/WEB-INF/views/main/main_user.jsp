@@ -137,34 +137,70 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-header">더보기</div>
+                      <a class="dropdown-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
+                      <a class="dropdown-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
                     </div>
                   </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
+                <div class="card-body"  style="height: 385px;overflow: hidden;">
+                  <div style="height: 300px;">
+                    <table id="noticeTable" class="table table-hover">
+					<!-- 반복 시작 -->
+						<c:if test="${!empty notiList }">
+							<c:forEach var="notiVo" items="${notiList }">
+								<tr onclick="location.href='<c:url value="/notice/noticeCountUpdate.do?noticeNo=${notiVo.noticeNo }"/>'">
+									<td>
+										<c:if test="${notiVo.category=='전체' }">
+											<i class="fas fa-circle text-primary"></i>
+										</c:if>
+										<c:if test="${notiVo.category=='경영' }">
+											<i class="fas fa-circle text-success"></i>
+										</c:if>
+										<c:if test="${notiVo.category=='회계' }">
+											<i class="fas fa-circle text-info"></i>
+										</c:if>
+										<c:if test="${notiVo.category=='영업' }">
+											<i class="fas fa-circle text-default"></i>
+										</c:if>
+										${notiVo.title }
+									</td>
+									<td width="10%">
+										<c:if test="${notiVo.newImgTerm<24 }">
+											<img src="<c:url value='/resources/img/new.gif' />" 
+												alt="new이미지">
+										</c:if>
+									</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty notiList }">
+							<tr>
+								<td colspan="6" style="text-align: center;">게시글이 존재하지 않습니다</td>
+							</tr>
+						</c:if>
+						<!-- 반복 끝 -->
+				</table>
                   </div>
                   <div class="mt-4 text-center small">
                     <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
+                      <i class="fas fa-circle text-primary"></i> 전체
                     </span>
                     <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
+                      <i class="fas fa-circle text-success"></i> 경영
                     </span>
                     <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
+                      <i class="fas fa-circle text-info"></i> 회계
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-default"></i> 영업
                     </span>
                   </div>
                 </div>

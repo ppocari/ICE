@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DoctypeService;
 import com.will.ice.document.model.DoctypeVO;
+import com.will.ice.notice.model.NoticeService;
+import com.will.ice.notice.model.NoticeVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
 
@@ -24,6 +26,7 @@ public class IceController {
 	
 	@Autowired PaymentService paymentService;
 	@Autowired DoctypeService doctypeService;
+	@Autowired NoticeService notiService;
 	
 	@RequestMapping("/main/main_admin.do")
 	public void main_admin() {
@@ -41,14 +44,19 @@ public class IceController {
 		logger.info("사원 메인 페이지 보여주기");
 		String identNum = (String)session.getAttribute("identNum");
 		
+		//메인 공지사항
+		List<NoticeVO> notiList = notiService.selectMain();
+		
+		//미결함
 		paysearchVo.setIdentNum(identNum);
 		List<Integer> docNolist = paymentService.docNolist();
 		logger.info("docNolist={}",docNolist);
 		
-		List<PaylistViewVO> list = paymentService.selectUndecided2(paysearchVo,docNolist);
-		logger.info("미결함 목록 조회 결과={}",list.size());
+		List<PaylistViewVO> paylist = paymentService.selectUndecided2(paysearchVo,docNolist);
+		logger.info("미결함 목록 조회 결과={}",paylist.size());
 		
-		model.addAttribute("list",list);
+		model.addAttribute("paylist",paylist);
+		model.addAttribute("notiList",notiList);
 	}
 	
 	@RequestMapping("/main/main_manager.do")
