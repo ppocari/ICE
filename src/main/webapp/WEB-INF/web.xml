@@ -41,22 +41,25 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
+	
+	 <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+	
+	
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
+	<!-- <error-page> <error-code>404</error-code> <location>/code404.jsp</location>
+		</error-page> <error-page> <error-code>500</error-code> <location>/code500.jsp</location>
 
-
-	<session-config>
-		<session-timeout>20</session-timeout>
-	</session-config>
-	<!-- <error-page> <error-code>404</error-code> <location>/code404.jsp</location> 
-		</error-page> <error-page> <error-code>500</error-code> <location>/code500.jsp</location> 
 		</error-page> -->
 
 	<welcome-file-list>
