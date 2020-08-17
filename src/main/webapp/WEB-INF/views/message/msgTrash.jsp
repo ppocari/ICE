@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/inc/top.do"></c:import>
 
@@ -39,8 +38,7 @@
 			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
 			
 		});	
-		
-		/* 삭제 여러개(휴지통으로 이동) */
+				
 		$('#btDel').click(function(){
 			var len=$('input[type=checkbox]:checked').length;
 			if(len==0){
@@ -48,9 +46,20 @@
 				return;
 			}
 			$('form[name=msgRecListFrm]')
-				.prop("action","<c:url value='/message/msgDelete.do'/>");
+				.prop("action","<c:url value='/message/msgREALDelete.do'/>");
 			$('form[name=msgRecListFrm]').submit();
 		});	 
+		
+		$('#btBack').click(function(){
+			var len=$('input[type=checkbox]:checked').length;
+			if(len==0){
+				alert('복원힐 쪽지를  체크하세요');
+				return;
+			}
+			$('form[name=msgRecListFrm]')
+				.prop("action","<c:url value='/message/msgDelBack.do'/>");
+			$('form[name=msgRecListFrm]').submit();
+		});
 	});
 </script>
 <!-- Begin Page Content -->
@@ -59,7 +68,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">받은 쪽지함</h1>
+		<h1 class="h3 mb-0 text-gray-800">휴지통</h1>
 	</div>
 
 	<!-- Content Row -->
@@ -73,18 +82,31 @@
 				<form name="msgRecListFrm" method="post"  
 				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">			
 					<!-- 검색기능 -->
-						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">										
+						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+				
+							<div class="search" style="margin-right: 20px; text-align:right;">
+								<label for="hiredate1" style="margin-right: 20px;"></label>
+								<select class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+								 	 <option>내용</option>
+									 <option>보낸사람</option>
+								</select>
+								<input type="text" class="form-control" 
+									placeholder="검색어를 입력하세요" style=" width: 180px; 
+										height: 30px; font-size: 13px; display: inline-block;">
+								<button type="button" class="btn btn-primary ">검색</button>
+								
+							</div>
 							<div style="float: right">
-								<input type="button" id="btDel" class="btn btn-primary " value="휴지통으로 이동">				
-								<a href="<c:url value='/message/msgWrite.do'/>">
-									<input type="button"   class="btn btn-info" value="쪽지작성">
-								</a>
+								<input type="button" id="btBack" class="btn btn-primary " value="복원">				
+								<input type="button" id="btDel" class="btn btn-primary " value="삭제">				
+								
 							</div>
 						</div>
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style=" height:570px; overflow: scroll; overflow-x: hidden; ">
+						<div  style=" height:420px;">
 							<table class="table table-bordered table-condensed table-hover" id="dynamicTable">
 								<thead>
 									<tr>
@@ -114,15 +136,7 @@
 											<td>
 												<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox">
 											</td>
-											<td class="click">
-												<c:if test = "${msgvo.msgStatus == 'N'}">
-													<i class="fas fa-envelope" style="color: blue;" ></i>
-												</c:if>
-												<c:if test="${msgvo.msgStatus == 'Y'}">
-													<i class="far fa-envelope" ></i>	
-												</c:if> 
-												
-											</td>
+											<td class="click">${msgvo.msgStatus}</td>
 											<td class="click">${msgvo.sendName}</td>
 											<td class="align_left click">
 												<!-- 제목보여주기 길면 일부 -->

@@ -9,6 +9,9 @@
 <%@ include file="../inc/all_css_js.jsp" %>
   
 </head>
+<script type="text/javascript">
+	
+</script>
 <body>
 	<!-- Begin Page Content -->
 
@@ -19,33 +22,20 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-6 " style="margin-top: 30px;">
-			<div class="card shadow mb-4" style="height: 500px;">
+		<div class="col-xl-3" style="margin-top: 30px;">
+			<div class="card shadow mb-4" style="height: 380px;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post" action="<c:url value='/member/memWrite.do' />">
+				<form name="memRegisterFrm" method="post" action="<c:url value='/message/msgWrite.do' />">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">쪽지 쓰기</h6>
+						<h6 class="m-0 font-weight-bold text-primary">보낸 쪽지 내용</h6>
 						
+						<input type="hidden" value="${msgvo.recMemNo }" name="recMemNo">
 					</div>
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<div>
-							<button type="submit" class="btn btn-primary" id = "sengMsg">보내기 </button>
-							<input type="button" class="btn btn-info" id = "openWinMsg" value="새창">
-						</div>
-						<hr>
-						<div>
-							<label for="recMemNo">받는 사람</label>
-							<input name="reciMsgMe" id="reciMsgMe" type="checkbox">
-							<label for="reciMsgMe">내게 쓰기</label>
-							<input type="text" id="recMemNo" name="recMemNo" style="width: 280px;"  placeholder="여러 명은 쉼표(,) 또는 세미콜론(;) 구분 (최대 10 명)">
-							<input type="button" class="btn btn-success"  id = "openAddrMsg" value="주소록">
-							<input type="hidden" id = "openAddrMsg_memNo" name = "memNo" value="${sessionScope.identNum }">
-						</div>
-					</div>
+					
 					<!-- Card Body -->
 					<div class="card-body" style="text-align: center">
-						<textarea style="width: 98%;  height: 320px;">
-						
+						<textarea style="width: 98%;  height: 280px;" readonly="readonly" id="msgContent" name="msgContent">
+							${msgvo.msgContent }
 						</textarea>
 					</div>
 						

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="../../inc/top.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script> 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
@@ -33,7 +34,7 @@
 </div>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
-	<div class="col-xl-12 ">
+	<div class="col-xl-11 ">
 	<div class="card shadow mb-4" style="height:800px;width: 99%;padding: 0px 0px 10px 0px;">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<h6 class="m-0 font-weight-bold text-primary">임시보관 목록</h6>

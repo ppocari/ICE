@@ -2,9 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 <style>
 .table td {
 	width: 90px;

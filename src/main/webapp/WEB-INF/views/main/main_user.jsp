@@ -2,20 +2,16 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ include file="../inc/top.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/inc/top.do"/>        
-        <!-- Begin Page Content -->
-        
-        
+
         <div class="container-fluid">
 		
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	     <h1 class="h3 mb-0 text-gray-800">Main</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+
           </div>
 
           <!-- Content Row -->
@@ -99,11 +95,11 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
-                <a href="" style="text-decoration: none;">
+                <a href="<c:url value='/address/addressMain.do'/>" style="text-decoration: none;">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">쪽지</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">쪽지 쓰기</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">주소록</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">주소록 바로가기</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
