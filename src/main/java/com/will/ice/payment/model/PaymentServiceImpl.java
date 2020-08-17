@@ -204,17 +204,19 @@ public class PaymentServiceImpl implements PaymentService{
 	public List<PaylistViewVO> selectUndecided2(PaymentSearchVO paysearchVo,List<Integer> docNolist) {
 		int docNo=0;
 		List<PaylistViewVO> list = new ArrayList<PaylistViewVO>();
+		paysearchVo.setProgress("reject");
 		
 		for(int i=0; i<docNolist.size(); i++) {
 			docNo = docNolist.get(i);
 			paysearchVo.setDocNo(docNo);
 			logger.info("paysearchVo={}",paysearchVo);
 			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-			logger.info("vo.getGmemNo()={}",vo.getGmemNo());
-			logger.info("paysearchVo.getIdentNum()={}",paysearchVo.getIdentNum());
+			logger.info("PaylistViewVO={}",vo);
 			
-			if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-				list.add(vo);
+			if(vo!=null) {
+				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+					list.add(vo);
+				}
 			}
 		}
 		
@@ -226,6 +228,7 @@ public class PaymentServiceImpl implements PaymentService{
 		int docNo=0;
 		List<PaylistViewVO> list = new ArrayList<PaylistViewVO>();
 		int count=0;
+		paysearchVo.setProgress("reject");
 		
 		for(int i=0; i<docNolist.size(); i++) {
 			if(count<5) {
@@ -233,11 +236,12 @@ public class PaymentServiceImpl implements PaymentService{
 				paysearchVo.setDocNo(docNo);
 				logger.info("paysearchVo={}",paysearchVo);
 				PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-				logger.info("vo.getGmemNo()={}",vo.getGmemNo());
-				logger.info("paysearchVo.getIdentNum()={}",paysearchVo.getIdentNum());
+				logger.info("PaylistViewVO={}",vo);
 				
-				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-					list.add(vo);
+				if(vo!=null) {
+					if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+						list.add(vo);
+					}
 				}
 			}
 			count++;
@@ -302,5 +306,15 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public List<CommentviewVO> selectComment(int docNo) {
 		return paymentDao.selectComment(docNo);
+	}
+
+	@Override
+	public int rewritePay1(int docNo) {
+		return paymentDao.rewritePay1(docNo);
+	}
+
+	@Override
+	public int rewritePay2(int docNo) {
+		return paymentDao.rewritePay2(docNo);
 	}
 }
