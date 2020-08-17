@@ -104,7 +104,6 @@ h6{
 #addressMain_section{
 	font-size: 1.25em;
 }
-
 </style>
 
 <section id="addressMain_section">
@@ -127,8 +126,6 @@ h6{
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">주소록</h6>
 						<div style="float: right">
-							<button type="button" class="btn btn-info"
-							 >주소 불러오기</button>
 							<button type="button" class="btn btn-info"
 							 >주소 내보내기</button>
 						</div>
@@ -161,7 +158,6 @@ h6{
 									<a href="<c:url value='/address/addressMain.do?searchCondition=favorite'/>">즐겨찾기</a>
 								</span>
 							<div id="divRight">
-								<input type="button" id="btEdit" value="설정">
 								<input type="button" id="btTrash" value="휴지통">
 							</div>
 							</div>
