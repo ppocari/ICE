@@ -21,13 +21,13 @@
 <!-- Begin Page Content -->
 
 <table class="table table-bordered table-hover" id="dynamicTable">
-	<colgroup>
-		<col style="width: 15%;" />
-		<col style="width: 60%;" />
-		<col style="width: 15%;" />
-		<col style="width: 10%;" />
+	<colgroup >
+		<col style="width: 18%;" />
+		<col />
+		<col style="width: 18%;" />
+		<col style="width: 18%;" />
 	</colgroup>
-	<thead>
+	<thead style="font: 15px;">
 		<tr style="height: 0px;">
 			<th scope="col">부서</th>
 			<th scope="col">제목</th>
