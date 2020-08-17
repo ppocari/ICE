@@ -1,6 +1,6 @@
 package com.will.ice.resource.model;
 
-public class ResKindVO {
+public class ResKindVo {
 	
 	private int rkNo;
 	private String rkKind;

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../inc/top.jsp"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
-
 <link rel="stylesheet" type="text/css" 
 	href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
 <script type="text/javascript">
@@ -10,6 +10,17 @@ function pageProc(curPage){
 	$('input[name=currentPage]').val(curPage);
 	$('form[name=frmPage]').submit();
 }
+
+function showReason(rvNo) {
+	window.open('<c:url value="/resourceUser/rvCantReasonPopup.do?rvNo='+rvNo+'"/>', 'reasonPop', 
+	'width=300, height=300, left=800, top=200, location=yes, resizable=yes');
+}
+
+$(function(){
+	$('#addResource').click(function(){
+		
+	});
+});
 </script>
 
 <style type="text/css">
@@ -225,6 +236,16 @@ article > div {
 	width: 120px;
 	font-size: 0.9em;
 }
+
+#divMain{
+	margin-left: 20px;
+}
+
+.aTag, .aTag:hover{
+	color: #858796;
+	
+}
+
 </style>
 
 <section>
@@ -242,7 +263,7 @@ article > div {
 			</h3>
 		</header>
 		<!-- 내 예약 현황 -->
-		<div class="col-xl-12 ">
+		<div id="divMain" class="col-xl-11 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">예약 신청 전체 현황</h6>
@@ -286,8 +307,9 @@ article > div {
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>신청시간</th>
+							<th style="width:300px">신청시간</th>
 							<th>상태</th>
+							<th style="width:300px">거절사유</th>
 						</tr>
 						<c:forEach var="rs" items="${allList }">
 							<tr>
@@ -303,6 +325,18 @@ article > div {
 									</c:if>
 									<c:if test="${rs.rvState == 'no' }">
 										거절
+									</c:if>
+								</td>
+								<td id="td_cantReason">
+									<c:if test="${!empty rs.rvCantReason }">
+										<a class="aTag" onclick="showReason(${rs.rvNo})">
+											<c:if test="${fn:length(rs.rvCantReason)>20}">
+												${fn:substring(rs.rvCantReason, 0, 20)} ...
+											</c:if>
+											<c:if test="${fn:length(rs.rvCantReason)<=20}">
+												${rs.rvCantReason}
+											</c:if>	
+										</a>
 									</c:if>
 								</td>
 							</tr>
