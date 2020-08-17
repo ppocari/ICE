@@ -113,11 +113,9 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeList.do")
-
 	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공지사항 실행");
 		logger.info("글 목록 파라미터 searchVo={}", searchVo);
-
 				
 		//[1] PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
