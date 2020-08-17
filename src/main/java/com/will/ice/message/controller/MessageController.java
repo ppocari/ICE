@@ -21,12 +21,8 @@ import com.will.ice.address.model.AddressGroupVO;
 import com.will.ice.address.model.AddressService;
 import com.will.ice.address.model.AddressVO;
 import com.will.ice.common.Depart_posi_dateVO;
-import com.will.ice.common.PaginationInfo;
-import com.will.ice.common.SearchVO;
-import com.will.ice.common.Utility;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
-import com.will.ice.message.model.MessageListVO;
 import com.will.ice.message.model.MessageService;
 import com.will.ice.message.model.MessageVO;
 import com.will.ice.model.DepartmentVO;
@@ -50,17 +46,8 @@ public class MessageController {
 	
 	
 	@RequestMapping(value="/msgWrite.do", method = RequestMethod.GET)
-	public void messageWrite_get() {
+	public void messageWrite() {
 		logger.info("msgWrite.do 쪽지보내기 실행");
-		
-		
-	}
-	
-	@RequestMapping(value="/msgWriteReply.do", method = RequestMethod.GET)
-	public String messageWrite_post(@RequestParam String memNo) {
-		logger.info("msgWriteReply.do 쪽지보내기 특정 사람에게 실행 memNo={}", memNo);
-		
-		return "message/msgWrite";
 		
 	}
 	
@@ -107,7 +94,12 @@ public class MessageController {
 	}
 	
 	
+	
+	@RequestMapping(value="/msgContact.do", method = RequestMethod.GET)
+	public void messageContact() {
+		logger.info("연락처 실행");
 
+	}
 	
 	@RequestMapping(value="/msgSendList.do", method = RequestMethod.GET)
 	public void messageList(HttpSession session, Model model) {
@@ -124,16 +116,14 @@ public class MessageController {
 
 	
 	@RequestMapping(value="/msgRecList.do", method = RequestMethod.GET)
-	public void msgRecList( HttpSession session, Model model) {
+	public void msgRecList(HttpSession session, Model model) {
 		logger.info("받은 쪽지함 실행 ");
-	
 		String memNo = (String)session.getAttribute("identNum");
 		MessageVO msgvo = new MessageVO();
 		msgvo.setRecMemNo(memNo);
 		logger.info("msgvo={}",msgvo);
-		
 		 List<MessageVO> msgList = msgService.msgRecList(msgvo);
-		 	 
+		 
 		 model.addAttribute("msgList", msgList);
 	}
 	
@@ -142,101 +132,16 @@ public class MessageController {
 		logger.info("받은 쪽지함 실행 no={}", no);
 		
 		MessageVO msgvo = msgService.msgSelecyByno(no);
-		
-		int cnt = msgService.msgUpdateRead(msgvo.getMsgNo());
-		logger.info("받은 쪽지함 실행 msgvo.getMsgNo()={}", msgvo.getMsgNo());
-		logger.info("받은 쪽지함 실행 cnt={}", msgvo.getMsgNo());
-		logger.info("받은 쪽지함 실행 msgvo={}", msgvo);
-		
-		model.addAttribute("msgvo", msgvo);
-		
-	}
-
-	
-	@RequestMapping(value="/msgSendDetail.do", method = RequestMethod.GET)
-	public void msgSendDetail(@RequestParam int no, HttpSession session, Model model) {
-		logger.info("받은 쪽지함 실행 no={}", no);
-		
-		MessageVO msgvo = msgService.msgSelecyByno(no);
 		logger.info("받은 쪽지함 실행 msgvo={}", msgvo);
 		
 		model.addAttribute("msgvo", msgvo);
 		
 	}
 	
-	@RequestMapping(value="/msgDelete.do", method = RequestMethod.POST)
-	public String msgDelete(@ModelAttribute MessageListVO msgListVO, Model model) {
-		logger.info("쪽지 삭제 msgListVO={}", msgListVO);
-		
-		List<MessageVO> msgList = msgListVO.getMsgItems();
-		
-		int cnt =msgService.updateDelteMsg(msgList);
-		
-		String msg = "쪽지 휴지통 이동 실패", url = "/message/msgRecList.do";
-		if(cnt > 0) {
-			msg = "쪽지 휴지통 이동 성공";  
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/message";
+	@RequestMapping(value="/msgWriteWin", method = RequestMethod.GET)
+	public void msgWriteWin() {
+		logger.info("msgWrite.do 쪽지보내기 실행");
 		
 	}
-	
-	@RequestMapping(value="/msgTrash.do", method = RequestMethod.GET)
-	public void msgTrash(HttpSession session, Model model) {
-		logger.info("msgTrash.do 휴지통");
-		//D인거 조회
-		String recMemNo = (String)session.getAttribute("identNum");
-		List<MessageVO> msgList = msgService.selectMsgTrash(recMemNo);
-		
-		model.addAttribute("msgList", msgList);
-	}
-	
-	@RequestMapping(value="/msgREALDelete.do", method = RequestMethod.POST)
-	public String msgREALDelete(@ModelAttribute MessageListVO msgListVO, Model model) {
-		logger.info("msgREALDelete.do 아예 삭제");
-		//D인거 조회
-		logger.info("쪽지 삭제 msgListVO={}", msgListVO);
-		
-		List<MessageVO> msgList = msgListVO.getMsgItems();
-		
-		int cnt =msgService.msgREALDelete(msgList);
-		
-		String msg = "쪽지 삭제 실패", url = "/message/msgTrash.do";
-		if(cnt > 0) {
-			msg = "쪽지 삭제 성공";  
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/message";
-		
-	}
-	
-	@RequestMapping(value="/msgDelBack.do", method = RequestMethod.POST)
-	public String msgDelBack(@ModelAttribute MessageListVO msgListVO, Model model) {
-		logger.info("msgDelBack.do 휴지통");
-		//D 에서 읽음 상태로 복원
-		logger.info("쪽지 삭제 msgListVO={}", msgListVO);
-		
-		List<MessageVO> msgList = msgListVO.getMsgItems();
-		
-		int cnt =msgService.msgDelBack(msgList);
-		
-		String msg = "쪽지 복원 실패", url = "/message/msgRecList.do";
-		if(cnt > 0) {
-			msg = "쪽지 복원 성공";  
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/message";
-		
-	}
-	
 	
 }

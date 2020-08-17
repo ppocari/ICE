@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 <link rel="stylesheet" type="text/css" 
 	href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
@@ -27,14 +26,13 @@ $(function(){
 		$(this).removeClass("highlight");
 	});
 	
-	var resNo=0;
-	
 	/* 자원명 누르면 수정화면 ajax 처리해서 보여주기 */
 	$(".goDetail").click(function(){
 		//1. 번호를 받는다
 		var res_no=$(this).attr('id');
 		
 		//2. controller 처리를 한다
+		var resNo;
 		var resName;
 		var resImageVar;
 		var resSize;
@@ -124,11 +122,6 @@ $(function(){
 		});
 		
 	}); //자원명 누르면 수정화면 ajax 처리해서 보여주기
-	
-	$('#btReserve').click(function(){
-		location.href='<c:url value="/resourceUser/addReservation.do?resNo='+resNo+'"/>'
-	});
-		
 	
 	
 }); //전체 function()
@@ -249,7 +242,11 @@ article{
 		<div class="col-xl-7 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">예약 신청</h6>
+					<h6 class="m-0 font-weight-bold text-primary">자원목록</h6>
+					<div style="float: right">
+						<button id="addResource" type="button" class="btn btn-info"
+						 >자원 추가</button>
+					</div>
 				</div>
 				<div id="tableDivForm">
 					<table id="tableForm">
@@ -266,7 +263,9 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>
+							<th>상태
+								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
+								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
@@ -279,7 +278,7 @@ article{
 								<td>${rm.rkKind }</td>
 								<td>${rm.resLocation }</td>
 								<%-- <td>${rm.resState }</td> --%>
-								<td><button onclick="resReserve(${rm.resNo})">예약</button></td>
+								<td><button onclick="resReserve(${rm.resNo})">예약신청</button></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -356,7 +355,7 @@ article{
 								</div>
 							</div>
 							<div id="divButton">
-								<button id="btReserve" name="">예약</button> 
+								<button id="btReserve" name="">예약신청</button> 
 								<!-- <button id="btDel">삭제</button> -->
 							</div>
 					</div>

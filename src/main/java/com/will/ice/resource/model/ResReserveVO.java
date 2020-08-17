@@ -7,7 +7,6 @@ public class ResReserveVO {
 	private String resName;
 	private int rkNo;
 	private String rkKind;
-	private String rkColor;
 	
 	private int rvNo;
 	
@@ -21,7 +20,7 @@ public class ResReserveVO {
 	private String pickDate;
 	
 	private String rvReason;
-	private String rvState;
+	private String rvConfirm;
 	private Timestamp rvRegdate;
 	private String memNo;
 	private String name;
@@ -64,15 +63,6 @@ public class ResReserveVO {
 	public void setRkKind(String rkKind) {
 		this.rkKind = rkKind;
 	}
-	
-	public String getRkColor() {
-		return rkColor;
-	}
-
-	public void setRkColor(String rkColor) {
-		this.rkColor = rkColor;
-	}
-
 	public int getRvNo() {
 		return rvNo;
 	}
@@ -102,15 +92,12 @@ public class ResReserveVO {
 	public void setRvReason(String rvReason) {
 		this.rvReason = rvReason;
 	}
-
-	public String getRvState() {
-		return rvState;
+	public String getRvConfirm() {
+		return rvConfirm;
 	}
-
-	public void setRvState(String rvState) {
-		this.rvState = rvState;
+	public void setRvConfirm(String rvConfirm) {
+		this.rvConfirm = rvConfirm;
 	}
-
 	public Timestamp getRvRegdate() {
 		return rvRegdate;
 	}
@@ -186,11 +173,11 @@ public class ResReserveVO {
 	@Override
 	public String toString() {
 		return "ResReserveVO [resNo=" + resNo + ", resName=" + resName + ", rkNo=" + rkNo + ", rkKind=" + rkKind
-				+ ", rkColor=" + rkColor + ", rvNo=" + rvNo + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", startHour=" + startHour + ", endHour=" + endHour + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd
-				+ ", pickDate=" + pickDate + ", rvReason=" + rvReason + ", rvState=" + rvState + ", rvRegdate="
-				+ rvRegdate + ", memNo=" + memNo + ", name=" + name + ", deptName=" + deptName + ", posName=" + posName
-				+ "]";
+				+ ", rvNo=" + rvNo + ", startDate=" + startDate + ", endDate=" + endDate + ", startHour=" + startHour
+				+ ", endHour=" + endHour + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd + ", pickDate=" + pickDate
+				+ ", rvReason=" + rvReason + ", rvConfirm=" + rvConfirm + ", rvRegdate=" + rvRegdate + ", memNo="
+				+ memNo + ", name=" + name + ", deptName=" + deptName + ", posName=" + posName + "]";
 	}
-
+	
+	
 }

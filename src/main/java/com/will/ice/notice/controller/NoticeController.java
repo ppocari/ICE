@@ -52,6 +52,7 @@ public class NoticeController {
 		
 		logger.info("memNo 가져왔나? memNo={}",memNo);
 		
+		
 	}
 	
 	//관리자 공지사항 작성

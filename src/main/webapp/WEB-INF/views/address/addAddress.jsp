@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <script type="text/javascript" src="<c:url value='/resources/js/address/inputCheck.js'/>"></script>
 <script type="text/javascript">
 $(function(){
@@ -11,10 +9,10 @@ $(function(){
 		location.href="<c:url value='/address/addressMain.do'/>";
 	});
 	
-	/* 조직도에서 추가 */
+		/* 조직도에서 추가 */
 	$('#addFromOrgan').click(function(){
 		window.open('<c:url value="/address/organizeChart.do"/>', 'organ', 
-				'width=433, height=382, left=800, top=200, location=yes, resizable=yes');
+				'width=420, height=320, left=800, top=200, location=yes, resizable=yes');
 	});
 		
 });
@@ -44,7 +42,11 @@ $(function(){
 }
 
 #addFromOrgan{
+	margin-right: 20px;
 	font-size: 15px;
+	background-color: #fdfdfd;
+	border-radius: 3px 3px 3px 3px;
+	border: 2px solid lightgray;
 }
 
 #addFromOrgan_span{
@@ -57,14 +59,10 @@ $(function(){
 	margin-bottom: 10px;
 }
 
-#add_inputs input, #addFromOrgan{
-	background-color: #4e73df;color:white;
-	border-color: #4e73df;
-}
-
 article{
 	font-size:1.25em;
 }
+
 
 </style>
 <section>
@@ -73,16 +71,10 @@ article{
 			<header>
 				<h3>
 					주소록<span> > 추가하기 </span>
+					<span id="addFromOrgan_span"><input type="button" id="addFromOrgan" value="조직도에서 추가하기"></span>
 				</h3>
 			</header>
-			<div class="row" style="padding-left: 15px;">
-		<!-- Area Chart -->
-		<div class="card shadow mb-4" style="width: 99%;">
-			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #F8F9FC;">
-				<h6 class="m-0 font-weight-bold text-primary">신규 등록</h6>
-				<span id="addFromOrgan_span">
-					<input type="button" id="addFromOrgan" value="조직도에서 추가하기" class="btn btn-primary"></span>
-			</div>
+			<div class="card shadow mb-4">
 				<div class="divForm">
 					<form method="post" action="<c:url value='/address/addAddress.do'/>">
 						<fieldset>
@@ -149,14 +141,13 @@ article{
 								<textarea class="borderStyle" rows="3" cols="109" name="memo"></textarea>
 							</div>
 							<div id="add_inputs">
-								<input type="submit" class="btn" value="등록"> 
-								<input type="reset" class="btn" value="돌아가기">
+								<input type="submit" value="등록"> 
+								<input type="reset"	value="돌아가기">
 							</div>
-					</fieldset>
+						</fieldset>
 					</form>
 				</div>
 			</div>
-		</div>
 		</div>
 	</article>
 </section>

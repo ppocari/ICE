@@ -54,7 +54,7 @@ public class LoginController {
 			session.setAttribute("identNum", identNum);
 			session.setAttribute("posCode", memVo.getPosCode());
 			session.setAttribute("userName", memVo.getName());
-			session.setAttribute("memImg", memVo.getProfileURL());
+			session.setAttribute("memImg", memVo.getOriginalFileName());
 
 			//쿠키에 저장
 			if(rememCheck!=null) {  //아이디 저장에 체크한 경우
@@ -70,21 +70,25 @@ public class LoginController {
 			}
 
 			msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-			if(memVo.getPosCode().equals("999")){ //관리자
-				msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-				url = "/main/main_admin.do";
-				/* url ="/main/main_account.do"; */
-				
-			}else {	//사원 if(memVo.getPosCode().equals("920"))		
-					if(pwd.equals(memVo.getSsn1())){
-						msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다";
-						url = "/member/memPwd.do";
-					}else {
-						msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-						url = "/main/main_user.do";
-						/* url ="/main/main_account.do"; */
-					}
-				
+			if(memVo.getPosCode().equals("920")){ //경리
+				if(pwd.equals(memVo.getSsn1())){
+					msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다";
+					url = "/member/memPwd.do";
+				}else {
+					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
+					url = "/main/main_user.do";
+					/* url ="/main/main_account.do"; */
+				}
+			}else {
+				//과장 이상
+				if(pwd.equals(memVo.getSsn1())){
+					msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다";
+					url = "/member/memPwd.do";
+
+				}else {
+					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
+					url = "/main/main_user.do";
+				}
 			}
 		}else if(result==MemberService.PWD_DISAGREE){
 			msg="비밀번호가 일치하지 않습니다.";

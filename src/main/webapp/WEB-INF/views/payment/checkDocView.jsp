@@ -15,17 +15,17 @@
 </style>
 </head>
 <body id="CDV">
-<div class="row" >
+<div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-	<div class="card shadow mb-4" style="height:fit-content;  margin: 30px;">
+	<div class="card shadow mb-4" style="height:fit-content;width: 99%;">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<h6 class="m-0 font-weight-bold text-primary">문서보기</h6>
 	</div>
 	<div id="tableDiv">
 		<h3 id="docType">${payVo.typeName}</h3>
 		<div>
-			<table id="docTable" class="table table-bordered" style="width: 30%;margin-left: 35px;">
+			<table id="docTable" class="table table-bordered" style="width: 30%;margin-left: 20px;">
 				<tr>
 					<td class="center">기안자</td>
 					<td>${payVo.name }</td>
@@ -77,13 +77,13 @@
 			</c:forEach>
 		</div>
 		<div>
-			<table class="table table-bordered" style="width: 92%; margin-left: 35px;">
+			<table class="table table-bordered" style="width: 96%;margin-left: 20px;">
 				<tr>
 					<td width="10%" class="center">제목</td>
 					<td>${payVo.title }</td>
 				</tr>
 				<tr>
-					<td colspan="2" style="height: 440px;">${payVo.content}</td>
+					<td colspan="2" style="height: 500px;">${payVo.content}</td>
 				</tr>
 				
 			</table>
@@ -97,14 +97,12 @@
 				</a>
 			</c:if>
 		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style=" float: right;
-    margin: 15px; background-color: #0079ff; color:white;">
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -87%;top:-7px;background-color: #0079ff; color:white;">
 				결재선 지정
 			</button>
 		</c:if>
 		<c:if test="${param.flag!='imsy'}">
-			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style=" float: right;
-    margin: 15px; background-color: #0079ff; color:white;">
+			<button type="button" class="btn btn-default" id="CDVcancelBt" onclick="location.href='<c:url value="/payment/deletePayline.do?docNo=${payVo.docNo }"/>'" style="position: relative; right: -87%;top:-7px;background-color: #0079ff; color:white;">
 				결재상신 취소
 			</button>
 		</c:if>

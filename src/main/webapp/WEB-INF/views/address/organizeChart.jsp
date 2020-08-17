@@ -10,7 +10,6 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <script>
 	$(function() {
 		$("#accordion").accordion();
@@ -114,7 +113,7 @@ table {
 #selectMenu {
 	width: 400px;
 	font-size: 0.8em;
-	margin-left: 6px;
+	
 }
 
 #selectMenu a {
@@ -175,10 +174,6 @@ table {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-#organ_inputs input{
-	background-color: #4e73df;
-	color:white;
-}
 
 article{
 	font-size:1.25em;
@@ -186,14 +181,7 @@ article{
 
 </style>
 </head>
-<body style="overflow: hidden;">
-<div class="row" style="padding-left: 15px;">
-	<!-- Area Chart -->
-	<div class="col-xl-12 " style="position: relative;left: -7px;">
-	<div class="card shadow mb-4" style="height:fit-content;width: 99%;">
-	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-		<h6 class="m-0 font-weight-bold text-primary">조직도</h6>
-	</div>
+<body>
 	<section>
 		<article id="selectMenu">
 
@@ -249,12 +237,11 @@ article{
 			<!-- 아코디언 끝 -->
 				<form name="organForm">
 					<div id="organ_inputs">
-						<input type="submit" class="btn btn-primary" value="주소록에 추가"> 
-						<input type="reset" class="btn btn-primary" value="취소">
+						<input type="submit" value="주소록에 추가"> 
+						<input type="reset" value="취소">
 					</div>
 				</form>
 		</article>
 	</section>
-	</div></div></div>
 </body>
 </html>

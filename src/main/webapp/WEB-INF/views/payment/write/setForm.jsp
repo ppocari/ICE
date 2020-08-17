@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@include file="../../inc/top.jsp" %>
 <style type="text/css">
 	#SFformTable thead tr{background-color: #858796; color:white;}.table td, .table th{text-align: center;}#SFformlistDiv{overflow-y:auto; overflow-x:hidden;height: 480px;left: 5px;padding: 1% 10% 1% 10%;}#SFbtForm{background-color: #0079ff; color:white;}#SFbtDel{font-size:1.0em;}#SFbigDiv{padding-left: 2%;padding-right: 2%;}#SFlastDiv{padding-left: 8px;float:right;}#SFheaderDiv{background-color: #4e73df;color:white;font-size: 1.3em;font-weight: 600;height: 40px;}#SFheaderDiv p{padding-top: 5px;padding-left: 5px;}.card-header {padding: .75rem 1.25rem;margin-bottom: 0;background-color: #f8f9fc;border-bottom: 1px solid #e3e6f0;}
 </style>

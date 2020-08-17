@@ -3,8 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/inc/top.do"></c:import>
+<jsp:include page="../inc/top.jsp" />
 
 <style>
 .table td {
@@ -31,26 +30,14 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	$(function(){
-		
-		
-		$("#dynamicTbody tr").dblclick(function(){
+		$("#dynamicTbody tr").click(function(){
 			var no = $(this).children(0).val();
-			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
-			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
+			alert(no);
 			
-		});	
-		
-		/* 삭제 여러개(휴지통으로 이동) */
-		$('#btDel').click(function(){
-			var len=$('input[type=checkbox]:checked').length;
-			if(len==0){
-				alert('삭제할 쪽지를  체크하세요');
-				return;
-			}
-			$('form[name=msgRecListFrm]')
-				.prop("action","<c:url value='/message/msgDelete.do'/>");
-			$('form[name=msgRecListFrm]').submit();
-		});	 
+			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
+			'width=780,height=600,left=50,top=50,location=yes,resizable=yes');	
+			
+		});		
 	});
 </script>
 <!-- Begin Page Content -->
@@ -59,7 +46,7 @@
 
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-		<h1 class="h3 mb-0 text-gray-800">받은 쪽지함</h1>
+		<h1 class="h3 mb-0 text-gray-800">쪽지함</h1>
 	</div>
 
 	<!-- Content Row -->
@@ -67,78 +54,119 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-10 " >
+		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
-				<form name="msgRecListFrm" method="post"  
-				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">			
+				<form name="memRegisterFrm" method="post"  
+				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">
+					
 					<!-- 검색기능 -->
-						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">										
-							<div style="float: right">
-								<input type="button" id="btDel" class="btn btn-primary " value="휴지통으로 이동">				
-								<a href="<c:url value='/message/msgWrite.do'/>">
-									<input type="button"   class="btn btn-info" value="쪽지작성">
-								</a>
+						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							<%-- <div class="search" style="margin-left: 10px;">
+								<label for="department" style="margin-right: 20px;">부서별 조회</label>
+								<select name="department">
+									<!-- option 반복 -->
+									<option>전체</option>
+									<c:forEach var="deptvo" items="${deptList }">
+										<option>${deptvo.deptName }</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="search">
+								<label for="position" style="margin-right: 20px;">직급별 조회</label>
+								<select name="position">
+									<!-- option 반복 -->
+									<option>전체</option>
+									<c:forEach var="posvo" items="${ posList }">
+										<option>${posvo.posName }</option>
+									</c:forEach>
+								</select>
+							</div> --%>
+							<div class="search" style="margin-right: 20px; text-align:right;">
+								<label for="hiredate1" style="margin-right: 20px;"></label>
+								<select class="form-control" style=" width: 100px;
+									height: 30px; font-size: 13px; display: inline-block;">
+								 	 <option>내용</option>
+									 <option>보낸사람</option>
+								</select>
+								<input type="text" class="form-control" 
+									placeholder="검색어를 입력하세요" style=" width: 180px; 
+										height: 30px; font-size: 13px; display: inline-block;">
+								<button type="button" class="btn btn-primary btn-sm">검색</button>
+								
 							</div>
 						</div>
+						
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+						style="padding-right: 1385px;">
+						<button type="button" style="float: left;" class="btn btn-primary btn-sm">삭제</button>
+						<button type="button" style="float: left;" class="btn btn-primary btn-sm">보관</button>
+						<button type="button" style="float: left;" class="btn btn-primary btn-sm">답장</button>
+
+	
+						<a href="<c:url value='/message/messageWrite.do'/>">
+							<button type="button"  style="float: right; font-size:13px;" class="btn btn-info">쪽지작성</button>
+						</a>
+						
+					</div>
+					
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style=" height:570px; overflow: scroll; overflow-x: hidden; ">
+						<div class="chart-area" style="overflow: scroll; height:420px;">
+
+
 							<table class="table table-bordered table-condensed table-hover" id="dynamicTable">
+								<colgroup>
+									<col style="width:5%;"/>
+									<col style="width:15%;"/>
+									<col style="width:55%;"/>
+									<col style="width:15%;"/>
+								</colgroup>
 								<thead>
 									<tr>
-										<th style="width:5%;">
+										<th scope="col">
 											<input type="checkbox" id="checkAll" value="option1">
 										</th>
-										<th style="width:10%;">읽기 여부</th>
-										<th style="width:10%;">보낸 사람</th>
-										<th style="width:55%;">내용</th>
-										<th style="width:20%;">보낸 날짜</th>
+										<th scope="col">읽기 여부</th>
+										<th scope="col">보낸 사람</th>
+										<th scope="col">내용</th>
+										<th scope="col">보낸 날짜</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 게시판 내용 반복문시작 -->
-									
-									
 									<c:set var="i" value="${1 }" />
 									<c:forEach var="msgvo" items="${msgList }">
-										<c:if test="${empty msgvo}">
-											<tr >
-												<td colspan="5" align="center">받은 쪽지가 없습니다.</td>
-											</tr>
-										</c:if>
-										<c:if test="${!empty msgvo}">
-											<tr class="align_center" id="msgRecList${i }">
-											<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}" name="msgItems[${i }].no">
+										<tr class="align_center" id="msgRecList${i }" >
+											<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}">
 											<td>
-												<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox">
+												<input type="checkbox" id="inlineCheckbox1" value="option1">
 											</td>
-											<td class="click">
-												<c:if test = "${msgvo.msgStatus == 'N'}">
-													<i class="fas fa-envelope" style="color: blue;" ></i>
+											<td>${msgvo.msgStatus}</td>
+											<td>${msgvo.sendName}</td>
+											<td class="align_left">
+												<!-- 24시간 공지사항  new 이미지-->
+												<c:if test="">
+													<img>
 												</c:if>
-												<c:if test="${msgvo.msgStatus == 'Y'}">
-													<i class="far fa-envelope" ></i>	
-												</c:if> 
 												
+												<a href="">
+													<!-- 제목보여주기 길면 일부 -->
+													<c:if test="${fn:length(msgvo.msgContent)>30 }">
+														${fn:substring(msgvo.msgContent, 0, 30)} ...
+													</c:if>
+													<c:if test="${fn:length(msgvo.msgContent)<=30 }">
+														${msgvo.msgContent}
+													</c:if>
+												</a>
 											</td>
-											<td class="click">${msgvo.sendName}</td>
-											<td class="align_left click">
-												<!-- 제목보여주기 길면 일부 -->
-												<c:if test="${fn:length(msgvo.msgContent)>30 }">
-													${fn:substring(msgvo.msgContent, 0, 30)} ...
-												</c:if>
-												<c:if test="${fn:length(msgvo.msgContent)<=30 }">
-													${msgvo.msgContent}
-												</c:if>												
-											</td>
-											<td class="click"><fmt:formatDate value="${msgvo.msgRegdate}"
+											<td><fmt:formatDate value="${msgvo.msgRegdate}"
 												pattern="yyyy-MM-dd"/> 
 											</td>
 										</tr>
+										
 										<c:set var="i" value="${ i+1 }" />
-										</c:if>	
 									</c:forEach>
 								</tbody>
 						</table>

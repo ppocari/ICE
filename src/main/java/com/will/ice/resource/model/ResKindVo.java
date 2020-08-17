@@ -1,7 +1,6 @@
 package com.will.ice.resource.model;
 
-public class ResKindVO {
-	
+public class ResKindVo {
 	private int rkNo;
 	private String rkKind;
 	public int getRkNo() {
@@ -16,11 +15,9 @@ public class ResKindVO {
 	public void setRkKind(String rkKind) {
 		this.rkKind = rkKind;
 	}
-
 	@Override
 	public String toString() {
-		return "ResKindVO [rkNo=" + rkNo + ", rkKind=" + rkKind + "]";
+		return "ResKindVo [rkNo=" + rkNo + ", rkKind=" + rkKind + "]";
 	}
 	
-
 }

@@ -220,31 +220,6 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		return list;
 	}
-	
-	@Override
-	public List<PaylistViewVO> selectMain(PaymentSearchVO paysearchVo,List<Integer> docNolist) {
-		int docNo=0;
-		List<PaylistViewVO> list = new ArrayList<PaylistViewVO>();
-		int count=0;
-		
-		for(int i=0; i<docNolist.size(); i++) {
-			if(count<5) {
-				docNo = docNolist.get(i);
-				paysearchVo.setDocNo(docNo);
-				logger.info("paysearchVo={}",paysearchVo);
-				PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-				logger.info("vo.getGmemNo()={}",vo.getGmemNo());
-				logger.info("paysearchVo.getIdentNum()={}",paysearchVo.getIdentNum());
-				
-				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-					list.add(vo);
-				}
-			}
-			count++;
-		}
-		
-		return list;
-	}
 
 	@Override
 	public int insertComment(PaycommentVO comVo) {

@@ -59,11 +59,6 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.updateVisited(boardNo);
 	}
 
-	@Override
-	public List<BoardVO> selectMain() {
-		return boardDao.selectMain();
-	}
-
 
 	
 }

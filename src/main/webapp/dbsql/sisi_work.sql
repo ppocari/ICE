@@ -1,9 +1,5 @@
 select * from member;
 
-update member
-set deptcode = '999', poscode='999'
-where memno = '998999';
-
 select * from position;
 
 select * from department;
@@ -250,16 +246,6 @@ where memno =121930;
 select * from message_rec;
 select * from message;
 
-
-
-insert into message(msgno, msgstatus, msgcontent, sendmemno)
-		values(message_seq.nextval, 'Y', '반가워', '121920' );
-		
-insert into message_rec
-		values(message_rec_seq.nextval, 3 , '111910');
-
-
-
 select * from member;
 
 insert into message_rec
@@ -273,7 +259,7 @@ commit;
 --rollback;
 create view message_view
 as
-select mr.NO, mem.name as recname , mr.RECMEMNO ,m.* , memb.name as sendname, memb.PROFILEURL as sendImg
+select mr.NO, mem.name as recname , mr.RECMEMNO ,m.* , memb.name as sendname
 from message_rec mr join message m
 on mr.MSGNO = m.MSGNO
 join member mem
@@ -281,19 +267,8 @@ on mem.memno = mr.RECMEMNO
 join member memb
 on memb.memno = m.sendmemno;
 
-select * from member;
-
 select * from message_view;
 
-select * from message_view
-		where recmemno = '111920'
-		and msgstatus = 'N'
-		order by msgregdate desc;
-
-
-update message_view
-set msgstatus = 'Y'
-where no = 100;
 
 create sequence message_rec_seq
 start with 100

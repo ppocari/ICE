@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@include file="../inc/top.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 
 <link rel="stylesheet" type="text/css" 
@@ -27,13 +26,9 @@ function pageProc(curPage){
 
 /* 신청 처리 */
 function handleReserve(rvNo, mode) {
-	if(mode == 'no') {
 	var message = prompt("예약신청 거절의 이유를 적어주세요.");
-		if(message!=null){
-			location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"&message="+message+"'/>";
-		}
-	}else if(mode == 'yes') {
-		location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"'/>";
+	if(message!=null){
+		location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"&message="+message+"'/>";
 	}
 }
 
@@ -134,6 +129,8 @@ article{
 	<form action="<c:url value='/resource/manageReserve.do'/>" 
 		name="frmPage" method="post">
 		<input type="hidden" name="currentPage">
+		<input type="hidden" name="searchKeyword" 
+			value="${param.searchKeyword}">	
 	</form>
 		<header>
 			<h3>

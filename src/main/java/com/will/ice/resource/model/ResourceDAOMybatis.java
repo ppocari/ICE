@@ -48,7 +48,7 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	
 	//자원예약
 	@Override
-	public List<ResKindVO> selectResKind() {
+	public List<ResKindVo> selectResKind() {
 		return sqlSession.selectList(namespace+"selectResKind");
 	}
 
@@ -58,8 +58,8 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	}
 
 	@Override
-	public List<ResManageVO> selectReserveKind(int rkNo) {
-		return sqlSession.selectList(namespace+"selectReserveKind", rkNo);
+	public ResKindVo selectReserveKind(int rkNo) {
+		return sqlSession.selectOne(namespace+"selectReserveKind", rkNo);
 	}
 
 	@Override
@@ -74,84 +74,29 @@ public class ResourceDAOMybatis implements ResourceDAO {
 
 	@Override
 	public int insertResReserve(ResReserveVO rsVo) {
-		System.out.println("resNo="+rsVo.getResNo());
 		return sqlSession.insert(namespace+"insertResReserve", rsVo);
 	}
 
 	@Override
-	public List<ResReserveVO> selectReserveCondition(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectReserveCondition", rss);
+	public List<ResReserveVO> selectReserve(ResReserveSearchVO rss) {
+		return sqlSession.selectList(namespace+"selectReserve", rss);
 	}
 
 	@Override
-	public int selectReserveCountCondition(ResReserveSearchVO rssVo) {
-		return sqlSession.selectOne(namespace+"selectReserveCountCondition", rssVo);
+	public int selectReserveCount() {
+		return sqlSession.selectOne(namespace+"selectReserveCount");
 	}
 
 	@Override
-	public int updateReserveState(StringIntVo siVo) {
-		return sqlSession.update(namespace+"updateReserveState", siVo);
+	public int updateConfirmReserve(ResKindVo rkVo) {
+		return sqlSession.update(namespace+"updateConfirmReserve", rkVo);
 	}
 
 	@Override
-	public int updateReserveNoReason(StringIntVo siVo) {
-		return sqlSession.update(namespace+"updateReserveNoReason", siVo);
+	public int updateNoReasonReserve(ResKindVo rkVo) {
+		return sqlSession.update(namespace+"updateNoReasonReserve", rkVo);
 	}
-
-	@Override
-	public List<ResReserveVO> selectReserveResNoHistory(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectReserveResNoHistory", rss);
-	}
-
-	@Override
-	public int selectReserveResNoHistoryCount(StringIntVo siVo) {
-		return sqlSession.selectOne(namespace+"selectReserveResNoHistoryCount", siVo);
-	}
-
-	@Override
-	public List<ResReserveVO> selectReserveRkNoHistory(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectReserveRkNoHistory", rss);
-	}
-
-	@Override
-	public int selectReserveRkNoHistoryCount(StringIntVo siVo) {
-		return sqlSession.selectOne(namespace+"selectReserveRkNoHistoryCount", siVo);
-	}
-
-	@Override
-	public List<ResReserveVO> selectResNoCalendar(int resNo) {
-		return sqlSession.selectList(namespace+"selectResNoCalendar", resNo);
-	}
-
-	@Override
-	public List<ResReserveVO> selectRkNoCalendar(int rkNo) {
-		return sqlSession.selectList(namespace+"selectRkNoCalendar", rkNo);
-	}
-
-	@Override
-	public List<ResReserveVO> selectMyFutureReserve(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectMyFutureReserve", rss);
-	}
-	@Override
-	public List<ResReserveVO> selectMyPastReserve(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectMyPastReserve", rss);
-	}
-
-	@Override
-	public List<ResReserveVO> selectMyAllReserve(ResReserveSearchVO rss) {
-		return sqlSession.selectList(namespace+"selectMyAllReserve", rss);
-	}
-
-	@Override
-	public int selectMyAllReserveCount(StringIntVo siVo) {
-		return sqlSession.selectOne(namespace+"selectMyAllReserveCount", siVo);
-				
-	}
-
-	@Override
-	public int selectMyFutureReserveCount(StringIntVo siVo) {
-		return sqlSession.selectOne(namespace+"selectMyFutureReserveCount", siVo);
-	}
+	
 	
 
 }

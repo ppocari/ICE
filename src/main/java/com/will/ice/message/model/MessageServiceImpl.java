@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.will.ice.common.SearchVO;
 import com.will.ice.message.controller.MessageController;
 
 @Service
@@ -63,84 +60,6 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public MessageVO msgSelecyByno(int no) {
 		return msgDao.msgSelecyByno(no);
-	}
-
-	@Override
-	public int msgUpdateRead(int msgNo) {
-		return msgDao.msgUpdateRead(msgNo);
-	}
-
-	@Override
-	@Transactional
-	public int updateDelteMsg(List<MessageVO> msgList) {
-		int cnt = 0;
-		try {
-			for( MessageVO msgVo: msgList) {
-				if(msgVo.getNo() != 0) {
-					MessageVO msgNo_vo = msgDao.msgSelecyByno(msgVo.getNo());
-					
-					cnt = msgDao.updateDelteMsg(msgNo_vo.getMsgNo());
-				}
-				
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		}	
-		return cnt;
-	}
-
-	@Override
-	public int msgREALDelete(List<MessageVO> msgList) {
-		int cnt = 0;
-		try {
-			for( MessageVO msgVo: msgList) {
-				if(msgVo.getNo() != 0) {
-							
-					cnt = msgDao.msgREALDeleteByNo(msgVo.getNo());
-					cnt = msgDao.msgREALDeleteByMsgNo(msgVo.getMsgNo());
-				}
-				
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		}	
-		return cnt;
-	}
-
-	@Override
-	public List<MessageVO> selectMsgTrash(String recMemNo) {
-		return msgDao.selectMsgTrash(recMemNo);
-	}
-
-	@Override
-	public int msgDelBack(List<MessageVO> msgList) {
-		int cnt = 0;
-		try {
-			for( MessageVO msgVo: msgList) {
-				if(msgVo.getNo() != 0) {
-					MessageVO msgNo_vo = msgDao.msgSelecyByno(msgVo.getNo());
-					
-					cnt = msgDao.msgDelBack(msgNo_vo.getMsgNo());
-				}
-				
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		}	
-		return cnt;
-	}
-
-	@Override
-	public int selectUnRead(String recMemNo) {
-		return msgDao.selectUnRead(recMemNo);
-	}
-
-	@Override
-	public List<MessageVO> msgRecListOnlyN(MessageVO msgVO) {
-		return msgDao.msgRecListOnlyN(msgVO);
 	}
 
 	

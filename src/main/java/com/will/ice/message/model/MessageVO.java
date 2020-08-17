@@ -2,9 +2,7 @@ package com.will.ice.message.model;
 
 import java.sql.Timestamp;
 
-import com.will.ice.common.SearchVO;
-
-public class MessageVO extends SearchVO {
+public class MessageVO {
 	private int no;				//보낸 번호
 	private String recMemNo;	//메세지 받을 사람 목록 8,9,
 	private String recName;	//메세지 받을 사람 이름
@@ -76,9 +74,7 @@ public class MessageVO extends SearchVO {
 				+ ", msgStatus=" + msgStatus + ", msgContent=" + msgContent + ", msgRegdate=" + msgRegdate
 				+ ", sendMemNo=" + sendMemNo + ", sendName=" + sendName + "]";
 	}
-	
-	
-	
+
 
 	
 }

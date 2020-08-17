@@ -30,7 +30,7 @@
 		$('input[name=currentPage]').val(curPage);
 		$('form[name=frmPage]').submit();
 	}
-
+	
 	$(function(){
 		$('.divList table.box2 tbody tr').hover(function(){
 			$(this).css('background','skyblue')
@@ -64,54 +64,54 @@
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
-				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+				<div
+					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 
-						<c:if test="${sessionScope.identNum == '999999' }">
-							<a href="<c:url value='/notice/noticeWrite.do'/>">
-								<button type="button" class="btn btn-info" style="float: right;"
-								 >공지사항 작성</button>
-							</a>
-						</c:if>
+					<c:if test="${sessionScope.identNum == '999999' }">
+						<a href="<c:url value='/notice/noticeWrite.do'/>">
+							<button type="button" class="btn btn-info" style="float: right;">공지사항
+								작성</button>
+						</a>
+					</c:if>
 
-					</div>
+				</div>
 
 
-					<!-- Card Body -->
-					<div  style="height: 400px;">
-						<div class="chart-area" style="height: 450px; font-size: 13px;">
+				<!-- Card Body -->
+				<div style="height: 400px;">
+					<div class="chart-area" style="height: 450px; font-size: 13px;">
 
-							<div class="divList" style="width:98%;margin-left: 1%;margin-top: 1%;">
-								<table class="table table-bordered table-hover" id="dynamicTable">
-									<colgroup>
-										<col style="width:15%;"/>
-										<col style="width:60%;"/>
-										<col style="width:15%;"/>
-										<col style="width:10%;"/>
-									</colgroup>
-									<thead>
-										<tr style="height:0px;">
-											<th scope="col">부서</th>
-											<th scope="col">제목</th>
-											<th scope="col">작성일</th>
-											<th scope="col">조회수</th>
-										</tr>
-									</thead>
-									<tbody id="dynamicTbody">
-										<!-- 게시판 내용 반복문시작 -->
-										<c:forEach var="vo" items="${list }">
-											<input type="hidden" name="noticeNo" value="${vo.noticeNo }">
+						<div class="divList"
+							style="width: 98%; margin-left: 1%; margin-top: 1%;">
+							<table class="table table-bordered table-hover" id="dynamicTable">
+								<colgroup>
+									<col style="width: 15%;" />
+									<col style="width: 60%;" />
+									<col style="width: 15%;" />
+									<col style="width: 10%;" />
+								</colgroup>
+								<thead>
+									<tr style="height: 0px;">
+										<th scope="col">부서</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성일</th>
+										<th scope="col">조회수</th>
+									</tr>
+								</thead>
+								<tbody id="dynamicTbody">
+									<!-- 게시판 내용 반복문시작 -->
+									<c:forEach var="vo" items="${list }">
+										<input type="hidden" name="noticeNo" value="${vo.noticeNo }">
 
-											<tr class="align_center">
-												<td>${vo.category}</td>
-												<td class="align_left">
+										<tr class="align_center">
+											<td>${vo.category}</td>
+											<td class="align_left">
+												<!-- 조회수 올리기 --> <%-- /notice/noticeCountUpdate.do?no=${vo.no} --%>
+												<a
+												href="<c:url value="/notice/noticeCountUpdate.do?noticeNo=${vo.noticeNo }"/>">
 
-													<!-- 조회수 올리기 -->
-													<%-- /notice/noticeCountUpdate.do?no=${vo.no} --%>
-													<a href
-										="<c:url value="/notice/noticeCountUpdate.do?noticeNo=${vo.noticeNo }"/>">
-
-														<c:if test="${fn:length(vo.title)>30 }">
+													<c:if test="${fn:length(vo.title)>30 }">
 															${fn:substring(vo.title, 0, 30)} ...
 														</c:if> <c:if test="${fn:length(vo.title)<=30 }">
 															${vo.title}
@@ -198,3 +198,4 @@
 <!-- End of Main Content -->
 
 <%@ include file="../inc/bottom.jsp"%>
+

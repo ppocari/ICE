@@ -23,7 +23,7 @@
 			}
 		});
 		
-		window.resizeTo(1000,400);
+		window.resizeTo(1000,450);
 	});
 	
 </script>
@@ -63,6 +63,14 @@
 					<input type="hidden" name="fileItems[${idx }].originalFileName" value="${fListVo.originalFileName }">
 					<c:set var="idx" value="${idx+1 }"/>
 				</c:forEach>
+				<div class="form-group">
+					<label for="deptName">부서</label> 
+						<input type="text" class="form-control" id="deptName">
+				</div>
+				<div class="form-group">
+					<label for="name">성명</label> 
+						<input type="text" class="form-control" id="name">
+				</div><br>
 				<div class="form-group" id="empListDiv" style="height:200px; overflow: auto;">
 					<table id="empList" class="table-hover">
 						<tr>
@@ -93,7 +101,7 @@
 				<div id="payline3">
 					<button type="submit" class="btn btn-default" id="btSavePayLine">저장</button>
 					<button type="button" class="btn btn-default" id="btCancel"
-						onclick="self.close()">취소</button>
+						onclick="<c:url value='/payment/close.do' />">취소</button>
 				</div>
 			</form>
 		</div>

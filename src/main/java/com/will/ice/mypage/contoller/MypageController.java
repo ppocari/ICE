@@ -85,7 +85,13 @@ public class MypageController {
 		String msg="회원 수정 실패", url = "/mypage/mypage.do";
 		if(cnt>0) {
 			msg="회원 수정성공!";
-			url = "/main/main_user.do";
+			
+ 			String posCode = (String)session.getAttribute("posCode");
+ 			if(posCode.equals("920")) {
+ 				url ="/main/main_account.do";
+ 			}else {
+ 				url = "/main/main_user.do";
+ 			}
 			
 		}
 		

@@ -65,7 +65,7 @@
 }
 
 #buttonsDiv a:hover{
-	color: #224abe;
+	text-decoration: underline;
 }
 
 /* 한 줄에 정렬 3개 */
@@ -89,7 +89,7 @@
  
 .highlight a {
 	text-decoration: none;
-	color:#224abe;
+	color:#858796;
 } 
 
 /* 하이퍼링크(a href) 건 것 스타일 취소 */

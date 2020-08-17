@@ -38,7 +38,7 @@
 <body>
 <div class="row" style="padding-left: 15px;">
 	<!-- Area Chart -->
-	<div class="col-xl-10 ">
+	<div class="col-xl-12 ">
 	<div class="card shadow mb-4" style="height:fit-content;width: 99%;">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<h6 class="m-0 font-weight-bold text-primary">문서보기</h6>

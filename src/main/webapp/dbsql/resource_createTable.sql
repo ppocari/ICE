@@ -23,7 +23,7 @@ CREATE TABLE resReserve (
 	rvEnd DATE NOT NULL, /* 자원예약 끝시간 */
 	rvReason VARCHAR2(1000), /* 자원예약 이유 */
 	rvReReason VARCHAR2(1000), /* 자원예약 거절 이유 */
-	rvState VARCHAR2(10) default 'wait', /* 자원승인여부 */
+	rvConfirm VARCHAR2(10) default 'w', /* 자원승인여부 */
 	rvRegdate DATE DEFAULT sysdate, /* 자원예약일 */
 	memNo VARCHAR2(50) NOT NULL /* 사원번호 */
 );
@@ -45,9 +45,8 @@ CREATE TABLE resManage (
 	rkNo NUMBER, /* 자원종류번호 */
 	resLocation VARCHAR2(200), /* 장소 */
 	resSubdesc VARCHAR2(2000), /* 자원부가설명 */
-	resColor VARCHAR2(45), /* 달력에 나타낼 색 */
 	resRegdate DATE DEFAULT sysdate, /* 자원등록일 */
-	resState VARCHAR2(30) DEFAULT 'yes', /* 자원상태 */
+	resState VARCHAR2(30) DEFAULT 'new', /* 자원상태 */
 	resIsDel VARCHAR2(10) /* 자원삭제여부 */
 );
 

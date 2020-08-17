@@ -24,7 +24,7 @@
 		select count(*) from v_resmanage 
 	</select>
 	
-	<select id="selectResKind" resultType="ResKindVo">
+	<select id="selectResKind" resultType="resKindVo">
 		select * from resKind
 	</select>
 
@@ -57,7 +57,10 @@
 		select * from v_resreserve
 		where resno=#{resNo}
 	</select>
-
+	<select id="selectReserveKind" parameterType="int" resultType="resKindVo">
+		select * from reskind
+		where rkno=#{rkNo}
+	</select>
 	<select id="selectStartAvailableHour" parameterType="resReserveVo" resultType="resReserveVo">
 		select * from (
 		    select * from v_resreserve
@@ -82,156 +85,34 @@
 	
 	<insert id="insertResReserve">
 		insert into resreserve(rvno, resno, rvstart, rvend, rvReason, memno)
-		values(rvno_seq.nextval, #{resNo}, #{rvStart},#{rvEnd}, #{rvReason}, #{memNo})
+		values(rvno_seq.nextval, 1, #{rvStart},#{rvEnd}, #{rvReason}, #{memNo})
 	</insert>
 	
 	<!-- 자원예약 처리 -->
-	<select id="selectReserveCondition" parameterType="resReserveSearchVo" resultType="resReserveVo">
+	<select id="selectReserve" parameterType="resReserveSearchVo" resultType="resReserveVo">
 	select * from(
 		select rownum as RNUM, A.*
 		from (
 		   	select * from v_resreserve
-		   	<if test="rvState!=null and rvState!=''">
-				where rvstate=#{rvState}
-		   	</if>
-		   	<if test="rvState==null or rvState==''">
-				where rvstate='yes'
-				or rvstate='no'
-		   	</if>
-		   	order by rvstart
+			where rvconfirm='w'
 		)A
 	)
 	<![CDATA[ 
 	where RNUM > #{firstRecordIndex}
 	 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
 	</select>
-	<select id="selectReserveCountCondition" parameterType="resReserveSearchVo" resultType="int">
+	<select id="selectReserveCount" resultType="int">
 		select count(*) from v_resreserve
-		<if test="rvState!=null and rvState!=''">
-			where rvstate=#{rvState}
-	   	</if>
-		<if test="rvState==null or rvState==''">
-			where rvstate='yes'
-			or rvstate='no'
-		</if>
-		order by rvstart
+		where rvconfirm='w'
 	</select>
-	<update id="updateReserveState" parameterType="StringIntVo">
+	<update id="updateConfirmReserve" parameterType="resKindVo">
 	update resreserve
-	set rvstate=#{text}
-	where rvNo=#{no}
+	set rvconfirm=#{rkKind}
+	where rvNo=#{rkNo}
 	</update>
-	<update id="updateReserveNoReason" parameterType="StringIntVo">
+	<update id="updateNoReasonReserve" parameterType="resKindVo">
 	update resreserve
-	set rvReReason=#{text}
-	where rvNo=#{no}
+	set rvReReason=#{rkKind}
+	where rvNo=#{rkNo}
 	</update>
-	
-	<!-- 자원이용현황 -->
-	<select id="selectReserveResNoHistory" parameterType="resReserveSearchVo" 
-		resultType="resReserveVo">
-	select * from(
-		select rownum as RNUM, A.*
-		from (
-			select * from v_resreserve
-			where resno=#{searchNumber}
-			<if test="rvState!=null and rvState!=''">
-				and rvstate=#{rvState}
-		   	</if>
-			)A
-		)
-	<![CDATA[ 
-	where RNUM > #{firstRecordIndex}
-	 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
-	</select>
-	<select id="selectReserveRkNoHistory" parameterType="resReserveSearchVo" 
-		resultType="resReserveVo">
-	select * from(
-		select rownum as RNUM, A.*
-		from (
-			select * from v_resreserve
-			where rkNo=#{searchNumber}
-			<if test="rvState!=null and rvState!=''">
-				and rvstate=#{rvState}
-		   	</if>
-			)A
-		)
-	<![CDATA[ 
-	where RNUM > #{firstRecordIndex}
-	 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
-	</select>
-	<select id="selectReserveResNoHistoryCount" parameterType="StringIntVo" resultType="int"> 
-		select count(*) from v_resreserve
-		where resno=#{no}
-		<if test="text!=null and text!=''">
-			and rvstate=#{text}
-	   	</if>
-	</select>
-	<select id="selectReserveRkNoHistoryCount" parameterType="StringIntVo" resultType="int"> 
-		select count(*) from v_resreserve
-		where rkno=#{no}
-		<if test="text!=null and text!=''">
-			and rvstate=#{text}
-	   	</if>
-	</select>
-	<select id="selectReserveKind" parameterType="int" resultType="resManageVo">
-		select * from v_resmanage
-		where rkno=#{rkNo}
-	</select>
-	<select id="selectResNoCalendar" parameterType="int"
-		resultType="resReserveVo">
-		select resName, resNo, deptName, rvStart, rvEnd	from v_resreserve
-		where resno=#{resNo}
-		and rvstate='yes'
-	</select>
-	<select id="selectRkNoCalendar" parameterType="int"
-		resultType="resReserveVo">
-		select resName, resNo, deptName, rvStart, rvEnd from v_resreserve
-		where rkno=#{rkNo}
-		and rvstate='yes'
-	</select>
-	
-	<!-- 내 자원 이용 현황 -->
-	<select id="selectMyFutureReserve" parameterType="resReserveSearchVo" resultType="resReserveVo">
-		select * from(
-		select rownum as RNUM, A.*
-		from (
-			select * from v_resreserve
-			where memno=#{rvState}
-			and rvstart >= sysdate
-			order by rvstart 
-			)A
-		)
-		<![CDATA[ 
-		where RNUM > #{firstRecordIndex}
-		 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
-	</select>
-	<select id="selectMyAllReserve" parameterType="resReserveSearchVo" resultType="resReserveVo">
-		select * from(
-		select rownum as RNUM, A.*
-		from (
-			select * from v_resreserve
-			where memno=#{mode}
-			<if test="rvState !=null and rvState !=''">
-			and rvState=#{rvState}
-			</if>
-			order by rvstart
-			)A
-		)
-		<![CDATA[ 
-		where RNUM > #{firstRecordIndex}
-	 	and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
-	</select>
-	<select id="selectMyAllReserveCount" parameterType="StringIntVo" resultType="int"> 
-		select count(*) from v_resreserve
-		where memno=#{text}
-		<if test="text2!=null and text2!=''">
-		and rvstate=#{text2}
-	   	</if>
-	</select>
-	<select id="selectMyFutureReserveCount" parameterType="StringIntVo" resultType="int"> 
-		select count(*) from v_resreserve
-		where memno=#{text}
-		and rvstart >= sysdate
-	</select>
 </mapper>

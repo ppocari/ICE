@@ -39,6 +39,10 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">쪽지함</h1>
+
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
 	</div>
 
 	<!-- Content Row -->
@@ -50,7 +54,7 @@
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
 				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">
+				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
 					
 					<!-- 검색기능 -->
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -76,29 +80,24 @@
 							</div> --%>
 							<div class="search" style="margin-right: 20px; text-align:right;">
 								<label for="hiredate1" style="margin-right: 20px;"></label>
-								<select class="form-control" style=" width: 100px;
-									height: 30px; font-size: 13px; display: inline-block;">
+								<select class="form-control" style="weight:50px;">
 								 	 <option>내용</option>
-									 <option>받는사람</option>
+									 <option>보낸사람</option>
 								</select>
 								<input type="text" class="form-control" 
-									placeholder="검색어를 입력하세요" style=" width: 180px; 
-										height: 30px; font-size: 13px; display: inline-block;">
+									placeholder="검색어를 입력...">
 								<button type="button" class="btn btn-primary btn-sm">검색</button>
 								
 							</div>
 						</div>
 						
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-						style="padding-right: 1385px;">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">삭제</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">보관</button>
 						<button type="button" style="float: left;" class="btn btn-primary btn-sm">답장</button>
-
-	
-						<a href="<c:url value='/message/messageWrite.do'/>">
+						<a href="<c:url value='/notice/noticeWrite.do'/>">
 							<div>
-								<button type="button"  style="float: right; font-size:13px;" class="btn btn-info"
+								<button type="button"  style="float: right;" class="btn btn-info"
 								 >쪽지작성</button>
 							</div>
 						</a>
@@ -123,19 +122,19 @@
 										<th scope="col">
 											<input type="checkbox" id="checkAll" value="option1">
 										</th>
-										<th scope="col">받을 사람</th>
+										<th scope="col">보낸사람</th>
 										<th scope="col">내용</th>
-										<th scope="col">보낸 날짜</th>
+										<th scope="col">날짜</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 게시판 내용 반복문시작 -->
-									<c:forEach var="msgvo" items="${msgList }">
+									<c:forEach var="vo" items="${list }">
 										<tr class="align_center">
 											<td>
 												<input type="checkbox" id="inlineCheckbox1" value="option1">
 											</td>
-											<td>${msgvo.recName}</td>
+											<td>${vo.MEMNO}</td>
 											<td class="align_left">
 												<!-- 24시간 공지사항  new 이미지-->
 												<c:if test="">
@@ -144,15 +143,15 @@
 												
 												<a href="">
 													<!-- 제목보여주기 길면 일부 -->
-													<c:if test="${fn:length(msgvo.msgContent)>30 }">
-														${fn:substring(msgvo.msgContent, 0, 30)} ...
+													<c:if test="${fn:length(vo.MSG_CONTENT)>30 }">
+														${fn:substring(vo.MSG_CONTENT, 0, 30)} ...
 													</c:if>
-													<c:if test="${fn:length(msgvo.msgContent)<=30 }">
-														${msgvo.msgContent}
+													<c:if test="${fn:length(vo.MSG_CONTENT)<=30 }">
+														${vo.MSG_CONTENT}
 													</c:if>
 												</a>
 											</td>
-											<td><fmt:formatDate value="${msgvo.msgRegdate}"
+											<td><fmt:formatDate value="${vo.MSG_REGDATE}"
 												pattern="yyyy-MM-dd"/> 
 											</td>
 										</tr>

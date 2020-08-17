@@ -50,9 +50,4 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.updateDownCount(noticeNo);
 	}
 
-	@Override
-	public List<NoticeVO> selectMain() {
-		return noticeDao.selectMain();
-	}
-
 }

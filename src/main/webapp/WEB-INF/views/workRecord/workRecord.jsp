@@ -2,8 +2,7 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@include file="../inc/top.jsp"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style type="text/css">
@@ -153,6 +152,7 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">근태관리</h1>
 	</div>
+	<div><span id="name">${userName}님</span></div>
 	<!-- Content Row -->
 	<div class="row">
 		<!-- Area Chart -->
