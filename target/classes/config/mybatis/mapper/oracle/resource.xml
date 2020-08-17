@@ -52,7 +52,6 @@
 		delete from resmanage where resNo=#{resNo} 
 	</delete>
 	
-	
 	<!-- 자원예약 -->
 	<select id="selectReserveResNo" parameterType="int" resultType="resReserveVo">
 		select * from v_resreserve
@@ -62,16 +61,58 @@
 		select * from reskind
 		where rkno=#{rkNo}
 	</select>
-	<select id="selectAvailableHour" parameterType="resReserveVo" resultType="resReserveVo">
-		select * from
-		    (
-		    select rvno, resno, rvstart, rvend 
-		    from v_resreserve
-		    <![CDATA[ 
-		    where (rvstart > to_date(#{startDate}, 'YYYY-MM-DD') and rvstart < to_date(#{startDate}, 'YYYY-MM-DD') + 1)
-		    or (rvstart > to_date(#{startDate}, 'YYYY-MM-DD')-1 and rvend < to_date(#{startDate}, 'YYYY-MM-DD') + 1) ]]>
-		    )
+	<select id="selectStartAvailableHour" parameterType="resReserveVo" resultType="resReserveVo">
+		select * from (
+		    select * from v_resreserve
+		    where <![CDATA[ (rvend >to_date(#{pickDate}, 'YYYY-MM-DD')]]>
+		    and <![CDATA[ rvend < to_date(#{pickDate}, 'YYYY-MM-DD')+1)]]>
+		    or <![CDATA[ (rvstart > to_date(#{pickDate}, 'YYYY-MM-DD')]]>
+		    and <![CDATA[ rvstart < to_date(#{pickDate}, 'YYYY-MM-DD')+1)]]>
+		    or <![CDATA[ (rvstart <= to_date(#{pickDate}, 'YYYY-MM-DD')]]>
+		    and <![CDATA[ rvend >= to_date(#{pickDate}, 'YYYY-MM-DD')+1)]]>
+		)
 		where resno=#{resNo}
 		order by rvstart
 	</select>
+	<select id="selectEndAvailableHour" parameterType="resReserveVo" resultType="resReserveVo">
+	select A.* from(
+   	 	select rvno, resno, rvstart from v_resreserve
+    	where resNo=#{resNo}
+    	and rvstart > to_date(#{pickDate}, 'YYYY-MM-DD hh24:Mi')
+    	order by rvstart)A
+	where rownum = 1
+	</select>
+	
+	<insert id="insertResReserve">
+		insert into resreserve(rvno, resno, rvstart, rvend, rvReason, memno)
+		values(rvno_seq.nextval, 1, #{rvStart},#{rvEnd}, #{rvReason}, #{memNo})
+	</insert>
+	
+	<!-- 자원예약 처리 -->
+	<select id="selectReserve" parameterType="resReserveSearchVo" resultType="resReserveVo">
+	select * from(
+		select rownum as RNUM, A.*
+		from (
+		   	select * from v_resreserve
+			where rvconfirm='w'
+		)A
+	)
+	<![CDATA[ 
+	where RNUM > #{firstRecordIndex}
+	 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
+	</select>
+	<select id="selectReserveCount" resultType="int">
+		select count(*) from v_resreserve
+		where rvconfirm='w'
+	</select>
+	<update id="updateConfirmReserve" parameterType="resKindVo">
+	update resreserve
+	set rvconfirm=#{rkKind}
+	where rvNo=#{rkNo}
+	</update>
+	<update id="updateNoReasonReserve" parameterType="resKindVo">
+	update resreserve
+	set rvReReason=#{rkKind}
+	where rvNo=#{rkNo}
+	</update>
 </mapper>

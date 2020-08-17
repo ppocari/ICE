@@ -14,12 +14,12 @@
 		</init-param>
 	</filter>
 
-	<!-- The definition of the Root Spring Container shared by all Servlets
+	<!-- The definition of the Root Spring Container shared by all Servlets 
 		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:config/spring/context-*.xml
-					classpath*:config/spring/spring-*.xml
+			classpath*:config/spring/spring-*.xml
 		</param-value>
 	</context-param>
 
@@ -56,8 +56,24 @@
 		<session-timeout>20</session-timeout>
 	</session-config>
 
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	
+	 <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+	
+	
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
 	<!-- <error-page> <error-code>404</error-code> <location>/code404.jsp</location>
 		</error-page> <error-page> <error-code>500</error-code> <location>/code500.jsp</location>
+
 		</error-page> -->
 
 	<welcome-file-list>

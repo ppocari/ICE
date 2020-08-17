@@ -22,6 +22,7 @@ CREATE TABLE resReserve (
 	rvStart DATE NOT NULL, /* 자원예약 시작시간 */
 	rvEnd DATE NOT NULL, /* 자원예약 끝시간 */
 	rvReason VARCHAR2(1000), /* 자원예약 이유 */
+	rvReReason VARCHAR2(1000), /* 자원예약 거절 이유 */
 	rvConfirm VARCHAR2(10) default 'w', /* 자원승인여부 */
 	rvRegdate DATE DEFAULT sysdate, /* 자원예약일 */
 	memNo VARCHAR2(50) NOT NULL /* 사원번호 */

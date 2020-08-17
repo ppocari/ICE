@@ -1,6 +1,7 @@
 package com.will.ice.resource.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ import com.will.ice.resource.model.ResKindVo;
 import com.will.ice.resource.model.ResManageSearchVO;
 
 import com.will.ice.resource.model.ResManageVO;
+import com.will.ice.resource.model.ResReserveSearchVO;
+import com.will.ice.resource.model.ResReserveVO;
 import com.will.ice.resource.model.ResourceService;
 
 @Controller
@@ -279,6 +282,81 @@ public class ResourceController {
 			msg="해당 자원을 삭제하였습니다.";
 		}else {
 			msg="자원 삭제가 실패하였습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/manageReserve.do") 
+	public void manageReserve_get(@ModelAttribute ResReserveSearchVO rssVo, Model model) {
+		
+		//[1] PaginationInfo 
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(AddressUtility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(rssVo.getCurrentPage());
+
+		//[2] SearchVo 
+		rssVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		rssVo.setRecordCountPerPage(AddressUtility.RECORD_COUNT);
+		logger.info("db 처리 전 rssVo={}", rssVo);
+		
+		List<ResReserveVO> rsList=service.selectReserve(rssVo);
+		logger.info("자원예약 처리 화면, rsList={}", rsList);
+		
+		for(ResReserveVO rsVo : rsList) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			String rvStart  = dateFormat.format(rsVo.getRvStart());
+			String rvEnd  = dateFormat.format(rsVo.getRvEnd());
+			
+			String[] startArr=rvStart.split(" ");
+			String[] endArr=rvEnd.split(" ");
+			
+			rsVo.setStartDate(startArr[0]);
+			rsVo.setStartHour(startArr[1]);
+			rsVo.setEndDate(endArr[0]);
+			rsVo.setEndHour(endArr[1]);
+		}
+		
+		int totalRecord=service.selectReserveCount(); 
+		logger.info("전체 레코드 : " +	totalRecord);
+
+		pagingInfo.setTotalRecord(totalRecord);
+
+		//3 
+		model.addAttribute("pagingInfo", pagingInfo);
+		model.addAttribute("rsList", rsList);
+		
+	}
+	
+	@RequestMapping("handleReserve.do")
+	public String rvYes(@RequestParam int rvNo, @RequestParam String mode, Model model, 
+				@RequestParam (required = false) String message) {
+		logger.info("예약 신청 처리, rvNo={}, mode={}", rvNo, mode);
+		//원래 새 VO를 만들어야 하지만, 파라미터의 타입을 모두 가진 ResKindVo를 대신 임시로 씀.
+		ResKindVo handleVo = new ResKindVo();
+		handleVo.setRkNo(rvNo);
+		handleVo.setRkKind(mode);
+		
+		int cnt=service.updateConfirmReserve(handleVo);
+		
+		if(message!=null && !message.isEmpty()) {
+			logger.info("거절 메세지 파라미터, message={}", message);
+			ResKindVo reasonVo = new ResKindVo();
+			reasonVo.setRkNo(rvNo);
+			reasonVo.setRkKind(message);
+			int count=service.updateNoReasonReserve(reasonVo);
+			if(count>0) {
+				logger.info("거절 메세지 저장 완료!");
+			}
+		}
+		
+		String url="/resource/manageReserve.do", msg="예약신청 승인처리를 실패하였습니다.";
+		if(cnt>0) {
+			msg="예약신청 처리 되었습니다.";
 		}
 		
 		model.addAttribute("msg", msg);
