@@ -6,12 +6,12 @@ public interface ResourceDAO {
 	//자원관리
 	List<ResManageVO> selectResManage(ResManageSearchVO rmsVo);
 	int selectTotalRecord();
-	
-	List<ResKindVO> selectResKind();
+	List<ResKindVo> selectResKind();
 	int insertResManage(ResManageVO rmVo);
 	ResManageVO selectResManageOne(int resNo);
 	int updateResource(ResManageVO rmVo);
-	int deleteResManage(int resNo);
+	int updateManageDel(int resNo);
+	int updateReserveBecauseResDelete(int resNo);
 
 	//자원예약
 	List<ResReserveVO> selectReserveResNo(int resNo);
@@ -40,4 +40,8 @@ public interface ResourceDAO {
 	List<ResReserveVO> selectMyPastReserve(ResReserveSearchVO rss);
 	int selectMyAllReserveCount(StringIntVo siVo);
 	int selectMyFutureReserveCount(StringIntVo siVo);
+	ResReserveVO selectReserveCantReason(int rvNo);
+	
+	//자원 설정
+	int insertResKind(String rkKind);
 }

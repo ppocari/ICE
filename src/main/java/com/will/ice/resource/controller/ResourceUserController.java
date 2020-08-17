@@ -234,6 +234,17 @@ public class ResourceUserController {
 
 		return "resourceUser/showMyReserve";
 	}
+	
+	@RequestMapping("/rvCantReasonPopup.do")
+	public void showReason(@RequestParam int rvNo, Model model) {
+		logger.info("자원 예약 거절 사유 보기, rvNo={}", rvNo);
+		
+		ResReserveVO rsVo= service.selectReserveCantReason(rvNo);
+		logger.info("자원 예약 거절 사유, rsVo={}", rsVo);
+		
+		model.addAttribute("rsVo", rsVo);
+		
+	}
 }
 
 

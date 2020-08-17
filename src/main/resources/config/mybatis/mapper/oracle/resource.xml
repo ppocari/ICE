@@ -18,11 +18,11 @@
 	 and RNUM <= #{firstRecordIndex } + #{recordCountPerPage}]]>
 	</select>
 	
-	<select resultType="int" id="selectTotalRecord">
+	<select id="selectTotalRecord" resultType="int">
 		select count(*) from v_resmanage 
 	</select>
 	
-	<select id="selectResKind" resultType="ResKindVo">
+	<select id="selectResKind" resultType="resKindVo">
 		select * from resKind
 	</select>
 	
@@ -43,9 +43,16 @@
 		, reslocation=#{resLocation}, ressubdesc=#{resSubdesc}, rkNo=#{rkNo}
 		where resno=#{resNo}
 	</update>
-	<delete parameterType="int" id="deleteResManage">
-		delete from resmanage where resNo=#{resNo} 
-	</delete>
+	<update parameterType="int" id="updateManageDel">
+		update resmanage
+		set resstate='del'
+		where resNo=#{resNo}
+	</update>
+	<select id="canResDelete">
+		select count(*) from v_resreserve
+		where resNo=#{resNo}
+		and rvState='wait'
+	</select>
 	
 	<!-- 자원예약 -->
 	<select id="selectReserveResNo" parameterType="int" resultType="resReserveVo">
@@ -118,8 +125,14 @@
 	</update>
 	<update id="updateReserveNoReason" parameterType="StringIntVo">
 	update resreserve
-	set rvReReason=#{text}
+	set rvCantReason=#{text}
 	where rvNo=#{no}
+	</update>
+	<update id="updateReserveBecauseResDelete" parameterType="int">
+	update resreserve
+	set rvstate='no', rvcantreason='해당 자원은 현재 사용할 수 없는 상태입니다.'
+	where rvstate='wait'
+	and resno=#{resNo}
 	</update>
 	
 	<!-- 자원이용현황 -->
@@ -229,4 +242,16 @@
 		where memno=#{text}
 		and rvstart >= sysdate
 	</select>
+	<select id="selectReserveCantReason" parameterType="int" resultType="resReserveVo">
+		select * from v_resreserve
+		where rvNo=#{rvNo}
+	</select>
+	
+	<!-- 자원 설정 -->
+	<insert id="insertResKind" parameterType="string">
+		insert into resKind	
+		values(rkno_seq.nextval, #{rkKind})
+		order by rkno
+	</insert>
+	
 </mapper>
