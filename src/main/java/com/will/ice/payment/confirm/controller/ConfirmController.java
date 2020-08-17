@@ -45,6 +45,7 @@ public class ConfirmController {
 		
 		String identNum = (String)session.getAttribute("identNum");
 		paysearchVo.setIdentNum(identNum);
+		paysearchVo.setProgress("reject");
 		
 		//미결문서번호 리스트 뽑아서 for문으로 돌리기
 		List<Integer> docNolist = paymentService.docNolist();

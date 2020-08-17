@@ -90,7 +90,7 @@ $(function(){
 									class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
 							<td style="width:80%; weight:100px; width:500px;">
-								<select name="category" class="form-control" style=>
+								<select name="category" class="form-control" style="width: 400px;">
 									<option value="전체">전체</option>
 									<option value="잡담">잡담</option>
 									<option value="동아리">동아리</option>

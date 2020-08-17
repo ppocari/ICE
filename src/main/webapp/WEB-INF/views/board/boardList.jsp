@@ -3,7 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/inc/top.do"></c:import>
 
 <style>
@@ -79,7 +78,7 @@ function pageProc(curPage){
 						<div class="chart-area" style="height: 450px; font-size: 13px;">
 
 							<div style="width:98%;margin-left: 1%;margin-top: 1%;">
-								<table class="table table-bordered table-hover" id="dynamicTable">
+								<table class="table table-bordered table-hover" id="dynamicTable" style="font-size: 12pt;">
 									<colgroup>
 										<col style="width:5%;"/>
 										<col style="width:50%;"/>
@@ -119,7 +118,7 @@ function pageProc(curPage){
 													</c:if>
 												</td>
 												<td>${vo.nickname }</td>
-												<td style="font-size:10px;">
+												<td style="font-size:13px;">
 													<fmt:formatDate pattern="yyyy-MM-dd-HH:mm"
 													value="${vo.regdate}"/>
 												</td>
@@ -170,7 +169,7 @@ function pageProc(curPage){
 						   	<form name="frmSearch" method="post" 
 						   		action='<c:url value="/board/boardList.do"/>'>
 						        <select name="searchCondition" class="form-control" style=" width: 100px;
-									height: 30px; font-size: 13px; display: inline-block;">
+									height: 30px; font-size: 13px; display: inline-block; position: relative;top: 4px;">
 						            <option value="title" 
 						            	<c:if test="${param.searchCondition=='title' }">
 						            		selected="selected"
@@ -181,8 +180,8 @@ function pageProc(curPage){
 						            		selected="selected"
 						            	</c:if>
 						            >내용</option>
-						            <option value="name" 
-						            	<c:if test="${param.searchCondition=='name' }">
+						            <option value="nickname" 
+						            	<c:if test="${param.searchCondition=='nickname' }">
 						            		selected="selected"
 						            	</c:if>
 						            >닉네임</option>
