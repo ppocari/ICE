@@ -46,7 +46,6 @@
 			<![CDATA[
 			and memno = #{memNo} ]]>
 		</if>
-		order by confirmDate desc
 	</select>
 	
 	<insert id="insertCCMulti" parameterType="ComcardVO">

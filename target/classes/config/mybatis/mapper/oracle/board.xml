@@ -75,11 +75,6 @@
 		where boardNo=#{boardNo}
 	</update>
 	
-	<select id="selectMain" resultType="boardVo">
-		select * from board
-		<![CDATA[where rownum <6
-		order by visited desc]]>
-	</select>
 </mapper>
 
 

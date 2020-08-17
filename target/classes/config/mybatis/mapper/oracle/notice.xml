@@ -82,13 +82,6 @@
 		set downcount = downcount+1
 		where noticeNo=#{noticeNo}
 	</update>
-	
-	<select id="selectMain" resultType="noticeVo">
-		select * from notice
-		where main='Y'
-		<![CDATA[ 
-		and rownum<=6]]>
-	</select>
 </mapper>
 
 
