@@ -486,7 +486,10 @@ article > div {
 							</div>
 							<div>
 								<span class="la_left">상태: </span>
-								<span class="fl">${rmVo.resState }</span>
+								<span class="fl">
+									<c:if test="${rmVo.resState == 'yes' }">사용가능</c:if>
+									<c:if test="${rmVo.resState == 'no' }">사용불가능</c:if>
+								</span>
 								<span class="fl" id="spanResState"></span>
 							</div>
 							<div>

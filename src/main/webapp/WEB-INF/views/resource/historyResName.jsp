@@ -23,6 +23,8 @@
 		$('form[name=frmPage]').submit();
 	}
 	
+	
+	
 	//들어오자 마자 일정 보여주기
 	var contextPath = "/ice";
 	var resNo=0;
@@ -36,7 +38,7 @@
 			},
 		</c:forEach>
 	];
-
+		
 	$(function() {
 		$('#showKind').click(function(){
 			location.href="<c:url value='/resource/historyResKind.do?rkNo="+${resVo.rkNo}+"'/>";	
@@ -209,6 +211,7 @@ article{
 		background: white;
 		float:left;
 		text-align: center;
+		margin: 20px;
 	}
 	
     .fc-day-top.fc-sat.fc-past { color:#0000FF; }     	/* 토요일 */
@@ -268,7 +271,7 @@ article{
 	#calendar{
 		width: 500px;
 		display: inline-block;
-		border: 1px solid lightgray;
+		
 	}
 	
 	#resDetailDiv {
@@ -332,7 +335,7 @@ article > div {
 			자원별 이용 및 승인현황 > ${resVo.resName}<span></span>
 		</h3>
 	</header>
-		<div class="col-xl-6 ">
+		<div class="col-xl-8 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원 이용/승인 목록</h6>
@@ -342,18 +345,14 @@ article > div {
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
+							<th>자원명</th>
 							<th>이용시간</th>
-							<th>신청부서
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청자
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>신청부서</th>
+							<th>신청자</th>
 						</tr>
 						<c:forEach var="rs" items="${rvResNoList }">
 							<tr>
+								<td>${rs.resName }</td>
 								<td>${rs.startDate } ${rs.startHour } ~ ${rs.endDate } ${rs.endHour }</td>
 								<td>${rs.deptName }</td>
 								<td>${rs.name}</td>
@@ -396,7 +395,7 @@ article > div {
 		</div>
 		
 		<!-- Area Chart -->
-		<div class="col-xl-6 " >
+		<div class="col-xl-8 " >
 			<div class="card shadow mb-4" style="fit-content">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원 일정</h6>

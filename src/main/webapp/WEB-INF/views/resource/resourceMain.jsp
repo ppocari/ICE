@@ -19,7 +19,7 @@ $(function(){
 	/* 추가 누르면 팝업창  */
 	$('#addResource').click(function(){
 		window.open('<c:url value="/resource/addResource.do"/>', 'addRes', 
-				'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+				'width=500, height=500, left=800, top=200, location=yes, resizable=yes');
 	});
 	
 	/* 설정 누르면 팝업 창 */
@@ -132,7 +132,7 @@ $(function(){
 					/* 수정버튼 처리 */
 					$('#btEdit').click(function(){
 						window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-						'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+						'width=600, height=600, left=800, top=200, location=yes, resizable=yes');
 					});
 					
 					$('#btDel').click(function(){
@@ -337,8 +337,8 @@ article{
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원목록</h6>
 					<div style="float: right">
-						<button id="preferencesResource" type="button" class="btn btn-info"
-						 >설정</button>
+					<!-- 	<button id="preferencesResource" type="button" class="btn btn-info"
+						 >설정</button> -->
 						<button id="addResource" type="button" class="btn btn-info"
 						 >자원 추가</button>
 					</div>
@@ -347,23 +347,11 @@ article{
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-body">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>장소
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>상태
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
 
+							<th>자원명</th>
+							<th>종류</th>
+							<th>장소</th>
+							<th>상태</th>
 							<th>수정</th>
 							<th>삭제</th>
 						</tr>

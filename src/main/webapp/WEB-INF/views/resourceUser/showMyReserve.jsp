@@ -246,6 +246,15 @@ article > div {
 	
 }
 
+form[name=frmSearch] * {
+	font-size: 0.9em;
+	border: 1px solid lightgray;
+}
+
+select[name=rvState] {
+	height:28px;
+}
+
 </style>
 
 <section>
@@ -254,23 +263,17 @@ article > div {
 	<form action="<c:url value='/resourceUser/showMyReserve.do'/>" name="frmPage" method="post">
 		<!-- 내 전체 이용 현황  -->
 		<input type="hidden" name="currentPage">
-		<input type="hidden" name="rsState" 
-			value="${param.rsState}">	
+		<input type="hidden" name="rvState" 
+			value="${param.rvState}">	
 	</form>
-		<header>
-			<h3>
-				나의 자원 이용현황<span></span>
-			</h3>
-		</header>
 		<!-- 내 예약 현황 -->
 		<div id="divMain" class="col-xl-11 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">예약 신청 전체 현황</h6>
+					<h6 class="m-0 font-weight-bold text-primary">자원 예약 현황</h6>
 					<div style="text-align: right;">
-						<span>상태</span>
 						<form name="frmSearch" method="post" action='<c:url value="/resourceUser/showMyReserve.do"/>'>
-							<select name="rvState">
+							<select name="rvState" >
 								<option value="" 
 									<c:if test="${param.rvState=='' }">
 					            		selected="selected"
@@ -299,13 +302,8 @@ article > div {
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>자원명</th>
 							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
 							<th style="width:300px">신청시간</th>
 							<th>상태</th>

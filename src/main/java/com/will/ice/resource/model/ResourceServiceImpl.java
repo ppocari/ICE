@@ -163,5 +163,10 @@ public class ResourceServiceImpl implements ResourceService {
 		return dao.updateReserveBecauseResDelete(resNo);
 	}
 
+	@Override
+	public List<ResManageVO> selectResManageAll() {
+		return dao.selectResManageAll();
+	}
+
 
 }
