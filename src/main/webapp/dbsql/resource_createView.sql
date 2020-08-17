@@ -13,7 +13,7 @@ on me.poscode=po.poscode;
 create or replace view v_resForReserve 
 as
 select rm.resno, rm.resname, rk.rkno, rk.rkkind,
-    rs.rvno, rs.rvstart, rs.rvend, rs.rvconfirm, rs.rvregdate, rs.memno
+    rs.rvno, rs.rvstart, rs.rvend, rs.rvstate, rs.rvregdate, rs.memno
 from resmanage rm join reskind rk
 on rm.rkno=rk.rkno
 join resreserve rs
