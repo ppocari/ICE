@@ -60,11 +60,24 @@ public class MypageController {
 		
 		String memNo = (String) session.getAttribute("identNum");
 		logger.info("회원정보 수정하기, 아이디 memNo={},vo={}",memNo,vo);
+
 		logger.info("vo.getEmail2={}",vo.getEmail2());
 		if(vo.getEmail2().equals("etc")) {
 			vo.setEmail2(email3);
 			logger.info("vo.getEmail2={}",vo.getEmail2());
 		}
+
+		
+		if(vo.getHp2() == null ||vo.getHp2().isEmpty() || vo.getHp3() == null ||vo.getHp3().isEmpty()) {
+			vo.setHp1("");
+			vo.setHp2("");
+			vo.setHp3("");
+		}
+		if(vo.getEmail1()==null ||vo.getEmail1().isEmpty()) {
+			vo.setEmail1("");
+			vo.setEmail2("");
+		}
+
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList
 		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PD_IMAGE);

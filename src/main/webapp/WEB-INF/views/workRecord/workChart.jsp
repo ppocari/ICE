@@ -21,11 +21,7 @@
 	}
 	
 
-	/*바 차트*/
-	div#chartdiv2 {
-	    margin-left: 50%;
-	    margin-top: -25%;
-	}
+
 	
 
 	/*툴팁*/

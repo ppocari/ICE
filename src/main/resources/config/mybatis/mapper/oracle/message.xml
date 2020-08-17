@@ -23,14 +23,21 @@
 		select * from message_view
 		where sendmemno = #{sendMemNo}
 		and msgstatus != 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
 		order by msgregdate	desc
-		
 	</select>
 	
 	<select id="msgRecList" parameterType="messageVO" resultType="messageVO">
 		select * from message_view
 		where recmemno = #{recMemNo}
 		and msgstatus != 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
 		order by msgregdate desc
 	</select>
 	
@@ -62,10 +69,15 @@
 		where msgno = #{msgNo}
 	</delete>
 	
-	<select id="selectMsgTrash" parameterType="String" resultType="messageVO">
+	<select id="selectMsgTrash" parameterType="messageVO" resultType="messageVO">
 		select * from message_view
 		where recmemno = #{recMemNo}
-		and msgstatus = 'D' 
+		and msgstatus = 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if> 
+        order by msgregdate desc
 	</select>
 	
 	<select id="selectUnRead" parameterType="String" resultType="int">
@@ -79,6 +91,40 @@
 		where recmemno = #{recMemNo}
 		and msgstatus = 'N'
 		order by msgregdate desc
+	</select>
+	
+
+	<select id="selectTotalMsgRecord" parameterType="MessageVO"
+		resultType="int">
+		select count(*) from message_view
+		where recmemno = #{recMemNo}
+		and msgstatus = 'D'
+        <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
+	</select>
+	
+	<select id="selectTotalMsgSendRecord" parameterType="MessageVO"
+		resultType="int">
+		select count(*) from message_view
+		where sendmemno = #{sendMemNo}
+		and msgstatus != 'D'
+        <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
+	</select>
+	
+	<select id="selectTotalMsgRecRecord" parameterType="MessageVO"
+		resultType="int">
+		select count(*) from message_view
+		where recmemno = #{recMemNo}
+		and msgstatus != 'D'
+        <if test="searchKeyword!=null and searchKeyword !=''">
+        	and ${searchCondition} like '%' 
+        			|| #{searchKeyword} || '%'
+        </if>
 	</select>
 </mapper>
  

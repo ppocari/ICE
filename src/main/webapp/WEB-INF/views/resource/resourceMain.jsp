@@ -327,13 +327,13 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<header>
-			<h3>
-				자원관리<span></span>
-			</h3>
-		</header>
+	
+			<div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h1 class="h3 mb-0 text-gray-800">자원관리</h1>
+			</div>
+		
 		<div class="col-xl-7 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style="height: 400px;">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원목록</h6>
 					<div style="float: right">
@@ -415,7 +415,7 @@ article{
 		</div>
 		
 		<div class="col-xl-4 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style=" height: 400px" >
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>

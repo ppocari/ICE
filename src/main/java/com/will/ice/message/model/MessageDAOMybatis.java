@@ -66,8 +66,8 @@ public class MessageDAOMybatis implements MessageDAO{
 	}
 
 	@Override
-	public List<MessageVO> selectMsgTrash(String recMemNo) {
-		return sqlsession.selectList(namespace+"selectMsgTrash", recMemNo);
+	public List<MessageVO> selectMsgTrash(MessageVO msgVO) {
+		return sqlsession.selectList(namespace+"selectMsgTrash", msgVO);
 	}
 
 	@Override
@@ -83,6 +83,21 @@ public class MessageDAOMybatis implements MessageDAO{
 	@Override
 	public List<MessageVO> msgRecListOnlyN(MessageVO msgVO) {
 		return sqlsession.selectList(namespace+"msgRecListOnlyN", msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgRecord(MessageVO msgVO) {
+		return sqlsession.selectOne(namespace+"selectTotalMsgRecord", msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgSendRecord(MessageVO msgVO) {
+		return sqlsession.selectOne(namespace+"selectTotalMsgSendRecord", msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgRecRecord(MessageVO msgVO) {
+		return sqlsession.selectOne(namespace+"selectTotalMsgRecRecord", msgVO);
 	}
 
 	

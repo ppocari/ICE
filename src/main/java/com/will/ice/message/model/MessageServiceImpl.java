@@ -110,8 +110,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageVO> selectMsgTrash(String recMemNo) {
-		return msgDao.selectMsgTrash(recMemNo);
+	public List<MessageVO> selectMsgTrash(MessageVO msgVO) {
+		return msgDao.selectMsgTrash(msgVO);
 	}
 
 	@Override
@@ -141,6 +141,21 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public List<MessageVO> msgRecListOnlyN(MessageVO msgVO) {
 		return msgDao.msgRecListOnlyN(msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgRecord(MessageVO msgVO) {
+		return msgDao.selectTotalMsgRecord(msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgSendRecord(MessageVO msgVO) {
+		return msgDao.selectTotalMsgSendRecord(msgVO);
+	}
+
+	@Override
+	public int selectTotalMsgRecRecord(MessageVO msgVO) {
+		return msgDao.selectTotalMsgRecRecord(msgVO);
 	}
 
 	

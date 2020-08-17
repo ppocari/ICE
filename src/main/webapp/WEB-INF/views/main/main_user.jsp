@@ -137,30 +137,58 @@
 		</div>
 
 
-            <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
+          <div class="row">
+			<div class="col-lg-8 col-lg-5">
+
+
+              <!-- Project Card Example -->
               <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
 
-                 <div class="dropdown no-arrow">
-                    <%@include file="../workRecord/chartSearch.jsp"%>
-                  </div> 
-
+               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">미결 문서
+                  	<c:if test="${!empty paylist}">
+                  		<strong style="color: red;">${paySize }</strong>
+                  	</c:if>
+                  </h6>
+                  <div class="dropdown no-arrow">
+                   <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                   </a>
+                   <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                     <a class="dropdown-item" href="<c:url value='/payment/confirm/undecided.do'/>">더보기</a>
+                   </div>
+                 </div>
                 </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-					<%@include file="../workRecord/chartView.jsp"%>
-                  </div>
+                 
+                <div class="card-body" style="height: 300px;">
+                  <table id="UDpayTable" class="table table-hover">
+					<tbody>
+					<!-- 반복 시작 -->
+						<c:if test="${!empty paylist }">
+							<c:forEach var="payVo" items="${paylist }">
+								<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+									<td width="30%;">[${payVo.typeName}] ${payVo.name}</td>
+									<td>${payVo.title}</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty paylist }">
+							<tr>
+								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+							</tr>
+						</c:if>
+						<!-- 반복 끝 -->
+					</tbody>
+				</table>
                 </div>
               </div>
+
             </div>
+            
 
 
             <!-- 공지사항 -->
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-4 col-lg-4">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
@@ -225,130 +253,12 @@
             </div>
           </div>
 
-	<div class="row">
 
-		<!-- Area Chart -->
-		<div class="col-xl-8 col-lg-7">
-			<div class="card shadow mb-4">
-				<!-- Card Header - Dropdown -->
-				<div
-					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">Earnings
-						Overview</h6>
-					<div class="dropdown no-arrow">
-						<%@include file="../workRecord/chartSearch.jsp"%>
-					</div>
-				</div>
-				<!-- Card Body -->
-				<div class="card-body">
-					<div class="chart-area">
-						<%@include file="../workRecord/chartView.jsp"%>
-					</div>
-				</div>
-			</div>
-		</div>
+         
+        </div>
+        <!-- /.container-fluid -->
 
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">미결 문서
-                  	<c:if test="${!empty paylist}">
-                  		<strong style="color: red;">${paySize }</strong>
-                  	</c:if>
-                  </h6>
-                  <div class="dropdown no-arrow">
-                   <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                   </a>
-                   <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                     <a class="dropdown-item" href="<c:url value='/payment/confirm/undecided.do'/>">더보기</a>
-                   </div>
-                 </div>
-                </div>
-
-                <div class="card-body" style="height: 300px;">
-                  <table id="UDpayTable" class="table table-hover">
-					<tbody>
-					<!-- 반복 시작 -->
-						<c:if test="${!empty paylist }">
-							<c:forEach var="payVo" items="${paylist }">
-								<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1060,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
-									<td width="30%;">[${payVo.typeName}] ${payVo.name}</td>
-									<td>${payVo.title}</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-						<c:if test="${empty paylist }"></c:if>
-							<tr>
-								<th width="20%;">문서종류</th>
-								<th width="20%;">작성자</th>
-								<th>제목</th>
-							</tr>
-						</thead>
-						<tbody>
-							<!-- 반복 시작 -->
-							<c:if test="${!empty list }">
-								<c:forEach var="vo" items="${list }">
-									<tr
-										onclick="window.open('../payment/docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
-										<td>${vo.typeName }</td>
-										<td>${vo.name }</td>
-										<td>${vo.title }</td>
-									</tr>
-								</c:forEach>
-							</c:if>
-							<c:if test="${empty list }">
-								<tr>
-									<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
-								</tr>
-							</c:if>
-							<!-- 반복 끝 -->
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-            </div>
-
-		<div class="col-lg-6 mb-4">
-
-              <!-- 사내게시판 -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">인기 게시글</h6>
-                </div>
-                <div class="card-body" style="height: 300px;">
-                  <div class="text-left">
-                  	<table id="boardTable" class="table table-hover">
-					<tbody>
-					<!-- 반복 시작 -->
-						<c:if test="${!empty boardList }">
-							<c:forEach var="boardVo" items="${boardList }">
-								<tr onclick="location.href='<c:url value="/board/boardCountUpdate.do?boardNo=${boardVo.boardNo }"/>'">
-									<td width="25%;">${boardVo.nickname }</td>
-									<td>${boardVo.title }</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-						<c:if test="${empty boardList }">
-							<tr>
-								<td colspan="6" style="text-align: center;">게시글이 존재하지 않습니다</td>
-							</tr>
-						</c:if>
-						<!-- 반복 끝 -->
-					</tbody>
-				</table>
-                  </div>
-                </div>
-              </div>
-
-		</div>
-	</div>
-
-</div>
-<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->
+      
+      <!-- End of Main Content -->
 
 <%@ include file="../inc/bottom.jsp"%>

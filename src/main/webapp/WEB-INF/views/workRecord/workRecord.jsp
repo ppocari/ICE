@@ -98,7 +98,10 @@
 				var cmpRegdate = item.cmpRegdate;
 				var cmpIn = item.cmpIn;
 				var cmpOut = item.cmpOut;
-				var cmpStatus = item.cmpStatus;
+				var cmpStatus = item.cmpStatus;				
+				if(cmpOut == null){
+					cmpOut = "미체크";
+				}	
 				
 		
 				
