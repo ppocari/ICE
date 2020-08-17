@@ -13,4 +13,5 @@ public interface BoardDAO {
 	public int deleteBoard(int boardNo);
 	public int updateBoard(BoardVO vo);
 	public int updateVisited(int boardNo);
+	List<BoardVO> selectMain();
 }

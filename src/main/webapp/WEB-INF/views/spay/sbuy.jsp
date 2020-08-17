@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -74,9 +75,7 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">식권구매</h1>
 
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+		
 	</div>
 
 	<!-- Content Row -->

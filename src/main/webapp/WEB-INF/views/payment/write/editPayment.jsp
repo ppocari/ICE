@@ -28,18 +28,20 @@
 				}
 			});
 		});
+		
+		window.resizeTo(1000, 1000);
 	});
 </script>
 </head>
 <body style="overflow-x: hidden">
-	<div class="row" style="padding-left: 15px;">
+	<div class="row">
 	<!-- Area Chart -->
 	<div class="col-xl-12 ">
-		<div class="card shadow mb-4" style="height:fit-content;width: 99%;">
+		<div class="card shadow mb-4" style="height:fit-content;     margin: 30px;">
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 				<h6 class="m-0 font-weight-bold text-primary">기안 이어쓰기</h6>
 			</div>
-			<div style="width: 98%;margin-left: 1%;">
+			<div style="padding: 0px 30px;">
 				<form name="editpayInfoFrm" method="post" style="color: black;height:1100px;" enctype="multipart/form-data">
 					<label for="docNo" id="editlabel1">문서 번호</label> 
 					<input type="text" class="form-control" id="editdocNo"
@@ -126,22 +128,24 @@
 							첨부된 파일이 없습니다.
 						</span>
 						</c:if>
-					<select class="form-control" id="edittypeNo" name="typeNo"
-						style="width: 200px;">
-						<!-- 반복 시작 -->
-						<c:forEach var="doctypeVo" items="${doctypelist }">
-							<option value="${doctypeVo.typeNo}"
-								<c:if test="${payVo.typeNo==doctypeVo.typeNo }">
-									selected="selected"
-								</c:if>
-							>${doctypeVo.typeName}</option>
-						</c:forEach>
-						<!-- 반복 끝 -->
-					</select>
-					<button type="submit" class="btn btn-primary" id="editsaveBt"
-						formaction="<c:url value='/payment/write/imsyEdit.do'/>">임시저장</button>
-					<button type="submit" class="btn btn-primary" id="editsendBt"
-						formaction="<c:url value='/payment/write/editPaydoc.do'/>">결재상신</button>
+						<div style="margin-right: 30px">
+							<select class="form-control" id="edittypeNo" name="typeNo"
+								style="width: 150px;">
+								<!-- 반복 시작 -->
+								<c:forEach var="doctypeVo" items="${doctypelist }">
+									<option value="${doctypeVo.typeNo}"
+										<c:if test="${payVo.typeNo==doctypeVo.typeNo }">
+											selected="selected"
+										</c:if>
+									>${doctypeVo.typeName}</option>
+								</c:forEach>
+								<!-- 반복 끝 -->
+							</select>
+							<button type="submit" class="btn btn-primary" id="editsaveBt"
+								formaction="<c:url value='/payment/write/imsyEdit.do'/>">임시저장</button>
+							<button type="submit" class="btn btn-primary" id="editsendBt"
+								formaction="<c:url value='/payment/write/editPaydoc.do'/>" >결재상신</button>
+					</div>
 				</form>
 				</div>
 			</div>

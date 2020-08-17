@@ -2,7 +2,9 @@ package com.will.ice.resource.model;
 
 public class ResReserveSearchVO {
 	/** 검색조건 */
-	private String searchKeyword = "";
+	private String rvState = "";
+	
+	private int searchNumber=0;
 	
 	/** 현재 페이지 */
 	private int currentPage = 1;
@@ -22,12 +24,21 @@ public class ResReserveSearchVO {
     /* 예약 처리 시 승인인지 거절인지 구분 */
     private String mode;
     
-	public String getSearchKeyword() {
-		return searchKeyword;
+	public String getRvState() {
+		return rvState;
 	}
 
-	public void setSearchKeyword(String searchKeyword) {
-		this.searchKeyword = searchKeyword;
+	public void setRvState(String rvState) {
+		this.rvState = rvState;
+	}
+	
+
+	public int getSearchNumber() {
+		return searchNumber;
+	}
+
+	public void setSearchNumber(int searchNumber) {
+		this.searchNumber = searchNumber;
 	}
 
 	public int getCurrentPage() {
@@ -80,10 +91,12 @@ public class ResReserveSearchVO {
 
 	@Override
 	public String toString() {
-		return "ResReserveSearchVO [searchKeyword=" + searchKeyword + ", currentPage=" + currentPage + ", blockSize="
-				+ blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
-				+ ", recordCountPerPage=" + recordCountPerPage + ", mode=" + mode + "]";
+		return "ResReserveSearchVO [rvState=" + rvState + ", searchNumber=" + searchNumber + ", currentPage="
+				+ currentPage + ", blockSize=" + blockSize + ", firstRecordIndex=" + firstRecordIndex
+				+ ", lastRecordIndex=" + lastRecordIndex + ", recordCountPerPage=" + recordCountPerPage + ", mode="
+				+ mode + "]";
 	}
 
-    
+
+	
 }
