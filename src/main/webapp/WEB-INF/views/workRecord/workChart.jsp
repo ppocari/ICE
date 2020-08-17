@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/inc/top.do"/> 
 <!-- jqplot cdn -->	
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>	
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.barRenderer.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pieRenderer.js"></script>	
@@ -19,12 +20,14 @@
 		color: white;
 	}
 	
+
 	/*바 차트*/
 	div#chartdiv2 {
 	    margin-left: 50%;
 	    margin-top: -25%;
 	}
 	
+
 	/*툴팁*/
 	table.jqplot-table-legend{
 		width: 30%;
@@ -134,8 +137,8 @@
  					</div>
 				<!-- 통계 API -->
 				<div id="ChartDiv">
-					<div id="chartdiv1" style="height:100%; width:40%; "></div>	
-					<div id="chartdiv2" style="height:400px; width:40%; position: absolute;"></div>	
+					<div id="chartdiv1" style="height:100%; width:40%; float: left; margin-left: 5%;"></div>	
+					<div id="chartdiv2" style="height:400px; width:40%; float: left; margin-left: 5%;"></div>	
 				</div>
 				
 				
