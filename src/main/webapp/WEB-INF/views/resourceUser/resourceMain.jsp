@@ -240,11 +240,6 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<header>
-			<h3>
-				자원관리<span></span>
-			</h3>
-		</header>
 		<div class="col-xl-7 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

@@ -170,7 +170,7 @@ $(function(){
 /* 목록 수정 */
 function resEdit(resNo) {
 	window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-	'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+	'width=600, height=600, left=800, top=200, location=yes, resizable=yes');
 	
 }
 

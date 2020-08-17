@@ -255,9 +255,11 @@ public class ResourceController {
 		logger.info("자원 관리 삭제, rmVo={}, rvWaitCount={}", rmVo, rvWaitCount);
 		
 		//승인 대기 중인 예약이 있다면 거절 메시지와 함께 거절 처리함.
-		int updateRvCount= service.updateReserveBecauseResDelete(rvWaitCount);
-		if(updateRvCount>0) {
-			logger.info("자원 삭제 시, 승인 대기 중인 예약을 거절 사유와 함께 거절 처리함!");
+		if(rvWaitCount > 0) {
+			int updateRvCount= service.updateReserveBecauseResDelete(rmVo.getResNo());
+			if(updateRvCount>0) {
+				logger.info("자원 삭제 시, 승인 대기 중인 예약을 거절 사유와 함께 거절 처리함!");
+			}
 		}
 		
 		int deleteCnt=service.updateManageDel(rmVo.getResNo());
