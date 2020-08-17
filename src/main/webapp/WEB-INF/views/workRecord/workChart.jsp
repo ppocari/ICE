@@ -45,12 +45,12 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">근태관리 통계</h1>
 	</div>
-	<div><span id="name">${userName}님</span></div>
+
 	<!-- Content Row -->
 	<div class="row">
 		<!-- Area Chart -->
-		<div class="col-xl-12">
-			<div class="card shadow mb-4" style="fit-content">
+		<div class="col-xl-11">
+			<div class="card shadow mb-4" style="fit-content;height: fit-content;height: 550px;">
 				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">월별 확인 - 그래프</h5>
@@ -151,19 +151,15 @@
 	</div>
 </div>
 
-<!-- Begin Page Content -->
+<!-- 
 <div class="container-fluid">
-	<!-- Content Row -->
 	<div class="row">
-		<!-- Area Chart -->
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="fit-content;">
-				<!-- 근태관리 조회 -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">월별 확인 - 테이블</h5>
 					<input type="submit" class="btn btn-primary" id="btTable" value="테이블 보기">
 				</div>
-				<!-- 조회시 테이블 생성 -->
 				<div id="table" style="height: 300px; overflow:auto;">
 					<div id="ajaxTable"></div>
 				</div>
@@ -171,6 +167,7 @@
 		</div>
 	</div>
 </div>
+ -->
 <script>	
 //테이블 데이터 
 function makeList(xmlStr){
@@ -178,7 +175,7 @@ function makeList(xmlStr){
 			str += "<tr style='background:gray; color:white;'><th>오늘날짜</th>";
 			str += "<th>출근시간</th>";
 			str += "<th>퇴근시간</th>";
-			str += "<th>근무상태</th></tr>";
+			str += "<th>근무시간</th></tr>";
 			
 		if(xmlStr==''){
 			str += "<tr><td colspan='4' style='text_align:center'>해당 날짜에 근태 기록이 없습니다.</td></tr>";
@@ -197,7 +194,7 @@ function makeList(xmlStr){
 				str += "<td>"+cmpRegdate+"</td>";
 				str += "<td>"+cmpIn+"</td>";			
 				str += "<td>"+cmpOut+"</td>";	
-				if(cmpStatus == '지각'){
+				/*if(cmpStatus == '지각'){
 					str += "<td style='color:red';>"+cmpStatus+"</td>";			
 				}
 				if(cmpStatus == '반차'){
@@ -208,7 +205,8 @@ function makeList(xmlStr){
 				}
 				if(cmpStatus == '퇴근'){
 					str += "<td>"+cmpStatus+"</td>";			
-				}
+				}*/
+				str += "<td>"+(cmpOut-cmpIn)+"</td>"; 	
 				str += "</tr>"; 	
 			});
 			
