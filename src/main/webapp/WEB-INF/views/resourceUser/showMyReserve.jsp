@@ -5,37 +5,11 @@
 
 <link rel="stylesheet" type="text/css" 
 	href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <script type="text/javascript">
-$(function(){
-	/* highlight */
-	$("#tableForm tr:gt(0)").hover(function(event) {
-		$(this).addClass("highlight");
-	}, function(event) {
-		$(this).removeClass("highlight");
-	});
-	
-}); //전체 function()
-
 function pageProc(curPage){
 	$('input[name=currentPage]').val(curPage);
 	$('form[name=frmPage]').submit();
 }
-
-/* 신청 처리 */
-function handleReserve(rvNo, mode) {
-	if(mode == 'no') {
-	var message = prompt("예약신청 거절의 이유를 적어주세요.");
-		if(message!=null){
-			location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"&message="+message+"'/>";
-		}
-	}else if(mode == 'yes') {
-		location.href="<c:url value='/resource/handleReserve.do?rvNo="+rvNo+"&mode="+mode+"'/>";
-	}
-}
-
 </script>
 
 <style type="text/css">
@@ -56,6 +30,7 @@ article > div {
 #RESbottom{
 	clear:both;
 }
+
 
 button{
 	border: 1px solid lightgray;
@@ -125,24 +100,180 @@ article{
 	.orderImgHide{
 		visibility:hidden;
 	}
+	
+	/* addReserve에서 가져옴 */
+	body {
+  	text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+  }
+
+	.calendar_back{
+		background: white;
+		float:left;
+		text-align: center;
+	}
+	
+    .fc-day-top.fc-sat.fc-past { color:#0000FF; }     	/* 토요일 */
+    .fc-highlight { color:#0000FF; }     				/* 토요일 */
+	td.fc-day-top.fc-sat.fc-future { color: blue;}		/* 토요일 */
+    
+    td.fc-day-top.fc-sun.fc-past { color: red;}			/* 일요일 */
+    td.fc-day-top.fc-sun.fc-future { color: red;}		/* 일요일 */
+    
+    .fc-title {		/*이벤트 폰트 컬러 변경*/
+	    color: white;
+	}
+	
+	.msgbox{
+		position: absolute;
+	    left: -10%;
+    	top: 10%;
+	    z-index: 5000;
+	    background: white;
+	    border: 1px solid gray;
+	}
+	
+	.head {
+	    color: #fff;
+	    border-bottom: 1px solid #f2f2f2;
+	    background-color: #464646;
+	}
+	
+	/*일정쓰기*/
+	div#writeModal {
+	    line-height: 30px;
+	}
+	
+	/*일정확인*/
+	div#modal {
+	    width: 20%;
+	    height: 35%;
+	}
+	
+	div#modal_button {
+	    margin-top: 64%;
+	    margin-left: 15%;
+	}
+	
+	#modal_button button {
+	    width: 80px;
+	}
+	
+	div#modal-title {
+	    font-size: 2em;
+	}
+	
+	.fc-content {
+	    color: black;
+	}
+	
+	#calendar{
+		width: 500px;
+		display: inline-block;
+		border: 1px solid lightgray;
+	}
+	
+	#resDetailDiv {
+		text-align:center;
+		margin: 20px;
+	}
+	
+	.fc-license-message{
+		visibility: hidden;
+	}
+	
+	#spanResImage{
+		width:250px; 
+		height:250px; 
+		border: 1px solid lightgray;
+	}
+	
+	#RESbottom{
+	clear:both;
+}
+
+article > div {
+	float:left;
+}
+
+.la_left  {
+	clear:both;
+	float: left;
+	width: 35%;
+	text-align: right;
+	padding: 3px 15px 0 0;
+	font-weight: bold;
+}
+
+.fl{
+	float:left;
+}
+
+#spanSubdesc{
+	text-align: left;
+	width: 200px;
+}
+
+.infobox{
+	width: 120px;
+	font-size: 0.9em;
+}
 </style>
 
 <section>
 	<article>
 	<!-- post방식으로 페이징 처리 -->
-	<form action="<c:url value='/resource/manageReserve.do'/>" 
-		name="frmPage" method="post">
+	<form action="<c:url value='/resourceUser/showMyReserve.do'/>" name="frmPage" method="post">
+		<!-- 내 전체 이용 현황  -->
 		<input type="hidden" name="currentPage">
+		<input type="hidden" name="rsState" 
+			value="${param.rsState}">	
 	</form>
 		<header>
 			<h3>
-				예약처리<span></span>
+				나의 자원 이용현황<span></span>
 			</h3>
 		</header>
+		<!-- 내 예약 현황 -->
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">예약신청목록</h6>
+					<h6 class="m-0 font-weight-bold text-primary">예약 신청 전체 현황</h6>
+					<div style="text-align: right;">
+						<span>상태</span>
+						<form name="frmSearch" method="post" action='<c:url value="/resourceUser/showMyReserve.do"/>'>
+							<select name="rvState">
+								<option value="" 
+									<c:if test="${param.rvState=='' }">
+					            		selected="selected"
+					            	</c:if>
+								>전체</option>
+								<option value="wait"
+									<c:if test="${param.rvState=='wait' }">
+					            		selected="selected"
+					            	</c:if>
+								>승인대기</option>
+								<option value="yes"
+									<c:if test="${param.rvState=='yes' }">
+		            					selected="selected"
+		            				</c:if>
+								>승인</option>
+								<option value="no"
+									<c:if test="${param.rvState=='no' }">
+					            		selected="selected"
+					            	</c:if>
+								>거절</option>
+							</select>
+							<input type="submit" value="검색">
+						</form>
+					</div>
 				</div>
 				<div id="tableDivForm">
 					<table id="tableForm">
@@ -155,27 +286,25 @@ article{
 								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
 								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
 							</th>
-							<th>이용예약시간</th>
-							<th>신청부서
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청자
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>승인</th>
-							<th>거절</th>
+							<th>신청시간</th>
+							<th>상태</th>
 						</tr>
-						<c:forEach var="rs" items="${rsList }">
+						<c:forEach var="rs" items="${allList }">
 							<tr>
 								<td class="goDetail" id="${rs.resNo }">${rs.resName }</td>
 								<td>${rs.rkKind }</td>
 								<td>${rs.startDate } ${rs.startHour } ~ ${rs.endDate } ${rs.endHour }</td>
-								<td>${rs.deptName }</td>
-								<td>${rs.name}</td>
-								<td><button onclick="handleReserve(${rs.rvNo}, 'yes')">승인</button></td>
-								<td><button onclick="handleReserve(${rs.rvNo }, 'no')">거절</button></td>
+								<td>
+									<c:if test="${rs.rvState == 'wait' }">
+										대기
+									</c:if>
+									<c:if test="${rs.rvState == 'yes' }">
+										승인
+									</c:if>
+									<c:if test="${rs.rvState == 'no' }">
+										거절
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -213,6 +342,8 @@ article{
 				</div>
 			</div>
 		</div>
+		
+		
 	</article>
 </section>
 

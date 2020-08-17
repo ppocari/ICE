@@ -14,6 +14,7 @@ public class ResManageVO {
 	private String resLocation;
 
 	private String resSubdesc;
+	private String resColor;
 	private Timestamp resRegdate;
 	private String resState;
 	private String resIsDel;
@@ -78,6 +79,13 @@ public class ResManageVO {
 	public void setResSubdesc(String resSubdesc) {
 		this.resSubdesc = resSubdesc;
 	}
+	
+	public String getResColor() {
+		return resColor;
+	}
+	public void setResColor(String resColor) {
+		this.resColor = resColor;
+	}
 	public Timestamp getResRegdate() {
 		return resRegdate;
 	}
@@ -97,14 +105,14 @@ public class ResManageVO {
 		this.resIsDel = resIsDel;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "ResManageVO [resNo=" + resNo + ", resName=" + resName + ", resImage=" + resImage + ", resSize="
 				+ resSize + ", resOriginalImage=" + resOriginalImage + ", rkNo=" + rkNo + ", rkKind=" + rkKind
-				+ ", resLocation=" + resLocation + ", resSubdesc=" + resSubdesc + ", resRegdate=" + resRegdate
-				+ ", resState=" + resState + ", resIsDel=" + resIsDel + "]";
 
+				+ ", resLocation=" + resLocation + ", resSubdesc=" + resSubdesc + ", resColor=" + resColor
+				+ ", resRegdate=" + resRegdate + ", resState=" + resState + ", resIsDel=" + resIsDel + "]";
 	}
+	
 	
 }

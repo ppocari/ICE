@@ -8,16 +8,16 @@ values(rkno_seq.nextval, '차량');
 
 select * from resmanage;
 
-insert into resmanage(resno, resname, rkno, reslocation)
-values(resno_seq.nextval, '회의실1', 1, '4층 A동');
-insert into resmanage(resno, resname, rkno, reslocation)
-values(resno_seq.nextval, '회의실2', 1, '4층 B동');
-insert into resmanage(resno, resname, rkno, reslocation)
-values(resno_seq.nextval, '회의실3', 1, '2층 본관');
-insert into resmanage(resno, resname, rkno, reslocation)
-values(resno_seq.nextval, '제네시스 G80', 2, '주차장A');
-insert into resmanage(resno, resname, rkno, reslocation)
-values(resno_seq.nextval, '아반떼', 2, '주차장B');
+insert into resmanage(resno, resname, rkno, reslocation, rescolor)
+values(resno_seq.nextval, '회의실1', 1, '4층 A동', 'red');
+insert into resmanage(resno, resname, rkno, reslocation, rescolor)
+values(resno_seq.nextval, '회의실2', 1, '4층 B동', 'green');
+insert into resmanage(resno, resname, rkno, reslocation, rescolor)
+values(resno_seq.nextval, '회의실3', 1, '2층 본관', 'orange');
+insert into resmanage(resno, resname, rkno, reslocation, rescolor)
+values(resno_seq.nextval, '제네시스 G80', 2, '주차장A', 'lightgray');
+insert into resmanage(resno, resname, rkno, reslocation, rescolor)
+values(resno_seq.nextval, '아반떼', 2, '주차장B', 'violet');
 
 -- resSubdesc -> 수정 페이지에서 자원설명에 붙여서 등록할 것.
 -- resImage -> /webapp/resources/img/resource 파일에 있는 이미지를 활용할 것. 
