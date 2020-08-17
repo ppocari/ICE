@@ -25,30 +25,30 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$("input[name=comEditBt]").click(function(){
+	$("input[name=comEditBt]").click(function(){ 
 		if($(this).parent().next().css('display','none')){
 			$(this).parent().next().css('display','inline-block');
 		}
 	});
-
+	
 	$('form[name=writeCommentForm]').submit(function() {
-
+		
 		if ($('#writeCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#writeCon').focus();
 			event.preventDefault();
 		}
 	});
-
+	
 	$('form[name=editCommentForm]').submit(function() {
-
+		
 		if ($('#editCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#editCon').focus();
 			event.preventDefault();
 		}
 	});
-});
+});	
 function del(noticeNo) {
 	var chk = confirm("정말 삭제하시겠습니까?");
 	if(chk) {
@@ -74,53 +74,47 @@ function del(noticeNo) {
 						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 					</a>
 				</div>
-
+				
 				<br>
 				<div class="card-body">
 					<div>
 						<div style=float:left;>
 							<span style="font-size: 25px; display: inline-block; text-align: left; vertical-align: middle;">
-								[${vo.category}] ${vo.title }</span>
+								[${vo.category}] ${vo.title }</span> 
 						</div>
 						<div style="float:right;margin-top: 10px;">
 							<span style="font-size: 14px; display: inline-block; text-align: left; vertical-align: middle;">
 									관리자</span>
-							</a><br>
-							<span style="vertical-algin:middle; opacity:.4;">
-								<fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd-HH:mm"/>
-							</span>
-							<span style="vertical-algin:middle; opacity:.4;">
-								| ${vo.readcount} 읽음
-							</span>
-						</p>
-						<span class="sp1" style="font-size:12px;">첨부파일</span>
-						<span style="font-size:12px;">
-							<a href
-				="<c:url value='/notice/download.do?noticeNo=${vo.noticeNo}&fileName=${vo.fileName}'/>">
-							${fileInfo}
-							</a>
-						</span>
-						<span style="color:blue; font-size:12px;">${downInfo}</span>
-					<br><hr>
+							<span style="vertical-algin: middle; opacity: .4;">
+								<fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd-HH:mm" />
+							</span> <span style="vertical-algin: middle; opacity: .4;"> |
+								${vo.readcount} 읽음 </span>
+						</div>
+					</div>
+					<div>
+						<hr style="margin-top: 50px;">
+					</div>
 
-					<p class="content">
-						<% pageContext.setAttribute("newLine", "\r\n"); %>
+					<div class="content">
+						<%
+							pageContext.setAttribute("newLine", "\r\n");
+						%>
 						${fn:replace(vo.content, newLine, '<br>')}
 					</div>
 				</div>
 				<!-- 첨부파일 -->
 				<c:if test="${!empty vo.fileName}">
 					<div style=" margin: 10px; margin-left: 30px;">
-						<span class="sp1" style="font-size: 12px;">첨부파일</span>
-							<span style="font-size: 12px;">
+						<span class="sp1" style="font-size: 12px;">첨부파일</span> 
+							<span style="font-size: 12px;"> 
 								<a href="<c:url value='/notice/download.do?noticeNo=${vo.noticeNo}&fileName=${vo.fileName}'/>">	${fileInfo} </a>
-							</span>
+							</span> 
 						<span style="color: blue; font-size: 12px;">${downInfo}</span> <br>
 					</div>
 				</c:if>
 				<c:if test="${empty vo.fileName}"></c:if>
 
-				<div style="margin-left: auto;background-color: white;"
+				<div style="margin-left: auto;background-color: white;" 
 					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<c:if test="${sessionScope.identNum == vo.memNo }">
 						<a
@@ -143,12 +137,12 @@ function del(noticeNo) {
 						<c:forEach var="comment" items="${list }">
 							<p> <a href="#"> <span style="font-size: 12px; display: inline-block; text-align: left; vertical-align: middle;">
 										${comment.name} </span>
-								</a>
+								</a> 
 								<span style="font-size: 13px; display: inline-block; text-align: left; vertical-align: middle;">
 									${comment.content} </span>
 									 <span style="vertical-algin: middle; opacity: .4; font-size: 11px;">
 									<fmt:formatDate value="${comment.regdate}"
-										pattern="yyyy-MM-dd-HH:mm" />
+										pattern="yyyy-MM-dd-HH:mm" /> 
 										<c:if test="${sessionScope.identNum == comment.memNo }">
 										<form name="DeleteCommentForm" method="post"
 											action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">

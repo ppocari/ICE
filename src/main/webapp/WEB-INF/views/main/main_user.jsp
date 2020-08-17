@@ -276,7 +276,7 @@
 								</tr>
 							</c:forEach>
 						</c:if>
-						<c:if test="${empty paylist }">
+						<c:if test="${empty paylist }"></c:if>
 							<tr>
 								<th width="20%;">문서종류</th>
 								<th width="20%;">작성자</th>
