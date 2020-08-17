@@ -113,6 +113,15 @@ article{
 	.orderImgHide{
 		visibility:hidden;
 	}
+	
+form[name=frmSearch] * {
+	font-size: 0.8em;
+	border: 1px solid lightgray;
+}
+
+select[name=rvState] {
+	height:28px;
+}
 </style>
 
 <section>
@@ -124,18 +133,11 @@ article{
 			<input type="hidden" name="rvState" 
 				value="${param.rvState}">	
 		</form>
-		
-		<header>
-			<h3>
-				이용현황 > 전체 <span></span>
-			</h3>
-		</header>
 		<div class="col-xl-12 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원이용현황</h6>
-					<div style="text-align: right;">
-						<span>상태</span>
+					<div style="text-align: right">
 						<form name="frmSearch" method="post" action='<c:url value="/resource/historyReserveMain.do"/>'>
 							<select name="rvState">
 								<option value="" 
@@ -161,23 +163,11 @@ article{
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>자원명</th>
+							<th>종류</th>
 							<th>이용시간</th>
-							<th>이용부서
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청자
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>이용부서</th>
+							<th>신청자</th>
 							<th>상태</th>
 						</tr>
 						<c:forEach var="rs" items="${rsList }">

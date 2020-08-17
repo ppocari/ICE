@@ -168,4 +168,9 @@ public class ResourceDAOMybatis implements ResourceDAO {
 		return sqlSession.update(namespace+"updateReserveBecauseResDelete", resNo);
 	}
 
+	@Override
+	public List<ResManageVO> selectResManageAll() {
+		return sqlSession.selectList(namespace+"selectResManageAll");
+	}
+
 }

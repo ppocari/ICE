@@ -161,7 +161,6 @@ h6{
 									<a href="<c:url value='/address/addressMain.do?searchCondition=favorite'/>">즐겨찾기</a>
 								</span>
 							<div id="divRight">
-								<input type="button" id="btEdit" value="설정">
 								<input type="button" id="btTrash" value="휴지통">
 							</div>
 							</div>
