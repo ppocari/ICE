@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:import url="/inc/top.do"></c:import>
+<%@ include file="../inc/top.jsp"%>
 
 <style>
 .table td {
@@ -24,17 +21,22 @@
 #noticeBt input[type=button]{
 	margin-right: 3px;
 }
- </style>
+</style>
+
+
+
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	$("input[name=comEditBt]").click(function(){ 
 		if($(this).parent().next().css('display','none')){
 			$(this).parent().next().css('display','inline-block');
 		}
+
 	});	
 		
 	$('form[name=writeCommentForm]').submit(function() {
@@ -53,7 +55,6 @@ $(function(){
 			$('#editCon').focus();
 			event.preventDefault();
 		}
-
 	});
 });	
 function del(noticeNo) {
@@ -70,11 +71,10 @@ function del(noticeNo) {
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 " >
+		<div class="col-xl-7 ">
 			<div class="card shadow mb-4" style="height: fit-content;">
-
 				<!-- Card Header - Dropdown -->
-				
+
 					<input type="hidden" name="noticeNo" value="${param.noticeNo }">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -154,10 +154,13 @@ function del(noticeNo) {
 									<c:if test="${sessionScope.identNum == comment.memNo }">										
 										<form name="DeleteCommentForm" method="post" 
 											action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
-											<input type="button" name="comEditBt" style="font-size: 9px; width: 38px;" class="btn btn-primary btn-sm" value="수정">
-											<button type="submit" id="comDelBt" style="font-size: 9px;" 
-											class="btn btn-primary btn-sm">삭제</button>
+											<input type="button" name="comEditBt"
+												style="font-size: 9px; width: 38px;"
+												class="btn btn-primary btn-sm" value="수정">
+											<button type="submit" id="comDelBt" style="font-size: 9px;"
+												class="btn btn-primary btn-sm">삭제</button>
 										</form>
+
 											
 											<div id="comEdit" style="display:none;">
 												<form name="editCommentForm" method="post" 
@@ -231,14 +234,11 @@ function del(noticeNo) {
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
 
 
 <!-- /.container-fluid -->
@@ -247,5 +247,4 @@ function del(noticeNo) {
 
 <!-- End of Main Content -->
 
-<jsp:include page="../inc/bottom.jsp" />
-
+<%@ include file="../inc/bottom.jsp"%>

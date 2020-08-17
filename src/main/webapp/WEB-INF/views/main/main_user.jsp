@@ -4,58 +4,26 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:import url="/inc/top.do"/>        
+<c:import url="/inc/top.do"/>
 
         <div class="container-fluid">
-		
+
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	     <h1 class="h3 mb-0 text-gray-800">Main</h1>
 
           </div>
 
-          <!-- Content Row -->
-          <div class="row">
+<div class="container-fluid">
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">TODAY</div>
-                      <%
-                      	Date today = new Date();
-                      	SimpleDateFormat sdf_today = new SimpleDateFormat("yyyy년 MM월 dd일");
-                      %>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%=sdf_today.format(today) %></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Main</h1>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                <a href="<c:url value ='/companyCard/comCardList.do'/> " style="text-decoration: none;">
-	                  <div class="row no-gutters align-items-center">
-	                    <div class="col mr-2">
-	                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">법인카드 </div>
-	                      <div class="h5 mb-0 font-weight-bold text-gray-800">조회 바로가기</div>
-	                    </div>
-	                    <div class="col-auto">
-	                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-	                    </div>
-	                  </div>
-                  </a>
-                </div>
-              </div>
-            </div>
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+	</div>
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -111,9 +79,63 @@
             </div>
           </div>
 
-          <!-- Content Row -->
+		<!-- Earnings (Monthly) Card Example -->
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-success shadow h-100 py-2">
+				<div class="card-body">
+					<a href="<c:url value ='/companyCard/comCardList.do'/> "
+						style="text-decoration: none;">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div
+									class="text-xs font-weight-bold text-success text-uppercase mb-1">법인카드
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">조회
+									바로가기</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
 
-          <div class="row">
+		<!-- Earnings (Monthly) Card Example -->
+		<div class="col-xl-3 col-md-6 mb-4">
+			<div class="card border-left-info shadow h-100 py-2">
+				<div class="card-body">
+					<a href="<c:url value='/payment/confirm/undecided.do' />"
+						style="text-decoration: none;">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div
+									class="text-xs font-weight-bold text-info text-uppercase mb-1">결재
+									서류</div>
+								<div class="row no-gutters align-items-center">
+									<div class="col-auto">
+										<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">미결함
+											바로가기</div>
+									</div>
+									<div class="col">
+										<div class="progress progress-sm mr-2">
+											<div class="progress-bar bg-info" role="progressbar"
+												style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+												aria-valuemax="100"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
 
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
@@ -121,9 +143,11 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                  <div class="dropdown no-arrow">
+
+                 <div class="dropdown no-arrow">
                     <%@include file="../workRecord/chartSearch.jsp"%>
-                  </div>
+                  </div> 
+
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -134,13 +158,14 @@
               </div>
             </div>
 
+
             <!-- 공지사항 -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
                 </div>
-                
+
                 <!-- Card Body -->
                 <div class="card-body"  style="height: 385px;overflow: hidden;">
                   <div style="height: 300px;">
@@ -166,7 +191,7 @@
 									</td>
 									<td width="10%">
 										<c:if test="${notiVo.newImgTerm<24 }">
-											<img src="<c:url value='/resources/img/new.gif' />" 
+											<img src="<c:url value='/resources/img/new.gif' />"
 												alt="new이미지">
 										</c:if>
 									</td>
@@ -200,11 +225,28 @@
             </div>
           </div>
 
-          <!-- Content Row -->
-          <div class="row">
+	<div class="row">
 
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
+		<!-- Area Chart -->
+		<div class="col-xl-8 col-lg-7">
+			<div class="card shadow mb-4">
+				<!-- Card Header - Dropdown -->
+				<div
+					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">Earnings
+						Overview</h6>
+					<div class="dropdown no-arrow">
+						<%@include file="../workRecord/chartSearch.jsp"%>
+					</div>
+				</div>
+				<!-- Card Body -->
+				<div class="card-body">
+					<div class="chart-area">
+						<%@include file="../workRecord/chartView.jsp"%>
+					</div>
+				</div>
+			</div>
+		</div>
 
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
@@ -223,7 +265,7 @@
                    </div>
                  </div>
                 </div>
-                 
+
                 <div class="card-body" style="height: 300px;">
                   <table id="UDpayTable" class="table table-hover">
 					<tbody>
@@ -236,20 +278,39 @@
 								</tr>
 							</c:forEach>
 						</c:if>
-						<c:if test="${empty paylist }">
+						<c:if test="${empty paylist }"></c:if>
 							<tr>
-								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+								<th width="20%;">문서종류</th>
+								<th width="20%;">작성자</th>
+								<th>제목</th>
 							</tr>
-						</c:if>
-						<!-- 반복 끝 -->
-					</tbody>
-				</table>
-                </div>
-              </div>
+						</thead>
+						<tbody>
+							<!-- 반복 시작 -->
+							<c:if test="${!empty list }">
+								<c:forEach var="vo" items="${list }">
+									<tr
+										onclick="window.open('../payment/docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+										<td>${vo.typeName }</td>
+										<td>${vo.name }</td>
+										<td>${vo.title }</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty list }">
+								<tr>
+									<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+								</tr>
+							</c:if>
+							<!-- 반복 끝 -->
+						</tbody>
+					</table>
+				</div>
+			</div>
 
             </div>
 
-            <div class="col-lg-6 mb-4">
+		<div class="col-lg-6 mb-4">
 
               <!-- 사내게시판 -->
               <div class="card shadow mb-4">
@@ -281,13 +342,13 @@
                 </div>
               </div>
 
-            </div>
-          </div>
+		</div>
+	</div>
 
-        </div>
-        <!-- /.container-fluid -->
+</div>
+<!-- /.container-fluid -->
 
-      </div>
-      <!-- End of Main Content -->
+</div>
+<!-- End of Main Content -->
 
- <%@ include file="../inc/bottom.jsp" %>     
+<%@ include file="../inc/bottom.jsp"%>

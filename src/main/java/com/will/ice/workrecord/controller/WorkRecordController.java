@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.will.ice.mypage.model.MypageService;
+import com.will.ice.mypage.model.MypageVO;
 import com.will.ice.workrecord.model.WorkRecordService;
 import com.will.ice.workrecord.model.WorkRecordVO;
 
@@ -33,6 +35,7 @@ public class WorkRecordController {
 	private SimpleDateFormat ym = new SimpleDateFormat("yyyy-MM");
 	
 	@Autowired WorkRecordService workService;
+	@Autowired MypageService mypage;
 	
 	@RequestMapping(value = "/workRecord.do",method = RequestMethod.GET)		
 	public String workRecord_get(HttpServletRequest request,Model model) {
@@ -134,7 +137,7 @@ public class WorkRecordController {
 		//int 형 변환
 		int outdate = Integer.parseInt(out3);
 		logger.info("outdate={}",outdate);
-		
+
 		
 		//출근시간
 		String []inArr = Evo.getCmpIn().split(":");
@@ -143,6 +146,7 @@ public class WorkRecordController {
 		int indate = Integer.parseInt(in3);
 		logger.info("indate={}",indate);
 		
+
 		if(Evo.getCmpStatus().equals("0") && ((outdate - indate)-100) == 800) {
 			Evo.setCmpStatus("지각");
 		}else if(Evo.getCmpStatus().equals("0") && ((outdate - indate)-100) < 800
@@ -222,6 +226,7 @@ public class WorkRecordController {
 		//월별 조회
 		if(year != null && !year.isEmpty() || month != null && !month.isEmpty()) {
 			String ym = year+"-"+month; vo.setCmpMonth(ym);
+
 			
 			vo.setCmpStatus("지각"); int under = workService.selectMonthCount(vo);
 			vo.setCmpStatus("반차"); int half = workService.selectMonthCount(vo);
@@ -233,6 +238,47 @@ public class WorkRecordController {
 			model.addAttribute("year",year); model.addAttribute("month",month);
 		}
 		
+	}
+	
+	@RequestMapping("/chartView.do")
+	public String chartView(HttpSession session,Model model) {
+		String memNo = (String) session.getAttribute("identNum");
+		WorkRecordVO vo = new WorkRecordVO(); vo.setMemNo(memNo);
+		
+		Date d = new Date(); 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		String date = sdf.format(d);
+		logger.info("date={}",date);
+		MypageVO Mvo = mypage.selectEmployee(memNo);
+		int pos = Mvo.getPosCode();
+		
+		vo.setCmpMonth(date);
+		//월별 조회
+		vo.setCmpStatus("지각"); int under = workService.selectMonthCount(vo);
+		vo.setCmpStatus("반차"); int half = workService.selectMonthCount(vo);
+		vo.setCmpStatus("초과근무"); int over = workService.selectMonthCount(vo);
+		vo.setCmpStatus("퇴근"); int avg = workService.selectMonthCount(vo);
+			
+		logger.info("under={}",under);
+		logger.info("half={}",half);
+		logger.info("over={}",over);
+		logger.info("avg={}",avg);
+		
+		model.addAttribute("under",under); model.addAttribute("half",half);
+		model.addAttribute("over",over); model.addAttribute("avg",avg);
+			
+		if(pos == 999) {
+			return "main/main_admin";
+		}
+		if(pos == 919) {
+			return "main/main_account";
+		}
+		if(pos == 930) {
+			return "main/main_restaurant";
+		}
+			
+		return "main/main_user";
+
 	}
 	
 }

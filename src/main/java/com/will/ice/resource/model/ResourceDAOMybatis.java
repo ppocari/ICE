@@ -36,8 +36,8 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	}
 
 	@Override
-	public int deleteResManage(int resNo) {
-		return sqlSession.delete(namespace+"deleteResManage", resNo);
+	public int updateManageDel(int resNo) {
+		return sqlSession.delete(namespace+"updateManageDel", resNo);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	
 	//자원예약
 	@Override
-	public List<ResKindVO> selectResKind() {
+	public List<ResKindVo> selectResKind() {
 		return sqlSession.selectList(namespace+"selectResKind");
 	}
 
@@ -152,6 +152,20 @@ public class ResourceDAOMybatis implements ResourceDAO {
 	public int selectMyFutureReserveCount(StringIntVo siVo) {
 		return sqlSession.selectOne(namespace+"selectMyFutureReserveCount", siVo);
 	}
-	
+
+	@Override
+	public int insertResKind(String rkKind) {
+		return sqlSession.insert(namespace+"insertResKind", rkKind);
+	}
+
+	@Override
+	public ResReserveVO selectReserveCantReason(int rvNo) {
+		return sqlSession.selectOne(namespace+"selectReserveCantReason", rvNo);
+	}
+
+	@Override
+	public int updateReserveBecauseResDelete(int resNo) {
+		return sqlSession.update(namespace+"updateReserveBecauseResDelete", resNo);
+	}
 
 }

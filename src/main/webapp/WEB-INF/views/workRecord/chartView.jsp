@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- jqplot cdn -->	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/jquery.jqplot.min.js"></script>	
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.barRenderer.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pieRenderer.js"></script>	
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.categoryAxisRenderer.min.js"></script>	
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.pointLabels.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqPlot/1.0.9/plugins/jqplot.enhancedPieLegendRenderer.js"></script>
+<script src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>	
+<script src="<c:url value='/resources/jqplot/jquery.jqplot.min.js'/>"></script>	
+<script type="text/javascript" src="<c:url value='/resources/jqplot/plugins/jqplot.barRenderer.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/jqplot/plugins/jqplot.pieRenderer.js'/>"></script>	
+<script type="text/javascript" src="<c:url value='/resources/jqplot/plugins/jqplot.categoryAxisRenderer.js'/>"></script>	
+<script type="text/javascript" src="<c:url value='/resources/jqplot/plugins/jqplot.pointLabels.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/jqplot/plugins/jqplot.enhancedPieLegendRenderer.js'/>"></script>
+
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/jqplot/jquery.jqplot.css'/>" />
 <style>
 	/*차트*/
@@ -31,11 +34,13 @@
 		width: 50px;
 	}
 
+
 	/*바 차트*/
 	div#chartdiv2 {
 	    margin-left: 50%;
 	    margin-top: -31%;
 	}
+
 	
 	/*툴팁*/
 	table.jqplot-table-legend{
@@ -53,6 +58,12 @@
 		var under = Number($("#under").val());
 		var half = Number($("#half").val());
 		
+
+		if(avg == '' && over == '' && under == '' && half == ''){
+			location.href="<c:url value='/workRecord/chartView.do'/>";
+		}
+		
+
 		var workAvg = [avg];
 		var workOver = [over];
 		var workUnder = [under];
@@ -107,7 +118,9 @@
 	            },
 	            legend: {
 	                show: true,
-	                location: 'e',
+
+	                location: 'ne',
+
 	                renderer: $.jqplot.EnhancedPieLegendRenderer,
 	                rendererOptions: {
 	                    numberColumns: 4,
@@ -120,11 +133,12 @@
 </script>
 <!-- 통계 API -->
 <div id="ChartDiv" style="height:100%; width:100%;">
-	<div id="chartdiv1" style="height:100%; width:50%; "></div>	
-	<div id="chartdiv2" style="height:100%; width:50%;"></div>	
+
+	<div id="chartdiv1" style="height:100%; width:50%; float:left;"></div>	
+	<div id="chartdiv2" style="height:100%; width:50%; float:left;"></div>	
 </div>
 
-
+<button style="visibility: hidden;" onclick="chartView()"></button>
 
 <input type="hidden" id="avg" value="${avg }">
 <input type="hidden" id="over" value="${over }">

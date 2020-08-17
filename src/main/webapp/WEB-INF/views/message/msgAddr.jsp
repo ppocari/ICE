@@ -108,6 +108,7 @@
  		
  		$("#checked_complete").click(function(){
  			//#result_msgAddrGroup > li:nth-child(1) > input[type=checkbox]
+ 			////#result_MAG111910 > input[type=hidden]:nth-child(2)
  			var people = $("#result_msgAddrGroup input[type=checkbox]:checked");
 			var str = "";
 			for( var i=0; i<people.length; i++){
