@@ -29,23 +29,11 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-function popup(){
-	var url="<c:url value='/board/boardDelete.do?boardNo=${param.boardNo}' />";
-	var name="주소록";
-	var option="width=500, height=500, top=100, left=200, location=no"
-	window.open(url,name,option);
-}	
-
 $(function(){
-	$("#comEdit").hide();
-	
-	$("#comEditBt").click(function(){ 
-		if($("#comEdit").hide()){
-			$("#comEdit").slideDown();
-		}else{
-			$("#comEdit").slideUp();
+	$("input[name=comEditBt]").click(function(){ 
+		if($(this).parent().next().css('display','none')){
+			$(this).parent().next().css('display','inline-block');
 		}
-		
 	});
 	$('form[name=writeCommentForm]').submit(function() {
 		
@@ -131,13 +119,13 @@ $(function(){
 
 				<div
 					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<a href="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
-						<input type="button" class="btn btn-primary btn-sm" value="수정">
-					</a> 
+					<c:if test="${sessionScope.identNum == vo.memNo }">
+						<a href="<c:url value='/board/boardEdit.do?boardNo=${vo.boardNo }'/>">
+							<input type="button" class="btn btn-primary btn-sm" value="수정">
+						</a> 
 						<input type="button" id="delBorBt" name="delBorBt" value="삭제" class="btn btn-primary btn-sm"
-						onclick="del(${vo.boardNo})">
-					<a href="javascript:popup()"> 
-					</a> 
+							onclick="del(${vo.boardNo})">
+					</c:if>
 					<a href="<c:url value='/board/boardList.do'/>"> 
 						<input type="button" class="btn btn-primary btn-sm" value="목록">
 					</a>
@@ -158,13 +146,16 @@ $(function(){
 									${comment.nickname}
 									</span>
 								</a> 
+								
 								<span style="font-size: 13px; display: inline-block; 
 									text-align: left; vertical-align: middle;">
 									${comment.content}
-									</span>
-									<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
+								</span>
+								
+								<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
+										
 								<c:if test="${sessionScope.identNum == comment.memNo }">
 									<form name="DeleteCommentForm" method="post"
 										action="<c:url value='/boardComment/boardCommentDelete.do?no=${comment.no }'/>">
@@ -172,7 +163,7 @@ $(function(){
 										<button type="submit" id="comDelBt" style="font-size: 9px;" 
 										class="btn btn-primary btn-sm">삭제</button>
 									</form>
-								</c:if>
+								
 										<div id="comEdit" style="display:none;">
 											<form name="editCommentForm" method="post"
 												action="<c:url value='/boardComment/boardCommentEdit.do'/>">
@@ -205,6 +196,7 @@ $(function(){
 												</div>
 											</form>
 										</div>
+									</c:if>
 								</span>
 							</p>
 						</c:forEach>
