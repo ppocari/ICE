@@ -38,14 +38,20 @@ public class ScheduleController {
 		model.addAttribute("list",list);
 	}
 	
-	/*
-	@RequestMapping("/ajaxWrite.do")
-	@ResponseBody
-	public ScheduleVo ajaxWrite(@ModelAttribute ScheduleVo scheduleVo,
-			HttpSession session) {
+	
+	@RequestMapping(value = "/writeSchedule_button.do", method = RequestMethod.GET)
+	public String writeSchedule_button(HttpSession session,Model model) {
 		String memNo = (String) session.getAttribute("identNum");
-		scheduleVo.setMemNo(memNo);
-		logger.info("ajax 스케줄 등록, 파라미터 scheduleVo={},memNo={}",scheduleVo,memNo);
+		logger.info("스케줄 작성화면, 파라미터 memNo={}",memNo);
+		
+		model.addAttribute("memNo",memNo);
+		
+		return "schedule/writeScheduleBt";
+	}
+	
+	@RequestMapping(value = "/writeScheduleBt.do", method = RequestMethod.POST)
+	public String writeSchedule_bt(@ModelAttribute ScheduleVo scheduleVo,Model model) {
+		logger.info("스케줄 등록, 파라미터 scheduleVo={}",scheduleVo);
 		
 		if(scheduleVo.getPlace().equals("1")) {
 			scheduleVo.setResourceId("a");
@@ -61,23 +67,38 @@ public class ScheduleController {
 			scheduleVo.setPlace("유연근무");
 		}
 		
+		if(scheduleVo.getEndDay() != scheduleVo.getStartDay()) {
+			String[] endArr = scheduleVo.getEndDay().split("-");
+			String end1 = endArr[0]; String end2 = endArr[1]; String end3 = endArr[2];
+			
+			int endD = Integer.parseInt(end3); logger.info("endD={}",endD);
+			String end4 = Integer.toString(endD+1); logger.info("end4={}",end4);
+			String endDay = end1 +"-"+ end2 +"-"+ end4; logger.info("endDay={}",endDay);
+			int endLen = endDay.length(); logger.info("endLen={}",endLen);
+			
+			if(endDay.length() == 9) {
+				String end5 = "0" + end4;
+				endDay = end1 +"-"+ end2 +"-"+ end5;
+				scheduleVo.setEndDay(endDay);
+				logger.info(scheduleVo.getEndDay());
+			}
+			
+			scheduleVo.setEndDay(endDay);
+			logger.info("scheduleVo.getEndDay={}",scheduleVo.getEndDay());
+		}
+		
 		int cnt = scheduleService.insertSchedule(scheduleVo);
 		logger.info("스케줄 등록 결과, cnt={}",cnt);
 		
-		ScheduleVo vo = scheduleService.selectRownum(memNo);
+		if(cnt < 0) {
+			String msg = "스케줄 등록 실패!", url="schedule/schedule.do";
+			
+			model.addAttribute("msg",msg); model.addAttribute("url",url);
+			return "common/message";
+		}
+		ScheduleVo vo = scheduleService.selectRownum(scheduleVo.getMemNo());
 		
-		return vo;
-	}
-	*/
-	
-	@RequestMapping(value = "/writeSchedule_button.do", method = RequestMethod.GET)
-	public String writeSchedule_button(HttpSession session,Model model) {
-		String memNo = (String) session.getAttribute("identNum");
-		logger.info("스케줄 작성화면, 파라미터 memNo={}",memNo);
-		
-		model.addAttribute("memNo",memNo);
-		
-		return "schedule/writeSchedule";
+		model.addAttribute("vo",vo); return "schedule/scheduleClose";
 	}
 	
 	@RequestMapping(value = "/writeSchedule_select.do", method = RequestMethod.GET)
@@ -125,24 +146,18 @@ public class ScheduleController {
 			scheduleVo.setResourceId("d");
 			scheduleVo.setPlace("유연근무");
 		}
-		
 		int cnt = scheduleService.insertSchedule(scheduleVo);
 		logger.info("스케줄 등록 결과, cnt={}",cnt);
 		
 		if(cnt < 0) {
 			String msg = "스케줄 등록 실패!", url="schedule/schedule.do";
 			
-			model.addAttribute("msg",msg);
-			model.addAttribute("url",url);
-			
+			model.addAttribute("msg",msg); model.addAttribute("url",url);
 			return "common/message";
 		}
-		
 		ScheduleVo vo = scheduleService.selectRownum(scheduleVo.getMemNo());
 		
-		model.addAttribute("vo",vo);
-		
-		return "schedule/scheduleClose";
+		model.addAttribute("vo",vo); return "schedule/scheduleClose";
 	}
 	
 	

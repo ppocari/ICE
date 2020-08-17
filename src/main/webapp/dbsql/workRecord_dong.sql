@@ -1,6 +1,6 @@
 /* 辟怕包府 */
--- DROP TABLE workRecord CASCADE CONSTRAINTS;
--- drop sequence workRecord_seq;
+DROP TABLE workRecord CASCADE CONSTRAINTS;
+drop sequence workRecord_seq;
 
 /* 辟怕包府 */
 CREATE TABLE workRecord (
@@ -33,7 +33,7 @@ ALTER TABLE workRecord
 
 create sequence workRecord_seq
 increment by 1
-start with 122;
+start with 79;
 
 -- insert => dbsql => dong_workData.sql
 
