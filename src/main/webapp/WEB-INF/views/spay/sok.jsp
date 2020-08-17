@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 
 <!DOCTYPE html>
 <html>
@@ -15,92 +16,79 @@
 		padding: 10px;
 		width: 50%;
 	}
-	
-	.bt5 {
-		box-shadow: inset 0px 1px 0px 0px #bbdaf7;
-		background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
-		background-color: #79bbff;
-		border-radius: 6px;
-		border: 1px solid #84bbf3;
-		display: inline-block;
-		cursor: pointer;
-		color: #ffffff;
-		font-family: Arial;
-		font-size: 15px;
-		font-weight: bold;
-		padding: 6px 24px;
-		text-decoration: none;
-		text-shadow: 0px 1px 0px #528ecc;
-		width: 20%
-	}
-	
-	.bt5:hover {
-		color: rgb(255, 255, 255);
-		background-color: rgb(46, 89, 217);
-		border-color: rgb(38, 83, 212);
-	}
-	
-	.bt5:active {
-		position: relative;
-		top: 1px;
-	}
-	
-	.p-5 {
-		padding: 2rem !important;
-		text-align: center;
-		border: solid;
-	}
-	
-	.pname{
-		background: #808080;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		color: white;
-	}
 
 </style>
 </head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="jquery-barcode.js">
-$("#bcTarget1").barcode("1234567890128", "code128");
-</script>
 
 <body>
-	<form name="frmok" method="post" action="<c:url value='/spay/sList.do'/>">
+	<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">결제완료</h1>
+
+		<a href="#"
+			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+	</div>
+
+	<!-- Content Row -->
+
 	<div class="center">
-		<p class="pname">결제 확인</p>
-		<div style="background-color: white;">
-			<div class="p-5">
-				<p style="font-size: larger">결제 확인</p>
-				
-					<div>
-						<input type="checkbox" name="chkAgree1" id="chkAgree1"> 
-						<label for="chkAgree1">구매 약관</label>
+
+		<!-- Area Chart -->
+		<div class="col-xl-11 " style="left: 5%;">
+			<div class="card shadow mb-4" style="height: 100%">
+				<!-- Card Header - Dropdown -->
+				<div
+					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h6 class="m-0 font-weight-bold text-primary">영수증</h6>
+				</div>
+				<div class="card-body">
+					<c:set var="now" value="<%=new java.util.Date()%>" />
+						<label>주문시각 : ${vo.TICREGDATE }</label><br>
+					
+						<label>상품명 : 식권 ${vo.TICQUANTITY }장</label><br>
+						<label>결제수단 : Card</label><br>
+						<label>구매자	: ${memVo.name }</label><br>
+						<c:if test="${!empty memVo.hp1}">
+						<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
+						</c:if>
+						<c:if test="${empty memVo.hp1}">
+						</c:if>
+						<c:if test="${!empty memVo.email1}">
+							<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+						</c:if>					
+						<c:if test="${empty memVo.email1}">
+						</c:if>	
+						
+						<!-- 10장이상이면 할인 -->
+						<c:if test="${vo.TICQUANTITY >=10}">
+							<label>할인 : 10%</label><br>
+						</c:if>
+						<c:if test="${vo.TICQUANTITY < 10}">
+						</c:if>
+					<hr>
+					<div class="p-3" style="text-align: center;">
+						<label>결제 금액 :	<fmt:formatNumber value="${vo.TICPRICE * vo.TICQUANTITY}" 
+	        				pattern="#,###"/>원</label><br>
+						<label>카드 승인번호 : *********</label><br>
+						<hr>
+						<label>결제가 완료되었습니다.</label><br>
+						<label>감사합니다.</label>
 					</div>
-					<p>
-						<iframe src="<c:url value='/inc2/text.html'/>" 
-			width="400" height="300"></iframe>
-					</p>
-					<label>주문시각 : "yyyy-MM-dd"</label><br>
-					<label>상품명 : "식권  장"</label><br>
-					<label>결제수단 : "카드"</label><br>
-					<label>할인율 : 0%</label><br>
-				<hr>
-				<div class="p-3" style="text-align: center;">
-					<label>상점 거래ID : "상점 거래ID"</label><br>
-					<label>결제 금액 :	"결제 금액"</label><br>
-					<label>카드 승인번호 : "카드 승인번호"</label><br>
+					<hr>
+					<div style=" text-align: center;">
+						<a href="<c:url value='/spay/sList.do'/>"><button class="btn btn-primary btn-user btn-block">구매목록</button></a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div style=" text-align: center;">
-			<button class="btn btn-primary btn-user btn-block">목록</button>
-		</div>
 	</div>
-	</form>
+	</div>
 </body>
 </html>
 

@@ -3,11 +3,92 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.comcard">
-	<select id="selectAllComcard"  resultType="comcardVO">
-		select * from comcard_mem		
+	<select id="selectUnUseComcard" parameterType="DateSearchVO" resultType="ComcardVO">
+		select * from comcard_mem
+		where acccode is null 
+		<![CDATA[ 
+		and to_date(USEDATE) >= #{startDay} 
+		and to_date(USEDATE) < #{endDay}
+		]]>
+		  
 	</select>
 	
+	<select id="selectNoComcard" parameterType="int" resultType="ComcardVO">
+		select * from comcard_mem_acc
+		where acccode is null
+		  and no = #{comcard_no}
+	</select>
+	
+	<select id="selectListComcard" parameterType="Depart_posi_dateVO" resultType="ComcardVO">
+		select * from comcard_mem_acc
+		where acccode is not null
+		<if test="deptCode!=null and deptCode!=''">
+		      and deptcode = #{deptCode}
+		</if>
+		<if test="posCode!=null and posCode!=''">
+		      and poscode = #{posCode }
+		</if>
+		<if test="usedate1 !=null and usedate1 != ''">
+			and to_date(USEDATE) >= #{usedate1}
+		</if>
+		<if test="usedate2 !=null and usedate2 != ''">
+			<![CDATA[
+			and to_date(USEDATE) < #{usedate2} ]]>
+		</if>
+		<if test="price1 !=null and price1 != ''">
+			and price >= #{price1}
+		</if>
+		<if test="price2 !=null and price2 != ''">
+			<![CDATA[
+			and price < #{price2} ]]>
+		</if>
+		<if test="memNo !=null and memNo != ''">
+			<![CDATA[
+			and memno = #{memNo} ]]>
+		</if>
+	</select>
+	
+	<insert id="insertCCMulti" parameterType="ComcardVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select companyCard_seq.nextval from dual
+		</selectKey>
+		insert into companyCard(no, cardno, company, memno, price,useplace, usedate, fileno)
+		values(#{no}, #{cardNo}, #{company}, #{memNo}, #{price}, #{usePlace}, #{useDate}, #{fileNo})
+	
+	</insert>
+	
+	
+	<insert id="insertCCFile" parameterType="ComCardFileVO">
+		<selectKey keyProperty="fileNo" resultType="int" order="BEFORE">
+			select companyCardFile_seq.nextval from dual
+		</selectKey>	
+		insert into companyCardFile(fileNo, fileName, originalFileName, fileSize )
+		values(#{fileNo}, #{fileName}, #{originalFileName}, #{fileSize})
+	</insert>
 	
 
+	<select id="selectCCFile_recent" resultType="comCardFileVO">
+		select * 
+			from
+			(
+			    select rownum as rnum, A.*
+			    from(
+			    select * from companyCardFile
+			    
+			    order by uploaddate  desc
+			    )A
+			)
+		where RNUM=1
+	</select>
+
+	<select id="selectListFileName" resultType="ComCardFileVO">
+		select filename from companyCardFile
+		order by fileno 
+	</select>
+	
+	<select id="selectUnUseComcardByFile" parameterType="String" resultType="ComcardVO">
+		select * from comcard_mem_acc_file
+		where filename = #{fileName}
+	</select>
 
 </mapper>

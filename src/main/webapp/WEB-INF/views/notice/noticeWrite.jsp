@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="../inc/top.jsp" />
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -42,7 +42,9 @@
 				event.preventDefault();
 			}
 		});
+
 	});
+
 </script>
 <!-- Begin Page Content -->
 
@@ -75,6 +77,7 @@
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
+
 							<tr>
 								<td style="width: 20%;"><h6
 										class="m-0 font-weight-bold text-primary">분류</h6></td>
@@ -90,6 +93,7 @@
 								<input type="checkbox" name="main" id="main" value="Y">
 									<span>메인 공지사항 등록</span></td>
 							</tr>
+
 						</table>
 
 					</div>

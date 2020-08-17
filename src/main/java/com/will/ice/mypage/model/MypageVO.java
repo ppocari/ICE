@@ -15,15 +15,16 @@ public class MypageVO {
 	private String addr;
 	private String addrDetail;
 	private int salary;
-	private Date hireDate;
+	private String hireDate;
 	private String gender;
 	private String proFileURL;
 	private String originalFileName;
-	private int fileSize;
+	private long fileSize;
 	private int deptCode;
 	private int posCode;
-	private String pname;
-	private String dname;
+	private String posName;
+	private String deptName;
+	
 	
 	public String getMemNo() {
 		return memNo;
@@ -48,18 +49,6 @@ public class MypageVO {
 	}
 	public void setHp1(String hp1) {
 		this.hp1 = hp1;
-	}
-	public String getPname() {
-		return pname;
-	}
-	public void setPname(String pname) {
-		this.pname = pname;
-	}
-	public String getDname() {
-		return dname;
-	}
-	public void setDname(String dname) {
-		this.dname = dname;
 	}
 	public String getHp2() {
 		return hp2;
@@ -109,10 +98,10 @@ public class MypageVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	public Date getHireDate() {
+	public String getHireDate() {
 		return hireDate;
 	}
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
 	public String getGender() {
@@ -133,6 +122,12 @@ public class MypageVO {
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
 	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
 	public int getDeptCode() {
 		return deptCode;
 	}
@@ -145,11 +140,17 @@ public class MypageVO {
 	public void setPosCode(int posCode) {
 		this.posCode = posCode;
 	}
-	public int getFileSize() {
-		return fileSize;
+	public String getPosName() {
+		return posName;
 	}
-	public void setFileSize(int fileSize) {
-		this.fileSize = fileSize;
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	
 	
@@ -159,9 +160,11 @@ public class MypageVO {
 				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", zipcode=" + zipcode + ", addr="
 				+ addr + ", addrDetail=" + addrDetail + ", salary=" + salary + ", hireDate=" + hireDate + ", gender="
 				+ gender + ", proFileURL=" + proFileURL + ", originalFileName=" + originalFileName + ", fileSize="
-				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + ", pname=" + pname + ", dname=" + dname
-				+ "]";
+				+ fileSize + ", deptCode=" + deptCode + ", posCode=" + posCode + ", posName=" + posName + ", deptName="
+				+ deptName + "]";
 	}
+	
+	
 	
 	
 }

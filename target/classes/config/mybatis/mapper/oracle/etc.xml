@@ -5,10 +5,14 @@
 <mapper namespace="com.mybatis.mapper.oracle.etc">
 	<select id="DeptAll" resultType="departmentVO">
 		select * from department
+		where deptcode != 999
+		order by deptcode
 	</select>
 	
 	<select id="PosAll" resultType="positionVO">
 		select * from position
+		where poscode != 999
+		order by poscode
 	</select>
 		
 </mapper>

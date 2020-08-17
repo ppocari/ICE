@@ -3,7 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -94,6 +95,7 @@ function pageProc(curPage){
 											<th scope="col">작성일</th>
 											<th scope="col">조회수</th>
 										</tr>
+
 									</thead>
 									<tbody id="dynamicTbody">
 										<!-- 게시판 내용 반복문시작 -->
@@ -127,6 +129,7 @@ function pageProc(curPage){
 									</tbody>
 								</table>
 							</div>
+
 						
 						<div class="divPage" style="text-align: center;">
 							<!-- 페이지 번호 추가 -->		

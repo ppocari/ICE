@@ -4,27 +4,68 @@
 
 <mapper namespace="com.mybatis.mapper.oracle.member">
 	<select id="selectPwd" parameterType="string"  resultType="string">
-		select pwd from log_mem
+		select pwd from mypage_mem
 		where memno = #{memNo} and firedate is null 
-		</select>
+	</select>
 
 	<select id="selectMember" parameterType="string" resultType="MemberVO">
-		select * from log_mem
+		select * from mypage_mem
 		where memno = #{memNo} 
 	</select>
 
-	<select id="logCheck" parameterType="MemberVO_log">
-		select * from log_mem
+	<select id="logCheck" parameterType="MemberVO">
+		select * from mypage_mem
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
-	<insert id="admin_regist_member" parameterType="memberVO">
-		insert into member(memno, name, pwd, hiredate, deptCode, posCode, salary)
-		values(#{memNo}, #{name}, #{pwd}, #{hiredate}, #{deptCode}, #{posCode}, #{salary} )
-			
+	<insert id="registerMulti" parameterType="memberVO">
+		insert into member(memNo, pwd, name, ssn1, ssn2, HIREDATE ,deptcode, POSCODE , salary)
+		values(#{memNo}, #{pwd} ,#{name}, #{ssn1}, #{ssn2}, #{hiredate}, #{deptCode}, #{posCode}, #{salary})
+		
 	</insert>
 	
-	<select id="searchAllmember" resultType="memberVo">
-		select * from member
+	<select id="selectMemberList" parameterType="Depart_posi_dateVO" resultType="memberVo">
+		select * from mypage_mem
+		where memno != 999999 and firedate is null
+		<if test="deptCode!=null and deptCode!=''">
+		      and deptcode  = #{deptCode }
+		</if>
+		<if test="posCode!=null and posCode!=''">
+		      and poscode  = #{posCode }
+		</if>
+		<if test="hiredate1 !=null and hiredate1 != ''">
+			and hiredate >= #{hiredate1}
+		</if>
+		<if test="hiredate2 !=null and hiredate2 != ''">
+			<![CDATA[
+			and hiredate < #{hiredate2} ]]>
+		</if>
 	</select>
+	
+	<update id="updateSelectMember" parameterType="memberVO">
+		update member
+		set NAME = #{name}, HIREDATE = #{hiredate},
+			DEPTCODE = #{deptCode}, POSCODE = #{posCode},  SALARY = #{salary}
+		where memno = #{memNo} 
+	</update>
+	
+	<update id="deleteSelectMember" parameterType="memberVO">
+		update member
+		set firedate = #{firedate}
+		where memno = #{memNo}
+	
+	</update>
+	
+	<update id="newPwd" parameterType="MemberVO">
+		update member
+		set pwd = #{pwd}
+		where memno = #{memNo}
+	</update>
+	
+	<update id="setPwd" parameterType="int">
+		update member
+		set pwd = #{pwd}
+		where memno = #{memNo}
+	</update>
+	
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 
 <!DOCTYPE html>
 <html>
@@ -18,58 +19,7 @@
 
 </style>
 </head>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script type="text/javascript">
-    function requestPay() {
-		var IMP = window.IMP; // 생략가능
-		IMP.init('imp61833107'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-		
-		IMP.request_pay({
-		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'card',
-		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:식권 결제',
-		    amount : 1000,
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		   
-		}, function(rsp) {
-		    if ( rsp.success ) {
-		        if ( rsp.success ) {
-		        	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-		        	jQuery.ajax({
-		        		url: "<c:url value='/spay/spay.do'/>", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-		        		type: 'POST',
-		        		dataType: 'json',
-		        		data: {
-		    	    		imp_uid : rsp.imp_uid
-		    	    		//기타 필요한 데이터가 있으면 추가 전달
-		        		}
-		        	}).done(function(data) {
-		        		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-		        		if ( everythings_fine ) {
-		        			var msg = '결제가 완료되었습니다.';
-		        			msg += '\n고유ID : ' + rsp.imp_uid;
-		        			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-		        			msg += '\결제 금액 : ' + rsp.paid_amount;
-		        			msg += '카드 승인번호 : ' + rsp.apply_num;
 
-		        			alert(msg);
-		        		} else {
-		        			//[3] 아직 제대로 결제가 되지 않았습니다.
-		        			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-		        		}
-		        	});
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		    }
-		    alert(msg);
-		});
-    }
-</script>
 <body>
 	<div class="container-fluid">
 
@@ -77,9 +27,7 @@
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">결제확인</h1>
 
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+		
 	</div>
 
 	<!-- Content Row -->
@@ -95,23 +43,53 @@
 					<h6 class="m-0 font-weight-bold text-primary">결제정보</h6>
 				</div>
 				<!-- Card Body -->
+				<!-- 가격설정 -->
+				<c:set var="now" value="<%=new java.util.Date()%>" />
+				<c:set var="date" value="sysdate"/>
+				<c:set var="sum" value="${sVo.TICPRICE * sVo.TICQUANTITY}"/>
+				<c:set var="saleprice" value="0.9"/>
+
+				<c:if test="${sum >= 70000}">
+					<c:set var="sale" value="${sum * saleprice}"/>
+					<fmt:parseNumber var= "sale" integerOnly= "true" value="${sale}"/>
+				</c:if>
+				<c:if test="${sum < 70000}">
+					<c:set var="sale" value="${sum}"/>
+				</c:if>
+						
 				<div class="card-body">
-					<label>주문시각 : yyyy-MM-dd</label><br> 
-					<label>구매매수 :  장</label><br> 
+					<label>현재시각 : <fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></label><br> 
+					<label>구매매수 : ${sVo.TICQUANTITY }장</label><br> 
 					<label>결제수단 : Card</label><br> 
-					<label>할인 : </label><br>
+					
+					<!-- 10장이상이면 할인 -->
+					<c:if test="${sVo.TICQUANTITY >=10}">
+						<label>할인 : 10%</label><br>
+					</c:if>
+					<c:if test="${sVo.TICQUANTITY < 10}">
+					</c:if>
+					
 					<hr>
-					<label>구매자	: ${vo.name }</label><br>
-					<label>전화번호 : ${vo.hp1 + vo.hp2 + vo.hp3 }</label><br>
-					<label>이메일 : ${vo.email1 + vo.email2 }</label><br>
+					<label>구매자	: ${memVo.name }</label><br>
+					<c:if test="${!empty memVo.hp1}">
+						<label>전화번호 : ${memVo.hp1} - ${memVo.hp2} - ${memVo.hp3 }</label><br>
+					</c:if>
+					<c:if test="${empty memVo.hp1}">
+					</c:if>
+					<c:if test="${!empty memVo.email1}">
+						<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+					</c:if>					
+					<c:if test="${empty memVo.email1}">
+					</c:if>					
+					
 					<hr>
 					<label>상점 거래ID : "지하 1층 사내 직원 식당"</label><br> 
-					<label>결제 금액 : "결제 금액"</label><br>
+					<label>결제 금액 : <fmt:formatNumber value="${sale }" 
+        				pattern="#,###"/>원</label><br>
 					<hr>
 					<div style="text-align: center;">
 						<button onclick="requestPay()" class="btn btn-primary btn-user btn-block">결제하기</button>
-						<button onclick="history.back()" 
-						class="btn btn-primary btn-user btn-block">돌아가기</button>
+						<button onclick="back()" class="btn btn-primary btn-user btn-block">돌아가기</button>
 					</div>
 				</div>
 			</div>
@@ -119,6 +97,52 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript">
+    function requestPay() {
+		var IMP = window.IMP; // 생략가능
+		IMP.init('imp61833107'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		
+		IMP.request_pay({
+		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(), // 구매일
+		    name : '주문명:식권 결제',
+		    amount : '${sale }',
+		    buyer_email : '${memVo.email1}${memVo.email2}',
+		    buyer_name : '${memVo.name}',
+		    buyer_tel : '${memVo.hp1}-${memVo.hp2}-${memVo.hp3}',
+		    TICQUANTITY: '${sVo.TICQUANTITY }',
+    		TICPRICE: '${sVo.TICPRICE }'
+	    }, function(rsp) {
+	        if ( rsp.success ) {
+	        	jQuery.ajax({
+	        		url: "<c:url value='/spay/sok.do'/>", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+	        		type: 'POST',
+	        		dataType: 'json',
+	        		data: {
+	    	    		TICQUANTITY: ${sVo.TICQUANTITY },
+	    	    		TICPRICE: ${sVo.TICPRICE },
+	    	    		
+	        		}
+	        	});
+	        	location.href="<c:url value='/spay/sok.do'/>";
+	        	Location.reload();
+	            var msg = '결제가 완료되었습니다. \n';
+	            msg += '결제 금액 : ' + rsp.paid_amount +'\n';
+	            msg += '카드 승인번호 : ' + rsp.apply_num +'\n';
+	        } else {
+	            var msg = '결제에 실패하였습니다.';
+	            msg += '에러내용 : ' + rsp.error_msg;
+	        }
+	        alert(msg);
+	    });
+    }
+	function back() {
+		location.href="<c:url value='/spay/sbuy.do'/>"
+	}
+</script>
 </html>
 
 <%@ include file="../inc/bottom.jsp" %>

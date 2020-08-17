@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -32,8 +32,10 @@ $(function(){
 	$("input[name=comEditBt]").click(function(){ 
 		if($(this).parent().next().css('display','none')){
 			$(this).parent().next().css('display','inline-block');
-		}
-	});
+
+	});	
+		
+	
 	
 	$('form[name=writeCommentForm]').submit(function() {
 		
@@ -51,6 +53,7 @@ $(function(){
 			$('#editCon').focus();
 			event.preventDefault();
 		}
+
 	});
 });	
 function del(noticeNo) {
@@ -69,6 +72,7 @@ function del(noticeNo) {
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
 			<div class="card shadow mb-4" style="height: fit-content;">
+
 				<!-- Card Header - Dropdown -->
 				
 					<input type="hidden" name="noticeNo" value="${param.noticeNo }">
@@ -124,8 +128,10 @@ function del(noticeNo) {
 							onclick="del(${vo.noticeNo})">
 						</c:if>
 						<a href="<c:url value='/notice/noticeList.do'/>"> 
+
 							<input type="button" value="목록" class="btn btn-primary btn-sm">
 						</a>
+
 						<hr>
 					</div>
 					
@@ -151,6 +157,7 @@ function del(noticeNo) {
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
 									
+
 									<c:if test="${sessionScope.identNum == comment.memNo }">										
 										<form name="DeleteCommentForm" method="post" 
 											action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
@@ -191,10 +198,12 @@ function del(noticeNo) {
 													</div>
 												</form>
 											</div>
+
 										</c:if>
 									</span>
 								</p>
 							</c:forEach>
+
 							
 							<div id="comWrite">
 								<form name="writeCommentForm" method="post"
@@ -205,6 +214,7 @@ function del(noticeNo) {
 									<hr>
 									댓글 입력<br>
 									<div class="form-group">
+
 										<table class="table table-borderless" id="dynamicTable">
 											<colgroup>
 												<col style="width:80%;"/>
@@ -224,6 +234,7 @@ function del(noticeNo) {
 										</table>
 									
 									</div>
+
 								</form>
 							</div>
 						</div>

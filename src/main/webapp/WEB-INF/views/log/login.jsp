@@ -29,14 +29,16 @@
 
 </head>
 
-<body class="bg-gradient-primary">
-
+<body class="bg-gradient-primary-log">
+	<a href="<c:url value='/log/login_admin.do' />"><i class="fas fa-user-cog" 
+		style="color:white; font-size:30px; float: right; margin: 20px "></i>
+	</a>
 	<div class="container">
 
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
-
-			<div class="col-xl-10 col-lg-12 col-md-9">
+			
+			<div class="col-xl-10 col-lg-12 col-md-9" style="margin-top: 165px;">
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -53,7 +55,8 @@
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user"
 												name="identNum" aria-describedby="emailHelp"
-												placeholder="Your identification number...">
+												placeholder="Your identification number..."
+												value="${cookie.ck_identNum.value }">
 										</div>
 										<div class="form-group">
 											<input type="password" class="form-control form-control-user"
@@ -61,10 +64,13 @@
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
-												<input type="checkbox" class="custom-control-input"
-													id="rememCheck"> <label
-													class="custom-control-label" for="customCheck">Remember
-													Me</label>
+												 <input type="checkbox" 
+													id="rememCheck"  name="rememCheck"
+													<c:if test="${!empty cookie.ck_identNum }">
+														checked="checked"
+													</c:if>>   
+													
+												<label  for="rememCheck">Remember Me</label>
 											</div>
 										</div>
 
@@ -73,7 +79,7 @@
 									</form>
 									<hr>
 									<div class="text-center">
-										<a class="small" href="forgot-password.html">Forgot
+										<a class="small" href="<c:url value='/log/findPwd.do'/>">Forgot
 											Password?</a>
 									</div>
 

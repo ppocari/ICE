@@ -13,4 +13,5 @@ public interface NoticeService {
 	public int deleteNotice(int noticeNo);
 	public int updateNotice(NoticeVO vo);
 	public int updateDownCount(int noticeNo);
+	List<NoticeVO> selectMain();
 }

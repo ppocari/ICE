@@ -2,6 +2,10 @@ package com.will.ice.member.model;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import com.will.ice.common.Depart_posi_dateVO;
+
 public interface MemberService {
 	
 	//아이디 중복확인 관련 상수
@@ -13,13 +17,23 @@ public interface MemberService {
 		int PWD_DISAGREE=2; //비밀번호 불일치
 		int ID_NONE=3; //아이디 존재하지 않음
 			
+		int logCheck_admin(String memNo, String pwd);
 	
 		int logCheck(String memNo, String pwd);
 		
 		MemberVO selectMember(String userid);
 		
-		int admin_regist_member(MemberVO membervo );
-		
-		List<MemberVO> searchAllmember(String searchKeyword);
+		List<MemberVO> selectMemberList(Depart_posi_dateVO dpdvo);
 
+		int registerMulti(List<MemberVO> memVO);
+		
+		int updateSelectMember(MemberVO memberVO);
+		
+		int deleteSelectMember(MemberVO memberVO);
+
+		int newPwd(MemberVO memVo);
+
+		String selectPwd(String memNo);
+
+		
 }

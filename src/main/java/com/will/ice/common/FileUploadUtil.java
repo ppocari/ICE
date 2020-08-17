@@ -23,20 +23,26 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component
 public class FileUploadUtil {
-	private Logger logger
+	private static Logger logger
 		=LoggerFactory.getLogger(FileUploadUtil.class);
 	
 	public static final int PATH_PDS=1;  //자료실에 사용
 	public static final int PATH_PD_IMAGE=2; //상품업로드시 사용
-	
+	public static final int PATH_PAYMENT_FILE=3;//결재등록시 자료업로드
+	public static final int PATH_SIGN_FILE=4;//결재처리시 사인업로드
+
+	public static final int PATH_COMCARD_FILE=5;//법인카드 파일 업로드
+
+	public static final int PATH_RESOURCE_FILE=6; //자원관리 이미지 업로드
+
+
 	@Resource(name="fileUploadProperties")
 	Properties fileUploadProps;
 	
 	public List<Map<String, Object>> fileUpload(
 			HttpServletRequest request,  int pathGb) {
 		//파일 업로드 처리 메서드		
-		MultipartHttpServletRequest multiReq 
-		= (MultipartHttpServletRequest) request;
+		MultipartHttpServletRequest multiReq = (MultipartHttpServletRequest) request;
 	
 		List<Map<String, Object>> resultList
 			=new ArrayList<Map<String,Object>>();
@@ -73,7 +79,6 @@ public class FileUploadUtil {
 				map.put("fileSize", fileSize);
 				map.put("fileName", fileName);
 				map.put("originalFileName", originalFName);
-				
 				resultList.add(map);
 			}
 		}//while
@@ -92,6 +97,14 @@ public class FileUploadUtil {
 				key="file.upload.path.test";
 			}else if(pathGb==PATH_PD_IMAGE) {
 				key="imageFile.upload.path.test";
+			}else if(pathGb==PATH_PAYMENT_FILE) {
+				key="paymentfile.upload.path.test";
+			}else if(pathGb==PATH_SIGN_FILE) {
+				key="signfile.upload.path.test";
+			}else if(pathGb==PATH_COMCARD_FILE) {
+				key="comcardfile.upload.path.test";
+			}else if(pathGb==PATH_RESOURCE_FILE) {
+				key="resourceFile.upload.path.test";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);
@@ -100,6 +113,14 @@ public class FileUploadUtil {
 				key="file.upload.path";
 			}else if(pathGb==PATH_PD_IMAGE) {
 				key="imageFile.upload.path";
+			}else if(pathGb==PATH_PAYMENT_FILE) {
+				key="paymentfile.upload.path";
+			}else if(pathGb==PATH_SIGN_FILE) {
+				key="signfile.upload.path";
+			}else if(pathGb==PATH_COMCARD_FILE) {
+				key="comcardfile.upload.path";
+			}else if(pathGb==PATH_RESOURCE_FILE) {
+				key="resourceFile.upload.path";
 			}
 			
 			uploadPath=fileUploadProps.getProperty(key);
@@ -127,7 +148,7 @@ public class FileUploadUtil {
 		return fileName;
 	}
 	
-	public String getTimeStamp() {
+	public static String getTimeStamp() {
 		//현재 시간을 밀리초까지 지정해서 리턴
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		Date d = new Date();
@@ -135,8 +156,6 @@ public class FileUploadUtil {
 		
 		return str;
 	}
-	
-	
 }
 
 

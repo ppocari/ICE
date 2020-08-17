@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../inc/top.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 
 <link href="<c:url value='/resources/fullcalendar/packages/core/main.css'/>" rel='stylesheet' />
 <link href="<c:url value='/resources/fullcalendar/packages/daygrid/main.css'/>" rel='stylesheet' />
@@ -13,108 +13,32 @@
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-common/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-daygrid/main.js'/>"></script>
 <script src="<c:url value='/resources/fullcalendar/packages-premium/resource-timegrid/main.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/jquery-3.5.1.min.js'/>"></script>
 <script type="text/javascript">
-  $(function() {
-		var memNo = $("#memNo").val();
-		var startDay="";
-		var endDay="";
-		var content="";
-		var title="";
-		
-			$.ajax({
-				url:"<c:url value='/schedule/ajaxSelect.do'/>",
-				type:"get",
-				dataType:"text",
-				data:"memNo="+$("#memNo").val(),
-				success:function(res){					
-					startDay = res.scheduleStart;
-					endDay = res.scheduleEnd;
-					content = res.content;
-					title = res.title;
-					
-					
-				},
-				error: function(jqXHR, exception) {
-	                if (jqXHR.status === 0) {
-	                        alert('Not connect.\n Verify Network.');
-	                    } 
-	                    else if (jqXHR.status == 400) {
-	                        alert('Server understood the request, but request content was invalid. [400]');
-	                    } 
-	                    else if (jqXHR.status == 401) {
-	                        alert('Unauthorized access. [401]');
-	                    } 
-	                    else if (jqXHR.status == 403) {
-	                        alert('Forbidden resource can not be accessed. [403]');
-	                    } 
-	                    else if (jqXHR.status == 404) {
-	                        alert('Requested page not found. [404]');
-	                    } 
-	                    else if (jqXHR.status == 500) {
-	                        alert('Internal server error. [500]');
-	                    } 
-	                    else if (jqXHR.status == 503) {
-	                        alert('Service unavailable. [503]');
-	                    } 
-	                    else if (exception === 'parsererror') {
-	                        alert('Requested JSON parse failed. [Failed]');
-	                    } 
-	                    else if (exception === 'timeout') {
-	                        alert('Time out error. [Timeout]');
-	                    } 
-	                    else if (exception === 'abort') {
-	                        alert('Ajax request aborted. [Aborted]');
-	                    }
-	                    else {
-	                        alert('Uncaught Error.n' + jqXHR.responseText);
-                    	}
-           		}
-			});
-	  
-		$('.BtClose').click(function() {
-			$('#modal').hide();
-		});
-		
-		$('.writeClose').click(function() {
-			event.preventDefault();
-			$('#writeModal').hide();
-		});
-		
-		
-		$('form[name=frm]').submit(function() {
-			$('.infobox').each(function(idx,item) {
-				if($(this).text().length()<1 ){
-					alert($(this).prev().html()+"을(를) 입력하세요!");
-					event.preventDefault();
-					$(this).focus();
-					return false;
-				}
-			});
-		});
-	
+	//들어오자 마자 일정 보여주기
+	var contextPath = "/ice";
+	var dataset = [
+		<c:forEach var="citem" items="${list}">
+			{
+				title:'<c:out value="${citem.title}"/>',
+				start:'<c:out value="${citem.startDay}"/>',
+				end:'<c:out value="${citem.endDay}"/>',
+				id:'<c:out value="${citem.schNo}"/>',
+				resourceId:'<c:out value="${citem.resourceId}"/>'
+			},
+		</c:forEach>
+	];
 
-  $('DOMContentLoaded', function() {
+	
+  $(function() {
 	  
+  $('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-    /*
-	var startDay = $("#scheduleStart").val();
-	var endDay = $("#scheduleEnd").val();
-	var content = $("textarea#content").val();
-	var title = $("#title").val();
-	*/
-	
-	
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
       defaultView: 'dayGridMonth',
-      defaultDate: '2020-07-18',
+      defaultDate: new Date(),
       editable: true,
-      
-      
-      
-      
       selectable: true,
       nowIndicator : true,
       eventLimit: true, // allow "more" link when too many events
@@ -133,36 +57,11 @@
           add_event: {
               text: '일정추가',
               click: function() {
-            	  $('#writeModal').show();
-            	  
-            	  //var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                  //var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-                		  
-               	  $("#frm").submit(function() {
-               			$.ajax({
-               				url:"<c:url value='/schedule/ajaxWrite.do'/>",
-               				type:"post",
-               				datatype:"json",
-               				data: $(this).serializeArray(),
-               				success:function(res){
-               					calendar.addEvent({
-               	                      title: "테스트",
-               	                      start: startDay,
-               	                      end: endDay,
-               	                      allDay: true
-               	                    });
-               	                    alert('일정이 추가되었습니다!');
-               				},
-               				error:function(xhr, status, error){
-               					alert(status + ", " + error);
-               				}
-               			});
-               		});  
+            	  window.open(contextPath+'/schedule/writeSchedule_button.do','wirteSC',
+           			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
               }
           }
       },
-      
-      
       
       header: {
         left: 'prev,next today',
@@ -171,7 +70,7 @@
       },
       views: {
   		dayGrid :{
-  			titleFormat: {
+			titleFormat: {
   	    		year:'numeric',
   	    		month: '2-digit'
   	    	}
@@ -182,79 +81,73 @@
       //allDaySlot: false,
 		
       resources: [
-        { id: 'a', title: 'Room A' },
-        { id: 'b', title: 'Room B', eventColor: 'green' },
-        { id: 'c', title: 'Room C', eventColor: 'orange' },
-        { id: 'd', title: 'Room D', eventColor: 'red' }
+        { id: 'a', title: 'Room A' , color:'orange'},
+        { id: 'b', title: 'Room B', eventColor: 'green' , textColor: 'red'},
+        { id: 'c', title: 'Room C', eventColor: 'red' ,color:'orange'},
+        { id: 'd', title: 'Room D', eventColor: 'orange' }
       ],
-      events:
-    	  [
-    		  { id: '1', resourceId: 'a', start: startDay, end: endDay, title: title } 
-    		  
-   	        /*
-   	        { id: '1', resourceId: 'a', start: startDay, end: endDay, title: content },
-   	        { id: '2', resourceId: 'a', start: '2020-07-12T09:00:00', end: '2020-07-13T14:00:00', title: 'event 2' },
-   	        { id: '3', resourceId: 'b', start: '2020-07-15T12:00:00', end: '2020-07-15T06:00:00', title: 'event 3' },
-   	        { id: '4', resourceId: 'c', start: '2020-07-15T07:30:00', end: '2020-07-16T09:30:00', title: 'event 4' },
-   	        { id: '5', resourceId: 'd', start: '2020-07-20T10:00:00', end: '2020-07-21T15:00:00', title: 'event 5' } */
- 	  ],
   	
+      //일정보여주기
+      events: dataset,
+      
  	  //드래그
       select: function(arg) {
-    	$('#writeModal').show();
         console.log(
           'select',
           arg.startStr,
           arg.endStr,
           arg.resource ? arg.resource.id : '(no resource)'
         );
-        
-        calendar.addEvent({
-            title: content,
-            start: startDay,
-            end: endDay,
-            allDay: true
-         });
+        window.open(contextPath+'/schedule/writeSchedule_select.do?startDay='+arg.startStr+'&endDay='+arg.endStr,'wirteSC',
+			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
+
       },
       
       //날짜클릭
       dateClick: function(arg) {
-    	$('#writeModal').show();
-        console.log(
-          'dateClick',
-          arg.date,
-          arg.resource ? arg.resource.id : '(no resource)'
-        );
-        calendar.addEvent({
-            title: 'title',
-            start: startDay,
-            end: endDay,
-            allDay: true
-         });
-        
+    	  window.open(contextPath+'/schedule/writeSchedule_date.do?startDay='+arg.dateStr+'&endDay='+arg.dateStr,'wirteSC',
+ 			'width=612,height=608,left=500,top=200,location=yes,resizable=yes');
+        	
       },
+      
+      
       
       //일정 보여주기
       eventClick: function(info) {
-    	  	$('#modal').show();
-    	  	
-    	  	//$("#modal-type"),text($("#type").on("selected","selected"));
-    	  	$('#modal-title').text(title);
-    	  	$('#modal-contents').text($("textarea#content").val());
-    	  	
-    	  	
-    	    // borderColor 변경
-    	    //info.el.style.borderColor = 'red';
+    	  	var dbTitle = info.event.title;
+    	  	var dbId = info.event.id;
+		   	 $.ajax({
+					url:"<c:url value='/schedule/ajaxDetail.do?dbId="+dbId+"'/>",
+					type:"get",
+					datatype:"json",
+					success:function(res){
+						var content = res.content;
+						var startDay = res.startDay;
+						var endDay = res.endDay;
+						var place = res.place;
+						var memNo = res.memNo;
+window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='+content+'&place='+place+'&dbId='+dbId+'&startDay='+startDay+'&endDay='+endDay+'&memNo='+memNo+''
+						,'detailSC',
+            			'width=450,height=650,left=500,top=200,location=yes,resizable=yes');
+					},
+					error:function(xhr, status, error){
+						alert(status + ", " + error);
+					}
+			});
    	  },
       
       // 한국어 설정
       locale: 'ko'
     });
-
     calendar.render();
-    
   });
   
+	function draw() {
+	  document.getElementById('canvas1');
+	  document.getElementById('canvas2');
+	  document.getElementById('canvas3');
+	  document.getElementById('canvas4');
+	}
 });
 </script>
 <style>
@@ -284,6 +177,10 @@
     td.fc-day-top.fc-sun.fc-past { color: red;}			/* 일요일 */
     td.fc-day-top.fc-sun.fc-future { color: red;}		/* 일요일 */
     
+    .fc-title {		/*이벤트 폰트 컬러 변경*/
+	    color: white;
+	}
+	
 	.msgbox{
 		position: absolute;
 	    left: 33%;
@@ -296,114 +193,75 @@
 	.head {
 	    color: #fff;
 	    border-bottom: 1px solid #f2f2f2;
-	    background-color: #464646;
+	    background-color: #4e73df;
+	    font-weight: bold;
+	    font-size: 1.2em;
+	    text-align: center;
+	}
+	
+	/*색깔별 내용*/
+	div#canvasDiv {
+	    position: fixed;
+	    margin-top: 10%;
+	    margin-left: 5%;
+	    width: 165px;
+	    border: 1px solid gray;
+	    padding: 10px;
+	    background: #fcf8e3;
+	}
+	
+	canvas{
+		width: 30px;
+	    height: 30px;
+	    border: 1px solid;
+	}
+	#canvas1{
+	    background: #3788d8;
+	}
+	#canvas2{
+	    background: #008000;
+	}
+	#canvas3{
+	    background: #ff0000;
+	}
+	#canvas4{
+	    background: #ffa500;
 	}
 	
 	
-	/*일정쓰기*/
-	div#writeModal {
-	    line-height: 30px;
-	}
-	
-	
-	/*일정확인*/
-	div#modal {
-	    width: 20%;
-	    height: 35%;
-	}
-	
-	div#modal_button {
-	    margin-top: 64%;
-	    margin-left: 15%;
-	}
-	
-	#modal_button button {
-	    width: 80px;
-	}
-	
-	div#modal-title {
-	    font-size: 2em;
-	}
-	
-	.fc-content {
-	    color: black;
-	}
 </style>
-		<div id="div"></div>
-		<!-- 캘린더 -->
-		<div class="calendar_back">
-			<div id='calendar'></div>
-		</div>
-		
-		<!-- style="display: none;" -->
-		<!-- 스케줄 글보기 모델 -->
-		<div id="modal" class="msgbox" style="display: none;">
-			<div class="head">
-				<div id="modal-type"></div>
-				<div id="modal-title"></div>
-		    </div>
-			<div class="body">
-				<div id="modal-contents"></div>
-				<div id="modal_button">
-					<button class="BtEdit">수정</button>				
-					<button class="BtDelte">삭제</button>				
-					<button class="BtClose">닫기</button>				
+<input type="hidden" value="${vo.title}">
+<input type="hidden" value="${vo.startDay}">
+<input type="hidden" value="${vo.endDay}">
+<input type="hidden" value="${vo.schNo}">
+<div class="row">
+	<!-- Area Chart -->
+	<div class="col-xl-12 " >
+		<div class="card shadow mb-4" style="fit-content">
+			<!-- 스케줄 -->
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<h5 class="m-0 font-weight-bold text-primary">스케줄</h5>
+				</div>
+				<!-- 색깔별 내용 -->
+				<div id="canvasDiv">
+					<div>
+						<canvas id="canvas1"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">업무관련</label>	
+					</div>
+					<div>
+						<canvas id="canvas2"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">기타</label>	
+					</div>
+					<div>
+						<canvas id="canvas3"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">휴가</label>		
+					</div>
+					<div>
+						<canvas id="canvas4"></canvas>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size:1.7em;margin:0;">유연근무</label>			
+					</div>
+				</div>
+				<!-- 캘린더 -->
+				<div class="calendar_back">
+					<div id='calendar'></div>
 				</div>
 			</div>
 		</div>
-		
-		<!-- 스케줄등록모델 -->
-		<!-- style="display: none;" -->
-		<div id="writeModal" class="msgbox" style="display: none;">
-		<!-- action="<c:url value='scheduleWrite.do'/>" method="post"  -->
-		<form id="frm">
-			<div class="head">
-				<span>등록 폼</span>
-		    </div>
-			<div class="body">
-				<input type="hidden" name="memNo" id="memNo" value="1">
-				<input type="hidden" name="scheduleNo" value="1">
-				<table>
-					<tr>
-						<td>
-							<select title="타입선" id="type" name="type" style="height: 28px;">
-								<option value="1">업무관련</option>
-								<option value="2">기타</option>
-								<option value="3">휴가/연차</option>
-								<option value="4">유연근무</option>
-							</select>
-							<input type="text" class="infobox" id="title" name="title" style="width: 529px" maxlength="100" placeholder="제목"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="schedulePicker">
-								<div style="float: left;">
-									<input type="date" name="scheduleStart" id="scheduleStart" class="infobox" value="${scheduleVo.scheduleStart }"
-										style="width: 192px" placeholder="시작일"/>
-									<div>STRAT</div>
-								</div>
-								<div style="float: right;">
-									<input type="date" name="scheduleEnd" id="scheduleEnd" class="infobox" value="${scheduleVo.scheduleEnd }"
-										style="width: 192px" placeholder="종료일"/>
-									<div>END</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<textarea class="infobox" name="content" id="content" name="content" style="width: 610px;height: 300px;" placeholder="내용">${scheduleVo.content }</textarea>
-						</td>
-					</tr>
-				</table>
-				<div style="text-align: center;">
-					<button class="writeBtn">저장</button>
-					<button class="writeClose">Close</button>
-				</div>
-			</div>
-		</form>
-		</div>
-		
-		
+	</div>
 <%@include file="../inc/bottom.jsp" %>

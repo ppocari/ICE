@@ -1,7 +1,5 @@
 package com.will.ice.member.model;
 
-import java.sql.Timestamp;
-
 public class MemberVO {
 	private String memNo;
 	private String name;
@@ -11,14 +9,14 @@ public class MemberVO {
 	private String hp3;
 	private String email1;
 	private String email2;
-	private String ssn1;
+	private String ssn1;	//주민번호 앞자리
 	private String ssn2;
 	private String zipcode;
 	private String addr;
 	private String addrDetail;
 	private int salary;
-	private Timestamp hiredate;
-	private Timestamp firedate;
+	private String hiredate;
+	private String firedate;
 	private String gender;
 	private String profileURL;
 	private String originalFileName;
@@ -27,6 +25,7 @@ public class MemberVO {
 	private String posCode;
 	private String posName;
 	private String deptName;
+	
 	
 	public String getMemNo() {
 		return memNo;
@@ -112,16 +111,16 @@ public class MemberVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	public Timestamp getHiredate() {
+	public String getHiredate() {
 		return hiredate;
 	}
-	public void setHiredate(Timestamp hiredate) {
+	public void setHiredate(String hiredate) {
 		this.hiredate = hiredate;
 	}
-	public Timestamp getFiredate() {
+	public String getFiredate() {
 		return firedate;
 	}
-	public void setFiredate(Timestamp firedate) {
+	public void setFiredate(String firedate) {
 		this.firedate = firedate;
 	}
 	public String getGender() {
@@ -174,14 +173,15 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [memNo=" + memNo + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2=" + hp2
-				+ ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", ssn1=" + ssn1 + ", ssn2=" + ssn2
-				+ ", zipcode=" + zipcode + ", addr=" + addr + ", addrDetail=" + addrDetail + ", salary=" + salary
+		return "MemberVO [ memNo=" + memNo + ", name=" + name + ", pwd=" + pwd + ", hp1=" + hp1 + ", hp2="
+				+ hp2 + ", hp3=" + hp3 + ", email1=" + email1 + ", email2=" + email2 + ", ssn1=" + ssn1 + ", ssn2="
+				+ ssn2 + ", zipcode=" + zipcode + ", addr=" + addr + ", addrDetail=" + addrDetail + ", salary=" + salary
 				+ ", hiredate=" + hiredate + ", firedate=" + firedate + ", gender=" + gender + ", profileURL="
 				+ profileURL + ", originalFileName=" + originalFileName + ", fileSize=" + fileSize + ", deptCode="
 				+ deptCode + ", posCode=" + posCode + ", posName=" + posName + ", deptName=" + deptName + "]";
 	}
-
+	
+	
 	
 
 	

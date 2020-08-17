@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 
 <style>
 .table td {
@@ -35,6 +35,7 @@ $(function(){
 			$(this).parent().next().css('display','inline-block');
 		}
 	});
+
 	$('form[name=writeCommentForm]').submit(function() {
 		
 		if ($('#writeCon').val() == '') {
@@ -57,7 +58,7 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-	
+
 });	
 	function del(boardNo) {
 		var chk = confirm("정말 삭제하시겠습니까?");
@@ -155,8 +156,9 @@ $(function(){
 								<span style="vertical-algin: middle; opacity: .4; font-size: 11px;"> 
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
-										
+
 								<c:if test="${sessionScope.identNum == comment.memNo }">
+
 									<form name="DeleteCommentForm" method="post"
 										action="<c:url value='/boardComment/boardCommentDelete.do?no=${comment.no }'/>">
 										<input text="button" id="comEditBt" style="font-size: 9px; width: 38px;" class="btn btn-primary btn-sm" value="수정">
@@ -166,6 +168,7 @@ $(function(){
 								
 										<div id="comEdit" style="display:none;">
 											<form name="editCommentForm" method="post"
+
 												action="<c:url value='/boardComment/boardCommentEdit.do'/>">
 												
 												<input type="hidden" name="boardNo" value="${comment.boardNo }">
@@ -194,6 +197,7 @@ $(function(){
 															</tbody>
 														</table>
 												</div>
+
 											</form>
 										</div>
 									</c:if>

@@ -1,8 +1,11 @@
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -10,13 +13,12 @@
 }
 
 .table .registerTable {
-	width: 90px;
+	
+	width: 110px;
 	border: 1px solid white;
 }
 
-.register_text {
-	width: 110px;
-}
+
 .search input{
 	width:150px;
 }
@@ -24,35 +26,35 @@
 
 </style>
 <script type="text/javascript">
+	
 	$(function(){
 		
-		$("form[name=memRegisterFrm]").submit(function(){
-			var strAll = "";
-			
-			$.ajax({
-				url: "/member/memList.do",
-				type:"POST",
-				dataType:"json",
-				sucess:function(res){
-					strAll += "<tr>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "<td></td>"
-					strAll += "</tr>"
-					
-					$("#dynamicTable").append(strAll);
-				}
-			
-			})
-			
+		
+		$( "input[name=hiredate1]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         changeMonth:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
+		
+		$( "input[name=hiredate2]" ).datepicker({
+			dateFormat:'yy-mm-dd',
+	         changeYear:true,
+	         changeMonth:true,
+	         dayNamesMin:['일','월','화','수','목','금','토'],
+	         monthNames:['1월','2월','3월','4월','5월','6월',
+	            '7월','8월','9월','10월','11월','12월']
+		} );
+		
+		
+		$("#dynamicTbody tr").click(function(){
+			var edit_memNo = $(this).children().eq(0).text();
+			window.open('/ice/member/memEdit.do?memeNo='+edit_memNo,'mem',
+			'width=1400,height=300,left=50,top=50,location=yes,resizable=yes');
 		});
-		
-		$("input[name=hiredate1]").datepicker();
-		$("input[name=hiredate2]").datepicker();
-		
-		
+		 
 		
 	});
 	
@@ -76,48 +78,57 @@
 
 		<!-- Area Chart -->
 		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+			<div class="card shadow mb-4" style="height: fit-content;">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
+				<!-- 페이징 처리를 위한 form 시작-->
+				<form name="frmPage" method="post" 
+					action="<c:url value='/member/memList.do'/>">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">사원조회</h6>
+						<h6 class="m-0 font-weight-bold text-primary">검색하기</h6>
+						
 						<div style="float: right">
 							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							 >조회</button>
 						</div>
-						
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-left: 10px;">
-							<label for="department" style="margin-right: 20px;">부서별 조회</label>
-							<select name="department">
+							<label for="deptCode" style="margin-right: 20px;">부서별 조회</label>
+							<select name="deptCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="deptvo" items="${deptList }">
-									<option>${deptvo.deptName }</option>
+									<option value="${deptvo.deptCode }" 
+										<c:if test="${dpdvo.deptCode == deptvo.deptCode }">
+											selected="selected"
+										</c:if>
+										>${deptvo.deptName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search">
-							<label for="position" style="margin-right: 20px;">직급별 조회</label>
-							<select name="position">
+							<label for="posCode" style="margin-right: 20px;">직급별 조회</label>
+							<select name="posCode">
 								<!-- option 반복 -->
-								<option>전체</option>
+								<option value="">전체</option>
 								<c:forEach var="posvo" items="${ posList }">
-									<option>${posvo.posName }</option>
+									<option value="${posvo.posCode }">${posvo.posName }</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="search" style="margin-right: 20px;">
 							<label for="hiredate1" style="margin-right: 20px;">입사일별</label>
-							<input type="text" name="hiredate1"> ~
-							<input type="text" name="hiredate2">
+							<input type="text" name="hiredate1" value="${dpdvo.hiredate1  }"> ~
+							<input type="text" name="hiredate2" value="${dpdvo.hiredate2  }">
 						</div>
+					
 					</div>
+				
+				<!-- 페이징 처리 form 끝 -->
+			
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
+						<div  style="overflow: scroll; overflow-x: scroll; height: 570px;">
 
 
 							<table class="table table-bordered table-hover" id="dynamicTable">
@@ -125,34 +136,30 @@
 									<tr>
 										<th>사원번호</th>
 										<th>이름</th>
-										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
 										<th>입사일</th>
 										<th>부서명</th>
 										<th>직급</th>
 										<th>계약연봉</th>
+										
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-										
+									
+									<c:set var="i" value="${1 }" />	
 									<c:forEach var="vo" items="${list }">
-										<tr>
-											<td>${vo.memNo }</td>
+										<tr id = "edit_tr${i}">
+											<td id = "edit_td${i}">${vo.memNo }</td>
 											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
 											<td>
-												<c:if test="${ !empty vo.hp1 }">
-													${vo.hp1 } - ${vo.hp2} - ${ vo.hp3 }
-												</c:if>
+												 <c:set var = "hiredate"  value = "${fn:substring(vo.hiredate,0,10)}" />
+												${ hiredate }
 											</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
 											<td>${vo.deptName }</td>
 											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
+											<td><fmt:formatNumber value="${vo.salary }" pattern="#,###"/>만원</td>											
 										</tr>
+										<c:set var="i" value="${i+1 }" />	
 									</c:forEach>
 								</tbody>
 						</table>

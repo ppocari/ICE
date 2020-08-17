@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<jsp:include page="../inc/top.jsp" />
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -17,42 +17,25 @@
 .register_text {
 	width: 110px;
 }
-.search input{
-	width:150px;
+
+.search input {
+	width: 150px;
 }
-
-
 </style>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$("#excelUpForm").change(function(){
-		                var form = $("#excelUpForm")[0];
-		 
-		                var data = new FormData(form);
-		                $.ajax({
-		                   enctype:"multipart/form-data",
-		                   method:"POST",
-		                   url: './excelUp.do',
-		                   processData: false,   
-		                   contentType: false,
-		                   cache: false,
-		                   data: data,
-		                   success: function(result){  
-		                       alert("업로드 성공!!");
-		                   }
-		                });
-		            });
-
-
-		
-		
+		$("#BtnUpload").click(function(){
+			$("form[name=cardUplodFrm]").attr("action", "<c:url value='/companyCard/comCardUpload.do' />").submit();				
+		});
 		
 	});
-	
 </script>
 <!-- Begin Page Content -->
 
@@ -68,72 +51,83 @@
 	</div>
 
 	<!-- Content Row -->
+	<!-- https://shinsunyoung.tistory.com/71 -->
 
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 " >
-			<div class="card shadow mb-4" style="height: 500px">
+		<div class="col-xl-12 ">
+			<div class="card shadow mb-4" style="height:fit-content; min-height:650px;  width: 99%;padding: 0px 0px 10px 0px;">
 				<!-- Card Header - Dropdown -->
-				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/member/memList.do?searchKeyWord=all'/> ">
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<h6 class="m-0 font-weight-bold text-primary">미등록</h6>
+				<form name="cardUplodFrm" action="<c:url value="/excel.do"/>"
+					method="POST" enctype="multipart/form-data">
+					<div
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">법인카드</h6>
 						<div style="float: right">
-							<button type="submit" class="btn btn-info"
-							 >전체조회</button>
+							<input type="file" name="file" value="파일 선택" > 
+							
 						</div>
-						
-					</div>		
+					</div>
+
 					<!-- Card Body -->
 					<div class="card-body">
-						<div class="chart-area" style="overflow: scroll;">
-
-
-							<table class="table table-bordered table-hover" id="dynamicTable">
+						<div  style="overflow: scroll; overflow-x: scroll; height: 630px;">
+							<table class="table table-bordered table-hover" id="dynamicTable" style="width: 1770px; " >
 								<thead>
 									<tr>
-										<th>사원번호</th>
-										<th>이름</th>
-										<th>비밀번호</th>
-										<th>전화번호</th>
-										<th>이메일</th>
-										<th>입사일</th>
-										<th>부서명</th>
-										<th>직급</th>
-										<th>계약연봉</th>
+										<th style="width: 7%">카드사</th>
+										<th style="width: 15%">카드번호</th>
+										<th style="width: 8%">사원번호</th>	
+										<th style="width: 10%">사용금액</th>
+										<th style="width: 13%">사용처</th>
+										<th style="width: 10%">사용일</th>
 									</tr>
 								</thead>
 								<tbody id="dynamicTbody">
 									<!-- 반복시작 -->
-										
-									<c:forEach var="vo" items="${list }">
+									<c:set var="i" value="1" />
+									<c:forEach var="data" items="${datas }">
+
 										<tr>
-											<td>${vo.memNo }</td>
-											<td>${vo.name }</td>
-											<td>${vo.pwd }</td>
-											<td>${vo.hp1 + vo.hp2 + vo.hp3 }</td>
-											<td>${vo.email1 + vo.email2 }</td>
-											<td>${vo.hiredate }</td>
-											<td>${vo.deptName }</td>
-											<td>${vo.posName }</td>
-											<td>${vo.salary }</td>										
+											<td>${data.company }
+												<input type="hidden" name="comCardItmes[${i }].company" value="${data.company }"> 
+											</td>
+											<td>${data.cardNo }
+												<input type="hidden" name="comCardItmes[${i }].cardNo" value="${data.cardNo }"> 
+											</td>
+											<td>${data.memNo }
+												<input type="hidden" name="comCardItmes[${i }].memNo" value="${data.memNo }"> 
+											</td>
+											<td>${data.price }
+												<input type="hidden" name="comCardItmes[${i }].price" value="${data.price }"> 
+											</td>
+											<td>${data.usePlace }
+												<input type="hidden" name="comCardItmes[${i }].usePlace" value="${data.usePlace }"> 
+											</td>
+											<td>${data.useDate }
+												<input type="hidden" name="comCardItmes[${i }].useDate" value=" ${data.useDate }">
+											</td>
 										</tr>
+										<c:set var="i" value="${i+1 }" />
 									</c:forEach>
 								</tbody>
-						</table>
-										
+							</table>
+
 						</div>
-					</div>		
+					</div>
+					<div style="float: right; margin-right: 20px;">
+						<input type="submit"value="파일 내역 보기" class="btn btn-success"/> 
+						<input type="button" id="BtnUpload" class="btn btn-info" value="사용내역  DB 업로드">
+					</div>
 				</form>
 
-				
 				
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 

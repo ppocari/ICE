@@ -2,9 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 <style>
 .table td {
 	width: 90px;
@@ -174,6 +173,7 @@
 						
 						<!-- 검색기능 -->
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+
 							<div class="search" style="margin-left: 10px;">
 							   	<form name="frmSearch" method="post" 
 							   		action='<c:url value="/notice/noticeList.do"/>'>

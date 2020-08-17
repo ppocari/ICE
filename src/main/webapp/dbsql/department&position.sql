@@ -8,7 +8,7 @@
 
 /* 직급 */
 CREATE TABLE position (
-	posCode NUMBER NOT NULL, /* 직급코드 */
+	posCode VARCHAR2(10) NOT NULL, /* 직급코드 */
 	posName VARCHAR2(100) /* 직급명 */
 );
 
@@ -34,7 +34,7 @@ insert into position
 values('912', '사원3');
 
 insert into position
-values('920', '경리');
+values('919', '경리');
 
 insert into position
 values('930', '과장');
@@ -53,7 +53,7 @@ values('999', '관리자');
 
 /* 부서 */
 CREATE TABLE department (
-	deptCode NUMBER NOT NULL, /* 부서코드 */
+	deptCode VARCHAR2(10) NOT NULL, /* 부서코드 */
 	deptName VARCHAR2(100) /* 부서명 */
 );
 
@@ -80,6 +80,13 @@ values('131', '법무팀');
 
 insert into department
 values('141', '마케팅');
+
+insert into department
+values('151', '개발팀');
+
+insert into department
+values('161', '생산팀');
+
 
 insert into department
 values('999', '전산팀');	

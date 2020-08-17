@@ -1,9 +1,78 @@
-/*
+
+DROP TABLE boardComment 
+	CASCADE CONSTRAINTS;
+	
+DROP TABLE companyBoard_recommend 
+	CASCADE CONSTRAINTS;
+
+/* 사내게시판 댓글 */
+CREATE TABLE boardComment (
+	bComNo NUMBER NOT NULL, /* 댓글번호 */
+	ComNo NUMBER, /* 댓글순서번호 */
+	boardNo NUMBER, /* 게시글번호 */
+	MEMNO VARCHAR2(50), /* 사원번호* */
+	content CLOB, /* 내용 */
+	regdate DATE DEFAULT sysdate /* 작성일 */
+);
+
+COMMENT ON TABLE boardComment IS '사내게시판 댓글';
+
+COMMENT ON COLUMN boardComment.bComNo IS '댓글번호';
+
+COMMENT ON COLUMN boardComment.ComNo IS '댓글순서번호';
+
+COMMENT ON COLUMN boardComment.boardNo IS '게시글번호';
+
+COMMENT ON COLUMN boardComment.MEMNO IS '사원번호*';
+
+COMMENT ON COLUMN boardComment.content IS '내용';
+
+COMMENT ON COLUMN boardComment.regdate IS '작성일';
+
+CREATE UNIQUE INDEX PK_boardComment
+	ON boardComment (
+		bComNo ASC
+	);
+
+ALTER TABLE boardComment
+	ADD
+		CONSTRAINT PK_boardComment
+		PRIMARY KEY (
+			bComNo
+		);
+
+/* 사내게시판추천 */
+CREATE TABLE companyBoard_recommend (
+	recNo NUMBER NOT NULL, /* 추천번호 */
+	MEMNO VARCHAR2(50), /* 사원번호 */
+	boardNo NUMBER /* 게시글번호 */
+);
+
+COMMENT ON TABLE companyBoard_recommend IS '사내게시판추천';
+
+COMMENT ON COLUMN companyBoard_recommend.recNo IS '추천번호';
+
+COMMENT ON COLUMN companyBoard_recommend.MEMNO IS '사원번호';
+
+COMMENT ON COLUMN companyBoard_recommend.boardNo IS '게시글번호';
+
+CREATE UNIQUE INDEX PK_companyBoard_recommend
+	ON companyBoard_recommend (
+		recNo ASC
+	);
+
+ALTER TABLE companyBoard_recommend
+	ADD
+		CONSTRAINT PK_companyBoard_recommend
+		PRIMARY KEY (
+			recNo
+		);
+
+
 drop table boardComment;
 drop table companyBoard_recommend;
 drop table board;
 drop sequence board_seq;
-*/
 
 /* 사내게시판 */
 CREATE TABLE board (

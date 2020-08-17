@@ -1,4 +1,6 @@
 /* 사내게시판 댓글 */
+drop table boardComment;
+
 CREATE TABLE boardComment (
 	no NUMBER NOT NULL, /* 댓글번호 */
 	boardNo NUMBER, /* 게시글번호 */
