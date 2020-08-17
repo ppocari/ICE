@@ -103,7 +103,7 @@
 										</tr>
 									</thead>
 									<tbody id="dynamicTbody">
-										<!-- 게시판 내용 반복문시작 -->							
+										<!-- 게시판 내용 반복문시작 -->
 										<c:forEach var="vo" items="${list }">
 											<input type="hidden" name="noticeNo" value="${vo.noticeNo }">		
 								

@@ -84,10 +84,11 @@
 								<td style="width: 80%; weight: 100px; width: 500px;">
 								<select	name="category" class="form-control" style="width:400px;">
 										<option value="전체">전체</option>
-										<option value="경영">경영</option>
-										<option value="회계">회계</option>
 										<option value="영업">영업</option>
-										<option value="경리">경리</option>
+										<option value="기획">기획</option>
+										<option value="법무">법무</option>
+										<option value="마케팅">마케팅</option>
+										<option value="전산">전산</option>
 								</select> 
 								<input type="checkbox" name="main" id="main" value="Y">
 									<span>메인 공지사항 등록</span></td>
