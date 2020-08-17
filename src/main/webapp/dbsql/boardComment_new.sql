@@ -1,7 +1,6 @@
 /* 사내게시판 댓글 */
 CREATE TABLE boardComment (
 	no NUMBER NOT NULL, /* 댓글번호 */
-	comNo NUMBER, /* 댓글순서번호 */
 	boardNo NUMBER, /* 게시글번호 */
 	memNO VARCHAR2(50), /* 사원번호* */
 	nickname VARCHAR2(50) NOT NULL, /* 별명 */
@@ -16,8 +15,6 @@ increment by 1;
 COMMENT ON TABLE boardComment IS '사내게시판 댓글';
 
 COMMENT ON COLUMN boardComment.no IS '댓글번호';
-
-COMMENT ON COLUMN boardComment.ComNo IS '댓글순서번호';
 
 COMMENT ON COLUMN boardComment.boardNo IS '게시글번호';
 
