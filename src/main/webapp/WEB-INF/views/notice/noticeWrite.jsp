@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="../inc/top.jsp" />
+
+<%@ include file="../inc/top.jsp"%>
 
 <style>
 .table td {
@@ -24,8 +22,8 @@
 }
 
 .note-editor.note-frame.card {
-    position: relative;
-    left: -31px;
+	position: relative;
+	left: -31px;
 }
 </style>
 <link rel="stylesheet"
@@ -42,9 +40,7 @@
 				event.preventDefault();
 			}
 		});
-
 	});
-
 </script>
 <!-- Begin Page Content -->
 
@@ -60,41 +56,48 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
-			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
+		<div class="col-xl-7 ">
+			<div class="card shadow mb-4"
+				style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmWrite" method="post"
 					action="<c:url value='/notice/noticeWrite.do'/>"
 					enctype="multipart/form-data">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<a href="<c:url value='/notice/noticeList.do'/>">
+						<div>
 							<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
-						</a>
+						</div>
+						<!-- 등록 버튼 -->
+						<div>
+							<input type="Button" class="btn btn-primary btn-sm" id="nList" value="글목록"
+								style="width: 60px; font-size: 13px;"
+								onclick="location.href='<c:url value="/notice/noticeList.do"/>'" />
+								
+							<input type="submit" class="btn btn-primary btn-sm" value="등록"
+								style="width: 60px; font-size: 13px;" />  
+						</div>
 					</div>
 
 					<!-- 분류 -->
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
-
 							<tr>
 								<td style="width: 20%;"><h6
 										class="m-0 font-weight-bold text-primary">분류</h6></td>
-								<td style="width: 80%; weight: 100px; width: 500px;">
-								<select	name="category" class="form-control" style="width:400px;">
+								<td style="width: 80%; weight: 100px; width: 500px;"><select
+									name="category" class="form-control" style="width: 400px;">
 										<option value="전체">전체</option>
-										<option value="경영">경영</option>
-										<option value="회계">회계</option>
 										<option value="영업">영업</option>
-										<option value="경리">경리</option>
-								</select> 
-								<input type="checkbox" name="main" id="main" value="Y">
+										<option value="기획">기획</option>
+										<option value="법무">법무</option>
+										<option value="마케팅">마케팅</option>
+										<option value="전산">전산</option>
+								</select> <input type="checkbox" name="main" id="main" value="Y">
 									<span>메인 공지사항 등록</span></td>
 							</tr>
-
 						</table>
-
 					</div>
 
 					<!-- 제목 -->
@@ -105,13 +108,11 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">제목</h6>
 								</td>
-								<td style="width: 80%; width: 500px;">
-									<input type="text"
-										class="form-control" name="title" id="title"
-										style="width: 400px; font-size: 14px;"></td>
+								<td style="width: 80%; width: 500px;"><input type="text"
+									class="form-control" name="title" id="title"
+									style="width: 400px; font-size: 14px;"></td>
 							</tr>
 						</table>
-
 					</div>
 
 					<!-- 첨부파일 -->
@@ -122,9 +123,14 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 								</td>
-								<td style="width: 80%;">
-								<input type="file" id="upfile" name="upfile" /> <br>
-								<span>(최대 2M)</span></td>
+								<td style="width: 80%;"><input type="file" id="fileName"
+									name="upfile" value="${vo.orFileName}"
+									style="margin-left: 40px;" /> <br> <c:if
+										test="${!empty vo.orFileName }">
+										<span class="sp1"></span>
+										<span style="color: green; font-weight: bold"> 첨부파일을 새로
+											지정할 경우 기존 파일 ${fileInfo }는 삭제됩니다.</span>
+									</c:if></td>
 							</tr>
 						</table>
 					</div>
@@ -137,32 +143,16 @@
 								<td style="width: 20%;">
 									<h6 class="m-0 font-weight-bold text-primary">내용</h6>
 								</td>
-								<td style="width: 80%; text-align: left;">
-									<%@ include	file="summer.jsp"%></td>
+								<td style="width: 80%; text-align: left;"><%@ include
+										file="summer.jsp"%></td>
 							</tr>
 						</table>
 					</div>
-
-					<!-- 등록,취소 버튼 -->
-					<div
-						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type="submit" class="form-control btList" value="등록"
-							style="width: 52px; font-size: 13px;" /> 
-						<input type="Button" class="form-control btList" id="nList" value="글목록"
-							style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/notice/noticeList.do"/>'"/>
-					</div>
 				</form>
-
-
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
-
 
 <!-- /.container-fluid -->
 <div></div>
@@ -170,5 +160,5 @@
 
 <!-- End of Main Content -->
 
-<jsp:include page="../inc/bottom.jsp" />
+<%@ include file="../inc/bottom.jsp"%>
 

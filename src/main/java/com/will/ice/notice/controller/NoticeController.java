@@ -114,11 +114,9 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeList.do")
-
 	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공지사항 실행");
 		logger.info("글 목록 파라미터 searchVo={}", searchVo);
-
 				
 		//[1] PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -204,6 +202,13 @@ public class NoticeController {
 		
 		return "notice/noticeDetail";
 	}
+	
+	@RequestMapping("/delete.do")
+	public String delete(@RequestParam(defaultValue = "0") int noticeNo) {
+		logger.info("삭제처리 파라미터 noticeNo={}", noticeNo);
+		noticeService.deleteNotice(noticeNo);
+		return "redirect:/notice/noticeList.do";
+	} 
 	
 	@RequestMapping(value="noticeDelete.do", method = RequestMethod.GET)
 	public String noticeDelete_get(@RequestParam(defaultValue = "0") int noticeNo,
