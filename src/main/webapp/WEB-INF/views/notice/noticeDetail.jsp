@@ -161,71 +161,6 @@ function del(noticeNo) {
 												class="btn btn-primary btn-sm">삭제</button>
 										</form>
 
-
-										<div id="comEdit" style="display: none;">
-											<form name="editCommentForm" method="post"
-												action="<c:url value='/noticeComment/noticeCommentEdit.do'/>">
-
-												<input type="hidden" name="noticeNo"
-													value="${comment.noticeNo }"> <input type="hidden"
-													name="no" value="${comment.no }"> <input
-													type="hidden" name="memNo" value="${comment.memNo }">
-												<div class="form-group">
-													<hr>
-													댓글 내용 수정<br>
-													<table class="table table-borderless" id="dynamicTable">
-														<colgroup>
-															<col style="width: 10%;" />
-															<col style="width: 90%;" />
-														</colgroup>
-														<tbody style="font-size: 11px;">
-															<tr class="align_center">
-																<td><input type="text"
-																	style="width: 420px; font-size: 12px;"
-																	class="form-control" name="content"
-																	placeholder="내용을 입력하세요" id="editCon"
-																	value="${comment.content }"></td>
-																<td>
-																	<button type="submit" style="font-size: 9px;"
-																		id="commentBt" class="btn btn-primary btn-sm">수정</button>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</form>
-										</div>
-									</c:if>
-								</span>
-							</p>
-						</c:forEach>
-
-						<div id="comWrite">
-							<form name="writeCommentForm" method="post"
-								action="<c:url value='/noticeComment/noticeCommentWrite.do'/>">
-
-								<input type="hidden" name="noticeNo" value="${vo.noticeNo }">
-								<input type="hidden" name="memNo" value="${vo.memNo }">
-								<hr>
-								댓글 입력<br>
-								<div class="form-group">
-									<table class="table table-borderless" id="dynamicTable">
-										<colgroup>
-											<col style="width: 100%;" />
-											<col style="width: 20%;" />
-										</colgroup>
-										<tbody style="font-size: 11px;">
-											<tr class="align_center">
-												<td><input type="text" id="writeCon"
-													style="width: 100%; font-size: 12px;" class="form-control"
-													name="content" placeholder="내용을 입력하세요"></td>
-												<td><input type="submit" id="commentBt"
-													class="btn btn-primary btn-sm" value="등록"></td>
-										</tbody>
-									</table>
-								</div>
-							</form>
-
 											
 											<div id="comEdit" style="display:none;">
 												<form name="editCommentForm" method="post" 
@@ -260,7 +195,9 @@ function del(noticeNo) {
 												</form>
 											</div>
 
-							
+										</c:if>
+									</span>
+							</c:forEach>
 
 							
 							<div id="comWrite">
@@ -295,7 +232,6 @@ function del(noticeNo) {
 
 								</form>
 							</div>
-
 						</div>
 					</div>
 				</div>
