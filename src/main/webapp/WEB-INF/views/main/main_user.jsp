@@ -5,6 +5,7 @@
 
 <%@ include file="../inc/top.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/inc/top.do"/>        
         <!-- Begin Page Content -->
         
@@ -14,7 +15,6 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	     <h1 class="h3 mb-0 text-gray-800">Main</h1>
-
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
@@ -68,7 +68,13 @@
                 <a href="<c:url value='/payment/confirm/undecided.do' />" style="text-decoration: none;">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
-	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류</div>
+	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류
+	                      	<c:if test="${!empty paylist}">
+	                      	<span class="badge badge-danger badge-counter" style="position: relative;">
+	                      		${paySize }
+	                      	</span>
+	                      	</c:if>
+	                      </div>
 	                      <div class="row no-gutters align-items-center">
 	                        <div class="col-auto">
 	                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">미결함 바로가기</div>
@@ -132,23 +138,13 @@
               </div>
             </div>
 
-            <!-- Pie Chart -->
+            <!-- 공지사항 -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">더보기</div>
-                      <a class="dropdown-item" href="<c:url value='/notice/noticeList.do'/>">공지사항</a>
-                      <a class="dropdown-item" href="<c:url value='/board/boardList.do'/>">사내게시판</a>
-                    </div>
-                  </div>
                 </div>
+                
                 <!-- Card Body -->
                 <div class="card-body"  style="height: 385px;overflow: hidden;">
                   <div style="height: 300px;">
@@ -168,7 +164,7 @@
 											<i class="fas fa-circle text-info"></i>
 										</c:if>
 										<c:if test="${notiVo.category=='영업' }">
-											<i class="fas fa-circle text-default"></i>
+											<i class="fas fa-circle text-warning"></i>
 										</c:if>
 										${notiVo.title }
 									</td>
@@ -200,7 +196,7 @@
                       <i class="fas fa-circle text-info"></i> 회계
                     </span>
                     <span class="mr-2">
-                      <i class="fas fa-circle text-default"></i> 영업
+                      <i class="fas fa-circle text-warning"></i> 영업
                     </span>
                   </div>
                 </div>
@@ -216,30 +212,35 @@
 
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">미결 문서</h6>
+               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">미결 문서
+                  	<c:if test="${!empty paylist}">
+                  		<strong style="color: red;">${paySize }</strong>
+                  	</c:if>
+                  </h6>
+                  <div class="dropdown no-arrow">
+                   <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                   </a>
+                   <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                     <a class="dropdown-item" href="<c:url value='/payment/confirm/undecided.do'/>">더보기</a>
+                   </div>
+                 </div>
                 </div>
-                <div class="card-body">
-                  <table id="UDpayTable" class="table table-hover" style="overflow: scroll;height: 150px;">
-					<thead>
-						<tr>
-							<th width="20%;">문서종류</th>
-							<th width="20%;">작성자</th>
-							<th>제목</th>
-						</tr>
-					</thead>
+                 
+                <div class="card-body" style="height: 300px;">
+                  <table id="UDpayTable" class="table table-hover">
 					<tbody>
 					<!-- 반복 시작 -->
-						<c:if test="${!empty list }">
-							<c:forEach var="vo" items="${list }">
-								<tr onclick="window.open('../payment/docView.do?docNo=${vo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
-									<td>${vo.typeName }</td>
-									<td>${vo.name }</td>
-									<td>${vo.title }</td>
+						<c:if test="${!empty paylist }">
+							<c:forEach var="payVo" items="${paylist }">
+								<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+									<td width="30%;">[${payVo.typeName}] ${payVo.name}</td>
+									<td>${payVo.title}</td>
 								</tr>
 							</c:forEach>
 						</c:if>
-						<c:if test="${empty list }">
+						<c:if test="${empty paylist }">
 							<tr>
 								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
 							</tr>
@@ -250,100 +251,37 @@
                 </div>
               </div>
 
-              <!-- Color System -->
-              <div class="row">
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-primary text-white shadow">
-                    <div class="card-body">
-                      Primary
-                      <div class="text-white-50 small">#4e73df</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-success text-white shadow">
-                    <div class="card-body">
-                      Success
-                      <div class="text-white-50 small">#1cc88a</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-info text-white shadow">
-                    <div class="card-body">
-                      Info
-                      <div class="text-white-50 small">#36b9cc</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-warning text-white shadow">
-                    <div class="card-body">
-                      Warning
-                      <div class="text-white-50 small">#f6c23e</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-danger text-white shadow">
-                    <div class="card-body">
-                      Danger
-                      <div class="text-white-50 small">#e74a3b</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-secondary text-white shadow">
-                    <div class="card-body">
-                      Secondary
-                      <div class="text-white-50 small">#858796</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-light text-black shadow">
-                    <div class="card-body">
-                      Light
-                      <div class="text-black-50 small">#f8f9fc</div>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                      Dark
-                      <div class="text-white-50 small">#5a5c69</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             </div>
 
             <div class="col-lg-6 mb-4">
 
-              <!-- Illustrations -->
+              <!-- 사내게시판 -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">인기 게시글</h6>
                 </div>
-                <div class="card-body">
-                  <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">
+                <div class="card-body" style="height: 300px;">
+                  <div class="text-left">
+                  	<table id="boardTable" class="table table-hover">
+					<tbody>
+					<!-- 반복 시작 -->
+						<c:if test="${!empty boardList }">
+							<c:forEach var="boardVo" items="${boardList }">
+								<tr onclick="location.href='<c:url value="/board/boardCountUpdate.do?boardNo=${boardVo.boardNo }"/>'">
+									<td width="25%;">${boardVo.nickname }</td>
+									<td>${boardVo.title }</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${empty boardList }">
+							<tr>
+								<td colspan="6" style="text-align: center;">게시글이 존재하지 않습니다</td>
+							</tr>
+						</c:if>
+						<!-- 반복 끝 -->
+					</tbody>
+				</table>
                   </div>
-                  <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
-                </div>
-              </div>
-
-              <!-- Approach -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                </div>
-                <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
                 </div>
               </div>
 

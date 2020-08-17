@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.will.ice.board.model.BoardService;
+import com.will.ice.board.model.BoardVO;
 import com.will.ice.common.PaymentSearchVO;
+import com.will.ice.common.SearchVO;
 import com.will.ice.document.model.DoctypeService;
-import com.will.ice.document.model.DoctypeVO;
 import com.will.ice.notice.model.NoticeService;
 import com.will.ice.notice.model.NoticeVO;
 import com.will.ice.payment.model.PaylistViewVO;
@@ -27,10 +29,22 @@ public class IceController {
 	@Autowired PaymentService paymentService;
 	@Autowired DoctypeService doctypeService;
 	@Autowired NoticeService notiService;
+	@Autowired BoardService boardService;
 	
 	@RequestMapping("/main/main_admin.do")
-	public void main_admin() {
+	public void main_admin(Model model) {
 		logger.info("관리자 메인 페이지 보여주기");
+		
+		//메인 공지사항
+		List<NoticeVO> notiList = notiService.selectMain();
+		logger.info("공지사항 목록 조회 결과={}",notiList.size());
+		
+		//사내게시판
+		List<BoardVO> boardList = boardService.selectMain();
+		logger.info("사내게시판 목록 조회 결과={}",boardList.size());
+				
+		model.addAttribute("notiList",notiList);
+		model.addAttribute("boardList",boardList);
 	}
 	
 	@RequestMapping("/main/main_account.do")
@@ -39,24 +53,32 @@ public class IceController {
 	}
 	
 	@RequestMapping("/main/main_user.do")
-	public void main_user(HttpSession session, @ModelAttribute PaymentSearchVO paysearchVo,
-			Model model) {
+	public void main_user(HttpSession session, Model model) {
 		logger.info("사원 메인 페이지 보여주기");
 		String identNum = (String)session.getAttribute("identNum");
 		
 		//메인 공지사항
 		List<NoticeVO> notiList = notiService.selectMain();
+		logger.info("공지사항 목록 조회 결과={}",notiList.size());
 		
 		//미결함
+		PaymentSearchVO paysearchVo = new PaymentSearchVO();
 		paysearchVo.setIdentNum(identNum);
 		List<Integer> docNolist = paymentService.docNolist();
 		logger.info("docNolist={}",docNolist);
 		
-		List<PaylistViewVO> paylist = paymentService.selectUndecided2(paysearchVo,docNolist);
+		List<PaylistViewVO> paylist = paymentService.selectMain(paysearchVo,docNolist);
+		int paySize = paymentService.selectUndecided2(paysearchVo,docNolist).size();
 		logger.info("미결함 목록 조회 결과={}",paylist.size());
 		
+		//사내게시판
+		List<BoardVO> boardList = boardService.selectMain();
+		logger.info("사내게시판 목록 조회 결과={}",boardList.size());
+		
 		model.addAttribute("paylist",paylist);
+		model.addAttribute("paySize",paySize);
 		model.addAttribute("notiList",notiList);
+		model.addAttribute("boardList",boardList);
 	}
 	
 	@RequestMapping("/main/main_manager.do")

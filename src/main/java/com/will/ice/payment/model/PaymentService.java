@@ -36,4 +36,5 @@ public interface PaymentService {
 	int updateProgress(PaymentviewVO vo);
 	List<PaymentviewVO> selectRejected(PaymentSearchVO paysearchVo);
 	List<CommentviewVO> selectComment(int docNo);
+	List<PaylistViewVO> selectMain(PaymentSearchVO paysearchVo, List<Integer> docNolist);
 }
