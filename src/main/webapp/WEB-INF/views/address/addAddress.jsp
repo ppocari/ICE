@@ -14,7 +14,7 @@ $(function(){
 	/* 조직도에서 추가 */
 	$('#addFromOrgan').click(function(){
 		window.open('<c:url value="/address/organizeChart.do"/>', 'organ', 
-				'width=433, height=382, left=800, top=200, location=yes, resizable=yes');
+				'width=433, height=400, left=800, top=200, location=yes, resizable=yes');
 	});
 		
 });
