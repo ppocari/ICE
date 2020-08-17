@@ -84,8 +84,15 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="/write/editPayment.do",method=RequestMethod.GET)
-	public void editPayment_get(@RequestParam int docNo,Model model,HttpSession session) {
+	public void editPayment_get(@RequestParam int docNo,Model model,HttpSession session,
+			@RequestParam(required = false) String rew) {
 		logger.info("임시보관 항목 수정하기, 파라미터 docNo={}",docNo);
+		
+		if(rew.equals("t")) {
+			paymentService.rewritePay1(docNo);
+			paymentService.rewritePay2(docNo);
+			logger.info("기존 결재선, 사인파일 삭제");
+		}
 		
 		String identNum = (String)session.getAttribute("identNum");
 		logger.info("기안 목록 보여주기,사원번호={}",identNum);
