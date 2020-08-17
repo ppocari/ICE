@@ -16,6 +16,7 @@ import com.will.ice.board.model.BoardService;
 import com.will.ice.board.model.BoardVO;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.common.SearchVO;
+import com.will.ice.companyCard.model.ComcardService;
 import com.will.ice.document.model.DoctypeService;
 
 import com.will.ice.notice.model.NoticeService;
@@ -42,6 +43,8 @@ public class IceController {
 
 	@Autowired MessageService msgService;
 	@Autowired MemberService memService;
+	
+	@Autowired ComcardService comcardService;
 	
 	
 	@RequestMapping("/main/main_admin.do")
@@ -87,6 +90,8 @@ public class IceController {
 		//사내게시판
 		List<BoardVO> boardList = boardService.selectMain();
 		logger.info("사내게시판 목록 조회 결과={}",boardList.size());
+		
+		
 		
 		model.addAttribute("paylist",paylist);
 		model.addAttribute("paySize",paySize);

@@ -16,9 +16,6 @@
 		$("#dynamicTbody tr").click(function(){
 			var acccode = $(this).children().eq(0).text();
 			var acccode_name = $(this).children().eq(2).text();
-			 alert(acccode);
-			 alert(acccode_name);
-			 alert(loc_num);
 			$(opener.document).find("#acccode"+loc_num).val(acccode);
 			$(opener.document).find("#acccode_name"+loc_num).val(acccode_name);
 			self.close();

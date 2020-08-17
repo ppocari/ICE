@@ -74,8 +74,16 @@ public class MessageVO extends SearchVO {
 	public String toString() {
 		return "MessageVO [no=" + no + ", recMemNo=" + recMemNo + ", recName=" + recName + ", msgNo=" + msgNo
 				+ ", msgStatus=" + msgStatus + ", msgContent=" + msgContent + ", msgRegdate=" + msgRegdate
-				+ ", sendMemNo=" + sendMemNo + ", sendName=" + sendName + "]";
+				+ ", sendMemNo=" + sendMemNo + ", sendName=" + sendName + ", getSearchCondition()="
+				+ getSearchCondition() + ", getSearchKeyword()=" + getSearchKeyword() + ", getSearchUseYn()="
+				+ getSearchUseYn() + ", getCurrentPage()=" + getCurrentPage() + ", getBlockSize()=" + getBlockSize()
+				+ ", getFirstRecordIndex()=" + getFirstRecordIndex() + ", getLastRecordIndex()=" + getLastRecordIndex()
+				+ ", getRecordCountPerPage()=" + getRecordCountPerPage() + ", toString()=" + super.toString()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
 	}
+	
+	
+	
 	
 	
 	

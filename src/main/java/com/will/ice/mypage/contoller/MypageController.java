@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.will.ice.common.FileUploadUtil;
@@ -54,13 +55,27 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value = "/mypage.do", method = RequestMethod.POST)
-	public String mypage_post(@ModelAttribute MypageVO vo,
+	public String mypage_post(@ModelAttribute MypageVO vo, @RequestParam String email3,
 			HttpServletRequest request, HttpSession session, Model model) {
 		
 		String memNo = (String) session.getAttribute("identNum");
 		logger.info("회원정보 수정하기, 아이디 memNo={},vo={}",memNo,vo);
 		
+		logger.info("vo.getEmail2={}",vo.getEmail2());
+		if(vo.getEmail2().equals("etc")) {
+			vo.setEmail2(email3);
+			logger.info("vo.getEmail2={}",vo.getEmail2());
+		}
 		
+		if(vo.getHp2() == null ||vo.getHp2().isEmpty() || vo.getHp3() == null ||vo.getHp3().isEmpty()) {
+			vo.setHp1("");
+			vo.setHp2("");
+			vo.setHp3("");
+		}
+		if(vo.getEmail1()==null ||vo.getEmail1().isEmpty()) {
+			vo.setEmail1("");
+			vo.setEmail2("");
+		}
 		//파일 업로드 처리
 		List<Map<String, Object>> fileList
 		=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_PD_IMAGE);

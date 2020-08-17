@@ -19,9 +19,15 @@ public interface MessageDAO {
 	int updateDelteMsg(int msgNo);
 	int msgREALDeleteByNo(int no);
 	int msgREALDeleteByMsgNo(int msgNo);
-	List<MessageVO> selectMsgTrash(String recMemNo);
+	List<MessageVO> selectMsgTrash(MessageVO msgVO);
 	int msgDelBack(int msgNo);
 	int selectUnRead(String recMemNo);
 	
 	List<MessageVO> msgRecListOnlyN(MessageVO msgVO);
+	
+	int selectTotalMsgRecord(MessageVO msgVO);
+	
+	int selectTotalMsgSendRecord(MessageVO msgVO);
+	
+	int selectTotalMsgRecRecord(MessageVO msgVO);
 }

@@ -19,11 +19,7 @@
 		color: white;
 	}
 	
-	/*바 차트*/
-	div#chartdiv2 {
-	    margin-left: 50%;
-	    margin-top: -25%;
-	}
+
 	
 	/*툴팁*/
 	table.jqplot-table-legend{
@@ -134,8 +130,8 @@
  					</div>
 				<!-- 통계 API -->
 				<div id="ChartDiv">
-					<div id="chartdiv1" style="height:100%; width:40%; "></div>	
-					<div id="chartdiv2" style="height:400px; width:40%; position: absolute;"></div>	
+					<div id="chartdiv1" style="height:100%; width:40%; float: left; margin-left: 5%;"></div>	
+					<div id="chartdiv2" style="height:400px; width:40%; float: left; margin-left: 5%;"></div>	
 				</div>
 				
 				

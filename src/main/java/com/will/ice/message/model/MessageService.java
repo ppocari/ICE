@@ -20,11 +20,17 @@ public interface MessageService {
 
 	int msgREALDelete(List<MessageVO> msgList);
 
-	List<MessageVO> selectMsgTrash(String recMemNo);
+	List<MessageVO> selectMsgTrash(MessageVO msgVO);
 
 	int msgDelBack(List<MessageVO> msgList);
 
 	int selectUnRead(String recMemNo);
 	
 	List<MessageVO> msgRecListOnlyN(MessageVO msgVO);
+
+	int selectTotalMsgRecord(MessageVO msgVO);
+
+	int selectTotalMsgSendRecord(MessageVO msgVO);
+	
+	int selectTotalMsgRecRecord(MessageVO msgVO);
 }
