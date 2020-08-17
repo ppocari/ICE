@@ -84,12 +84,12 @@
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
-							<tr>
-								<td style="width: 20%;"><h6
-										class="m-0 font-weight-bold text-primary">분류</h6></td>
-								<td style="width: 80%; weight: 100px; width: 500px;"><select
-									name="category" class="form-control" style="width: 400px;">
-										<option value="전체">전체</option>
+						<tr>
+							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
+							</td>
+							<td style="width: 80%; weight: 100px; width: 500px;">
+								<select name="category" class="form-control" style="width:400px;">
+									<option value="전체">전체</option>
 										<option value="영업">영업</option>
 										<option value="기획">기획</option>
 										<option value="법무">법무</option>
@@ -127,21 +127,21 @@
 										<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 									</td>
 										<td>
-										<input type="file" id="fileName" name="upfile" value="${vo.orFileName}" /> 
-									<br> 
+										<input type="file" id="fileName" name="upfile" value="${vo.orFileName}" />
+									<br>
 										<span class="sp1"></span>
 										<span style="color: green; font-weight: bold"> 첨부파일을 새로
 											지정할 경우 기존 파일 ${vo.orFileName}는 삭제됩니다.</span>
 									</td>
 								</c:if>
-								
+
 								<c:if test="${empty vo.orFileName }">
 									<td style="width: 20%;">
 										<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 									</td>
 										<td>
-										<input type="file" id="fileName" name="upfile" value="${vo.orFileName}" style="margin-left: 40px;" /> 
-									<br> 
+										<input type="file" id="fileName" name="upfile" value="${vo.orFileName}" style="margin-left: 40px;" />
+									<br>
 										<span class="sp1"></span>
 									</td>
 								</c:if>
@@ -162,7 +162,7 @@
 							</tr>
 						</table>
 					</div>
-					
+
 				</form>
 			</div>
 		</div>
@@ -175,4 +175,3 @@
 
 <!-- End of Main Content -->
 <%@ include file="../inc/bottom.jsp"%>
-

@@ -2,6 +2,8 @@ package com.will.ice.message.model;
 
 import java.util.List;
 
+import com.will.ice.common.SearchVO;
+
 public interface MessageDAO {
 
 	int msgWrite_send_msg(MessageVO msgVO);
@@ -12,4 +14,14 @@ public interface MessageDAO {
 	List<MessageVO> msgRecList(MessageVO msgVO);
 	
 	MessageVO msgSelecyByno(int no);
+	
+	int msgUpdateRead(int msgNo);
+	int updateDelteMsg(int msgNo);
+	int msgREALDeleteByNo(int no);
+	int msgREALDeleteByMsgNo(int msgNo);
+	List<MessageVO> selectMsgTrash(String recMemNo);
+	int msgDelBack(int msgNo);
+	int selectUnRead(String recMemNo);
+	
+	List<MessageVO> msgRecListOnlyN(MessageVO msgVO);
 }

@@ -42,7 +42,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<ResKindVo> selectResKind() {
+	public List<ResKindVO> selectResKind() {
 		return dao.selectResKind();
 	}
 
@@ -52,7 +52,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public ResKindVo selectReserveKind(int rkNo) {
+	public List<ResManageVO> selectReserveKind(int rkNo) {
 		return dao.selectReserveKind(rkNo);
 	}
 
@@ -72,24 +72,80 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<ResReserveVO> selectReserve(ResReserveSearchVO rss) {
-		return dao.selectReserve(rss);
+	public List<ResReserveVO> selectReserveCondition(ResReserveSearchVO rss) {
+		return dao.selectReserveCondition(rss);
 	}
 
 
 	@Override
-	public int selectReserveCount() {
-		return dao.selectReserveCount();
+	public int selectReserveCountCondition(ResReserveSearchVO rssVo) {
+		return dao.selectReserveCountCondition(rssVo);
 	}
 
 	@Override
-	public int updateConfirmReserve(ResKindVo rkVo) {
-		return dao.updateConfirmReserve(rkVo);
+	public int updateReserveState(StringIntVo siVo) {
+		return dao.updateReserveState(siVo);
 	}
 
 	@Override
-	public int updateNoReasonReserve(ResKindVo rkVo) {
-		return dao.updateNoReasonReserve(rkVo);
+	public int updateReserveNoReason(StringIntVo rkVo) {
+		return dao.updateReserveNoReason(rkVo);
+	}
+
+	@Override
+	public List<ResReserveVO> selectReserveResNoHistory(ResReserveSearchVO rss) {
+		return dao.selectReserveResNoHistory(rss);
+	}
+
+	@Override
+	public int selectReserveResNoHistoryCount(StringIntVo siVo) {
+		return dao.selectReserveResNoHistoryCount(siVo);
+	}
+
+	@Override
+	public List<ResReserveVO> selectReserveRkNoHistory(ResReserveSearchVO rss) {
+		return dao.selectReserveRkNoHistory(rss);
+	}
+
+	@Override
+	public int selectReserveRkNoHistoryCount(StringIntVo siVo) {
+		return dao.selectReserveRkNoHistoryCount(siVo);
+	}
+
+	@Override
+	public List<ResReserveVO> selectResNoCalendar(int resNo) {
+		return dao.selectResNoCalendar(resNo);
+	}
+
+	@Override
+	public List<ResReserveVO> selectRkNoCalendar(int rkNo) {
+		return dao.selectRkNoCalendar(rkNo);
+				
+	}
+
+	@Override
+	public List<ResReserveVO> selectMyFutureReserve(ResReserveSearchVO rss) {
+		return dao.selectMyFutureReserve(rss);
+	}
+
+	@Override
+	public List<ResReserveVO> selectMyPastReserve(ResReserveSearchVO rss) {
+		return dao.selectMyPastReserve(rss);
+	}
+
+	@Override
+	public List<ResReserveVO> selectMyAllReserve(ResReserveSearchVO rss) {
+		return dao.selectMyAllReserve(rss);
+	}
+
+	@Override
+	public int selectMyAllReserveCount(StringIntVo siVo) {
+		return dao.selectMyAllReserveCount(siVo);
+	}
+
+	@Override
+	public int selectMyFutureReserveCount(StringIntVo siVo) {
+		return dao.selectMyFutureReserveCount(siVo);
 	}
 
 

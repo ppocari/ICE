@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../inc/top.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/inc/top.do"/> 
 <style type="text/css">
 .data {
 	position: relative;
@@ -95,17 +96,9 @@ input#email1 {
 	height: 45px;
 }
 
-#mypageFrm {
-	padding: 60px;
-}
 
-input#mypageEdit {
-	width: 50%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	margin-left: 4%;
-}
+
+
 
 .form-group {
 	
@@ -229,20 +222,19 @@ input#mypageEdit {
 	<div class="row">
 		<!-- Area Chart -->
 		<div class="col-xl-9 ">
-			<div class="card shadow mb-4">
-				<div class="row">
+
+			
 					<!-- Area Chart -->
-					<div class="col-xl-12 ">
+					
 						<div class="card shadow mb-4" style="height: fit-content;">
 							<form name="mypageFrm" id="mypageFrm" method="post"
 								enctype="multipart/form-data"
 								action="<c:url value='/mypage/mypage.do'/>">
 								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 									<h6 class="m-0 font-weight-bold text-primary">내 정보</h6>
-									<div id="btnSubmit">
-										<input type="submit" class="btn btn-primary" id="mypageEdit"
+									<input type="submit" class="btn btn-primary" id="mypageEdit"
 											value="수정하기">
-									</div>
+									
 
 								</div>
 								<div class="card-body">
@@ -374,10 +366,10 @@ input#mypageEdit {
 
 						</div>
 					</div>
-				</div>
+				
 			</div>
-		</div>
-	</div>
+		
+	
 </div>
 
 <!-- /.container-fluid -->
