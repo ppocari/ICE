@@ -353,7 +353,7 @@ public class PaymentController {
 	
 	@RequestMapping("/download.do")
 	public ModelAndView download(@RequestParam int docNo,@RequestParam String fileName,
-			HttpServletRequest request,Model model) {
+			HttpServletRequest request) {
 		//첨부파일 다운로드
 		//1
 		logger.info("다운로드 파라미터, docNo={}, fileName={}", docNo, fileName);
