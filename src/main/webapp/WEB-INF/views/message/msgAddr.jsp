@@ -8,13 +8,11 @@
 <title>Insert title here</title>
 <%@ include file="../inc/all_css_js.jsp" %>
  <style type="text/css">
- 	table, table tr, table th, table td{
- 		border: 1px solid black; 
- 	}
+
  	
  	table {
 		width: 98%;
-		height: 400px;
+		height:300px;
 	}
 	
 	
@@ -39,7 +37,7 @@
 						var str="";
 						$.each(res, function(idx, item){	
 							
-							str+= "<li class='list-group-item list-group-item-action' style='width:190px;' id='result_MAG"+item.memNo+"' value='"+item.memNo+"'>";
+							str+= "<li class='list-group-item list-group-item-action' style='width:100%;' id='result_MAG"+item.memNo+"' value='"+item.memNo+"'>";
 							str+= "<input type='checkbox' style='margin-left:5px;'value='"+item.memNo+"'>"
 							str+= item.name;
 							if(item.deptName != null ){
@@ -148,7 +146,7 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-7 " style="margin-top: 30px;">
+		<div class="col-xl-4 " style="margin-top: 30px;">
 			<div class="card shadow mb-4" style="height: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="msgAddrFrm" method="post" action="<c:url value='/message/msgClose.do' />">
@@ -161,8 +159,8 @@
 					<!-- Card Body -->
 					<input type="hidden" id = "openAddrMsg_memNo" name = "memNo" value="${sessionScope.identNum }">
 					<div class="card-body" style="text-align: center">
-						<table >
-							<tr style="height: 70px;" >
+						<table class="table table-condensed " >
+							<tr style="height: 50px;" >
 								<th style="width: 37%">주소록 그룹</th> 
 								<th style="width: 63%">검색</th>
 								<!-- <th style="width: 40%" rowspan="2">
@@ -185,7 +183,7 @@
 								</td>
 								<td>
 									<div id="search_msgAddrGroup">
-										<ul id="result_msgAddrGroup" style="width: 80%;   height: 320px; padding-left: 0px; overflow:scroll">
+										<ul id="result_msgAddrGroup" style="height:320px;  padding-left: 0px; overflow:scroll; overflow-x: hidden ">
 										
 										</ul>
 									</div>

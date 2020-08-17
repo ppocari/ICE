@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.will.ice.common.PaymentSearchVO;
 import com.will.ice.document.model.DoctypeService;
 import com.will.ice.document.model.DoctypeVO;
+import com.will.ice.member.model.MemberService;
+import com.will.ice.member.model.MemberVO;
+import com.will.ice.message.model.MessageService;
+import com.will.ice.message.model.MessageVO;
 import com.will.ice.payment.model.PaylistViewVO;
 import com.will.ice.payment.model.PaymentService;
 
@@ -24,6 +28,8 @@ public class IceController {
 	
 	@Autowired PaymentService paymentService;
 	@Autowired DoctypeService doctypeService;
+	@Autowired MessageService msgService;
+	@Autowired MemberService memService;
 	
 	@RequestMapping("/main/main_admin.do")
 	public void main_admin() {
@@ -59,5 +65,31 @@ public class IceController {
 	@RequestMapping("/log/login.do")
 	public void login_Get() {
 		logger.info("로그인 페이지 보여주기");
+	}
+	
+	@RequestMapping("/inc/top.do")
+	public void top(HttpSession session, Model model) {
+		logger.info("top 메신저 보여주기");
+		String identNum = (String)session.getAttribute("identNum");
+		
+		int msgCount = msgService.selectUnRead(identNum);
+		logger.info("msgCount={}",msgCount);
+		
+		MessageVO msgVO = new MessageVO();
+		msgVO.setRecMemNo(identNum);
+		List<MessageVO> msgList = msgService.msgRecListOnlyN(msgVO);
+		
+		MemberVO senderImgMemVO = new MemberVO();
+		for(int i=0; i<msgList.size(); i++) {
+			MessageVO senderImgVO = msgList.get(i);
+						
+			senderImgMemVO = memService.selectMember(senderImgVO.getSendMemNo());
+		}
+		
+				
+		model.addAttribute("senderImgMemVO", senderImgMemVO);
+		model.addAttribute("msgCount", msgCount);
+		model.addAttribute("msgList", msgList);
+		
 	}
 }

@@ -23,12 +23,15 @@
 		select * from message_view
 		where sendmemno = #{sendMemNo}
 		and msgstatus != 'D'
+		order by msgregdate	desc
+		
 	</select>
 	
 	<select id="msgRecList" parameterType="messageVO" resultType="messageVO">
 		select * from message_view
 		where recmemno = #{recMemNo}
 		and msgstatus != 'D'
+		order by msgregdate desc
 	</select>
 	
 	<select id="msgSelecyByno" parameterType="int" resultType="messageVO">
@@ -63,6 +66,19 @@
 		select * from message_view
 		where recmemno = #{recMemNo}
 		and msgstatus = 'D' 
+	</select>
+	
+	<select id="selectUnRead" parameterType="String" resultType="int">
+		select count(*) from message_view
+		where msgstatus = 'N' 
+		and recmemno = #{recMemNo}
+	</select>
+	
+	<select id="msgRecListOnlyN" parameterType="String" resultType="messageVO">
+		select * from message_view
+		where recmemno = #{recMemNo}
+		and msgstatus = 'N'
+		order by msgregdate desc
 	</select>
 </mapper>
  

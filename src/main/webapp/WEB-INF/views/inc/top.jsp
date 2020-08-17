@@ -291,7 +291,6 @@
 				<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="<c:url value='/companyCard/MycomCard.do'/>">내 법인카드</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardList.do'/>">법인카드 조회</a>
 						<a class="collapse-item" href="<c:url value='/companyCard/comCardStatistic.do'/>">법인카드 통계</a>
 						<%
@@ -400,7 +399,7 @@
 						<i class="fa fa-bars"></i>	<!-- 쪽지 이동 -->
 					</button>
 
-					<!-- Topbar Search -->
+					<!--검색하는 거  Topbar Search 
 					<form
 						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 						<div class="input-group">
@@ -413,7 +412,7 @@
 								</button>
 							</div>
 						</div>
-					</form>
+					</form> -->
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
@@ -497,61 +496,42 @@
 							aria-expanded="false"> 
 							<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages --> <span
-								class="badge badge-danger badge-counter">7<!-- 아직 안읽은 쪾지 개수 count(*)해서 뿌려주기  --></span>
+								class="badge badge-danger badge-counter">${msgCount}<!-- 아직 안읽은 쪾지 개수 count(*)해서 뿌려주기  --></span>
 						</a> <!-- Dropdown - Messages -->
 							<div
 								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="messagesDropdown">
 								<h6 class="dropdown-header">Message Center</h6>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-										<div class="status-indicator bg-success"></div>
-									</div>
+								
+								<c:if test="${empty msgList }">								
 									<div class="font-weight-bold">
-										<div class="text-truncate">Hi there! I am wondering if
-											you can help me with a problem I've been having.</div>
-										<div class="small text-gray-500">Emily Fowler Â· 58m</div>
+										<div class="text-truncate">받은 쪽지가 없습니다.</div>
+	
 									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-										<div class="status-indicator"></div>
-									</div>
-									<div>
-										<div class="text-truncate">I have the photos that you
-											ordered last month, how would you like them sent to you?</div>
-										<div class="small text-gray-500">Jae Chun Â· 1d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-										<div class="status-indicator bg-warning"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Last month's report looks
-											great, I am very happy with the progress so far, keep up the
-											good work!</div>
-										<div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-										<div class="status-indicator bg-success"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Am I a good boy? The reason I
-											ask is because someone told me that people say this to all
-											dogs, even if they aren't good...</div>
-										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
-									</div>
-								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="<c:url value='/message/messageList.do'/>">Read More Messages<!-- 받은 쪽지함으로 이동 --></a>
-							</div></li>
+								
+								</c:if>
+								<c:if test="${!empty msgList }">
+									<c:forEach var="mvo_top" items="${msgList }">
+										<a class="dropdown-item d-flex align-items-center" href="#">
+										<div class="dropdown-list-image mr-3">
+											
+											<img class="rounded-circle"
+												src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+											<div class="status-indicator bg-success"></div>
+										</div>
+										<div class="font-weight-bold">
+											<div class="text-truncate">${ mvo_top.msgContent}</div>
+											<div class="small text-gray-500">${ mvo_top.msgRegdate}</div>
+										</div>
+									
+									</a> 
+									</c:forEach>
+									
+								</c:if>
+								<a class="dropdown-item text-center small text-gray-500"
+									href="<c:url value='/message/msgRecList.do'/>">받은 쪽지함으로 이동<!-- 받은 쪽지함으로 이동 --></a>
+								</div>
+							</li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
 

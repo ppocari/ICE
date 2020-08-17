@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../inc/top.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <script type="text/javascript">
 	$(function(){
@@ -10,7 +11,7 @@
 			
 			console.log(memNo);
 			window.open('/ice/message/msgAddr.do?memNo='+memNo,'mem',
-			'width=780,height=600,left=50,top=50,location=yes,resizable=yes');			
+			'width=650,height=550,left=50,top=50,location=yes,resizable=yes');			
 		});
 		
 	

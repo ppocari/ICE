@@ -3,7 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -72,21 +73,7 @@
 				<form name="msgRecListFrm" method="post"  
 				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">			
 					<!-- 검색기능 -->
-						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-				
-							<div class="search" style="margin-right: 20px; text-align:right;">
-								<label for="hiredate1" style="margin-right: 20px;"></label>
-								<select class="form-control" style=" width: 100px;
-									height: 30px; font-size: 13px; display: inline-block;">
-								 	 <option>내용</option>
-									 <option>보낸사람</option>
-								</select>
-								<input type="text" class="form-control" 
-									placeholder="검색어를 입력하세요" style=" width: 180px; 
-										height: 30px; font-size: 13px; display: inline-block;">
-								<button type="button" class="btn btn-primary ">검색</button>
-								
-							</div>
+						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">										
 							<div style="float: right">
 								<input type="button" id="btDel" class="btn btn-primary " value="휴지통으로 이동">				
 								<a href="<c:url value='/message/msgWrite.do'/>">
@@ -97,7 +84,7 @@
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style=" height:420px;">
+						<div  style=" height:570px; overflow: scroll; overflow-x: hidden; ">
 							<table class="table table-bordered table-condensed table-hover" id="dynamicTable">
 								<thead>
 									<tr>

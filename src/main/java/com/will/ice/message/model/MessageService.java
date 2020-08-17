@@ -2,6 +2,8 @@ package com.will.ice.message.model;
 
 import java.util.List;
 
+import com.will.ice.common.SearchVO;
+
 public interface MessageService {
 
 	int msgWrite_send(MessageVO msgVO);
@@ -21,4 +23,8 @@ public interface MessageService {
 	List<MessageVO> selectMsgTrash(String recMemNo);
 
 	int msgDelBack(List<MessageVO> msgList);
+
+	int selectUnRead(String recMemNo);
+	
+	List<MessageVO> msgRecListOnlyN(MessageVO msgVO);
 }

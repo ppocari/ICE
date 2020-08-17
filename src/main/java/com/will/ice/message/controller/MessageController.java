@@ -21,6 +21,9 @@ import com.will.ice.address.model.AddressGroupVO;
 import com.will.ice.address.model.AddressService;
 import com.will.ice.address.model.AddressVO;
 import com.will.ice.common.Depart_posi_dateVO;
+import com.will.ice.common.PaginationInfo;
+import com.will.ice.common.SearchVO;
+import com.will.ice.common.Utility;
 import com.will.ice.member.model.MemberService;
 import com.will.ice.member.model.MemberVO;
 import com.will.ice.message.model.MessageListVO;
@@ -121,14 +124,16 @@ public class MessageController {
 
 	
 	@RequestMapping(value="/msgRecList.do", method = RequestMethod.GET)
-	public void msgRecList(HttpSession session, Model model) {
+	public void msgRecList( HttpSession session, Model model) {
 		logger.info("받은 쪽지함 실행 ");
+	
 		String memNo = (String)session.getAttribute("identNum");
 		MessageVO msgvo = new MessageVO();
 		msgvo.setRecMemNo(memNo);
 		logger.info("msgvo={}",msgvo);
+		
 		 List<MessageVO> msgList = msgService.msgRecList(msgvo);
-		 
+		 	 
 		 model.addAttribute("msgList", msgList);
 	}
 	

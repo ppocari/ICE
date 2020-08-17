@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.will.ice.common.SearchVO;
 import com.will.ice.message.controller.MessageController;
 
 @Service
@@ -130,6 +131,16 @@ public class MessageServiceImpl implements MessageService {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}	
 		return cnt;
+	}
+
+	@Override
+	public int selectUnRead(String recMemNo) {
+		return msgDao.selectUnRead(recMemNo);
+	}
+
+	@Override
+	public List<MessageVO> msgRecListOnlyN(MessageVO msgVO) {
+		return msgDao.msgRecListOnlyN(msgVO);
 	}
 
 	

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.will.ice.common.SearchVO;
+
 @Repository
 public class MessageDAOMybatis implements MessageDAO{
 
@@ -71,6 +73,16 @@ public class MessageDAOMybatis implements MessageDAO{
 	@Override
 	public int msgDelBack(int msgNo) {
 		return sqlsession.update(namespace+"msgUpdateRead", msgNo);
+	}
+
+	@Override
+	public int selectUnRead(String recMemNo) {
+		return sqlsession.selectOne(namespace+"selectUnRead", recMemNo);
+	}
+
+	@Override
+	public List<MessageVO> msgRecListOnlyN(MessageVO msgVO) {
+		return sqlsession.selectList(namespace+"msgRecListOnlyN", msgVO);
 	}
 
 	

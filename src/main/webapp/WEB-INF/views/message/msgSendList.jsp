@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../inc/top.jsp" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 
 <style>
 .table td {
@@ -40,10 +40,22 @@
 		$("#moveTomsgWrite").click(function(){
 			
 		});
-		
+		function pageProc(curPage){
+			$('input[name=currentPage]').val(curPage);
+			$('form[name=frmPage]').submit();
+		}
 	});
 </script>
 <!-- Begin Page Content -->
+
+<form action="<c:url value='/message/msgSendList.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="currentPage">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}">	
+</form>
 
 <div class="container-fluid">
 
@@ -60,37 +72,24 @@
 		<div class="col-xl-10 " >
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
-				<form name="memRegisterFrm" method="post"  
-				action="<c:url value='/message/messageList.do?searchKeyWord=all'/> ">
-					
+			
 					<!-- 검색기능 -->
-						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">			
-							<div class="search" style="margin-right: 20px; text-align:right;">
-								<label for="hiredate1" style="margin-right: 20px;"></label>
-								<select class="form-control" style=" width: 100px;
-									height: 30px; font-size: 13px; display: inline-block;">
-								 	 <option>전체</option>
-								 	 <option>내용</option>
-									 <option>받는사람</option>
-								</select>
-								<input type="text" class="form-control" 
-									placeholder="검색어를 입력하세요" style=" width: 180px; 
-										height: 30px; font-size: 13px; display: inline-block;">
-								<button type="button" class="btn btn-primary btn-sm">검색</button>
-								
-							</div>
+						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">									
+							
+							<div style="float: right">
 							<a href="<c:url value='/message/msgWrite.do'/>">
 									<input type="button"   class="btn btn-info" value="쪽지쓰기">
 								</a>
+							</div>
 						</div>
 							
-					</form>	
+					
 				
 					
 					
 					<!-- Card Body -->
 					<div class="card-body">
-						<div  style=" height:420px;">
+						<div  style=" height:570px; overflow: scroll; overflow-x: hidden; ">
 								<table class="table table-bordered table-condensed table-hover" id="dynamicTable">
 								<colgroup>
 									<col style="width:5%;"/>
@@ -140,8 +139,7 @@
 						
 							
 					</div>		
-				
-				
+					
 				
 			</div>
 		</div>
