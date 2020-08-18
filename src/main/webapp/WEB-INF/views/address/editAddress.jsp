@@ -51,9 +51,14 @@ $(function(){
 
 </style>
 </head>
-<body>
+<body style="overflow: hidden;">
 <section>
 	<article>
+	<!-- Area Chart -->
+		<div class="card shadow mb-4" style="width: 99%;">
+		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #F8F9FC;">
+			<h6 class="m-0 font-weight-bold text-primary">주소록 수정하기</h6>
+		</div>
 		<div class="divForm">
 			<form name="editForm" method="post" action="<c:url value='/address/editAddress.do'/>">
 				<fieldset>
@@ -143,6 +148,7 @@ $(function(){
 					</div>
 				</fieldset>
 			</form>
+		</div>
 		</div>
 	</article>
 </section>

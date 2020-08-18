@@ -127,8 +127,7 @@ h6{
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">주소록</h6>
 						<div style="float: right">
-							<button type="button" class="btn btn-info"
-							 >주소 내보내기</button>
+							<button type="button" class="btn btn-info" onclick="<c:url value='/addressExcel.do' />">주소 내보내기</button>
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
