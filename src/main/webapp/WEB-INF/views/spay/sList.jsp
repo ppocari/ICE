@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/inc/top.do"/> 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -135,9 +136,9 @@
 				<li class="page-item"><a class="page-link" href="#"
 					onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a></li>
 			</c:if>
-			<!--  페이지 번호 끝 -->
 		</ul>
 	</nav>
+	<!--  페이지 번호 끝 -->
 </div>
 
 <%@ include file="../inc/bottom.jsp"%>

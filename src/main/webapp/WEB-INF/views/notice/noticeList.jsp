@@ -25,6 +25,13 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+
 <script type="text/javascript">
 	function pageProc(curPage){
 		$('input[name=currentPage]').val(curPage);
@@ -40,14 +47,14 @@
 		});
 	});
 </script>
-<!-- Begin Page Content -->
-
-<form action="<c:url value='/notice/noticeList.do'/>" name="frmPage"
-	method="post">
-	<input type="hidden" name="currentPage"> <input type="hidden"
-		name="searchCondition" value="${param.searchCondition}"> <input
-		type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+<!-- 페이징 처리를 위한 form 시작-->
+<form name="frmPage" method="post"
+	action="<c:url value='/notice/noticeList.do'/>">
+	<input type="hidden" name="searchCondition" value="${param.searchCondition}">
+	<input type="hidden" name="searchKeyword" value="${param.searchKeyword}"> 
+	<input type="hidden" name="currentPage">
 </form>
+<!-- 페이징 처리 form 끝 -->
 
 <div class="container-fluid">
 
@@ -73,16 +80,14 @@
 								 >공지사항 작성</button>
 							</a>
 						</c:if>
-
 					</div>
-
 
 					<!-- Card Body -->
 					<div  style="height: 400px;">
 						<div class="chart-area" style="height: 450px; font-size: 13px;">
 
-							<div class="divList" style="width:98%;margin-left: 1%;margin-top: 1%;">
-								<table class="table table-bordered table-hover" id="dynamicTable">
+							<div style="width:98%;margin-left: 1%;margin-top: 1%;">
+								<table class="table table-bordered table-hover" id="dynamicTable" style="font-size: 12pt;">
 									<colgroup>
 										<col style="width:15%;"/>
 										<col style="width:60%;"/>
@@ -121,7 +126,7 @@
 														alt="new이미지">
 												</c:if>
 											</td>
-											<td style="font-size: 10px;"><fmt:formatDate
+											<td style="font-size: 15px;"><fmt:formatDate
 													value="${vo.regdate}" pattern="yyyy-MM-dd-HH:mm" /></td>
 											<td>${vo.readcount}</td>
 										</tr>
@@ -129,9 +134,7 @@
 								</tbody>
 							</table>
 						</div>
-
 					</div>
-
 				</div>
 			</div>
 			<!-- 검색기능 -->
@@ -157,38 +160,43 @@
 					</form>
 				</div>
 			</div>
-			<div class="divPage" style="text-align: center;">
-				<!-- 페이지 번호 추가 -->
-				<nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
-						<c:if test="${pagingInfo.firstPage>1 }">
-							<li class="page-item disabled"><a class="page-link"
-								href="#" onclick="pageFunc(${pagingInfo.firstPage-1})">previous</a></li>
-						</c:if>
-
-						<!-- [1][2][3][4][5][6][7][8][9][10] -->
-						<c:forEach var="i" begin="${pagingInfo.firstPage }"
-							end="${pagingInfo.lastPage }">
-							<c:if test="${i==pagingInfo.currentPage }">
-								<li class="page-item active"><a class="page-link"
-									href="#">${i } </a></li>
-							</c:if>
-							<c:if test="${i!=pagingInfo.currentPage }">
-								<li class="page-item"><a class="page-link" href="#"
-									onclick="pageFunc(${i})">${i }</a></li>
-							</c:if>
-						</c:forEach>
-
-						<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
-							<li class="page-item"><a class="page-link" href="#"
-								onclick="pageFunc(${pagingInfo.lastPage+1})">Next</a></li>
-						</c:if>
-						<!--  페이지 번호 끝 -->
-					</ul>
-				</nav>
-			</div>
 		</div>
 	</div>
+</div>
+<div class="divPage" style="text-align: center;">
+	<!-- 페이지 번호 추가 -->
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<c:if test="${pagingInfo.firstPage>1 }">
+				<li class="page-item disabled"><a class="page-link" href="#"
+					onclick="pageProc(${pagingInfo.firstPage-1})">previous</a></li>
+			</c:if>
+
+			<!-- [1][2][3][4][5][6][7][8][9][10] -->
+			<c:forEach var="i" begin="${pagingInfo.firstPage }"
+				end="${pagingInfo.lastPage }">
+				<c:if test="${i==pagingInfo.currentPage }">
+					<li class="page-item active">
+						<a class="page-link" href="#">${i }</a>
+					</li>
+				</c:if>
+				<c:if test="${i!=pagingInfo.currentPage }">
+					<li class="page-item">
+						<a class="page-link" href="#" onclick="pageProc(${i})">${i}</a>
+					</li>
+				</c:if>
+			</c:forEach>
+
+			<!-- 다음 블럭으로 이동 ▶ -->
+			<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
+				<li class="page-item">
+					<a class="page-link" href="#" onclick="pageProc(${pagingInfo.lastPage+1})">Next</a>
+				</li>
+			</c:if>
+			
+		</ul>
+	</nav>
+	<!--  페이지 번호 끝 -->
 </div>
 
 <!-- /.container-fluid -->
