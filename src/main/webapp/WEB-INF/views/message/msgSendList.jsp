@@ -58,20 +58,20 @@ function pageProc(curPage){
 	</div>
 
 	<!-- Content Row -->
-
+<form name="msgRecListFrm" method="post"
+	action="<c:url value='/message/msgSendList.do'/> ">
+	<input type="hidden" name="currentPage" > <input
+		type="hidden" name="searchCondition"
+		value="${param.searchCondition}"> <input type="hidden"
+		name="searchKeyword" value="${param.searchKeyword}">
+</form>
 	<div class="row">
 
 		<!-- Area Chart -->
 		<div class="col-xl-10 ">
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
-				<form name="msgRecListFrm" method="post"
-					action="<c:url value='/message/msgSendList.do'/> ">
-					<input type="hidden" name="currentPage" > <input
-						type="hidden" name="searchCondition"
-						value="${param.searchCondition}"> <input type="hidden"
-						name="searchKeyword" value="${param.searchKeyword}">
-				</form>
+				
 				<form name="msgRecListFrm" method="post"
 					action="<c:url value='/message/msgSendList.do'/> ">
 					

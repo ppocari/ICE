@@ -74,7 +74,7 @@
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 
-						<c:if test="${sessionScope.identNum == '999999' }">
+						<c:if test="${sessionScope.posCode == '999' }">
 							<a href="<c:url value='/notice/noticeWrite.do'/>">
 								<button type="button" class="btn btn-info" style="float: right;"
 								 >공지사항 작성</button>
