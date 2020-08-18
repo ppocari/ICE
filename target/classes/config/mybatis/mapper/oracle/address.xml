@@ -153,6 +153,45 @@
 		select * from v_address
 		where memno = #{memNo} and adgno = #{adgNo}
 	</select>
+	
+	<select id="selectAddress2" parameterType="AddressSearchVo" resultType="AddressVo">
+	select * from(
+		select rownum as RNUM, A.*
+		from (
+		   	select * from v_address
+            where memno = #{memNo}
+            <!-- <if test='userId == "hong"'>  (O) -->
+		     	<if test='searchCondition == "kor"'> 
+		     		<if test='searchKeyword == "하"'>
+		     		and name >= #{searchKeyword}
+		     		</if>
+		     		<if test='searchKeyword != "하"'>
+			     	<![CDATA[ 
+						and name >= #{searchKeyword} and name < #{nextKeyword}]]>
+		     		</if>
+		        </if>
+		      	<if test='searchCondition == "eng"'> 
+		      	<![CDATA[ 
+					and name >= 'A' and name < 'Z'
+					or name >= 'a' and name < 'z']]>
+		        </if> 
+		       <if test='searchCondition == "num"'> 
+				<![CDATA[ 
+				and name >='0' and name <='9']]>
+		        </if> 
+		       <if test='searchCondition == "favorite"'> 
+			 	and isfavorite = 'yes'
+		        </if> 
+		        <if  test='isTrash ==null or isTrash ==""'>
+		        and isDeleted is null
+		        </if>
+		        <if  test='isTrash !=null and isTrash !=""'>
+		        and isDeleted is not null
+		        </if> 
+		    order by name
+		)A
+	)
+	</select>
 </mapper>
 
 
