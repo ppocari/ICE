@@ -35,31 +35,31 @@
 
 <script type="text/javascript">
 $(function(){
-	$("input[name=comEditBt]").click(function(){ 
+	$("input[name=comEditBt]").click(function(){
 		if($(this).parent().next().css('display','none')){
 			$(this).parent().next().css('display','inline-block');
 		}
 
-	});	
-		
+	});
+
 	$('form[name=writeCommentForm]').submit(function() {
-		
+
 		if ($('#writeCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#writeCon').focus();
 			event.preventDefault();
 		}
 	});
-	
+
 	$('form[name=editCommentForm]').submit(function() {
-		
+
 		if ($('#editCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#editCon').focus();
 			event.preventDefault();
 		}
 	});
-});	
+});
 function del(noticeNo) {
 	var chk = confirm("정말 삭제하시겠습니까?");
 	if(chk) {
@@ -74,7 +74,7 @@ function del(noticeNo) {
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-7 ">
+		<div class="col-xl-10 ">
 			<div>
 				<div class="card shadow mb-4" style="height: 60%;">
 					<!-- Card Header - Dropdown -->
@@ -86,6 +86,17 @@ function del(noticeNo) {
 						<a href="<c:url value='/board/boardList.do'/>">
 							<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 						</a>
+						<!-- 등록 버튼 -->
+						<div>
+							<c:if test="${sessionScope.identNum == vo.memNo }">
+								<a
+									href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
+									<input type="button" value="수정" class="btn btn-primary btn-sm">
+								</a>
+								<input type="button" id="delNoBt" name="delNoBt" value="삭제"
+									class="btn btn-primary btn-sm" onclick="del(${vo.noticeNo})">
+							</c:if>
+						</div>
 					</div>
 
 
@@ -98,7 +109,7 @@ function del(noticeNo) {
 							</div>
 							<div style="float: right; margin-top: 10px;">
 								<span style="font-size: 14px; display: inline-block; text-align: left; vertical-align: middle;">
-									관리자</span> 
+									관리자</span>
 									<span style="vertical-algin: middle; opacity: .4;">
 									<fmt:formatDate value="${vo.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" />
@@ -131,14 +142,6 @@ function del(noticeNo) {
 
 					<div style="margin-left: auto; background-color: white;"
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<c:if test="${sessionScope.identNum == vo.memNo }">
-							<a
-								href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
-								<input type="button" value="수정" class="btn btn-primary btn-sm">
-							</a>
-							<input type="button" id="delNoBt" name="delNoBt" value="삭제"
-								class="btn btn-primary btn-sm" onclick="del(${vo.noticeNo})">
-						</c:if>
 						<a href="<c:url value='/notice/noticeList.do'/>"> <input
 							type="button" value="목록" class="btn btn-primary btn-sm">
 						</a>
@@ -160,7 +163,7 @@ function del(noticeNo) {
 									${comment.content} </span> <span
 									style="vertical-algin: middle; opacity: .4; font-size: 11px;">
 									<fmt:formatDate value="${comment.regdate}"
-										pattern="yyyy-MM-dd-HH:mm" /> 
+										pattern="yyyy-MM-dd-HH:mm" />
 										<c:if test="${sessionScope.identNum == comment.memNo }">
 											<form name="DeleteCommentForm" method="post"
 												action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
@@ -170,7 +173,7 @@ function del(noticeNo) {
 												<button type="submit" id="comDelBt" style="font-size: 9px;"
 													class="btn btn-primary btn-sm">삭제</button>
 											</form>
-										
+
 										<div id="comEdit" style="display: none;">
 											<form name="editCommentForm" method="post"
 												action="<c:url value='/noticeComment/noticeCommentEdit.do'/>">

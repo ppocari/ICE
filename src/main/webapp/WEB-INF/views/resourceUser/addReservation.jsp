@@ -223,7 +223,6 @@
 						}); //ajax
 					}); //$('#startDay').change(function(){
 				}, //dateClick: function(info) {
-	      
 				// 한국어 설정
 				locale: 'ko'
     		}); //var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -425,7 +424,9 @@
 	}
 	
 	#RESbottom{
-	clear:both;
+		position:absolute;
+	width:100%;
+    bottom:0;
 }
 
 article > div {

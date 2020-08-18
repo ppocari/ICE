@@ -41,10 +41,10 @@ public class EmailController {
 		
 		logger.info("메일 발송 처리");
 		
+		int result = memberService.idCheck(memNo);
+		
 		String msg="비밀번호 발송 실패", url="/log/findPwd.do";
-		if(memNo=="0") {
-			msg = "해당 사원번호가 없습니다.";
-		}else {
+		if(memNo!="0") {
 			logger.info("사원번호 확인 ={}",memNo);
 			logger.info("사원메일 확인 ={}",email);
 
@@ -74,7 +74,8 @@ public class EmailController {
 				e.printStackTrace();
 				logger.info("이메일 발송 실패!");
 			}
-			
+		}else {
+			msg = "해당 사원번호가 없습니다.";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

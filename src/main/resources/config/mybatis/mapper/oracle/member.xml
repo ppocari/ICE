@@ -18,6 +18,11 @@
 		where memno = #{memNo} and pwd = #{pwd}
 	</select>
 	
+	<select id="idCheck" parameterType="string" resultType="int">
+		select memno from mypage_mem
+		where memno = #{memNo}
+	</select>
+	
 	<insert id="registerMulti" parameterType="memberVO">
 		insert into member(memNo, pwd, name, ssn1, ssn2, HIREDATE ,deptcode, POSCODE , salary)
 		values(#{memNo}, #{pwd} ,#{name}, #{ssn1}, #{ssn2}, #{hiredate}, #{deptCode}, #{posCode}, #{salary})

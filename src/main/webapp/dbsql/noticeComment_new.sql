@@ -9,13 +9,13 @@ CREATE TABLE noticeComment (
 	regdate DATE DEFAULT sysdate /* ¿€º∫¿œ */
 );
 
-create view noticeCommentView
+create or replace view noticeCommentView
 as
 select c.No,c.noticeNo,c.MEMNO,m.name, c.content, c.regdate from 
 noticeComment c join member m
 on c.memNo = m.memNo;
 
---drop sequence noticeComment_seq;
+drop sequence noticeComment_seq;
 create sequence noticeComment_seq
 start with 1
 increment by 1;

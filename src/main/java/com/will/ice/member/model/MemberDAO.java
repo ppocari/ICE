@@ -21,4 +21,6 @@ public interface MemberDAO {
 	
 	int newPwd(MemberVO memVo);
 	
+	int idCheck(String memno);
+	
 }
