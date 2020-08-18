@@ -123,11 +123,11 @@ h6{
 	<article>
 		<div class="col-xl-10 ">
 			<div class="card shadow mb-4">
-				<form name="addressList" method="post" action="">
+				<form name="addressList" method="post">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">주소록</h6>
 						<div style="float: right">
-							<button type="button" class="btn btn-info" onclick="<c:url value='/addressExcel.do' />">주소 내보내기</button>
+							<button type="submit" class="btn btn-info" formaction="<c:url value='/addressExcel.do' />">주소 내보내기</button>
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

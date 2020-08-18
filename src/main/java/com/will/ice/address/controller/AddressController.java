@@ -67,7 +67,7 @@ public class AddressController {
 		//2
 		adSearchVo.setMemNo(memNo);
 		
-		logger.info("처리 후 AddressSearchVo={}", adSearchVo);;
+		logger.info("처리 후 AddressSearchVo={}", adSearchVo);
 		List<AddressVO> adList=service.selectAddress(adSearchVo);
 		logger.info("주소록 조회 결과, list.size={}", adList.size());
 
