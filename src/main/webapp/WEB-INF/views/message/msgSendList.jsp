@@ -32,6 +32,7 @@
 function pageProc(curPage){
 	$('input[name=currentPage]').val(curPage);
 	$('form[name=msgRecListFrm]').submit();
+	
 }
 
 	$(function(){
@@ -41,10 +42,6 @@ function pageProc(curPage){
 			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
 			
 		});		
-
-		$("#moveTomsgWrite").click(function(){
-			
-		});
 		
 	});
 </script>
@@ -57,30 +54,31 @@ function pageProc(curPage){
 		<h1 class="h3 mb-0 text-gray-800">보낸 쪽지함</h1>
 	</div>
 
+	
 	<!-- Content Row -->
-<form name="msgRecListFrm" method="post"
-	action="<c:url value='/message/msgSendList.do'/> ">
-	<input type="hidden" name="currentPage" > <input
-		type="hidden" name="searchCondition"
-		value="${param.searchCondition}"> <input type="hidden"
-		name="searchKeyword" value="${param.searchKeyword}">
-</form>
+
 	<div class="row">
 
 		<!-- Area Chart -->
 		<div class="col-xl-10 ">
 			<div class="card shadow mb-4" style="height: 700px">
 				<!-- Card Header - Dropdown -->
-				
+				<form name="msgRecListFrm" method="post" action="<c:url value='/message/msgSendList.do'/> ">
+					<input type="hidden" name="currentPage" > 
+					<input type="hidden" name="searchCondition" value="${param.searchCondition}"> 
+					<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+				</form>
 				<form name="msgRecListFrm" method="post"
 					action="<c:url value='/message/msgSendList.do'/> ">
-					
+
+
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div class="search" style="margin-right: 20px; text-align: right;">
 
 							<select name="searchCondition" class="form-control"
-								style="float: left; display: inline-block; width: 100px;">
+								style="float: left; display: inline-block; width: 180px;">
+								<option value="">전체</option>
 								<option value="msgcontent"
 									<c:if test="${param.searchCondition=='msgcontent' }">
 							            		selected="selected"
@@ -88,11 +86,10 @@ function pageProc(curPage){
 								<option value="recname"
 									<c:if test="${param.searchCondition=='recname' }">
 							            		selected="selected"
-							            	</c:if>>받을
-									사람</option>
+							            	</c:if>>받을 사람</option>
 
 							</select> <input type="text" class="form-control" name="searchKeyword"
-								placeholder="검색어를 입력하세요"
+								placeholder="검색어를 입력하세요" value="${ param.searchKeyword}"
 								style="float: left; display: inline-block; width: 180px;">
 							<button type="submit" class="btn btn-primary "
 								style="float: left; display: inline-block;">검색</button>
@@ -136,9 +133,9 @@ function pageProc(curPage){
 										value="option1"></td>
 									<td>${msgvo.recName}</td>
 									<td class="align_left"><c:if
-											test="${fn:length(msgvo.msgContent)>30 }">
-													${fn:substring(msgvo.msgContent, 0, 30)} ...
-												</c:if> <c:if test="${fn:length(msgvo.msgContent)<=30 }">
+											test="${fn:length(msgvo.msgContent)>40 }">
+													${fn:substring(msgvo.msgContent, 0, 40)} ...
+												</c:if> <c:if test="${fn:length(msgvo.msgContent)<=40 }">
 													${msgvo.msgContent}
 												</c:if></td>
 									<td><fmt:formatDate value="${msgvo.msgRegdate}"
@@ -189,10 +186,10 @@ function pageProc(curPage){
 
 
 
-	<!-- /.container-fluid -->
-	<div></div>
-	<div></div>
+<!-- /.container-fluid -->
+<div></div>
+<div></div>
 
-	<!-- End of Main Content -->
+<!-- End of Main Content -->
 
-	<jsp:include page="../inc/bottom.jsp" />
+<jsp:include page="../inc/bottom.jsp" />

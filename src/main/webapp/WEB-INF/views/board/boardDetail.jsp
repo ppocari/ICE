@@ -87,7 +87,7 @@ $(function(){
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
+		<div class="col-xl-7 ">
 			<div class="card shadow mb-4" style="height: fit-content;">
 				<!-- Card Header - Dropdown -->
 

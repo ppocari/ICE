@@ -37,7 +37,7 @@
 		<h1 class="h3 mb-0 text-gray-800">식권구매</h1>
 		<a href="<c:url value='/spay/excelDown.do?startDay=${param.startDay }&endDay=${param.endDay }'/>" 
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+			class="fas fa-download fa-sm text-white-50"></i> excel 파일 다운</a>
 	</div>
 
 	<!-- Content Row -->

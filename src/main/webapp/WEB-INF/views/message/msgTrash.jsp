@@ -96,7 +96,7 @@
 						<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 				
 							<div class="search" style="margin-right: 20px; text-align:right;">
-								<label for="hiredate1" style="margin-right: 20px;"></label>
+								<label for="searchCondition" style="margin-right: 20px;"></label>
 								<select name="searchCondition" class="form-control" style=" width: 100px;
 									height: 30px;  display: inline-block;">
 								 	 <option value="msgcontent" 
