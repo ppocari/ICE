@@ -269,7 +269,7 @@ input#email1 {
 										<label for="salary">연봉</label> <input type="hidden"
 											class="form-control" id="salary" readonly name="salary"
 											value='${vo.salary }'>
-											<fmt:formatNumber value="${vo.salary }" pattern="#,###" var="sal"/>만원
+										<fmt:formatNumber value="${ vo.salary }" pattern="#,###" />만원	
 									</div>
 									<div class="form-group">
 										<label for="name">이름</label> <input type="text"
