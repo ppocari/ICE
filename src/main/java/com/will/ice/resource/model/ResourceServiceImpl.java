@@ -32,8 +32,8 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public int deleteResManage(int resNo) {
-		return dao.deleteResManage(resNo);
+	public int updateManageDel(int resNo) {
+		return dao.updateManageDel(resNo);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public List<ResKindVO> selectResKind() {
+	public List<ResKindVo> selectResKind() {
 		return dao.selectResKind();
 	}
 
@@ -146,6 +146,26 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public int selectMyFutureReserveCount(StringIntVo siVo) {
 		return dao.selectMyFutureReserveCount(siVo);
+	}
+
+	@Override
+	public int insertResKind(String rkKind) {
+		return dao.insertResKind(rkKind);
+	}
+
+	@Override
+	public ResReserveVO selectReserveCantReason(int rvNo) {
+		return dao.selectReserveCantReason(rvNo);
+	}
+
+	@Override
+	public int updateReserveBecauseResDelete(int resNo) {
+		return dao.updateReserveBecauseResDelete(resNo);
+	}
+
+	@Override
+	public List<ResManageVO> selectResManageAll() {
+		return dao.selectResManageAll();
 	}
 
 

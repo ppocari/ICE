@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ import com.will.ice.address.model.AddressUtility;
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.common.PaginationInfo;
 import com.will.ice.common.Utility;
-import com.will.ice.resource.model.ResKindVO;
+import com.will.ice.resource.model.ResKindVo;
 import com.will.ice.resource.model.ResManageSearchVO;
 
 import com.will.ice.resource.model.ResManageVO;
@@ -116,7 +117,7 @@ public class ResourceController {
 		logger.info("파라미터 memNo={}", memNo);
 
 		
-		List<ResKindVO> rkList= service.selectResKind();
+		List<ResKindVo> rkList= service.selectResKind();
 		logger.info("자원관리 등록 화면 rkList.size={}", rkList.size());
 		
 		model.addAttribute("rkList", rkList);
@@ -181,7 +182,7 @@ public class ResourceController {
 		ResManageVO rmVo= service.selectResManageOne(resNo);
 		logger.info("자원관리 수정 기존 rmVo={}", rmVo);
 		
-		List<ResKindVO> rkList=service.selectResKind();
+		List<ResKindVo> rkList=service.selectResKind();
 		
 		String fileInfo
 		=Utility.getFileInfo(rmVo.getResOriginalImage(), request);
@@ -263,10 +264,18 @@ public class ResourceController {
 	/* 삭제 */
 	@RequestMapping("/deleteResource.do")
 	public String delete_get(@ModelAttribute ResManageVO rmVo, Model model,
-			HttpServletRequest request) {
-		logger.info("자원 관리 삭제, rmVo={}", rmVo);
+			@RequestParam (required = false, defaultValue= "0") int rvWaitCount, HttpServletRequest request) {
+		logger.info("자원 관리 삭제, rmVo={}, rvWaitCount={}", rmVo, rvWaitCount);
 		
-		int cnt=service.deleteResManage(rmVo.getResNo());
+		//승인 대기 중인 예약이 있다면 거절 메시지와 함께 거절 처리함.
+		if(rvWaitCount > 0) {
+			int updateRvCount= service.updateReserveBecauseResDelete(rmVo.getResNo());
+			if(updateRvCount>0) {
+				logger.info("자원 삭제 시, 승인 대기 중인 예약을 거절 사유와 함께 거절 처리함!");
+			}
+		}
+		
+		int deleteCnt=service.updateManageDel(rmVo.getResNo());
 		
 		String oldFileName=rmVo.getResImage();
 		if(oldFileName!=null && !oldFileName.isEmpty()) {
@@ -279,7 +288,7 @@ public class ResourceController {
 		}
 		
 		String msg="", url="/resource/resourceMain.do";
-		if(cnt>0) {
+		if(deleteCnt>0) {
 			msg="해당 자원을 삭제하였습니다.";
 		}else {
 			msg="자원 삭제가 실패하였습니다.";
@@ -289,6 +298,19 @@ public class ResourceController {
 		model.addAttribute("url", url);
 		
 		return "common/message";
+	}
+	
+	@RequestMapping("/canResDelete.do")
+	@ResponseBody
+	public int casResDelete(@RequestParam int resNo) {
+		logger.info("자원 삭제 가능한지 판별");
+		
+		StringIntVo siVo = new StringIntVo();
+		siVo.setNo(resNo);
+		int cnt=service.selectReserveResNoHistoryCount(siVo);
+		logger.info("해당 자원의 승인대기 중인 예약 유무: cnt={}", cnt);
+		
+		return cnt;
 	}
 	
 	@RequestMapping("/manageReserve.do") 
@@ -531,12 +553,46 @@ public class ResourceController {
 		List<ResReserveVO> rsCal = service.selectRkNoCalendar(rkNo);
 		logger.info("달력 전체보기: rsCal={}" +	rsCal);
 		
+		String rkKind=rmList.get(0).getRkKind();
+			
+		List<ResManageVO> rmListAll=service.selectResManageAll();
+		
 		model.addAttribute("rsCal", rsCal);
 		model.addAttribute("rmList", rmList);
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("rvRkNoList", rvRkNoList);
+		model.addAttribute("rkKind", rkKind);
+		model.addAttribute("rmListAll", rmListAll);
 		
+	}
+	
+	@RequestMapping("/preferenceResource.do")
+	public String preference_get(Model model, @RequestParam (required = false, defaultValue="0") int rkNo, 
+			@RequestParam (required = false) String rkKind, 
+			@RequestParam (required = false) String mode) {
+		logger.info("자원 환경 설정");
 		
+		if(mode==null || mode.isEmpty()) {
+			List<ResKindVo> rkList = service.selectResKind();
+			logger.info("자원관리 조회 결과, rkList.size={}", rkList.size());
+			
+			model.addAttribute("rkList", rkList);
+			
+			return "resource/preferenceResource";
+		}else if(mode.equals("add")) {
+			logger.info("등록함");
+		}else if(mode.equals("edit")) {
+			
+			logger.info("수정함");
+		}else if(mode.equals("del")) {
+			logger.info("삭제함");
+			
+		}else {
+			
+		}
+		
+		return "";
+			
 	}
 	
 		

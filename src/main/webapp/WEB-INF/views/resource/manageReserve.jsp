@@ -148,23 +148,11 @@ article{
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>자원명</th>
+							<th>종류</th>
 							<th>이용예약시간</th>
-							<th>신청부서
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청자
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>신청부서</th>
+							<th>신청자</th>
 							<th>승인</th>
 							<th>거절</th>
 						</tr>

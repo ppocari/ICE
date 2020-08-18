@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/inc/top.do"/> 
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
 
-<link rel="stylesheet" type="text/css" 
-	href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -17,9 +16,16 @@ function pageProc(curPage){
 }
 
 $(function(){
+	/* 추가 누르면 팝업창  */
 	$('#addResource').click(function(){
 		window.open('<c:url value="/resource/addResource.do"/>', 'addRes', 
-				'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+				'width=500, height=500, left=800, top=200, location=yes, resizable=yes');
+	});
+	
+	/* 설정 누르면 팝업 창 */
+	$('#preferencesResource').click(function(){
+		window.open('<c:url value="/resource/preferenceResource.do"/>', 'addRes', 
+		'width=250, height=300, left=800, top=200, location=yes, resizable=yes');
 	});
 	
 	/* highlight */
@@ -28,6 +34,7 @@ $(function(){
 	}, function(event) {
 		$(this).removeClass("highlight");
 	});
+	
 	
 	/* 자원명 누르면 수정화면 ajax 처리해서 보여주기 */
 	$(".goDetail").click(function(){
@@ -73,7 +80,7 @@ $(function(){
 					}
 					if(res.resSubdesc!=null && res.resSubdesc.length!=0) {
 						resSubdesc=res.resSubdesc;
-						resSubdesc=resSubdesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+						/* resSubdesc=resSubdesc.replace(/(?:\r\n|\r|\n)/g, '<br>'); */
 					}
 					if(res.resImage!=null && res.resImage.length!=0) {
 						resImageVar="<c:url value='/resource_file/"+resImage+"'/>";
@@ -81,9 +88,13 @@ $(function(){
 					if(res.resRegdate!=null && res.resRegdate.length!=0) {
 						resRegdate=res.resRegdate;
 					}
-					if(res.resState!=null && res.resState.length!=0) {
-						resState=res.resState;
+					
+					if(res.resState == 'yes') {
+						resState='사용가능';
+					}else if(res.resState == 'no') {
+						resState='사용불가';
 					}
+						
 					if(res.resIsDel!=null && res.resIsDel.length!=0) {
 						resIsDel=res.resIsDel;
 					}
@@ -121,14 +132,31 @@ $(function(){
 					/* 수정버튼 처리 */
 					$('#btEdit').click(function(){
 						window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-						'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+						'width=600, height=600, left=800, top=200, location=yes, resizable=yes');
 					});
 					
 					$('#btDel').click(function(){
-						var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
-						if(result) {
+						var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?");
+						
+							$(function(){
+								$.ajax({
+									url:"<c:url value='/resource/canResDelete.do?resNo="+resNo+"'/>",
+									type:"get",
+									data:{
+										resNo:resNo
+									},
+									success:function(res){
+										alert(res)
+									},
+									error:function(xhr, status, error){
+										alert(status+", "+error);
+									}
+								});
+							});
+							
+						/* if(result) {
 							location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>'
-						}
+						} */
 					});
 				},
 				error:function(xhr, status, error) {
@@ -145,7 +173,7 @@ $(function(){
 /* 목록 수정 */
 function resEdit(resNo) {
 	window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-	'width=600, height=500, left=800, top=200, location=yes, resizable=yes');
+	'width=600, height=600, left=800, top=200, location=yes, resizable=yes');
 	
 }
 
@@ -153,7 +181,27 @@ function resEdit(resNo) {
 function resDel(resNo, resName, resImage) {
 	var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?")
 	if(result) {
-		location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>'
+		
+		$(function(){
+			$.ajax({
+				url:"<c:url value='/resource/canResDelete.do?resNo="+resNo+"'/>",
+				type:"get",
+				data:{
+					resNo:resNo
+				},
+				success:function(res){
+					if(res>0) { //예약이 있음.
+						var result=confirm('해당 자원에 승인대기 중인 예약이 있습니다. 그래도 삭제하시겠습니까?\n(승인대기 중인 예약은 거절 처리가 됩니다.)');
+						if(result>0) {
+							 location.href='<c:url value="/resource/deleteResource.do?rvWaitCount='+res+'&resNo='+resNo+'&resImage='+resImage+'"/>';
+						}
+					}else{ //예약이 없음
+						location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>';
+					}
+				}
+			});
+		});
+		
 	}
 	
 }
@@ -248,6 +296,26 @@ article{
 	.orderImgHide{
 		visibility:hidden;
 	}
+	
+	
+	#spanResSubdesc{
+		border: none;
+		color: #858796;
+	}
+	
+	.span_left{
+		padding: 3px 15px 0 0;
+		font-weight: bold;
+	}
+	
+	.div_left{
+		margin-left: 5%;
+	}
+	
+	#preferencesResource{
+		margin-right: 5px;
+	}
+	
 </style>
 
 <section>
@@ -259,16 +327,18 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<header>
-			<h3>
-				자원관리<span></span>
-			</h3>
-		</header>
+	
+			<div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h1 class="h3 mb-0 text-gray-800">자원관리</h1>
+			</div>
+		
 		<div class="col-xl-7 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style="height: 400px;">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원목록</h6>
 					<div style="float: right">
+					<!-- 	<button id="preferencesResource" type="button" class="btn btn-info"
+						 >설정</button> -->
 						<button id="addResource" type="button" class="btn btn-info"
 						 >자원 추가</button>
 					</div>
@@ -276,37 +346,32 @@ article{
 
 				<div id="tableDivForm">
 					<table id="tableForm">
-						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>장소
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>상태
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+						<tr id="tableTrForm" class="card-body">
 
+							<th>자원명</th>
+							<th>종류</th>
+							<th>장소</th>
+							<th>상태</th>
 							<th>수정</th>
 							<th>삭제</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
-							<tr>
-								<td class="goDetail" id="${rm.resNo }">${rm.resName }
+							<tr class="goDetail" id="${rm.resNo }">
+								<td>${rm.resName }
 									<c:if test="${!empty rm.resImage }">
 										<img src="<c:url value='/resources/img/file.gif'/>" alt="파일유무표시 이미지"> 
 									</c:if>
 								</td>
 								<td>${rm.rkKind }</td>
 								<td>${rm.resLocation }</td>
-								<td>${rm.resState }</td>
+								<td>
+									<c:if test="${rm.resState == 'yes' }">
+										사용가능
+									</c:if>
+									<c:if test="${rm.resState == 'no' }">
+										사용불가
+									</c:if>
+									</td>
 								<td><button onclick="resEdit(${rm.resNo})">수정</button></td>
 
 								<td><button onclick="resDel(${rm.resNo }, '${rm.resName}', '${rm.resImage}')">삭제</button></td>
@@ -350,46 +415,45 @@ article{
 		</div>
 		
 		<div class="col-xl-4 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style=" height: 400px" >
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>
 				<div id="loadDetailResource" style="visibility:hidden" class="card-body">
 					<div id="divAll">
-							<div class="divSection" id="divResName">
-								<span id="spanResName"></span>
+						<div class="divSection" id="divResName">
+							<span id="spanResName"></span>
+						</div>
+						<div id="divContent">
+							<div class="divSection" id="divImage">
+							<!-- 이미지 -->
 							</div>
-							<div id="divContent">
-								<div class="divSection" id="divImage">
-								<!-- 이미지 -->
+							<div class="divSection" id="divDesc">
+								<div class="div_left"> 
+									<span class="span_left">종류: </span>
+									<span id="spanRkKind">
+									</span>
 								</div>
-								<div class="divSection" id="divDesc">
-									<div>
-										<span>종류: </span>
-										<span id="spanRkKind">
-										</span>
-									</div>
-									<div>
-										<span>장소: </span>
-										<span id="spanResLocation">
-										</span>
-									</div>
-									<div>
-										<span>상태: </span>
-										<span id="spanResState"></span>
-									</div>
-									<div>
-										<span>자원설명: </span>
-										<p id="spanResSubdesc">
-											
-										</p>
-									</div>
+								<div class="div_left">
+									<span class="span_left">장소: </span>
+									<span id="spanResLocation">
+									</span>
+								</div>
+								<div class="div_left">
+									<span class="span_left">상태: </span>
+									<span id="spanResState"></span>
+								</div>
+								<div class="div_left">
+									<span style="float:left" class="span_left">자원설명: </span>
+									<textarea cols="30" rows="8" style="float: left" id="spanResSubdesc"></textarea>
+										
 								</div>
 							</div>
-							<div id="divButton">
-								<button id="btEdit" name="">수정</button> 
-								<button id="btDel">삭제</button>
-							</div>
+						</div>
+						<div id="divButton">
+							<button id="btEdit" name="">수정</button> 
+							<button id="btDel">삭제</button>
+						</div>
 					</div>
 				</div>
 			</div>

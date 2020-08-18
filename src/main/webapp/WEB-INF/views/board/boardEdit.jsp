@@ -3,7 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/inc/top.do"></c:import>
 
 <style>
@@ -29,6 +28,8 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 <script type="text/javascript">
 	
 $(function(){
@@ -96,7 +97,7 @@ $(function(){
 							<td style="width:20%;"><h6 class="m-0 font-weight-bold text-primary">분류</h6>
 							</td>
 							<td style="width: 80%; weight: 100px; width: 500px;">
-								<select name="category" class="form-control">
+								<select name="category" class="form-control" style="width: 400px;">
 									<option value="전체">전체</option>
 									<option value="잡담">잡담</option>
 									<option value="동아리">동아리</option>
@@ -129,10 +130,9 @@ $(function(){
 						<table>
 							<tr>
 								<td style="width:20%;">
-								
 									<h6 class="m-0 font-weight-bold text-primary">별명</h6>
 								</td>
-								<td style="width:80%;">
+								<td style="width:80%; width: 500px;">
 									<input type="text" class="form-control" 
 									name="nickname" id="nickname" value="${vo.nickname }"
 									style="width: 400px; font-size: 14px;">
@@ -145,11 +145,20 @@ $(function(){
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<table>
 							<tr>
-								<td style="width:20%;">
+								<td style="width:15%;">
 									<h6 class="m-0 font-weight-bold text-primary">내용</h6>
 								</td>
 								<td style="width:80%; text-align:left;">
-									<%@ include file="EditSummer.jsp" %>
+									<textarea id="summernote" name="content">${vo.content }</textarea>
+									<script>
+									$('#summernote').summernote({
+									 	placeholder: '내용을 입력하세요',
+									    minHeight: 370,
+									    maxHeight: null,
+									    focus: true, 
+									    lang : 'ko-KR'
+									});
+									</script>
 								</td>
 							</tr>
 						</table>

@@ -8,11 +8,13 @@ public interface ResourceService {
 
 	int insertResManage(ResManageVO rmVo);
 	
-	List<ResKindVO> selectResKind();
+	List<ResKindVo> selectResKind();
 	ResManageVO selectResManageOne(int resNo);
 	int updateResource(ResManageVO rmVo);
-	int deleteResManage(int resNo);
+	int updateManageDel(int resNo);
+	int updateReserveBecauseResDelete(int resNo);
 	int selectTotalRecord();
+	
 	
 	//자원예약
 	List<ResReserveVO> selectReserveResNo(int resNo);
@@ -34,6 +36,7 @@ public interface ResourceService {
 	List<ResManageVO> selectReserveKind(int rkNo);
 	List<ResReserveVO> selectResNoCalendar(int resNo);
 	List<ResReserveVO> selectRkNoCalendar(int rkNo);
+	List<ResManageVO> selectResManageAll();
 	
 	//내 자원 이용현황
 	List<ResReserveVO> selectMyFutureReserve(ResReserveSearchVO rss);
@@ -41,4 +44,8 @@ public interface ResourceService {
 	List<ResReserveVO> selectMyAllReserve(ResReserveSearchVO rss);
 	int selectMyAllReserveCount(StringIntVo siVo);
 	int selectMyFutureReserveCount(StringIntVo siVo);
+	ResReserveVO selectReserveCantReason(int rvNo);
+	
+	//자원 설정
+	int insertResKind(String rkKind);
 }

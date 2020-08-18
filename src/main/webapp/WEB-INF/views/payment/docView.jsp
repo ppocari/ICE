@@ -127,7 +127,7 @@
 				<input type="hidden" name="docNo" value="${payVo.docNo }">
 			</div>
 			<button type="submit" class="btn btn-default" id="cancelBt" onclick="checkReject()"
-				formaction="<c:url value='/payment/reject.do' />" value="reject" style="margin-left: 98px;">반려</button>
+				formaction="<c:url value='/payment/reject.do' />" value="reject" >반려</button>
 			<button type="submit" class="btn btn-default" id="acceptBt" onclick="checkApprove()"
 				formaction="<c:url value='/payment/approve.do' />" value="approve" style="margin-left: 10px;">승인</button>
 		</form>

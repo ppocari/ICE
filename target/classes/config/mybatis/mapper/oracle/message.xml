@@ -22,13 +22,64 @@
 	<select id="msgSendList" parameterType="messageVO" resultType="messageVO">
 		select * from message_view
 		where sendmemno = #{sendMemNo}
+		and msgstatus != 'D'
+		order by msgregdate	desc
+		
 	</select>
 	
 	<select id="msgRecList" parameterType="messageVO" resultType="messageVO">
 		select * from message_view
 		where recmemno = #{recMemNo}
+		and msgstatus != 'D'
+		order by msgregdate desc
 	</select>
+	
+	<select id="msgSelecyByno" parameterType="int" resultType="messageVO">
+		select * from message_view
+		where no = #{no}
+	
+	</select>
+	
+	<update id="msgUpdateRead" parameterType="int">
+		update message
+		set msgstatus ='Y'
+		where msgno = #{msgNo}
+	</update>
 
+	<update id="updateDelteMsg" parameterType="int">
+		update message
+		set msgstatus ='D'
+		where msgno = #{msgNo}
+	</update>
+	
+	<delete id="msgREALDeleteByNo" parameterType="int">
+		delete from message_rec
+		where no = #{no}
+	</delete>
+	
+	<delete id="msgREALDeleteByMsgNo" parameterType="int">
+		delete from message_rec
+		where msgno = #{msgNo}
+	</delete>
+	
+	<select id="selectMsgTrash" parameterType="String" resultType="messageVO">
+		select * from message_view
+		where recmemno = #{recMemNo}
+		and msgstatus = 'D' 
+	</select>
+	
+	<select id="selectUnRead" parameterType="String" resultType="int">
+		select count(*) from message_view
+		where msgstatus = 'N' 
+		and recmemno = #{recMemNo}
+	</select>
+	
+	<select id="msgRecListOnlyN" parameterType="String" resultType="messageVO">
+		select * from message_view
+		where recmemno = #{recMemNo}
+		and msgstatus = 'N'
+		order by msgregdate desc
+	</select>
 </mapper>
  
 

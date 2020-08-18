@@ -115,7 +115,7 @@
 			</c:if>
 		</table>
 		<c:if test="${param.d !='1' }">
-			<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style="background-color: #4e73df; color:white;"/>
+			<input type="submit" class="btn btn-default" value="재결재" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo}&rew=t"/>'" style="background-color: #4e73df; color:white;"/>
 		</c:if>
 	</div>
 	</div>

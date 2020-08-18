@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:import url="/inc/top.do"/> 
 <style type="text/css">
 .data {
@@ -162,35 +164,28 @@ input#email1 {
 			}
 		});
 
-		$("form[name=mypageFrm]").submit(
-				function() {
+		$("form[name=mypageFrm]").submit(function() {
 					var pwd = $('#pwd').val();
 					var pwd2 = $('#pwd2').val();
 					if (pwd != pwd2) {
 						alert("비밀번호가 일치 하지 않습니다.")
 						event.preventDefault();
-					}
-
-					if (!validate_phone($('#hp2').val())
+					}else if (!validate_phone($('#hp2').val())
 							|| !validate_phone($('#hp3').val())) {
 						alert('핸드폰은 숫자만 가능합니다!');
 						$('#hp2').focus();
 						event.preventDefault();
-					} else if (!validate_pwd($('#pwd1').val())
+					}else if (!validate_pwd($('#pwd1').val())
 							|| !validate_pwd($('#pwd2').val())) {
 						alert('비밀번호는 영문 대소문자,숫자,_만 가능합니다!');
 						$('#pwd1').focus();
 						event.preventDefault();
 					}
 				});
-		$('#btZipcode')
-				.click(
-						function() {
-							window
-									.open(contextPath + '/mypage/zipcode.do',
-											'zip',
-											'width=500,height=500,left=0,top=0,location=yes,resizable=yes');
-						});
+		$('#btZipcode').click(function() {
+			window.open(contextPath + '/mypage/zipcode.do','zip',
+				'width=500,height=500,left=0,top=0,location=yes,resizable=yes');
+		});
 
 		function validate_pwd(pwd) {
 			var pattern = new RegExp(/^[a-zA-Z0-9_]+$/g);
@@ -271,9 +266,10 @@ input#email1 {
 											readonly>
 									</div>
 									<div class="form-group">
-										<label for="salary">연봉</label> <input type="text"
+										<label for="salary">연봉</label> <input type="hidden"
 											class="form-control" id="salary" readonly name="salary"
-											value="${vo.salary }">
+											value='${vo.salary }'>
+										<fmt:formatNumber value="${ vo.salary }" pattern="#,###" />만원	
 									</div>
 									<div class="form-group">
 										<label for="name">이름</label> <input type="text"
@@ -290,33 +286,102 @@ input#email1 {
 									<div class="form-group">
 										<label for="hp1">휴대폰 </label> <select name="hp1" id="hp1"
 											title="휴대폰 앞자리" class="form-control">
-											<option value="010">010</option>
-											<option value="011">011</option>
-											<option value="016">016</option>
-											<option value="017">017</option>
-											<option value="018">018</option>
-											<option value="019">019</option>
-										</select> - <input type="text" name="hp2" class="form-control" id="hp2"
+											<option value="" 
+								            	<c:if test="${vo.hp1 == '' }">
+								            		selected="selected"
+								            	</c:if>
+								            >선택하세요</option>
+											<option value="010" 
+								            	<c:if test="${vo.hp1=='010' }">
+								            	      selected="selected"
+								            	</c:if>            
+								            >010</option>
+								            <option value="011"
+								            	<c:if test="${vo.hp1=='011' }">
+								            	      selected="selected"
+								            	</c:if> 
+								            >011</option>
+								            <option value="016"
+								            	<c:if test="${vo.hp1=='016' }">
+								            	      selected="selected"
+								            	</c:if> 
+								            >016</option>
+								            <option value="017"
+								            	<c:if test="${vo.hp1=='017' }">
+								            	      selected="selected"
+								            	</c:if> 
+								            >017</option>
+								            <option value="018"
+								            	<c:if test="${vo.hp1=='018' }">
+								            	      selected="selected"
+								            	</c:if> 
+								            >018</option>
+								            <option value="019" 
+								            	<c:if test="${vo.hp1=='019' }">
+								            	      selected="selected"
+								            	</c:if> 
+								            >019</option>
+										</select> - 
+										<input type="text" name="hp2" class="form-control" id="hp2"
 											value="${vo.hp2 }" maxlength="4" title="휴대폰 가운데자리"
-											style="width: 80px; display: inline-block;">- <input
-											type="text" name="hp3" class="form-control" id="hp3"
+											style="width: 80px; display: inline-block;">- 
+										<input type="text" name="hp3" class="form-control" id="hp3"
 											value="${vo.hp3 }" maxlength="4" title="휴대폰 뒷자리"
 											style="width: 80px; display: inline-block;">
 									</div>
 									<div class="form-group">
+										<c:set var="isEtc" value="true" />
+								    	<c:if test="${vo.email2 == 'naver.com' || 
+								    		vo.email2 == 'hanmail.net' || vo.email2 == 'nate.com'
+								    		|| vo.email2 == 'gmail.com' || empty vo.email2}">
+									    	<c:set var="isEtc" value="false" />    		
+								    	</c:if>
 										<label for="email1">이메일</label> <input type="text"
 											name="email1" value="${vo.email1 }" class="form-control"
 											id="email" title="이메일주소 앞자리" placeholder="이메일을 입력하세요">@
 										<select name="email2" class="form-control" id="email2"
 											title="이메일주소 뒷자리" style="height: 45px;">
-											<option value="naver.com">naver.com</option>
-											<option value="hanmail.net">hanmail.net</option>
-											<option value="nate.com">nate.com</option>
-											<option value="gmail.com">gmail.com</option>
-											<option value="etc">직접입력</option>
-										</select> <input type="text" name="email3" class="form-control"
+											<option value="" 
+								            	<c:if test="${vo.email2 == '' }">
+								            		selected="selected"
+								            	</c:if>
+								            >선택하세요</option>
+											<option value="naver.com" 
+								            	<c:if test="${vo.email2 == 'naver.com' }">
+								            		selected="selected"
+								            	</c:if>
+								            >naver.com</option>
+								            <option value="hanmail.net"
+								            	<c:if test="${vo.email2 == 'hanmail.net' }">
+								            		selected="selected"
+								            	</c:if>
+								            >hanmail.net</option>
+								            <option value="nate.com" 
+								            	<c:if test="${vo.email2 == 'nate.com' }">
+								            		selected="selected"
+								            	</c:if>
+								            >nate.com</option>
+								            <option value="gmail.com"
+								            	<c:if test="${vo.email2 == 'gmail.com' }">
+								            		selected="selected"
+								            	</c:if>
+								            >gmail.com</option> 
+								            <option value="etc"
+								            	<c:if test="${isEtc==true}">
+								            		selected="selected"
+								            	</c:if>
+								            >직접입력</option>
+										</select> 
+										<input type="text" name="email3" class="form-control"
 											id="email3" title="직접입력인 경우 이메일주소 뒷자리"
-											style="visibility: hidden">
+											<c:if test="${isEtc==true}">
+								        		style="visibility:visible;"
+								        		value="${vo.email2}"
+								        	</c:if>
+								        	<c:if test="${isEtc==false}">
+								        		style="visibility:hidden"
+								        	</c:if>
+										>
 									</div>
 									<div class="form-group">
 										<label for="zipcode">우편번호/주소</label>

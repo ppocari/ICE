@@ -6,12 +6,13 @@
 <!-- include summernote css/js-->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+
 <input type="hidden" name="boardNo" value="${param.boardNo }">
 <textarea id="summernote" name="content" value="${vo.content }"></textarea>
 <script>
 $('#summernote').summernote({
  	placeholder: '내용을 입력하세요',
-    minHeight: 370,
+    minHeight: 350,
     maxHeight: null,
     focus: true, 
     lang : 'ko-KR'

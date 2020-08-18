@@ -21,6 +21,7 @@ public class ResReserveVO {
 	private String pickDate;
 	
 	private String rvReason;
+	private String rvCantReason;
 	private String rvState;
 	private Timestamp rvRegdate;
 	private String memNo;
@@ -101,6 +102,16 @@ public class ResReserveVO {
 	}
 	public void setRvReason(String rvReason) {
 		this.rvReason = rvReason;
+	}
+	
+	
+
+	public String getRvCantReason() {
+		return rvCantReason;
+	}
+
+	public void setRvCantReason(String rvCantReason) {
+		this.rvCantReason = rvCantReason;
 	}
 
 	public String getRvState() {
@@ -188,9 +199,10 @@ public class ResReserveVO {
 		return "ResReserveVO [resNo=" + resNo + ", resName=" + resName + ", rkNo=" + rkNo + ", rkKind=" + rkKind
 				+ ", rkColor=" + rkColor + ", rvNo=" + rvNo + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", startHour=" + startHour + ", endHour=" + endHour + ", rvStart=" + rvStart + ", rvEnd=" + rvEnd
-				+ ", pickDate=" + pickDate + ", rvReason=" + rvReason + ", rvState=" + rvState + ", rvRegdate="
-				+ rvRegdate + ", memNo=" + memNo + ", name=" + name + ", deptName=" + deptName + ", posName=" + posName
-				+ "]";
+				+ ", pickDate=" + pickDate + ", rvReason=" + rvReason + ", rvCantReason=" + rvCantReason + ", rvState="
+				+ rvState + ", rvRegdate=" + rvRegdate + ", memNo=" + memNo + ", name=" + name + ", deptName="
+				+ deptName + ", posName=" + posName + "]";
 	}
+
 
 }

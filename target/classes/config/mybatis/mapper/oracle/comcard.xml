@@ -46,6 +46,7 @@
 			<![CDATA[
 			and memno = #{memNo} ]]>
 		</if>
+		order by confirmDate desc
 	</select>
 	
 	<insert id="insertCCMulti" parameterType="ComcardVO">
@@ -89,6 +90,18 @@
 	<select id="selectUnUseComcardByFile" parameterType="String" resultType="ComcardVO">
 		select * from comcard_mem_acc_file
 		where filename = #{fileName}
+	</select>
+
+	<select id="selectByDept" resultType="CartVO">
+		select deptName,sum(price) as price from comcard_mem_acc
+		where acccode is not null
+		group by deptName
+	</select>
+
+	<select id="selectByPos" resultType="CartVO">
+		select posCode,sum(price) as price from comcard_mem_acc
+		where acccode is not null
+		group by posCode
 	</select>
 
 </mapper>

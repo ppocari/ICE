@@ -113,11 +113,9 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/noticeList.do")
-
 	public String noticeList(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공지사항 실행");
 		logger.info("글 목록 파라미터 searchVo={}", searchVo);
-
 				
 		//[1] PaginationInfo 생성
 		PaginationInfo pagingInfo = new PaginationInfo();
@@ -343,7 +341,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/download.do")
-	public ModelAndView download(@RequestParam(defaultValue = "0")int noticeNo, 
+	public ModelAndView download(@RequestParam int noticeNo, 
 		@RequestParam String fileName, HttpServletRequest request) {
 		//1
 		logger.info("다운로드 파라미터, noticeNo={}, fileName={}", noticeNo, fileName);
@@ -353,7 +351,7 @@ public class NoticeController {
 		
 		//다운로드 처리를 위한 페이지로 넘겨준다
 		String upPath
-		=fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
+			=fileUploadUtil.getUploadPath(request, FileUploadUtil.PATH_PDS);
 		File file = new File(upPath, fileName);
 		
 		//3
@@ -362,7 +360,7 @@ public class NoticeController {
 		
 		//4
 		//ModelAndView(String viewName, Map<String, ?> model)
-		ModelAndView mav = new ModelAndView("NoticeDownloadView", map);
+		ModelAndView mav = new ModelAndView("noticeDownloadView", map);
 		return mav;
 	}
 }

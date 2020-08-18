@@ -38,6 +38,16 @@
 	];
 
 	$(function() {
+		$('#showResKind').click(function(){
+			var resNo= $('select[name=resNo').val();
+			if(resNo==0) {
+				alert("자원명을 선택하세요");
+			}else{
+				location.href="<c:url value='/resource/historyResName.do?resNo="+resNo+"'/>";
+			}
+		
+		});		
+		
 		$('DOMContentLoaded', function() {
     		var calendarEl = document.getElementById('calendar');
 	
@@ -325,40 +335,33 @@ article > div {
 		<input type="hidden" name="rkNo" 
 			value="${param.rkNo}">	
 	</form>
-		<header>
-			<h3>
-				자원이용현황<span></span>
-			</h3>
-		</header>
-		<div class="col-xl-6 ">
+		<div class="col-xl-8 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h6 class="m-0 font-weight-bold text-primary">자원별 이용 현황</h6>
+					<h6 class="m-0 font-weight-bold text-primary">자원 종류별 이용 현황 > ${rkKind}</h6>
+					<select style="height:40px;" name="resNo" class="btn">
+						<option value="0">전체</option>
+						<c:forEach var="rm" items="${rmListAll }">
+							<option value="${rm.resNo }">${rm.resName }</option>
+						</c:forEach>
+					</select>
+					<button id="showResKind" type="button" class="btn btn-info"
+						 >자원명으로 보기</button>
 				</div>
-				<div id="tableDivForm">
+				<div id="tableDivForm" class="card-body">
 					<table id="tableForm">
-						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청부서
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>신청자
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+						<tr id="tableTrForm">
+							<th>자원명</th>
+							<th>종류</th>
+							<th>이용시간</th>
+							<th>신청부서</th>
+							<th>신청자</th>
 						</tr>
 						<c:forEach var="rs" items="${rvRkNoList }">
 							<tr>
 								<td class="goDetail" id="${rs.resNo }">${rs.resName }</td>
 								<td>${rs.rkKind }</td>
+								<td>${rs.startDate } ${rs.startHour } ~ ${rs.endDate } ${rs.endHour }</td>
 								<td>${rs.deptName }</td>
 								<td>${rs.name}</td>
 							</tr>
@@ -400,13 +403,13 @@ article > div {
 		</div>
 		
 		<!-- Area Chart -->
-		<div class="col-xl-5 " >
+		<div class="col-xl-8 " >
 			<div class="card shadow mb-4" style="fit-content">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<h5 class="m-0 font-weight-bold text-primary">자원 예약신청</h5>
+					<h6 class="m-0 font-weight-bold text-primary">자원 예약신청</h6>
 				</div>
 				<!-- 캘린더 -->
-				<div class="calendar_back" >
+				<div class="calendar_back card-body" >
 					<div id='calendar'></div>
 				</div>
 			</div>

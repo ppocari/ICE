@@ -241,11 +241,6 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<header>
-			<h3>
-				자원관리<span></span>
-			</h3>
-		</header>
 		<div class="col-xl-7 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -254,18 +249,9 @@ article{
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-header">
-							<th>자원명
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>종류
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
-							<th>장소
-								<img class="orderImg" src="<c:url value='/resources/img/up.png'/>" alt="오름차순 이미지">
-								<img class="orderImg" src="<c:url value='/resources/img/down.png'/>" alt="내림차순 이미지">
-							</th>
+							<th>자원명</th>
+							<th>종류</th>
+							<th>장소</th>
 							<th>
 							</th>
 						</tr>

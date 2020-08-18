@@ -25,6 +25,8 @@ public interface PaymentService {
 	int updatePaydocM(String[] memList, PaylinedocVO pldVo, PaymentfileVO fileVo,String oldfileName);
 	PaymentfileVO getFile(int docNo);
 	int updatePaydoc(PaylinedocVO pldVo,PaymentfileVO fileVo,String oldfileName);
+	int rewritePay1(int docNo);
+	int rewritePay2(int docNo);
 	
 	/* ---------------결재함------------------- */
 	List<PaylistViewVO> selectUndecided2(PaymentSearchVO paysearchVo,List<Integer> docNolist);
