@@ -34,22 +34,22 @@ function popup(){
 	var name="주소록";
 	var option="width=500, height=500, top=100, left=200, location=no"
 	window.open(url,name,option);
-}	
+}
 
 $(function(){
 	$("#comEdit").hide();
-	
-	$("#comEditBt").click(function(){ 
+
+	$("#comEditBt").click(function(){
 		if($("#comEdit").hide()){
 			$("#comEdit").slideDown();
 		}else{
 			$("#comEdit").slideUp();
 		}
-		
+
 	});
-	
+
 	$('form[name=writeCommentForm]').submit(function() {
-		
+
 		if ($('#writeCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#writeCon').focus();
@@ -61,9 +61,9 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-	
+
 	$('form[name=editCommentForm]').submit(function() {
-		
+
 		if ($('#editCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#editCon').focus();
@@ -71,7 +71,7 @@ $(function(){
 		}
 	});
 
-});	
+});
 	function del(boardNo) {
 		var chk = confirm("정말 삭제하시겠습니까?");
 		if(chk) {
@@ -98,6 +98,15 @@ $(function(){
 					<a href="<c:url value='/board/boardList.do'/>">
 						<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
 					</a>
+					<!-- 등록 버튼 -->
+					<c:if test="${sessionScope.identNum == vo.memNo }">
+						<div>
+							<input type="button" class="btn btn-primary btn-sm" value="수정"
+								onclick="location.href='<c:url value="/board/boardEdit.do?boardNo=${vo.boardNo }"/>'">
+							<input type="button" id="delBorBt" name="delBorBt" value="삭제"
+								class="btn btn-primary btn-sm" onclick="del(${vo.boardNo})">
+						</div>
+					</c:if>
 				</div>
 				<div class="card-body">
 					<div>
@@ -132,16 +141,11 @@ $(function(){
 				</div>
 				<div style="margin-left: auto; background-color: white;"
 					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<c:if test="${sessionScope.identNum == vo.memNo }">
-						<input type="button" class="btn btn-default btn-sm" value="수정"
-							onclick="location.href='<c:url value="/board/boardEdit.do?boardNo=${vo.boardNo }"/>'">
-						<input type="button" id="delBorBt" name="delBorBt" value="삭제"
-							class="btn btn-default btn-sm" onclick="del(${vo.boardNo})">
-					</c:if>
 					<input type="button" class="btn btn-primary btn-sm" value="목록"
 						onclick="location.href='<c:url value="/board/boardList.do"/>'">
 				</div>
 
+			</div>
 				<div style="background-color: white;">
 					<!-- 댓글 -->
 					<div class="card-body"
@@ -241,7 +245,6 @@ $(function(){
 						</div>
 					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 </div>

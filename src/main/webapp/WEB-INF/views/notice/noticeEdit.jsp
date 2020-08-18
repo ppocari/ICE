@@ -72,7 +72,7 @@
 						<!-- 등록 버튼 -->
 						<div>
 							<input type="Button" class="btn btn-primary btn-sm" id="nList"
-								value="글목록" style="width: 60px; font-size: 13px;"
+								value="취소" style="width: 60px; font-size: 13px;"
 								onclick="location.href='<c:url value="/notice/noticeList.do"/>'" />
 
 							<input type="submit" class="btn btn-primary btn-sm" value="등록"

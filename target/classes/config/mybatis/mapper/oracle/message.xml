@@ -3,128 +3,170 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.mybatis.mapper.oracle.message">
-	<insert id="msgWrite_send_msg" parameterType="messageVO" >
-		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+	<insert id="msgWrite_send_msg" parameterType="messageVO">
+		<selectKey keyProperty="msgNo" resultType="int"
+			order="BEFORE">
 			select message_seq.nextval from dual
 		</selectKey>
 		insert into message(msgno, msgstatus, msgcontent, sendmemno)
 		values(#{msgNo}, #{msgStatus}, #{msgContent}, #{sendMemNo} )
 	</insert>
-	
+
 	<insert id="msgWrite_send_msg_rec" parameterType="messageVO">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE" >
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select message_rec_seq.nextval from dual
 		</selectKey>
 		insert into message_rec
 		values(#{no}, #{msgNo} , #{recMemNo})
 	</insert>
-	
-	<select id="msgSendList" parameterType="messageVO" resultType="messageVO">
+
+	<select id="msgSendList" parameterType="messageVO"
+		resultType="messageVO">
+		
+		select * from(
+		select rownum as RNUM, A.*
+		from (
 		select * from message_view
 		where sendmemno = #{sendMemNo}
-		and msgstatus != 'D'
+		and msgstatus
+		!= 'D'
 		<if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if>
-		order by msgregdate	desc
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
+		order by msgregdate desc
+		)A
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
-	<select id="msgRecList" parameterType="messageVO" resultType="messageVO">
+
+	<select id="msgRecList" parameterType="messageVO"
+		resultType="messageVO">
+		select * from(
+		select rownum as RNUM, A.*
+		from (
 		select * from message_view
 		where recmemno = #{recMemNo}
 		and msgstatus != 'D'
 		<if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if>
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
 		order by msgregdate desc
+		)A
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
-	<select id="msgSelecyByno" parameterType="int" resultType="messageVO">
+
+	<select id="msgSelecyByno" parameterType="int"
+		resultType="messageVO">
 		select * from message_view
 		where no = #{no}
-	
+
 	</select>
-	
+
 	<update id="msgUpdateRead" parameterType="int">
 		update message
-		set msgstatus ='Y'
+		set
+		msgstatus ='Y'
 		where msgno = #{msgNo}
 	</update>
 
 	<update id="updateDelteMsg" parameterType="int">
 		update message
-		set msgstatus ='D'
+		set
+		msgstatus ='D'
 		where msgno = #{msgNo}
 	</update>
-	
+
 	<delete id="msgREALDeleteByNo" parameterType="int">
-		delete from message_rec
+		delete from
+		message_rec
 		where no = #{no}
 	</delete>
-	
+
 	<delete id="msgREALDeleteByMsgNo" parameterType="int">
-		delete from message_rec
+		delete from
+		message_rec
 		where msgno = #{msgNo}
 	</delete>
-	
-	<select id="selectMsgTrash" parameterType="messageVO" resultType="messageVO">
+
+	<select id="selectMsgTrash" parameterType="messageVO"
+		resultType="messageVO">		
+		select * from(
+		select rownum as RNUM, A.*
+		from (
 		select * from message_view
 		where recmemno = #{recMemNo}
-		and msgstatus = 'D'
+		and msgstatus =
+		'D'
 		<if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if> 
-        order by msgregdate desc
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
+		order by msgregdate desc
+		)A
+		)
+		<![CDATA[ 
+		where RNUM>#{firstRecordIndex}
+		and RNUM<=#{firstRecordIndex }+ #{recordCountPerPage}]]>
 	</select>
-	
-	<select id="selectUnRead" parameterType="String" resultType="int">
+
+	<select id="selectUnRead" parameterType="String"
+		resultType="int">
 		select count(*) from message_view
-		where msgstatus = 'N' 
+		where msgstatus = 'N'
 		and recmemno = #{recMemNo}
 	</select>
-	
-	<select id="msgRecListOnlyN" parameterType="String" resultType="messageVO">
+
+	<select id="msgRecListOnlyN" parameterType="String"
+		resultType="messageVO">
 		select * from message_view
 		where recmemno = #{recMemNo}
-		and msgstatus = 'N'
+		and
+		msgstatus = 'N'
 		order by msgregdate desc
 	</select>
-	
+
 
 	<select id="selectTotalMsgRecord" parameterType="MessageVO"
 		resultType="int">
 		select count(*) from message_view
 		where recmemno = #{recMemNo}
-		and msgstatus = 'D'
-        <if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if>
+		and
+		msgstatus = 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
 	</select>
-	
+
 	<select id="selectTotalMsgSendRecord" parameterType="MessageVO"
 		resultType="int">
 		select count(*) from message_view
 		where sendmemno = #{sendMemNo}
-		and msgstatus != 'D'
-        <if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if>
+		and
+		msgstatus != 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
 	</select>
-	
+
 	<select id="selectTotalMsgRecRecord" parameterType="MessageVO"
 		resultType="int">
 		select count(*) from message_view
 		where recmemno = #{recMemNo}
-		and msgstatus != 'D'
-        <if test="searchKeyword!=null and searchKeyword !=''">
-        	and ${searchCondition} like '%' 
-        			|| #{searchKeyword} || '%'
-        </if>
+		and
+		msgstatus != 'D'
+		<if test="searchKeyword!=null and searchKeyword !=''">
+			and ${searchCondition} like '%'
+			|| #{searchKeyword} || '%'
+		</if>
 	</select>
 </mapper>
  
