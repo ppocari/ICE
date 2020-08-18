@@ -30,10 +30,11 @@ ALTER TABLE schedule
 			MEMNO
 		);
 		
---drop sequence schedule_seq;
+drop sequence schedule_seq;
+
 create sequence schedule_seq
 increment by 1
-start with 1;
+start with 9;
 
 
 insert into SCHEDULE(schNo,memNo,title,start_day,end_day,place,content,resourceId)

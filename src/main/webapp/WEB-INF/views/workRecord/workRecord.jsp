@@ -59,7 +59,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("form[name=workSearchFrm]").submit(function(){
-			var year = $("#year option:selected").val();
+			var year = $("#year").val();
 			var month = $("#month option:selected").val();
 
 			event.preventDefault();
@@ -244,7 +244,7 @@
 					<h5 class="m-0 font-weight-bold text-primary">근태관리 조회</h5>
 					<form name="workSearchFrm" id="workSearchFrm">
 						<span id="spanDate">
-							<input type="text" id="year" value="2020" readonly="readonly" style="width: 100px;">년
+							<input type="text" id="year" name="year" value="2020" readonly="readonly" style="width: 100px;">년
 							&nbsp;&nbsp;&nbsp;
 							<select id="month">
 								<option value="01">1월</option>
