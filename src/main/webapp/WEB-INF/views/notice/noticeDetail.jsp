@@ -74,7 +74,7 @@ function del(noticeNo) {
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-7 ">
+		<div class="col-xl-10 ">
 			<div>
 				<div class="card shadow mb-4" style="height: 60%;">
 					<!-- Card Header - Dropdown -->

@@ -53,7 +53,7 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-7 ">
+		<div class="col-xl-10 ">
 			<div class="card shadow mb-4"
 				style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->

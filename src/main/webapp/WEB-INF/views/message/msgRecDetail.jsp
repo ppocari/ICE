@@ -18,7 +18,14 @@
 			self.close();
 
 		});
+		
+		
+		
+			
+		
 	});
+	
+	
 </script>
 <body>
 	<!-- Begin Page Content -->
@@ -41,6 +48,7 @@
 							<input type="hidden" value="${msgvo.sendMemNo }" name="recMemNo" id="recMemNo">
 							
 							<button type="submit" class="btn btn-primary" id = "sengMsg">답장쓰기 </button>
+							
 						</div>
 					</div>
 					

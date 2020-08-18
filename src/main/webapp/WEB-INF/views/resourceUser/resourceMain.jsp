@@ -147,7 +147,7 @@ function resReserve(resNo) {
 
 /* 자원목록 */
 #tableDivForm{
-	font-size: 0.9em;
+	
 }
 
 #searchLoc{
@@ -167,14 +167,14 @@ article > div {
 
 #mainDiv button{
 	border: 1px solid lightgray;
-	font-size: 0.8em;
+	
 	
 }
 
 
 #mainDiv a {
 	color:#858796;
-	font-size: 0.9em;
+	
 	margin-left:3px;
 	text-decoration: none;
 	cursor: pointer;
@@ -195,7 +195,7 @@ article{
 	
 	#divContent{
 		margin: 0 auto;
-		font-size: 0.8em;
+		
 	}
 	
 	#divDesc{
@@ -240,8 +240,12 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<div id="mainDiv" class="col-xl-7 ">
-			<div class="card shadow mb-4">
+		<header>
+				<h3 style="margin-left: 30px;">자원관리</h3>
+			</header>
+	
+		<div id="mainDiv" class="col-xl-7 " style="margin: 30px;">
+			<div class="card shadow mb-4" style="height: 500px;">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">예약 신청</h6>
 				</div>
@@ -304,7 +308,7 @@ article{
 		</div>
 		
 		<div id="longestHeight" class="col-xl-4 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style="height: 500px; margin-top: 30px;">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>

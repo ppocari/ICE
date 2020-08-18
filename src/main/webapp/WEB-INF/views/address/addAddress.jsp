@@ -69,13 +69,13 @@ article{
 </style>
 <section>
 	<article>
-		<div class="col-xl-12 ">
+		<div class="col-xl-9">
 			<header>
-				<h3>
+				<h3 style="margin-left: 30px;">
 					주소록<span> > 추가하기 </span>
 				</h3>
 			</header>
-			<div class="row" style="padding-left: 15px;">
+			<div class="row" style="margin: 30px;">
 		<!-- Area Chart -->
 		<div class="card shadow mb-4" style="width: 99%;">
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #F8F9FC;">
