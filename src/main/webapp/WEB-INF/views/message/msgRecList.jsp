@@ -36,10 +36,11 @@
 	}
 
 	$(function(){
-		
+		//#msgRecList_no1
 		
 		$("#dynamicTbody tr").dblclick(function(){
-			var no = $(this).children(0).val();
+			
+			var no = $(".meme").val();
 			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
 			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
 			
@@ -153,11 +154,11 @@
 										</c:if>
 										<c:if test="${!empty msgvo}">
 											<tr class="align_center" id="msgRecList${i }">
-
-												<td><input type="checkbox" id="inlineCheckbox${i }"
-													class="inlineCheckbox"> <input type="hidden"
-													value="${msgvo.no }" id="msgRecList_no${i}"
-													name="msgItems[${i }].no" disabled="disabled"></td>
+												<input type="hidden" value="${msgvo.no }" class="meme" >
+												<td>
+													<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox"> 
+													<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}" name="msgItems[${i }].no" disabled="disabled">
+												</td>
 												<td class="click"><c:if
 														test="${msgvo.msgStatus == 'N'}">
 														<i class="fas fa-envelope" style="color: blue;"></i>
