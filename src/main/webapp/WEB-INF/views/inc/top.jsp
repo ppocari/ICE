@@ -326,7 +326,6 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item" href="<c:url value='/address/addressMain.do'/>">주소록</a>
-							<a class="collapse-item" href="<c:url value='#'/>">주소록 다운</a>
 
 						</div>
 
