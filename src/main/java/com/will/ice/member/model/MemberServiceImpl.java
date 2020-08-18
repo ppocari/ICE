@@ -118,6 +118,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectPwd(memNo);
 	}
 
+	@Override
+	public int idCheck(String memno) {
+		return memberDao.idCheck(memno);
+	}
+
 
 	
 }

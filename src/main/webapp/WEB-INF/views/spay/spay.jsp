@@ -111,7 +111,7 @@
 		    merchant_uid : 'merchant_' + new Date().getTime(), // 구매일
 		    name : '주문명:식권 결제',
 		    amount : '${sale }',
-		    buyer_email : '${memVo.email1}${memVo.email2}',
+		    buyer_email : '${memVo.email1}@${memVo.email2}',
 		    buyer_name : '${memVo.name}',
 		    buyer_tel : '${memVo.hp1}-${memVo.hp2}-${memVo.hp3}',
 		    TICQUANTITY: '${sVo.TICQUANTITY }',
