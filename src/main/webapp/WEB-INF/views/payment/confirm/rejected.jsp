@@ -40,7 +40,7 @@
 	</div>
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<form name="searchDateFrm" method="post" class="form-inline"
-				id="UDdatefrm" action="<c:url value='/payment/confirm/undecided.do' />">
+				id="UDdatefrm" action="<c:url value='/payment/confirm/rejected.do' />">
 				<div class="form-group">
 					<label for="startDay">작성일</label>
 					<div class="input-group date" id="datetimepicker1"
@@ -73,8 +73,8 @@
 					<label for="docType">문서종류</label> 
 					<select class="form-control" id="docType" name="searchCondition">
 						<!-- 반복 시작 -->
+						<option value="">전체</option>
 						<c:forEach var="doctypeVo" items="${doctypelist }">
-							<option value="">전체</option>
 							<option value="${doctypeVo.typeNo }"
 								<c:if test="${paysearchVo.searchCondition==doctypeVo.typeNo }">
 									selected="selected"
