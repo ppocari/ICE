@@ -99,9 +99,11 @@ $(function(){
 						<h6 class="m-0 font-weight-bold text-primary">사내게시판</h6>
 					</a>
 					<div>
-						<input type="button" class="btn btn-default btn-sm" value="수정" onclick="location.href='<c:url value="/board/boardEdit.do?boardNo=${vo.boardNo }"/>'">
-						<input type="button" id="delBorBt" name="delBorBt" value="삭제" class="btn btn-default btn-sm"
-							onclick="del(${vo.boardNo})">
+						<c:if test="${sessionScope.identNum==vo.memNo }">
+							<input type="button" class="btn btn-primary btn-sm" value="수정" onclick="location.href='<c:url value="/board/boardEdit.do?boardNo=${vo.boardNo }"/>'">
+							<input type="button" id="delBorBt" name="delBorBt" value="삭제" class="btn btn-primary btn-sm"
+								onclick="del(${vo.boardNo})">
+						</c:if>
 						<input type="button" class="btn btn-primary btn-sm" value="목록" onclick="location.href='<c:url value="/board/boardList.do"/>'">
 					</div>
 				</div>
