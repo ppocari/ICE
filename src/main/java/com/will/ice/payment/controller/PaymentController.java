@@ -49,36 +49,85 @@ public class PaymentController {
 	@Autowired private FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping(value="/write/insertPaydoc.do",method=RequestMethod.POST)
-	public String insertPaydoc(@ModelAttribute PaylinedocVO pldVo, Model model ,HttpServletRequest request,HttpSession session) {
+	public String insertPaydoc(@ModelAttribute PaylinedocVO pldVo, Model model ,HttpServletRequest request,
+			HttpSession session) {
 		String identNum=(String)session.getAttribute("identNum");
 		pldVo.setWritememNo(identNum);
 		logger.info("기안작성=>완료함, pldVo={}",pldVo);
 		
+
+		MemberVO memVo = memService.selectMember(identNum);
+		List<MemberVO> memlist = 
+				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
+		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
+		
 		//파일 업로드 처리
-		List<Map<String, Object>> fileList = fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
-		String fileURL="",originalFileName="";long fileSize=0;
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
 		if(fileList!=null) {
 			for(Map<String, Object> map : fileList) {
 				fileURL=(String) map.get("fileName");
-				fileSize=(Long)map.get("fileSize");
 				originalFileName = (String)map.get("originalFileName");
+				fileSize=(Long)map.get("fileSize");
 			}
 		}
 		PaymentfileVO fileVo = new PaymentfileVO(); 
 		fileVo.setFileName(fileURL);
 		fileVo.setOriginalFileName(originalFileName);
 		fileVo.setFileSize(fileSize);
+		logger.info("기안작성 첨부, fileVo={}",fileVo);
+		
+		int update=0;
+		model.addAttribute("update",update);
+		model.addAttribute("fileVo",fileVo);
+		model.addAttribute("memlist",memlist);
+		model.addAttribute("pldVo",pldVo);
+		
+		return "payment/write/selectPayLine";
+	}
+	
+	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
+	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
+			Model model,HttpServletRequest request,HttpSession session,@RequestParam String keep,
+			@RequestParam String oldfileName) {
+		//임시보관함에서 결재선 등록시
+		String identNum = (String)session.getAttribute("identNum");
+		pldVo.setKeep(Integer.parseInt(keep));
+		pldVo.setWritememNo(identNum);
+		pldVo.setImsy("N");
+		pldVo.setProgress("waiting");
+		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
 		
 		MemberVO memVo = memService.selectMember(identNum);
 		List<MemberVO> memlist = 
 				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
 		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
-		
-		int update=0;
+
+		//파일 업로드 처리
+		List<Map<String, Object>> fileList 
+			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
+		String fileURL="",originalFileName="";
+		long fileSize=0;
+		if(fileList!=null) {
+			for(Map<String, Object> map : fileList) {
+				fileURL=(String) map.get("fileName");
+				originalFileName = (String)map.get("originalFileName");
+				fileSize=(Long)map.get("fileSize");
+			}
+		}
+		PaymentfileVO fileVo = new PaymentfileVO(); 
+		fileVo.setFileName(fileURL);
+		fileVo.setOriginalFileName(originalFileName);
+		fileVo.setFileSize(fileSize);
+
+		int update=1;
+		model.addAttribute("oldfileName",oldfileName);
+		model.addAttribute("fileVo",fileVo);
 		model.addAttribute("memlist",memlist);
 		model.addAttribute("update",update);
 		model.addAttribute("pldVo",pldVo);
-		model.addAttribute("fileVo",fileVo);
 		
 		return "payment/write/selectPayLine";
 	}
@@ -89,9 +138,9 @@ public class PaymentController {
 		logger.info("임시보관 항목 수정하기, 파라미터 docNo={}",docNo);
 		
 		if(rew.equals("t")) {
-			paymentService.rewritePay1(docNo);
-			paymentService.rewritePay2(docNo);
-			logger.info("기존 결재선, 사인파일 삭제");
+			int cnt = paymentService.rewritePay1(docNo);
+			cnt += paymentService.rewritePay2(docNo);
+			logger.info("기존 결재선, 사인파일 삭제 {}",cnt);
 		}
 		
 		String identNum = (String)session.getAttribute("identNum");
@@ -146,50 +195,6 @@ public class PaymentController {
 		return "common/message";
 	}
 
-	@RequestMapping(value="/write/editPaydoc.do",method=RequestMethod.POST)
-	public String editPaydoc_post(@ModelAttribute PaylinedocVO pldVo,
-			Model model,HttpServletRequest request,HttpSession session,@RequestParam String keep,
-			@RequestParam String oldfileName) {
-		//임시보관함에서 결재선 등록시
-		String identNum = (String)session.getAttribute("identNum");
-		pldVo.setKeep(Integer.parseInt(keep));
-		pldVo.setWritememNo(identNum);
-		pldVo.setImsy("N");
-		pldVo.setProgress("waiting");
-		logger.info("임시보관함=>완료함, pldVo={}",pldVo);
-		
-		MemberVO memVo = memService.selectMember(identNum);
-		List<MemberVO> memlist = 
-				paymentService.selectAllMem(Integer.parseInt(memVo.getPosCode()));
-		logger.info("내 직급보다 높은 사원목록 조회 결과, memlist={}",memlist.size());
-
-		//파일 업로드 처리
-		List<Map<String, Object>> fileList 
-			= fileUploadUtil.fileUpload(request, fileUploadUtil.PATH_PAYMENT_FILE);
-		String fileURL="",originalFileName="";
-		long fileSize=0;
-		if(fileList!=null) {
-			for(Map<String, Object> map : fileList) {
-				fileURL=(String) map.get("fileName");
-				originalFileName = (String)map.get("originalFileName");
-				fileSize=(Long)map.get("fileSize");
-			}
-		}
-		PaymentfileVO fileVo = new PaymentfileVO(); 
-		fileVo.setFileName(fileURL);
-		fileVo.setOriginalFileName(originalFileName);
-		fileVo.setFileSize(fileSize);
-
-		int update=1;
-		model.addAttribute("oldfileName",oldfileName);
-		model.addAttribute("fileVo",fileVo);
-		model.addAttribute("memlist",memlist);
-		model.addAttribute("update",update);
-		model.addAttribute("pldVo",pldVo);
-		
-		return "payment/write/selectPayLine";
-	}
-	
 	@RequestMapping("/write/imsyEdit.do")
 	public String imsyEdit(@ModelAttribute PaylinedocVO pldVo,HttpSession session,
 			Model model,HttpServletRequest request,@RequestParam String oldfileName) {

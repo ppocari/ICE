@@ -22,6 +22,11 @@ public class AddressServiceImpl implements AddressService{
 	}
 	
 	@Override
+	public List<AddressVO> selectAddress2(AddressSearchVO adSearchVo) {
+		return dao.selectAddress2(adSearchVo);
+	}
+	
+	@Override
 	public List<MemberVO> selectMemDeptPosForOrgan() {
 		return dao.selectMemDeptPosForOrgan();
 	}

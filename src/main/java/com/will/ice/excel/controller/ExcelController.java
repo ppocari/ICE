@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -32,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.will.ice.address.model.AddressSearchVO;
+import com.will.ice.address.model.AddressService;
+import com.will.ice.address.model.AddressVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.common.FileUploadUtil;
 import com.will.ice.companyCard.model.ComCardFileVO;
@@ -48,6 +52,7 @@ public class ExcelController {
 
 	@Autowired private FileUploadUtil fileUploadUtil;
 	@Autowired private ComcardService comcardService;
+	@Autowired private AddressService service;
 
 	@RequestMapping(value="/excelhtml.do", method = RequestMethod.GET)
 	public void excelhtml_get() { // 1
@@ -378,4 +383,109 @@ public class ExcelController {
 		wb.close();
 	}
 
+	@RequestMapping("/addressExcel.do")
+	public void addressExcel(@ModelAttribute AddressSearchVO adSearchVo, HttpServletResponse response,
+			 HttpSession session) throws Exception {
+		
+		String memNo=(String)session.getAttribute("identNum");
+		adSearchVo.setMemNo(memNo);
+		logger.info("주소록 엑셀 입력 전 adSearchVo={}", adSearchVo);
+
+		//주소록 조회
+		List<AddressVO> list=service.selectAddress2(adSearchVo);
+		logger.info("주소록 엑셀 입력 전 list.size={}", list.size());
+		
+		//워크북 생성
+		Workbook wb = new HSSFWorkbook();
+		Sheet sheet = wb.createSheet("주소록");
+		Row row = null;
+		Cell cell = null;
+		int rowNo = 0;
+		
+		// 테이블 헤더용 스타일
+		CellStyle headStyle = wb.createCellStyle();
+		
+		// 가는 경계선을 가집니다.
+		headStyle.setBorderTop(BorderStyle.THIN);
+		headStyle.setBorderBottom(BorderStyle.THIN);
+		headStyle.setBorderLeft(BorderStyle.THIN);
+		headStyle.setBorderRight(BorderStyle.THIN);
+		
+		// 데이터는 가운데 정렬합니다.
+		headStyle.setAlignment(HorizontalAlignment.CENTER);
+		
+		// 데이터용 경계 스타일 테두리만 지정
+		CellStyle bodyStyle = wb.createCellStyle();
+		bodyStyle.setBorderTop(BorderStyle.THIN);
+		bodyStyle.setBorderBottom(BorderStyle.THIN);
+		bodyStyle.setBorderLeft(BorderStyle.THIN);
+		bodyStyle.setBorderRight(BorderStyle.THIN);
+		
+		// 헤더 생성
+		row = sheet.createRow(rowNo++);
+		cell = row.createCell(0);
+		cell.setCellValue("이름");
+		
+		cell = row.createCell(1);
+		cell.setCellValue("전화번호");
+		
+		cell = row.createCell(2);
+		cell.setCellValue("이메일");
+		
+		cell = row.createCell(3);
+		cell.setCellValue("그룹");
+		
+		cell = row.createCell(4);
+		cell.setCellValue("회사명");
+		
+		cell = row.createCell(5);
+		cell.setCellValue("부서");
+		
+		cell = row.createCell(6);
+		cell.setCellValue("직책");
+		
+		//데이터 부분 생성
+		String tel="",email="";
+		for(int rowIdx=0; rowIdx < list.size(); rowIdx++) {
+			AddressVO vo = list.get(rowIdx);
+			row = sheet.createRow(rowNo++);
+			
+			if(vo.getHp1()!=null&&!vo.getHp1().isEmpty()) {
+				tel=vo.getHp1()+"-"+vo.getHp2()+"-"+vo.getHp3();
+			}
+			if(vo.getEmail1()!=null&&!vo.getEmail1().isEmpty()) {
+				email=vo.getEmail1()+"@"+vo.getEmail2();
+			}
+
+			cell = row.createCell(0);
+			cell.setCellValue(vo.getName());
+			
+			cell = row.createCell(1);
+			cell.setCellValue(tel);
+			
+			cell = row.createCell(2);
+			cell.setCellValue(email);
+
+			cell = row.createCell(3);
+			cell.setCellValue(vo.getGroupName());
+			
+			cell = row.createCell(4);
+			cell.setCellValue(vo.getCompany());
+			
+			cell = row.createCell(5);
+			cell.setCellValue(vo.getDeptName());
+			
+			cell = row.createCell(6);
+			cell.setCellValue(vo.getPosName());
+			
+		}
+		
+		//컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=addressList.xls");
+		
+		// 엑셀 출력
+		wb.write(response.getOutputStream());
+		wb.close();
+	}
 }
