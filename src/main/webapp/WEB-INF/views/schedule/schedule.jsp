@@ -151,6 +151,9 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 });
 </script>
 <style>
+nav{
+	font-size: 1.2em;
+}
 
   body {
     margin: 0;

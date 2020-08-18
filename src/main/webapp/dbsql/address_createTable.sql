@@ -1,8 +1,8 @@
 /* 林家 */
---DROP TABLE address CASCADE CONSTRAINTS;
+DROP TABLE address CASCADE CONSTRAINTS;
 
 /* 林家废弊缝 */
---DROP TABLE addressGroup CASCADE CONSTRAINTS;
+DROP TABLE addressGroup CASCADE CONSTRAINTS;
 
 
 /* 林家 */

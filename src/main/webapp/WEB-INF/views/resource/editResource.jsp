@@ -46,6 +46,22 @@ $(function(){
 	$('input[type=reset]').click(function(){
 		self.close();
 	});
+	
+	$('input[type=submit]').click(function(){
+		var resName= $('input[name=resName]').val();
+		var rkSelect= $('select[name=rkNo]').val();
+
+		if(resName.length < 1) {
+			alert('자원명을 입력하세요!');
+			$('input[name=resName]').focus();
+			event.preventDefault();
+		}else if(rkSelect==0) {
+			alert('종류를 선택하세요!');
+			event.preventDefault();
+		}
+		
+	});
+	
 });
 </script>
 

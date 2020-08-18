@@ -24,103 +24,6 @@ $(function(){
 </script>
 
 <style type="text/css">
-
-/* 자원목록 */
-#tableDivForm{
-	font-size: 0.9em;
-}
-
-#searchLoc{
-	text-align: right;
-} 
-
-article > div {
-	float:left;
-}
-
-#RESbottom{
-	clear:both;
-}
-
-
-button{
-	border: 1px solid lightgray;
-	font-size: 0.8em;
-	
-}
-
-a {
-	color:#858796;
-	font-size: 0.9em;
-	margin-left:3px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-a:hover{
-	text-decoration: underline;
-}
-
-article{
-	font-size: 1.25em;
-}
-
-/* 자원 상세보기 */
-	.divSection{
-		margin:10px;
-	}
-	
-	#divContent{
-		margin: 0 auto;
-		font-size: 0.8em;
-	}
-	
-	#divDesc{
-		text-align: left;
-	}
-	
-	#divResName{
-		font-weight: bold;
-		text-align: center;
-		
-	}
-	
-	#divButton{
-		text-align: center;
-		clear:both;
-		margin: 10px;
-		
-	}
-	
-	#divButton > button{
-		border-radius: 5px 5px 5px 5px;
-		border: 1px solid #DCDDE3;
-		margin-right: 5px;
-	}
-	
-	#divImage{
-		margin: 0 auto;
-	}
-
-	.orderImg{
-		border:1px solid lightgray; 
-		width:20px; 
-		height:20px;
-	}
-	
-	.orderImgHide{
-		visibility:hidden;
-	}
-	
-	/* addReserve에서 가져옴 */
-	body {
-  	text-align: center;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
   #calendar {
     max-width: 900px;
   }
@@ -138,7 +41,7 @@ article{
     td.fc-day-top.fc-sun.fc-past { color: red;}			/* 일요일 */
     td.fc-day-top.fc-sun.fc-future { color: red;}		/* 일요일 */
     
-    .fc-title {		/*이벤트 폰트 컬러 변경*/
+    .fc-title {	
 	    color: white;
 	}
 	
@@ -149,7 +52,7 @@ article{
 	    z-index: 5000;
 	    background: white;
 	    border: 1px solid gray;
-	}
+	} 
 	
 	.head {
 	    color: #fff;
@@ -157,12 +60,10 @@ article{
 	    background-color: #464646;
 	}
 	
-	/*일정쓰기*/
 	div#writeModal {
 	    line-height: 30px;
 	}
 	
-	/*일정확인*/
 	div#modal {
 	    width: 20%;
 	    height: 35%;
@@ -180,11 +81,7 @@ article{
 	div#modal-title {
 	    font-size: 2em;
 	}
-	
-	.fc-content {
-	    color: black;
-	}
-	
+
 	#calendar{
 		width: 500px;
 		display: inline-block;
@@ -206,8 +103,10 @@ article{
 		border: 1px solid lightgray;
 	}
 	
-	#RESbottom{
-	clear:both;
+#RESbottom{
+	position:absolute;
+	width:100%;
+    bottom:0;
 }
 
 article > div {
@@ -227,18 +126,10 @@ article > div {
 	float:left;
 }
 
-#spanSubdesc{
-	text-align: left;
-	width: 200px;
-}
-
-.infobox{
-	width: 120px;
-	font-size: 0.9em;
-}
 
 #divMain{
 	margin-left: 20px;
+	font-size: 1.1em;
 }
 
 .aTag, .aTag:hover{

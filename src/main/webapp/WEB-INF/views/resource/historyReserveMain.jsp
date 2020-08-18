@@ -37,21 +37,23 @@ function pageProc(curPage){
 	text-align: right;
 } 
 
-article > div {
+#mainDiv article > div {
 	float:left;
 }
 
 #RESbottom{
-	clear:both;
+	position:absolute;
+	width:100%;
+    bottom:0;
 }
 
-button{
+#mainDiv button{
 	border: 1px solid lightgray;
 	font-size: 0.8em;
 	
 }
 
-a {
+#mainDiv a {
 	color:#858796;
 	font-size: 0.9em;
 	margin-left:3px;
@@ -59,7 +61,7 @@ a {
 	cursor: pointer;
 }
 
-a:hover{
+#mainDiv a:hover{
 	text-decoration: underline;
 }
 
@@ -114,14 +116,21 @@ article{
 		visibility:hidden;
 	}
 	
-form[name=frmSearch] * {
+#mainDiv form[name=frmSearch] * {
 	font-size: 0.8em;
 	border: 1px solid lightgray;
 }
 
-select[name=rvState] {
+#mainDiv select[name=rvState] {
 	height:28px;
 }
+
+#RESBottom{
+	position:absolute;
+	width:100%;
+    bottom:0;
+}
+
 </style>
 
 <section>
@@ -133,7 +142,7 @@ select[name=rvState] {
 			<input type="hidden" name="rvState" 
 				value="${param.rvState}">	
 		</form>
-		<div class="col-xl-12 ">
+		<div id="mainDiv" class="col-xl-12 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원이용현황</h6>
@@ -226,4 +235,6 @@ select[name=rvState] {
 	</article>
 </section>
 
+<div id="RESBottom">
 <%@include file="../inc/bottom.jsp"%>
+</div>

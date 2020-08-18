@@ -123,21 +123,18 @@
 	text-align: right;
 } 
 
-article > div {
+#mainSection article > div {
 	float:left;
 }
 
-#RESbottom{
-	clear:both;
-}
 
-button{
+#mainSection button{
 	border: 1px solid lightgray;
 	font-size: 0.8em;
 	
 }
 
-a {
+#mainSection a {
 	color:#858796;
 	font-size: 0.9em;
 	margin-left:3px;
@@ -145,69 +142,13 @@ a {
 	cursor: pointer;
 }
 
-a:hover{
+#mainSection a:hover{
 	text-decoration: underline;
 }
 
 article{
 	font-size: 1.25em;
 }
-
-/* 자원 상세보기 */
-	.divSection{
-		margin:10px;
-	}
-	
-	#divContent{
-		margin: 0 auto;
-		font-size: 0.8em;
-	}
-	
-	#divDesc{
-		text-align: left;
-	}
-	
-	#divResName{
-		font-weight: bold;
-		text-align: center;
-		
-	}
-	
-	#divButton{
-		text-align: center;
-		clear:both;
-		margin: 10px;
-		
-	}
-	
-	#divButton > button{
-		border-radius: 5px 5px 5px 5px;
-		border: 1px solid #DCDDE3;
-		margin-right: 5px;
-	}
-	
-	#divImage{
-		margin: 0 auto;
-	}
-
-	.orderImg{
-		border:1px solid lightgray; 
-		width:20px; 
-		height:20px;
-	}
-	
-	.orderImgHide{
-		visibility:hidden;
-	}
-	
-	/* addReserve에서 가져옴 */
-	body {
-  	text-align: center;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
 
   #calendar {
     max-width: 900px;
@@ -217,7 +158,9 @@ article{
 		background: white;
 		float:left;
 		text-align: center;
+		margin: 20px;
 	}
+	
 	
     .fc-day-top.fc-sat.fc-past { color:#0000FF; }     	/* 토요일 */
     .fc-highlight { color:#0000FF; }     				/* 토요일 */
@@ -276,27 +219,14 @@ article{
 	#calendar{
 		width: 500px;
 		display: inline-block;
-		border: 1px solid lightgray;
+		
 	}
-	
-	#resDetailDiv {
-		text-align:center;
-		margin: 20px;
-	}
+
 	
 	.fc-license-message{
 		visibility: hidden;
 	}
 	
-	#spanResImage{
-		width:250px; 
-		height:250px; 
-		border: 1px solid lightgray;
-	}
-	
-	#RESbottom{
-	clear:both;
-}
 
 article > div {
 	float:left;
@@ -315,14 +245,19 @@ article > div {
 	float:left;
 }
 
-#spanSubdesc{
-	text-align: left;
-	width: 200px;
+
+	#RESbottom{
+	 clear:both;
 }
 
-.infobox{
-	width: 120px;
-	font-size: 0.9em;
+#headerTitle{
+	margin: 15px;
+}
+
+select[name=resNo] {
+	height: 35px;
+	font-size: 0.8em;
+	border: 1px solid lightgray;
 }
 </style>
 
@@ -335,18 +270,25 @@ article > div {
 		<input type="hidden" name="rkNo" 
 			value="${param.rkNo}">	
 	</form>
-		<div class="col-xl-8 ">
+	<header id="headerTitle">
+		<h3>
+			자원 종류별 이용현황 > ${rkKind}<span></span>
+		</h3>
+	</header>
+		<div id="mainDiv" class="col-xl-8 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원 종류별 이용 현황 > ${rkKind}</h6>
-					<select style="height:40px;" name="resNo" class="btn">
-						<option value="0">전체</option>
-						<c:forEach var="rm" items="${rmListAll }">
-							<option value="${rm.resNo }">${rm.resName }</option>
-						</c:forEach>
-					</select>
-					<button id="showResKind" type="button" class="btn btn-info"
-						 >자원명으로 보기</button>
+					<div>
+						<select name="resNo">
+							<option value="0">자원선택</option>
+							<c:forEach var="rm" items="${rmListAll }">
+								<option value="${rm.resNo }">${rm.resName }</option>
+							</c:forEach>
+						</select>
+						<button id="showResKind" type="button" class="btn btn-info"
+							 >자원명으로 보기</button>
+					</div>
 				</div>
 				<div id="tableDivForm" class="card-body">
 					<table id="tableForm">
