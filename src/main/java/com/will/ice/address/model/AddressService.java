@@ -7,6 +7,7 @@ import com.will.ice.model.DepartmentVO;
 
 public interface AddressService {
 	List<AddressVO> selectAddress(AddressSearchVO searchVo);
+	List<AddressVO> selectAddress2(AddressSearchVO adSearchVo);
 	int selectTotalRecord(AddressSearchVO searchVo);
 	
 	public List<MemberVO> selectMemDeptPosForOrgan();
