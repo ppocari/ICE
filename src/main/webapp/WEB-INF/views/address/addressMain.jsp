@@ -10,6 +10,17 @@ function pageProc(curPage){
 }
 
 	$(function(){
+		
+		$('#checkAll').click(function(){
+			if($("#checkAll").is(":checked") == true) {
+				$("input[type=checkbox]:checkbox").prop("checked", true);
+			}else{
+				$('#tableForm checkbox').prop("checked", false);
+				$("input[type=checkbox]:checkbox").prop("checked", false);
+			}
+		});
+			
+		
 		var selected = $(this).hasClass("highlight");
 
 		/* highlight */
@@ -98,12 +109,15 @@ function pageProc(curPage){
 	color: orange;
 } 
 
-h6{
-	font-size: 1em;
-}
 
 #addressMain_section{
 	font-size: 1.25em;
+}
+
+#RESbottom{
+	position:absolute;
+	width:100%;
+    bottom:0;
 }
 </style>
 
@@ -121,6 +135,7 @@ h6{
 	</form>
 	
 	<article>
+
 		<div class="col-xl-10 ">
 
 			<div class="card shadow mb-4">
@@ -128,7 +143,9 @@ h6{
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">주소록</h6>
 						<div style="float: right">
+
 							<button type="submit" class="btn btn-info" formaction="<c:url value='/addressExcel.do' />">주소 내보내기</button>
+
 						</div>
 					</div>
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -136,7 +153,7 @@ h6{
 							<div id="divAll">
 							<div id="divLeft">
 								<input type="button" id="btAdd" value="추가">
-								<input type="button" id="btDel" value="삭제">
+								<input type="button" id="btDel" value="휴지통으로 이동">
 							</div>
 								<span>
 									<a href="<c:url value='/address/addressMain.do?searchCondition=all'/>">전체</a>
@@ -158,16 +175,13 @@ h6{
 									<a href="<c:url value='/address/addressMain.do?searchCondition=num'/>">숫자</a>
 									<a href="<c:url value='/address/addressMain.do?searchCondition=favorite'/>">즐겨찾기</a>
 								</span>
-							<div id="divRight">
-								<input type="button" id="btTrash" value="휴지통">
-							</div>
 							</div>
 						</div>
 					</div>
 					<div id="tableDivForm">
 						<table id="tableForm">
 							<tr id="tableTrForm" class="card-header">
-								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
+								<th><input type="checkbox" id="checkAll" class="addressCB"></th>
 								<th class="star_color">★</th>
 								<th  style="width:10%">이름</th>
 								<th  style="width:15%">전화번호</th>
@@ -279,4 +293,6 @@ h6{
 		</div>
 	</article>
 </section>
+<div id="RESbottom">
 	<%@include file="../inc/bottom.jsp"%>
+</div>

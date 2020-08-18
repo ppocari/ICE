@@ -10,6 +10,16 @@ function pageProc(curPage){
 }
 
 	$(function() {
+		
+		$('#checkAll').click(function(){
+			if($("#checkAll").is(":checked") == true) {
+				$("input[type=checkbox]:checkbox").prop("checked", true);
+			}else{
+				$('#tableForm checkbox').prop("checked", false);
+				$("input[type=checkbox]:checkbox").prop("checked", false);
+			}
+		});
+		
 		var selected = $(this).hasClass("highlight");
 
 		/* highlight */
@@ -129,6 +139,11 @@ article{
 	font-size:1.25em;
 }
 
+#RESbottom{
+	position:absolute;
+	width:100%;
+    bottom:0;
+}
 
 </style>
 
@@ -149,20 +164,20 @@ article{
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">휴지통</h6>
+					<button id="btAddressMain" type="button" class="btn btn-info"
+					 >주소록</button>
 				</div>
 				<form name="addressList" method="post" action="">
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<div id="buttonsDiv">
 							<input type="button" id="btBack" value="복원">
 							<input type="button" id="btDel" value="삭제">
-							<button id="btAddressMain" type="button" class="btn btn-info"
-							 >주소록</button>
 						</div>
 					</div>
 					<div id="addressTableDiv">
 						<table id="addressTable">
 							<tr id="addressTableTr" class="card-header">
-								<th><input type="checkbox" id="CheckAll" class="addressCB"></th>
+								<th><input type="checkbox" id="checkAll" class="addressCB"></th>
 								<th  style="width:10%">이름</th>
 								<th  style="width:15%">전화번호</th>
 								<th  style="width:20%">이메일</th>
@@ -266,4 +281,6 @@ article{
 		</div>
 	</article>
 </section>
+<div id="RESbottom">
 	<%@include file="../inc/bottom.jsp"%>
+</div>

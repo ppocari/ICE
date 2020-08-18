@@ -159,16 +159,20 @@ article > div {
 }
 
 #RESbottom{
-	clear:both;
+	/* clear:both; */
+	position:absolute;
+	width:100%;
+    bottom:0;
 }
 
-button{
+#mainDiv button{
 	border: 1px solid lightgray;
 	font-size: 0.8em;
 	
 }
 
-a {
+
+#mainDiv a {
 	color:#858796;
 	font-size: 0.9em;
 	margin-left:3px;
@@ -176,7 +180,7 @@ a {
 	cursor: pointer;
 }
 
-a:hover{
+#mainDiv a:hover{
 	text-decoration: underline;
 }
 
@@ -220,16 +224,11 @@ article{
 	#divImage{
 		margin: 0 auto;
 	}
-
-	.orderImg{
-		border:1px solid lightgray; 
-		width:20px; 
-		height:20px;
-	}
 	
-	.orderImgHide{
-		visibility:hidden;
+	#longestHeight{
+		margin-bottom: 70px;	
 	}
+
 </style>
 
 <section>
@@ -241,7 +240,7 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-		<div class="col-xl-7 ">
+		<div id="mainDiv" class="col-xl-7 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">예약 신청</h6>
@@ -256,8 +255,8 @@ article{
 							</th>
 						</tr>
 						<c:forEach var="rm" items="${manageList }">
-							<tr>
-								<td class="goDetail" id="${rm.resNo }">${rm.resName }
+							<tr class="goDetail" id="${rm.resNo }">
+								<td>${rm.resName }
 									<c:if test="${!empty rm.resImage }">
 										<img src="<c:url value='/resources/img/file.gif'/>" alt="파일유무표시 이미지"> 
 									</c:if>
@@ -304,7 +303,7 @@ article{
 			</div>
 		</div>
 		
-		<div class="col-xl-4 ">
+		<div id="longestHeight" class="col-xl-4 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
