@@ -36,10 +36,6 @@
 	<!-- Page Heading -->
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
 		<h1 class="h3 mb-0 text-gray-800">식권구매</h1>
-
-		<a href="#"
-			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> excel 파일 다운</a>
 	</div>
 
 	<!-- Content Row -->
@@ -96,7 +92,12 @@
 												<c:if test="${!empty vo.HP1}">
 													<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
 												</c:if>
-												<td>${vo.EMAIL1}${vo.EMAIL2 }</td>
+												<c:if test="${!empty vo.EMAIL1}">
+													<td>${vo.EMAIL1}@${vo.EMAIL2 }</td>
+												</c:if>
+												<c:if test="${empty vo.EMAIL1}">
+													<td></td>
+												</c:if>
 											</tr>
 										</c:forEach>
 									</c:if>

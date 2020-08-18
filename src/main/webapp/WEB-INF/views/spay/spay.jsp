@@ -128,6 +128,7 @@
 	    	    		
 	        		}
 	        	});
+	        	Location.reload();
 	        	location.href="<c:url value='/spay/sok.do'/>";
 	        	Location.reload();
 	            var msg = '결제가 완료되었습니다. \n';

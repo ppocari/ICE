@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/inc/top.do"/> 
+<%@ include file="../inc/top.jsp"%>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet"
@@ -96,7 +95,12 @@
 												<c:if test="${!empty vo.HP1}">
 													<td>${vo.HP1}-${vo.HP2}-${vo.HP3}</td>
 												</c:if>
-												<td>${vo.EMAIL1}${vo.EMAIL2 }</td>
+												<c:if test="${!empty vo.EMAIL1}">
+													<td>${vo.EMAIL1}@${vo.EMAIL2 }</td>
+												</c:if>
+												<c:if test="${empty vo.EMAIL1}">
+													<td></td>
+												</c:if>
 											</tr>
 										</c:forEach>
 									</c:if>
