@@ -151,7 +151,7 @@ $(function(){
 					
 					<!-- 등록,취소 버튼 -->
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록" 
+						<input type = "submit" class="btn btn-primary" value="등록" 
 							style="width: 52px; font-size: 13px;"/>
           				<input type = "Button" class="form-control btList" id="nList"
           					style="width: 60px; font-size: 13px;" value="목록"

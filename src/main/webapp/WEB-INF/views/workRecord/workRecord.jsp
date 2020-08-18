@@ -6,6 +6,7 @@
 <c:import url="/inc/top.do"/> 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<jsp:useBean id="now" class="java.util.Date" />
 <style type="text/css">
 	/*top*/
 	div#work {
@@ -145,6 +146,7 @@
 			alert("퇴근처리 되었습니다.");
 		}
 	}
+	
 </script>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -246,19 +248,68 @@
 						<span id="spanDate">
 							<input type="text" id="year" name="year" value="2020" readonly="readonly" style="width: 100px;">년
 							&nbsp;&nbsp;&nbsp;
+							<fmt:formatDate var="month" value="${now}" pattern="MM"/>
 							<select id="month">
-								<option value="01">1월</option>
-								<option value="02">2월</option>
-								<option value="03">3월</option>
-								<option value="04">4월</option>
-								<option value="05">5월</option>
-								<option value="06">6월</option>
-								<option value="07">7월</option>
-								<option value="08">8월</option>
-								<option value="09">9월</option>
-								<option value="10">10월</option>
-								<option value="11">11월</option>
-								<option value="12">12월</option>
+								<option value="01" 
+									<c:if test="${month=='01'}">
+										selected
+									</c:if>
+								>1월</option>
+								<option value="02"
+									<c:if test="${month=='02'}">
+										selected
+									</c:if>
+								>2월</option>
+								<option value="03"
+									<c:if test="${month=='03'}">
+										selected="selected"
+									</c:if>
+								>3월</option>
+								<option value="04"
+									<c:if test="${month=='04'}">
+										selected="selected"
+									</c:if>
+								>4월</option>
+								<option value="05"
+									<c:if test="${month=='05'}">
+										selected="selected"
+									</c:if>
+								>5월</option>
+								<option value="06"
+									<c:if test="${month=='06'}">
+										selected="selected"
+									</c:if>
+								>6월</option>
+								<option value="07"
+									<c:if test="${month=='07'}">
+										selected="selected"
+									</c:if>
+								>7월</option>
+								<option value="08"
+									<c:if test="${month=='08'}">
+										selected="selected"
+									</c:if>
+								>8월</option>
+								<option value="09"
+									<c:if test="${month=='09'}">
+										selected="selected"
+									</c:if>
+								>9월</option>
+								<option value="10"
+									<c:if test="${month=='10'}">
+										selected="selected"
+									</c:if>
+								>10월</option>
+								<option value="11"
+									<c:if test="${month=='11'}">
+										selected="selected"
+									</c:if>
+								>11월</option>
+								<option value="12"
+									<c:if test="${month=='12'}">
+										selected="selected"
+									</c:if>
+								>12월</option>
 							</select>
 						</span>
 						<button id="btSearch" class="btn btn-primary">조회</button>
