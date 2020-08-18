@@ -1,6 +1,6 @@
 /* 辟怕包府 */
--- DROP TABLE workRecord CASCADE CONSTRAINTS;
--- drop sequence workRecord_seq;
+DROP TABLE workRecord CASCADE CONSTRAINTS;
+
 
 /* 辟怕包府 */
 CREATE TABLE workRecord (
@@ -30,6 +30,8 @@ ALTER TABLE workRecord
 		REFERENCES MEMBER (
 			MEMNO
 		);
+
+drop sequence workRecord_seq;
 
 create sequence workRecord_seq
 increment by 1
