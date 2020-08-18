@@ -15,20 +15,23 @@
 .register_text {
 	width: 110px;
 }
-.search input{
-	width:150px;
+
+.search input {
+	width: 150px;
 }
-#noticeBt input[type=button]{
+
+#noticeBt input[type=button] {
 	margin-right: 3px;
 }
 </style>
 
 
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -72,100 +75,102 @@ function del(noticeNo) {
 
 		<!-- Area Chart -->
 		<div class="col-xl-7 ">
+			<div>
+				<div class="card shadow mb-4" style="height: 60%;">
+					<!-- Card Header - Dropdown -->
 
-			<div class="card shadow mb-4" style=" height: 700px;">
-				<!-- Card Header - Dropdown -->
+					<input type="hidden" name="noticeNo" value="${param.noticeNo }">
 
-				<input type="hidden" name="noticeNo" value="${param.noticeNo }">
-
-				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<a href="<c:url value='/board/boardList.do'/>">
-						<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
-					</a>
-				</div>
-				
-
-				<br>
-				<div class="card-body">
-					<div>
-						<div style=float:left;>
-							<span style="font-size: 25px; display: inline-block; text-align: left; vertical-align: middle;">
-								[${vo.category}] ${vo.title }</span> 
-						</div>
-						<div style="float:right;margin-top: 10px;">
-							<span style="font-size: 14px; display: inline-block; text-align: left; vertical-align: middle;">
-									관리자</span>
-							<span style="vertical-algin: middle; opacity: .4;">
-								<fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd-HH:mm" />
-							</span> <span style="vertical-algin: middle; opacity: .4;"> |
-								${vo.readcount} 읽음 </span>
-						</div>
-					</div>
-					<div>
-						<hr style="margin-top: 50px;">
-					</div>
-
-					<div class="content">
-						<%
-							pageContext.setAttribute("newLine", "\r\n");
-						%>
-						${fn:replace(vo.content, newLine, '<br>')}
-					</div>
-				</div>
-				<!-- 첨부파일 -->
-				<c:if test="${!empty vo.fileName}">
-					<div style=" margin: 10px; margin-left: 30px;">
-						<span class="sp1" style="font-size: 12px;">첨부파일</span> 
-							<span style="font-size: 12px;"> 
-								<a href="<c:url value='/notice/download.do?noticeNo=${vo.noticeNo}&fileName=${vo.fileName}'/>">	${fileInfo} </a>
-							</span> 
-						<span style="color: blue; font-size: 12px;">${downInfo}</span> <br>
-					</div>
-				</c:if>
-				<c:if test="${empty vo.fileName}"></c:if>
-
-				<div style="margin-left: auto;background-color: white;" 
-					class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-					<c:if test="${sessionScope.identNum == vo.memNo }">
-						<a
-							href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
-							<input type="button" value="수정" class="btn btn-primary btn-sm">
+					<div
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<a href="<c:url value='/board/boardList.do'/>">
+							<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 						</a>
-						<input type="button" id="delNoBt" name="delNoBt" value="삭제"
-							class="btn btn-primary btn-sm" onclick="del(${vo.noticeNo})">
+					</div>
+
+
+					<br>
+					<div class="card-body">
+						<div>
+							<div style="float: left;">
+								<span style="font-size: 25px; display: inline-block; text-align: left; vertical-align: middle;">
+									[${vo.category}] ${vo.title }</span>
+							</div>
+							<div style="float: right; margin-top: 10px;">
+								<span style="font-size: 14px; display: inline-block; text-align: left; vertical-align: middle;">
+									관리자</span> 
+									<span style="vertical-algin: middle; opacity: .4;">
+									<fmt:formatDate value="${vo.regdate}"
+										pattern="yyyy-MM-dd-HH:mm" />
+								</span> <span style="vertical-algin: middle; opacity: .4;"> |
+									${vo.readcount} 읽음 </span>
+							</div>
+						</div>
+						<div>
+							<hr style="margin-top: 50px;">
+						</div>
+
+						<div class="content">
+							<%
+								pageContext.setAttribute("newLine", "\r\n");
+							%>
+							${fn:replace(vo.content, newLine, '<br>')}
+						</div>
+					</div>
+					<!-- 첨부파일 -->
+					<c:if test="${!empty vo.fileName}">
+						<div style="margin: 10px; margin-left: 30px;">
+							<span class="sp1" style="font-size: 12px;">첨부파일</span> <span
+								style="font-size: 12px;"> <a
+								href="<c:url value='/notice/download.do?noticeNo=${vo.noticeNo}&fileName=${vo.fileName}'/>">
+									${fileInfo} </a>
+							</span> <span style="color: blue; font-size: 12px;">${downInfo}</span> <br>
+						</div>
 					</c:if>
-					<a href="<c:url value='/notice/noticeList.do'/>"> <input
-						type="button" value="목록" class="btn btn-primary btn-sm">
-					</a>
-					<hr>
+					<c:if test="${empty vo.fileName}"></c:if>
+
+					<div style="margin-left: auto; background-color: white;"
+						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<c:if test="${sessionScope.identNum == vo.memNo }">
+							<a
+								href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo }'/>">
+								<input type="button" value="수정" class="btn btn-primary btn-sm">
+							</a>
+							<input type="button" id="delNoBt" name="delNoBt" value="삭제"
+								class="btn btn-primary btn-sm" onclick="del(${vo.noticeNo})">
+						</c:if>
+						<a href="<c:url value='/notice/noticeList.do'/>"> <input
+							type="button" value="목록" class="btn btn-primary btn-sm">
+						</a>
+						<hr>
+					</div>
 				</div>
 
-				<div>
+				<div style="background-color: white;">
 					<!-- 댓글 -->
 					<div class="card-body"
 						style="display: block; font-size: 13px; border: 2px solid #4e73df; border-radius: 10px;">
 						<c:forEach var="comment" items="${list }">
-							<p> <a href="#"> <span style="font-size: 12px; display: inline-block; text-align: left; vertical-align: middle;">
+							<div>
+								<a href="#"> <span
+									style="font-size: 12px; display: inline-block; text-align: left; vertical-align: middle;">
 										${comment.name} </span>
-								</a> 
-								<span style="font-size: 13px; display: inline-block; text-align: left; vertical-align: middle;">
-									${comment.content} </span>
-									 <span style="vertical-algin: middle; opacity: .4; font-size: 11px;">
+								</a> <span
+									style="font-size: 13px; display: inline-block; text-align: left; vertical-align: middle;">
+									${comment.content} </span> <span
+									style="vertical-algin: middle; opacity: .4; font-size: 11px;">
 									<fmt:formatDate value="${comment.regdate}"
 										pattern="yyyy-MM-dd-HH:mm" /> 
 										<c:if test="${sessionScope.identNum == comment.memNo }">
-										<form name="DeleteCommentForm" method="post"
-
-											action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
-											<input type="button" name="comEditBt"
-												style="font-size: 9px; width: 38px;"
-												class="btn btn-primary btn-sm" value="수정">
-											<button type="submit" id="comDelBt" style="font-size: 9px;"
-												class="btn btn-primary btn-sm">삭제</button>
-										</form>
-
-
-
+											<form name="DeleteCommentForm" method="post"
+												action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
+												<input type="button" name="comEditBt"
+													style="font-size: 9px; width: 38px;"
+													class="btn btn-primary btn-sm" value="수정">
+												<button type="submit" id="comDelBt" style="font-size: 9px;"
+													class="btn btn-primary btn-sm">삭제</button>
+											</form>
+										
 										<div id="comEdit" style="display: none;">
 											<form name="editCommentForm" method="post"
 												action="<c:url value='/noticeComment/noticeCommentEdit.do'/>">
@@ -201,7 +206,7 @@ function del(noticeNo) {
 										</div>
 									</c:if>
 								</span>
-							</p>
+							</div>
 						</c:forEach>
 
 						<div id="comWrite">

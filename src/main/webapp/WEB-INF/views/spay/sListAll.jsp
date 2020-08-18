@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:import url="/inc/top.do"/> 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -37,7 +39,7 @@
 		<h1 class="h3 mb-0 text-gray-800">식권구매</h1>
 		<a href="<c:url value='/spay/excelDown.do?startDay=${param.startDay }&endDay=${param.endDay }'/>" 
 			class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-			class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+			class="fas fa-download fa-sm text-white-50"></i> excel 파일 다운</a>
 	</div>
 
 	<!-- Content Row -->

@@ -173,6 +173,7 @@
 			select * from PAYLISTVIEW
 			<where>
 				docNo=#{docNo}
+				and progress!=#{progress}
 				and PAYDATE is null
 				and IMSY != 'Y'
 				<if test="searchKeyword!=null and searchKeyword!=''">
@@ -270,6 +271,15 @@
 		select * from commentView
 		where docNo=#{docNo}
 	</select>
+	
+	<delete id="rewritePay1" parameterType="int">
+		delete from payComment
+		where docNo=#{docNo}
+	</delete>
+	<delete id="rewritePay2" parameterType="int">
+		delete from paymentline
+		where docNo=#{docNo}
+	</delete>
 </mapper>
 
 

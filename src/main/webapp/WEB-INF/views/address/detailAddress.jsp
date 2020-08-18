@@ -9,7 +9,7 @@
 		$('input[type=submit]').click(function(){
 			/* location.href="<c:url value='/address/editAddress.do?adNo=${adVo.adNo}'/>"; */
 			window.open('<c:url value="/address/editAddress.do?adNo=${adVo.adNo}"/>', 'edit', 
-			'width=600, height=900, left=600, top=30, location=yes, resizable=no');
+			'width=500, height=750, left=600, top=30, location=yes, resizable=no');
 			
 			event.preventDefault();
 		});
@@ -58,7 +58,12 @@ article{
 					주소록<span> > 상세보기 </span>
 				</h3>
 			</header>
-			<div class="card shadow mb-4">
+			<div class="row" style="padding-left: 15px;">
+		<!-- Area Chart -->
+		<div class="card shadow mb-4" style="width: 99%;">
+			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #F8F9FC;">
+				<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
+				</div>
 				<div class="divForm">
 					<form>
 						<fieldset>
@@ -126,6 +131,8 @@ article{
 					</form>
 				</div>
 			</div>
+		
+		</div>
 		</div>
 	</article>
 </section>

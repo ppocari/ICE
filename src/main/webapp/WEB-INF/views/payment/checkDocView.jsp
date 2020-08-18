@@ -97,7 +97,7 @@
 				</a>
 			</c:if>
 		<c:if test="${param.flag=='imsy'}">
-			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }"/>'" style=" float: right;
+			<button type="button" class="btn btn-default" id="cancelBt" onclick="location.href='<c:url value="/payment/write/editPayment.do?docNo=${payVo.docNo }&rew=f"/>'" style=" float: right;
     margin: 15px; background-color: #0079ff; color:white;">
 				결재선 지정
 			</button>
