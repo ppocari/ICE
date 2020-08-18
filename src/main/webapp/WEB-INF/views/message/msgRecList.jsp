@@ -99,8 +99,7 @@
 								<option value="sendname"
 									<c:if test="${param.searchCondition=='sendname' }">
 							            		selected="selected"
-							            	</c:if>>받을
-									사람</option>
+							            	</c:if>>받을사람</option>
 
 							</select> <input type="text" class="form-control" name="searchKeyword"
 								placeholder="검색어를 입력하세요"
