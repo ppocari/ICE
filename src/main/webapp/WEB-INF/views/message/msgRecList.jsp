@@ -46,7 +46,13 @@
 		});	
 		
 		/* 삭제 여러개(휴지통으로 이동) */
+
+		$('.inlineCheckbox').click(function(){
+			$(this).next().attr("disabled",false);	
+		});
+						
 		$('#btDel').click(function(){
+			
 			var len=$('input[type=checkbox]:checked').length;
 			if(len==0){
 				alert('삭제할 쪽지를  체크하세요');
@@ -67,6 +73,12 @@
 		<h1 class="h3 mb-0 text-gray-800">받은 쪽지함</h1>
 	</div>
 
+	<form name="msgRecListFrm" method="post"
+		action="<c:url value='/message/msgRecList.do'/> ">
+		<input type="hidden" name="currentPage"> <input type="hidden"
+			name="searchCondition" value="${param.searchCondition}"> <input
+			type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+	</form>
 	<!-- Content Row -->
 
 	<div class="row">
@@ -77,13 +89,8 @@
 				<!-- Card Header - Dropdown -->
 				<form name="msgRecListFrm" method="post"
 					action="<c:url value='/message/msgRecList.do'/> ">
-					<input type="hidden" name="currentPage"> <input
-						type="hidden" name="searchCondition"
-						value="${param.searchCondition}"> <input type="hidden"
-						name="searchKeyword" value="${param.searchKeyword}">
-				</form>
-				<form name="msgRecListFrm" method="post"
-					action="<c:url value='/message/msgRecList.do'/> ">
+
+
 					<!-- 검색기능 -->
 
 					<div
@@ -146,10 +153,11 @@
 										</c:if>
 										<c:if test="${!empty msgvo}">
 											<tr class="align_center" id="msgRecList${i }">
-												<input type="hidden" value="${msgvo.no }"
-													id="msgRecList_no${i}" name="msgItems[${i }].no">
+
 												<td><input type="checkbox" id="inlineCheckbox${i }"
-													class="inlineCheckbox"></td>
+													class="inlineCheckbox"> <input type="hidden"
+													value="${msgvo.no }" id="msgRecList_no${i}"
+													name="msgItems[${i }].no" disabled="disabled"></td>
 												<td class="click"><c:if
 														test="${msgvo.msgStatus == 'N'}">
 														<i class="fas fa-envelope" style="color: blue;"></i>

@@ -34,22 +34,22 @@ function popup(){
 	var name="주소록";
 	var option="width=500, height=500, top=100, left=200, location=no"
 	window.open(url,name,option);
-}	
+}
 
 $(function(){
 	$("#comEdit").hide();
-	
-	$("#comEditBt").click(function(){ 
+
+	$("#comEditBt").click(function(){
 		if($("#comEdit").hide()){
 			$("#comEdit").slideDown();
 		}else{
 			$("#comEdit").slideUp();
 		}
-		
+
 	});
-	
+
 	$('form[name=writeCommentForm]').submit(function() {
-		
+
 		if ($('#writeCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#writeCon').focus();
@@ -61,9 +61,9 @@ $(function(){
 			event.preventDefault();
 		}
 	});
-	
+
 	$('form[name=editCommentForm]').submit(function() {
-		
+
 		if ($('#editCon').val() == '') {
 			alert('내용을 입력하세요');
 			$('#editCon').focus();
@@ -71,7 +71,7 @@ $(function(){
 		}
 	});
 
-});	
+});
 	function del(boardNo) {
 		var chk = confirm("정말 삭제하시겠습니까?");
 		if(chk) {

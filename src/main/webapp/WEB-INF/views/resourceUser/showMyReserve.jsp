@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="../inc/top.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 <link rel="stylesheet" type="text/css" 
@@ -268,7 +269,7 @@ select[name=rvState] {
 	</form>
 		<!-- 내 예약 현황 -->
 		<div id="divMain" class="col-xl-11 ">
-			<div class="card shadow mb-4">
+			<div class="card shadow mb-4" style="height: 700px">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원 예약 현황</h6>
 					<div style="text-align: right;">

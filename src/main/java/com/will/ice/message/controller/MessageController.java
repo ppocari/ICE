@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.will.ice.accode.model.AccodeVO;
 import com.will.ice.address.model.AddressGroupVO;
 import com.will.ice.address.model.AddressService;
+import com.will.ice.address.model.AddressUtility;
 import com.will.ice.address.model.AddressVO;
 import com.will.ice.common.Depart_posi_dateVO;
 import com.will.ice.common.PaginationInfo;
@@ -132,6 +133,7 @@ public class MessageController {
 		msgVO.setSendMemNo(memNo);		
 		 List<MessageVO> msgList = msgService.msgSendList(msgVO);
 		 int totalRecord=msgService.selectTotalMsgSendRecord(msgVO);
+		 
 		 pagingInfo.setTotalRecord(totalRecord);
 
 			
@@ -142,12 +144,11 @@ public class MessageController {
 
 	
 	@RequestMapping("/msgRecList.do")
-	public void msgRecList(@ModelAttribute MessageVO msgVO, @ModelAttribute SearchVO searchVO,
+	public void msgRecList(@ModelAttribute MessageVO msgVO,
 			HttpSession session, Model model) {
 		logger.info("받은 쪽지함 실행 ");
 		
 		//1
-		logger.info("글 목록 파라미터 searchVo={}", searchVO);
 		logger.info("글 목록 파라미터 msgVO={}", msgVO);
 		
 		//[1] PaginationInfo 생성
@@ -212,6 +213,7 @@ public class MessageController {
 		String msg = "쪽지 휴지통 이동 실패", url = "/message/msgRecList.do";
 		if(cnt > 0) {
 			msg = "쪽지 휴지통 이동 성공";  
+			url = "/message/msgTrash.do";
 		}
 		
 		model.addAttribute("msg", msg);

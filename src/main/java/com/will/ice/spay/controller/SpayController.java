@@ -154,7 +154,9 @@ public class SpayController {
 		String memno=Integer.toString(identNum);
 		
 		logger.info("사원번호 identNum={}", identNum);
-		if(identNum==999999) {
+		
+		String posCode = (String)session.getAttribute("posCode");
+		if(posCode.equals("999")) {
 			
 			dateSearchVo.setMemNo(memno);
 			logger.info("구매 조회 파라미터 dateSearchVo={}", dateSearchVo);

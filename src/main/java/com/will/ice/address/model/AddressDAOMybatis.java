@@ -85,6 +85,11 @@ public class AddressDAOMybatis implements AddressDAO {
 	public List<AddressVO> selectAddress(AddressSearchVO searchVo) {
 		return sqlSession.selectList(namespaces+"selectAddress", searchVo);
 	}
+	
+	@Override
+	public List<AddressVO> selectAddress2(AddressSearchVO adSearchVo) {
+		return sqlSession.selectList(namespaces+"selectAddress2", adSearchVo);
+	}
 
 
 	@Override

@@ -21,7 +21,7 @@
           <div class="row">
 
             <!-- 공지사항 -->
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-7 col-lg-7">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
@@ -89,7 +89,7 @@
               </div>
             </div>
 
-            <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-5 col-lg-5">
               <!-- 사내게시판 -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">

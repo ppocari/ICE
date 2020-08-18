@@ -25,6 +25,7 @@ public interface AddressDAO {
 	int updateNotFavorite(int adNo);
 	
 	public List<AddressVO> selectAddress(AddressSearchVO searchVo);
+	public List<AddressVO> selectAddress2(AddressSearchVO adSearchVo);
 	int getTotalRecord(AddressSearchVO searchVo);
 	
 	//쪽지 쓰기용

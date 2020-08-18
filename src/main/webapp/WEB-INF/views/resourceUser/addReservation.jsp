@@ -76,6 +76,10 @@
 	      
 	      		//날짜클릭
 				dateClick: function(info) {
+				clickDate = info.dateStr;	
+				$("#startDay").val(clickDate);
+	    	 	$("#endDay").val(clickDate);
+				
 	    	 	$("#writeModal").css("visibility","visible");
 	    	 	/*  alert('Clicked on: ' + info.dateStr); */
 	    		/*   window.open('<c:url value="/resourceUser/reservePopup.do?resNo=${rmVo.rkNo}"/>',

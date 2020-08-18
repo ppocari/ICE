@@ -1,10 +1,16 @@
 select * from member;
 
+commit;
+
 update member
 set deptcode = '999', poscode='999'
 where memno = '998999';
 
 select * from position;
+
+update member
+set  email2=''
+where memno = '131920';
 
 select * from department;
 
@@ -282,6 +288,10 @@ join member memb
 on memb.memno = m.sendmemno;
 
 select * from member;
+
+update message_view
+set msgstatus = 'N'
+WHERE NO =144 ;
 
 select * from message_view;
 
