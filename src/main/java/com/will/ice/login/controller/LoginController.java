@@ -70,10 +70,10 @@ public class LoginController {
 			}
 
 			msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
+			System.out.print(memVo.getPosCode());
 			if(memVo.getPosCode().equals("999")){ //관리자
 				msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-				url = "/main/main_admin.do";
-				/* url ="/main/main_account.do"; */
+				url = "/main/main_admin.do";			
 				
 			}else {	//사원 if(memVo.getPosCode().equals("920"))		
 					if(pwd.equals(memVo.getSsn1())){
@@ -82,7 +82,7 @@ public class LoginController {
 					}else {
 						msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
 						url = "/main/main_user.do";
-						/* url ="/main/main_account.do"; */
+			
 					}
 				
 			}
