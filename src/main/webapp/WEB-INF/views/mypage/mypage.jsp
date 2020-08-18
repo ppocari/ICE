@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:import url="/inc/top.do"/> 
 <style type="text/css">
 .data {
@@ -264,9 +266,10 @@ input#email1 {
 											readonly>
 									</div>
 									<div class="form-group">
-										<label for="salary">연봉</label> <input type="text"
+										<label for="salary">연봉</label> <input type="hidden"
 											class="form-control" id="salary" readonly name="salary"
-											value="${vo.salary }">
+											value='${vo.salary }'>
+											<fmt:formatNumber value="${vo.salary }" pattern="#,###" var="sal"/>만원
 									</div>
 									<div class="form-group">
 										<label for="name">이름</label> <input type="text"

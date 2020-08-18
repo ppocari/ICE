@@ -35,6 +35,7 @@ public interface ResourceDAO {
 	List<ResManageVO> selectReserveKind(int rkNo);
 	List<ResReserveVO> selectResNoCalendar(int resNo);
 	List<ResReserveVO> selectRkNoCalendar(int rkNo);
+	List<ResManageVO> selectResManageAll();
 	
 	//내 자원 이용현황
 	List<ResReserveVO> selectMyAllReserve(ResReserveSearchVO rss);

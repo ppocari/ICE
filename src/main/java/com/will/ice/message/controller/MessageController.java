@@ -109,32 +109,69 @@ public class MessageController {
 	
 
 	
-	@RequestMapping(value="/msgSendList.do", method = RequestMethod.GET)
-	public void messageList(HttpSession session, Model model) {
+	@RequestMapping("/msgSendList.do")
+	public void messageList(@ModelAttribute MessageVO msgVO,
+			HttpSession session, Model model) {
 		logger.info("보낸 쪽지함 실행 ");
+		
+		//1
+		
+		logger.info("보낸 쪽지함 실행  msgVO={}",msgVO);
+		//[1] PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(msgVO.getCurrentPage());
+		
+		//[2] SearchVo 에 값 셋팅
+		msgVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		msgVO.setRecordCountPerPage(Utility.RECORD_COUNT);
+				
 		String memNo = (String)session.getAttribute("identNum");
-		MessageVO msgvo = new MessageVO();
-		msgvo.setSendMemNo(memNo);
-		logger.info("msgvo={}",msgvo);
-		 List<MessageVO> msgList = msgService.msgSendList(msgvo);
-		 
+		
+		msgVO.setSendMemNo(memNo);		
+		 List<MessageVO> msgList = msgService.msgSendList(msgVO);
+		 int totalRecord=msgService.selectTotalMsgSendRecord(msgVO);
+		 pagingInfo.setTotalRecord(totalRecord);
+
+			
 		 model.addAttribute("msgList", msgList);
+		 model.addAttribute("pagingInfo", pagingInfo);
 	}
 	
 
 	
-	@RequestMapping(value="/msgRecList.do", method = RequestMethod.GET)
-	public void msgRecList( HttpSession session, Model model) {
+	@RequestMapping("/msgRecList.do")
+	public void msgRecList(@ModelAttribute MessageVO msgVO, @ModelAttribute SearchVO searchVO,
+			HttpSession session, Model model) {
 		logger.info("받은 쪽지함 실행 ");
+		
+		//1
+		logger.info("글 목록 파라미터 searchVo={}", searchVO);
+		logger.info("글 목록 파라미터 msgVO={}", msgVO);
+		
+		//[1] PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(msgVO.getCurrentPage());
+		
+		//[2] SearchVo 에 값 셋팅
+		msgVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		msgVO.setRecordCountPerPage(Utility.RECORD_COUNT);
 	
 		String memNo = (String)session.getAttribute("identNum");
-		MessageVO msgvo = new MessageVO();
-		msgvo.setRecMemNo(memNo);
-		logger.info("msgvo={}",msgvo);
+		msgVO.setRecMemNo(memNo);
+		logger.info("msgvo={}",msgVO);
 		
-		 List<MessageVO> msgList = msgService.msgRecList(msgvo);
-		 	 
+		 List<MessageVO> msgList = msgService.msgRecList(msgVO);
+		 int totalRecord=msgService.selectTotalMsgRecRecord(msgVO);
+		 pagingInfo.setTotalRecord(totalRecord);	 
+		 logger.info("글목록, 전체 레코드 개수 ={} " , totalRecord);
+		logger.info("글목록, 전체 레코드 개수 msgList ={} " , msgList);
+		
 		 model.addAttribute("msgList", msgList);
+		 model.addAttribute("pagingInfo", pagingInfo);
 	}
 	
 	@RequestMapping(value="/msgRecDetail.do", method = RequestMethod.GET)
@@ -184,14 +221,39 @@ public class MessageController {
 		
 	}
 	
-	@RequestMapping(value="/msgTrash.do", method = RequestMethod.GET)
-	public void msgTrash(HttpSession session, Model model) {
+	@RequestMapping("/msgTrash.do")
+	public void msgTrash(@ModelAttribute MessageVO msgVO, @ModelAttribute SearchVO searchVO,
+			HttpSession session, Model model) {
 		logger.info("msgTrash.do 휴지통");
+		
+		//1
+		logger.info("글 목록 파라미터 searchVo={}", searchVO);
+		logger.info("글 목록 파라미터 msgVO={}", msgVO);
+		
+		//[1] PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCKSIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT);
+		pagingInfo.setCurrentPage(msgVO.getCurrentPage());
+		
+		//[2] SearchVo 에 값 셋팅
+		msgVO.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		msgVO.setRecordCountPerPage(Utility.RECORD_COUNT);
+				
 		//D인거 조회
 		String recMemNo = (String)session.getAttribute("identNum");
-		List<MessageVO> msgList = msgService.selectMsgTrash(recMemNo);
+		msgVO.setRecMemNo(recMemNo);
+		List<MessageVO> msgList = msgService.selectMsgTrash(msgVO);
+		
+		int totalRecord=msgService.selectTotalMsgRecord(msgVO);
+		logger.info("글목록, 전체 레코드 개수 ={} " , totalRecord);
+		logger.info("글목록, 전체 레코드 개수 msgList ={} " , msgList);
+		
+		
+		pagingInfo.setTotalRecord(totalRecord);
 		
 		model.addAttribute("msgList", msgList);
+		model.addAttribute("pagingInfo", pagingInfo);
 	}
 	
 	@RequestMapping(value="/msgREALDelete.do", method = RequestMethod.POST)

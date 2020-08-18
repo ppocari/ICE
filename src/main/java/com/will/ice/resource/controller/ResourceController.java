@@ -551,10 +551,16 @@ public class ResourceController {
 		List<ResReserveVO> rsCal = service.selectRkNoCalendar(rkNo);
 		logger.info("달력 전체보기: rsCal={}" +	rsCal);
 		
+		String rkKind=rmList.get(0).getRkKind();
+			
+		List<ResManageVO> rmListAll=service.selectResManageAll();
+		
 		model.addAttribute("rsCal", rsCal);
 		model.addAttribute("rmList", rmList);
 		model.addAttribute("pagingInfo", pagingInfo);
 		model.addAttribute("rvRkNoList", rvRkNoList);
+		model.addAttribute("rkKind", rkKind);
+		model.addAttribute("rmListAll", rmListAll);
 		
 	}
 	
