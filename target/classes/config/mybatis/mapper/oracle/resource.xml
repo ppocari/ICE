@@ -203,6 +203,9 @@
 		where rkno=#{rkNo}
 		and rvstate='yes'
 	</select>
+	<select id="selectResManageAll" resultType="resManageVo">
+		select * from v_resmanage
+	</select>
 	
 	<!-- 내 자원 이용 현황 -->
 	<select id="selectMyFutureReserve" parameterType="resReserveSearchVo" resultType="resReserveVo">
