@@ -139,7 +139,7 @@
 					<!-- 반복 시작 -->
 						<c:if test="${!empty paylist }">
 						<c:forEach var="payVo" items="${paylist }">
-							<tr onclick="window.open('<c:url value="/payment/docView.do?docNo=${payVo.docNo}"/>','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+							<tr onclick="window.open('../../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
 							
 								<td>[${payVo.typeName }] ${payVo.writedate }</td>
 								<td>${payVo.name }</td>
