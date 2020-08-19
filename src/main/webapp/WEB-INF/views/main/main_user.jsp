@@ -158,7 +158,7 @@ $(function(){
 					</c:if>
 					<c:if test="${empty paylist }">
 						<tr>
-							<td colspan="6">문서가 존재하지 않습니다</td>
+							<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
 						</tr>
 					</c:if>
 						<!-- 반복 끝 -->
