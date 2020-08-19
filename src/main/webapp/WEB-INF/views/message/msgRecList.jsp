@@ -38,19 +38,19 @@
 	$(function(){
 		//#msgRecList_no1
 
-		$('#checkAll').click(function(){
+		/* $('#checkAll').click(function(){
 			if($("#checkAll").is(":checked") == true) {
 				$("input[type=checkbox]:checkbox").prop("checked", true);
 			}else{
 				$('#tableForm checkbox').prop("checked", false);
 				$("input[type=checkbox]:checkbox").prop("checked", false);
 			}
-		});
+		}); */
 
-		
+		//#msgRecList2 > input
 		$("#dynamicTbody tr").dblclick(function(){
 			
-			var no = $(".meme").val();
+			var no = $(this).children().eq(0).val();
 			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
 			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
 			
@@ -60,6 +60,8 @@
 
 		$('.inlineCheckbox').click(function(){
 			$(this).next().attr("disabled",false);	
+			var no = $(this).next().val();
+			
 		});
 						
 		$('#btDel').click(function(){
@@ -69,8 +71,10 @@
 				alert('삭제할 쪽지를  체크하세요');
 				return;
 			}
+			
+			var no = $('input[type=checkbox]:checked').next().val();
 			$('form[name=msgRecListFrm]')
-				.prop("action","<c:url value='/message/msgDelete.do'/>");
+				.prop("action","<c:url value='/message/msgDeleteByNo.do?no="+ no +"'/>");
 			$('form[name=msgRecListFrm]').submit();
 		});	 
 	});
@@ -109,7 +113,7 @@
 						<div class="search" style="margin-right: 20px; text-align: right;">
 
 							<select name="searchCondition" class="form-control"
-								style="float: left; display: inline-block; width: 100px;">
+								style="float: left; display: inline-block; width: 150px;">
 								<option value="msgcontent"
 									<c:if test="${param.searchCondition=='msgcontent' }">
 							            		selected="selected"
@@ -117,7 +121,7 @@
 								<option value="sendname"
 									<c:if test="${param.searchCondition=='sendname' }">
 							            		selected="selected"
-							            	</c:if>>받을사람</option>
+							            	</c:if>>보낸 사람</option>
 
 							</select> <input type="text" class="form-control" name="searchKeyword"
 								placeholder="검색어를 입력하세요"
@@ -165,12 +169,14 @@
 									</c:if>
 									<c:if test="${!empty msgvo}">
 										<tr class="align_center" id="msgRecList${i }">
-											<input type="hidden" value="${msgvo.no }" class="meme">
-											<td><input type="checkbox" id="inlineCheckbox${i }"
-												class="inlineCheckbox"> <input type="hidden"
-												value="${msgvo.no }" id="msgRecList_no${i}"
-												name="msgItems[${i }].no" disabled="disabled"></td>
-											<td class="click"><c:if test="${msgvo.msgStatus == 'N'}">
+											<input type="hidden" value="${msgvo.no }"  class="meme">
+											<td>
+												<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox" >
+												<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}" name="msgItems[${i }].no" disabled="disabled">
+											</td>
+											<td class="click">
+																					
+											<c:if test="${msgvo.msgStatus == 'N'}">
 													<i class="fas fa-envelope" style="color: blue;"></i>
 												</c:if> <c:if test="${msgvo.msgStatus == 'Y'}">
 													<i class="far fa-envelope"></i>

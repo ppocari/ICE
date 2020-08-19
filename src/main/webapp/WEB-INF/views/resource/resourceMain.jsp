@@ -393,11 +393,11 @@ article{
 		
 
 		<div class="col-xl-4 ">
-			<div class="card shadow mb-4" style=" height: 700px" >
+			<div class="card shadow mb-4" style="height: 700PX;" >
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>
-				<div id="loadDetailResource" style="visibility:hidden" class="card-body">
+				<div id="loadDetailResource" style="visibility:hidden;" class="card-body">
 					<div id="divAll">
 						<div class="divSection" id="divResName">
 							<span id="spanResName"></span>
@@ -406,7 +406,7 @@ article{
 							<div class="divSection" id="divImage">
 							<!-- 이미지 -->
 							</div>
-							<div class="divSection" id="divDesc">
+							<div class="divSection" id="divDesc" style="font-size: 0.8em;">
 								<div class="div_left"> 
 									<span class="span_left">종류: </span>
 									<span id="spanRkKind">

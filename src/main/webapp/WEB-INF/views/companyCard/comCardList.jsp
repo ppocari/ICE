@@ -25,7 +25,7 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		$( "input[name=usedate1]" ).datepicker({
+		$( "#usedate1" ).datepicker({
 			dateFormat:'yy-mm-dd',
 	         changeYear:true,
 	         changeMonth:true,
@@ -34,7 +34,7 @@
 	            '7월','8월','9월','10월','11월','12월']
 		} );
 		
-		$( "input[name=usedate2]" ).datepicker({
+		$( "#usedate2" ).datepicker({
 			dateFormat:'yy-mm-dd',
 	         changeYear:true,
 	         changeMonth:true,

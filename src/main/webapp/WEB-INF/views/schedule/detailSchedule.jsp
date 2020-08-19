@@ -118,8 +118,7 @@
 				</div>
 				<div>
 					<label>설명 :</label>
-					<textarea class="form-control" name="content" style="width: 400px;height: 100px;" placeholder="내용">
-						${content}</textarea>
+					<textarea class="form-control" name="content" style="width: 400px;height: 100px;" placeholder="내용">${content}</textarea>
 				</div>
 			</div>
 			<div id="modal_button">
