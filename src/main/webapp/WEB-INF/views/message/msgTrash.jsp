@@ -34,6 +34,10 @@
 		$('form[name=frmPage]').submit();
 	}
 	
+	$('.inlineCheckbox').click(function(){
+		$(this).next().attr("disabled",false);	
+	});
+	
 	$(function(){
 				
 		$("#dynamicTbody tr").dblclick(function(){
@@ -57,11 +61,12 @@
 		$('#btBack').click(function(){
 			var len=$('input[type=checkbox]:checked').length;
 			if(len==0){
-				alert('복원힐 쪽지를  체크하세요');
+				alert('복원할 쪽지를  체크하세요');
 				return;
 			}
+			var no = $('input[type=checkbox]:checked').next().val();
 			$('form[name=msgRecListFrm]')
-				.prop("action","<c:url value='/message/msgDelBack.do'/>");
+				.prop("action","<c:url value='/message/msgDelBackByNo.do?no="+ no +"'/>");
 			$('form[name=msgRecListFrm]').submit();
 		});
 	});
@@ -153,9 +158,10 @@
 										</c:if>
 										<c:if test="${!empty msgvo}">
 											<tr class="align_center" id="msgRecList${i }">
-											<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}" name="msgItems[${i }].no">
+											<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}"  >
 											<td>
-												<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox">
+												<input type="checkbox" id="inlineCheckbox${i }" class="inlineCheckbox" >
+												<input type="hidden" value="${msgvo.no }" id="msgRecList_no${i}" name="msgItems[${i }].no" disabled="disabled">
 											</td>
 											<td class="click">${msgvo.msgStatus}</td>
 											<td class="click">${msgvo.sendName}</td>

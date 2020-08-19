@@ -245,7 +245,7 @@ article{
 			</header>
 	
 		<div id="mainDiv" class="col-xl-7 " style="margin: 30px;">
-			<div class="card shadow mb-4" style="height: 500px;">
+			<div class="card shadow mb-4" style="height: 500px; ">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">예약 신청</h6>
 				</div>
@@ -308,12 +308,12 @@ article{
 		</div>
 		
 		<div id="longestHeight" class="col-xl-4 ">
-			<div class="card shadow mb-4" style="height: 500px; margin-top: 30px;">
+			<div class="card shadow mb-4" style=" margin-top: 30px; ">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>
 				<div id="loadDetailResource" style="visibility:hidden" class="card-body">
-					<div id="divAll">
+					<div id="divAll" style="font-size: 0.8em;">
 							<div class="divSection" id="divResName">
 								<span id="spanResName"></span>
 							</div>

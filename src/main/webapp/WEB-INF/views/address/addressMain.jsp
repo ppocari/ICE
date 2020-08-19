@@ -139,7 +139,7 @@ function pageProc(curPage){
 				</h3>
 			</header>
 			<div class="row" style="margin: 30px;">
-				<div class="card shadow mb-4" style="width: 99%; height: 700px;">
+				<div class="card shadow mb-4" style="width: 99%; height: 500px;">
 					<form name="addressList" method="post">
 						<div
 							class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

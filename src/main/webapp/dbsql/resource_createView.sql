@@ -1,3 +1,8 @@
+drop view v_resmanage;
+drop view v_memForReserve;
+drop view v_resForReserve;
+drop view v_resreserve;
+
 create or replace view v_resmanage
 as
 select re.*, rk.rkkind from resmanage re, reskind rk

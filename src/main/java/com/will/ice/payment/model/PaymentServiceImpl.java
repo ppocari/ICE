@@ -15,7 +15,6 @@ import com.will.ice.member.model.MemberVO;
 import com.will.ice.paycomment.model.CommentviewVO;
 import com.will.ice.paycomment.model.PaycommentVO;
 import com.will.ice.payline.model.PaylineVO;
-import com.will.ice.paymentfile.model.PaymentfileListVO;
 import com.will.ice.paymentfile.model.PaymentfileVO;
 
 @Service

@@ -319,7 +319,7 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/address/addressMain.do'/>">
 			 <i class="fas fa-fw fa-folder"></i> <span>주소록</span>
 			</a>
-				
+
 			</li>
 			
 			<!-- Nav Item -스케줄-->		

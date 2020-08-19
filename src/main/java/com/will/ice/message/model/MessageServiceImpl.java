@@ -158,5 +158,16 @@ public class MessageServiceImpl implements MessageService {
 		return msgDao.selectTotalMsgRecRecord(msgVO);
 	}
 
+	@Override
+	public int updateDelteMsgOne(int msgno) {
+		
+		return msgDao.updateDelteMsgOne(msgno);
+	}
+
+	@Override
+	public int msgDelBackOne(int msgno) {
+		return msgDao.msgDelBackOne(msgno);
+	}
+
 	
 }

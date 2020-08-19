@@ -164,7 +164,7 @@ select[name=rvState] {
 				<h3 style="margin-left: 30px;">자원관리</h3>
 			</header>
 			<div class="row" style="margin: 30px;">
-				<div class="card shadow mb-4" style="width: 99%; height: 700px">
+				<div class="card shadow mb-4" style="width: 99%; height: 500px">
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 						<h6 class="m-0 font-weight-bold text-primary">자원 예약 현황</h6>

@@ -5,7 +5,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/inc/top.do"/>        
-
+<script type="text/javascript">
+$(function(){
+	$("#dynamicTbody tr").click(function(){
+	    var docNo = $(this).children().eq(0).val();
+	    window.open('/ice/payment/docView.do?docNo='+docNo,'Docviewer',
+	    		'width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');
+	 });
+	
+});
+</script>
         <div class="container-fluid">
 		
           <!-- Page Heading -->
@@ -119,7 +128,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">미결 문서
                   		<c:if test="${!empty paylist}">
 	                      	<span class="badge badge-danger badge-counter" style="position: relative;">
-	                      		${paySize }
+	                      		${fn:length(paylist) }
 	                      	</span>
 	                      </c:if>
                   </h6>
@@ -134,22 +143,24 @@
                 </div>
                  
                 <div class="card-body" style="height: 300px;">
-                  <table id="UDpayTable" class="table table-hover">
-					<tbody>
+                  <table id="UDpayTable" class="table table-hover" style="overflow-x: hidden; overflow-y: scroll;">
+					<tbody id="dynamicTbody">
 					<!-- 반복 시작 -->
 						<c:if test="${!empty paylist }">
-							<c:forEach var="payVo" items="${paylist }">
-								<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
-									<td width="30%;">[${payVo.typeName}] ${payVo.name}</td>
-									<td>${payVo.title}</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-						<c:if test="${empty paylist }">
+						<c:forEach var="payVo" items="${paylist }">
 							<tr>
-								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+								<input type="hidden" value="${payVo.docNo}" id="docNum">
+								<td>[${payVo.typeName }] ${payVo.writedate }</td>
+								<td>${payVo.name }</td>
+								<td>${payVo.title }</td>
 							</tr>
-						</c:if>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty paylist }">
+						<tr>
+							<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+						</tr>
+					</c:if>
 						<!-- 반복 끝 -->
 					</tbody>
 				</table>

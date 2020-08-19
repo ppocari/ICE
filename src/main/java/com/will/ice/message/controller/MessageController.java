@@ -99,6 +99,7 @@ public class MessageController {
 		String msg = "쪽지 전송 실패", url = "/message/msgWrite.do";
 		if(result_msg_rec > 0) {
 			msg = "쪽지 전송 성공";  
+			url = "/message/msgSendList.do";
 		}
 		
 		model.addAttribute("msg", msg);
@@ -201,13 +202,36 @@ public class MessageController {
 		model.addAttribute("msgvo", msgvo);
 		
 	}
+	//msgDeleteByNo.do?no=184
+	
+	@RequestMapping(value="/msgDeleteByNo.do", method = RequestMethod.POST)
+	public String msgDeleteByNo(@RequestParam int no, Model model) {
+		logger.info("쪽지 삭제 no={}", no);
+		
+		MessageVO msgvo = msgService.msgSelecyByno(no);
+		int msgno = msgvo.getMsgNo();
+		int cnt =msgService.updateDelteMsgOne(msgno);
+		
+		String msg = "쪽지 휴지통 이동 실패", url = "/message/msgRecList.do";
+		if(cnt > 0) {
+			msg = "쪽지 휴지통 이동 성공";  
+			url = "/message/msgTrash.do";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+		
+	}
+	
 	
 	@RequestMapping(value="/msgDelete.do", method = RequestMethod.POST)
 	public String msgDelete(@ModelAttribute MessageListVO msgListVO, Model model) {
 		logger.info("쪽지 삭제 msgListVO={}", msgListVO);
 		
 		List<MessageVO> msgList = msgListVO.getMsgItems();
-		
+	
 		int cnt =msgService.updateDelteMsg(msgList);
 		
 		String msg = "쪽지 휴지통 이동 실패", url = "/message/msgRecList.do";
@@ -280,6 +304,10 @@ public class MessageController {
 		
 	}
 	
+	
+			
+	
+	
 	@RequestMapping(value="/msgDelBack.do", method = RequestMethod.POST)
 	public String msgDelBack(@ModelAttribute MessageListVO msgListVO, Model model) {
 		logger.info("msgDelBack.do 휴지통");
@@ -302,5 +330,26 @@ public class MessageController {
 		
 	}
 	
+	//msgDelBackByNo.do?no=157
+	@RequestMapping(value="/msgDelBackByNo.do", method = RequestMethod.POST)
+	public String msgDelBackByNo(@RequestParam int no, Model model) {
+		logger.info("쪽지 삭제 no={}", no);
+		
+		MessageVO msgvo = msgService.msgSelecyByno(no);
+		int msgno = msgvo.getMsgNo();
+		int cnt =msgService.msgDelBackOne(msgno);
+		
+		String msg = "쪽지 복원 실패", url = "/message/msgTrash.do";
+		if(cnt > 0) {
+			msg = "쪽지 복원 성공"; 
+			url = "/message/msgRecList.do";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+		
+	}
 	
 }

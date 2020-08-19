@@ -33,4 +33,8 @@ public interface MessageService {
 	int selectTotalMsgSendRecord(MessageVO msgVO);
 	
 	int selectTotalMsgRecRecord(MessageVO msgVO);
+
+	int updateDelteMsgOne(int msgno);
+
+	int msgDelBackOne(int msgno);
 }

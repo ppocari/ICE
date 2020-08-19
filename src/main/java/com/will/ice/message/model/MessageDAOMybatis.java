@@ -100,6 +100,16 @@ public class MessageDAOMybatis implements MessageDAO{
 		return sqlsession.selectOne(namespace+"selectTotalMsgRecRecord", msgVO);
 	}
 
+	@Override
+	public int updateDelteMsgOne(int msgno) {
+		return sqlsession.update(namespace+"updateDelteMsgOne", msgno);
+	}
+
+	@Override
+	public int msgDelBackOne(int msgno) {
+		return sqlsession.update(namespace+"msgDelBackOne", msgno);
+	}
+
 	
 	
 	
