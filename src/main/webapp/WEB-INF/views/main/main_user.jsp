@@ -138,11 +138,11 @@
 					<tbody>
 					<!-- 반복 시작 -->
 						<c:if test="${!empty paylist }">
-						<c:forEach var="vo" items="${paylist }">
-							<tr onclick="window.open('../docView.do?docNo=${vo.docNo}','Docviewer','width=1150,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
-								<td>[${vo.typeName }] ${vo.writedate }</td>
-								<td>${vo.name }</td>
-								<td>${vo.title }</td>
+						<c:forEach var="payVo" items="${paylist }">
+							<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
+								<td>[${payVo.typeName }] ${payVo.writedate }</td>
+								<td>${payVo.name }</td>
+								<td>${payVo.title }</td>
 							</tr>
 						</c:forEach>
 					</c:if>
