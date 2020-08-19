@@ -75,15 +75,15 @@ public class LoginController {
 				msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
 				url = "/main/main_admin.do";			
 				
-			}else {	//사원 if(memVo.getPosCode().equals("920"))		
-					if(pwd.equals(memVo.getSsn1())){
-						msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다";
-						url = "/member/memPwd.do";
-					}else {
-						msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
-						url = "/main/main_user.do";
-			
-					}
+			}else {		
+				if(pwd.equals(memVo.getSsn1())){
+					msg= memVo.getName()+"님 처음 오셨군요! 비밀번호 설정페이지로 이동합니다";
+					url = "/member/memPwd.do";
+				}else {
+					msg= memVo.getName()+" "+memVo.getPosName() + "님 로그인되었습니다.";
+					url = "/main/main_user.do";
+		
+				}
 				
 			}
 		}else if(result==MemberService.PWD_DISAGREE){

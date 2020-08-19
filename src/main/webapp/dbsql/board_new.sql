@@ -69,8 +69,7 @@ ALTER TABLE companyBoard_recommend
 		);
 
 
-drop table boardComment;
-drop table companyBoard_recommend;
+
 drop table board;
 drop sequence board_seq;
 

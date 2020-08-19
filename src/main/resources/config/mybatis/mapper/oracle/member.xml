@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="idCheck" parameterType="string" resultType="int">
-		select memno from mypage_mem
+		select * from mypage_mem
 		where memno = #{memNo}
 	</select>
 	

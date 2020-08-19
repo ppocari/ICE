@@ -75,11 +75,17 @@ public class BoardCommentController {
 	
 	@RequestMapping(value="boardCommentDelete.do", method = RequestMethod.POST)
 	public String boardCommentDelete_post(@RequestParam(defaultValue = "0") int no,
+			@RequestParam(defaultValue = "0") int boardNo,
 			@ModelAttribute BoardCommentVO vo, 
 			HttpSession session, Model model) {
 		logger.info("삭제처리 파라미터 No={}", no );
 		
-		String msg="삭제 실패했습니다", 
+		vo.setBoardNo(boardNo);
+		int BNo = vo.getBoardNo();
+		
+		logger.info("댓글 삭제할 페이지의 숫자 NNo={}", BNo );
+		
+		String msg="삭제 실패했습니다",
 				url="/board/boardDetail.do?boardNo="+vo.getBoardNo();		
 		int cnt=boardCommentService.commentDelete(no);
 		if(cnt>0) {
