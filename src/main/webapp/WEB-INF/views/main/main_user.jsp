@@ -5,7 +5,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/inc/top.do"/>        
-
+<script type="text/javascript">
+$(function(){
+	$("#dynamicTbody tr").click(function(){
+	    var docNo = $(this).children().eq(0).val();
+	    window.open('/ice/payment/docView.do?docNo='+docNo,'Docviewer',
+	    		'width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');
+	 });
+	
+});
+</script>
         <div class="container-fluid">
 		
           <!-- Page Heading -->
@@ -135,12 +144,12 @@
                  
                 <div class="card-body" style="height: 300px;">
                   <table id="UDpayTable" class="table table-hover" style="overflow-x: hidden; overflow-y: scroll;">
-					<tbody>
+					<tbody id="dynamicTbody">
 					<!-- 반복 시작 -->
 						<c:if test="${!empty paylist }">
 						<c:forEach var="payVo" items="${paylist }">
-							<tr onclick="window.open('../../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
-							
+							<tr>
+								<input type="hidden" value="${payVo.docNo}" id="docNum">
 								<td>[${payVo.typeName }] ${payVo.writedate }</td>
 								<td>${payVo.name }</td>
 								<td>${payVo.title }</td>
