@@ -4,9 +4,12 @@ commit;
 
 update member
 set deptcode = '999', poscode='999'
-where memno = '998999';
+where memno = '999999';
 
 select * from position;
+
+delete from notice
+where noticeno = 12;
 
 update member
 set  email2=''
@@ -75,6 +78,8 @@ select * from v_address;
   
  --delete from member;
   
+delete from member
+where memno = '999999';
 
 insert into member(memNo, name, pwd, deptcode, poscode)
 values('111910', '정그래', '123', '111','910');
@@ -89,7 +94,7 @@ insert into member(memNo, name, hp1, hp2, hp3, pwd, deptcode, poscode)
 values('141910', '둘리', '010', '1234','5678','123', '141','930');
 
 insert into member(memNo, name, pwd, hiredate, deptcode, poscode, salary)
-values('999999', '박관리', '123', '2009-01-02','999','999' , '4000');
+values('888888', '박관리', '123', '2009-01-02','999','999' , '4000');
 
 
 update member
@@ -221,7 +226,7 @@ select * from comcard_mem
  commit;
  
 delete from member
-where memno = '999999';
+where memno = '998999';
  
 select * 
 from
@@ -323,3 +328,6 @@ insert into message(msgno, msgstatus, msgcontent, sendmemno)
 
 
 select * from SpayView ;
+
+select * from workRecord;
+select * from resReserve;
