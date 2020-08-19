@@ -53,4 +53,9 @@ public class MemberDAOMybatis implements MemberDAO{
 		return sqlsession.update(namespace+"newPwd", memVo);
 	}
 
+	@Override
+	public int idCheck(String memno) {
+		return sqlsession.selectOne(namespace+"idCheck", memno);
+	}
+
 }

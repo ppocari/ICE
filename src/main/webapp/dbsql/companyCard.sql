@@ -93,7 +93,7 @@ ALTER TABLE companyCard
 
 ALTER TABLE companyCard
 	ADD
-		CONSTRAINT FK_accountCode_TO_companyCard
+		CONSTRAINT FK_accountCode_TO_comCard
 		FOREIGN KEY (
 			accCode
 		)
@@ -103,7 +103,7 @@ ALTER TABLE companyCard
 
 ALTER TABLE companyCard
 	ADD
-		CONSTRAINT FK_companyCardFile_TO_companyCard
+		CONSTRAINT FK_comCardFile_TO_comCard
 		FOREIGN KEY (
 			fileNo
 		)

@@ -316,21 +316,10 @@
 			</li>
 
 			<!-- Nav Item - 주소록-->		
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
-				data-toggle="collapse" data-target="#collapseSix"
-				aria-expanded="true" aria-controls="collapseSix"> <i
-					class="fas fa-fw fa-folder"></i> <span>주소록</span>
+			<li class="nav-item"><a class="nav-link collapsed" href="<c:url value='/address/addressMain.do'/>">
+			 <i class="fas fa-fw fa-folder"></i> <span>주소록</span>
 			</a>
-				<div id="collapseSix" class="collapse" aria-labelledby="headingSix"
-					data-parent="#accordionSidebar" >
-					<div class="bg-white py-2 collapse-inner rounded">
-						<div class="bg-white py-2 collapse-inner rounded">
-							<a class="collapse-item" href="<c:url value='/address/addressMain.do'/>">주소록</a>
 
-						</div>
-
-					</div>
-				</div>
 			</li>
 			
 			<!-- Nav Item -스케줄-->		
