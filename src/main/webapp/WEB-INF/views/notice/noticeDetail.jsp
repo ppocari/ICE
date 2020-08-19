@@ -169,6 +169,8 @@ function del(noticeNo) {
 										<c:if test="${sessionScope.identNum == comment.memNo }">
 											<form name="DeleteCommentForm" method="post"
 												action="<c:url value='/noticeComment/noticeCommentDelete.do?no=${comment.no }'/>">
+												<input type="hidden" name="noticeNo" value="${comment.noticeNo }">
+												
 												<input type="button" name="comEditBt"
 													style="font-size: 9px; width: 38px;"
 													class="btn btn-primary btn-sm" value="수정">

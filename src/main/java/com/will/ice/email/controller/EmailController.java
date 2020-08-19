@@ -2,6 +2,8 @@ package com.will.ice.email.controller;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +42,14 @@ public class EmailController {
 			@RequestParam(required = false) String email, Model model) {
 		
 		logger.info("메일 발송 처리");
+		logger.info("사원번호 확인 ={}",memNo);
+		logger.info("사원메일 확인 ={}",email);
 		
-		int result = memberService.idCheck(memNo);
+		int result = memberService.idCheck(memNo); // nullpointer
+		logger.info("아이디 체크 result={}",result);
 		
-		String msg="비밀번호 발송 실패", url="/log/findPwd.do";
-		if(memNo!="0") {
-			logger.info("사원번호 확인 ={}",memNo);
-			logger.info("사원메일 확인 ={}",email);
+		String msg="사원번호 조회 실패", url="/log/findPwd.do";
+		if(result==MemberService.LOGIN_OK) {
 
 			MemberVO vo = memberService.selectMember(memNo); // 주민번호로 앞자리로 초기화
 			String pwd = vo.getSsn1(); 
@@ -76,7 +79,8 @@ public class EmailController {
 			}
 		}else {
 			msg = "해당 사원번호가 없습니다.";
-		}
+		}	
+		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 	

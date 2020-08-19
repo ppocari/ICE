@@ -1,5 +1,7 @@
 package com.will.ice.noticeComment.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -72,12 +74,18 @@ public class NoticeCommentController {
 	}
 	@RequestMapping(value="noticeCommentDelete.do", method = RequestMethod.POST)
 	public String noticeCommentDelete_post(@RequestParam(defaultValue = "0") int no,
+			@RequestParam(defaultValue = "0") int noticeNo,
 			@ModelAttribute NoticeCommentViewVO vo, 
 			HttpSession session, Model model) {
 		logger.info("삭제처리 파라미터 No={}", no );
 		
-		String msg="삭제 실패했습니다", 
-				url="/notice/noticeDetail.do?noticeNo="+vo.getNoticeNo();
+		vo.setNoticeNo(noticeNo);
+		int NNo = vo.getNoticeNo();
+		
+		logger.info("댓글 삭제할 페이지의 숫자 NNo={}", NNo );
+		
+		
+		String msg="삭제 실패했습니다", url="/notice/noticeDetail.do?noticeNo="+ NNo;
 		
 		int cnt=noticeCommentService.commentDelete(no);
 		if(cnt>0) {

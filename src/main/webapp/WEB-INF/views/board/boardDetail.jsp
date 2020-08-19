@@ -165,6 +165,8 @@ $(function(){
 
 										<form name="DeleteCommentForm" method="post"
 											action="<c:url value='/boardComment/boardCommentDelete.do?no=${comment.no }'/>">
+											<input type="hidden" name="boardNo" value="${comment.boardNo }">
+
 											<input text="button" id="comEditBt"
 												style="font-size: 9px; width: 38px;"
 												class="btn btn-primary btn-sm" value="수정">

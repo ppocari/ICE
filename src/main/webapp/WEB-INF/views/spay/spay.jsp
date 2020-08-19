@@ -78,7 +78,7 @@
 					<c:if test="${empty memVo.hp1}">
 					</c:if>
 					<c:if test="${!empty memVo.email1}">
-						<label>이메일 : ${memVo.email1}${memVo.email2 }</label><br>
+						<label>이메일 : ${memVo.email1}@${memVo.email2 }</label><br>
 					</c:if>					
 					<c:if test="${empty memVo.email1}">
 					</c:if>					
@@ -128,7 +128,7 @@
 	    	    		
 	        		}
 	        	});
-	        	Location.reload();
+
 	        	location.href="<c:url value='/spay/sok.do'/>";
 	        	Location.reload();
 	            var msg = '결제가 완료되었습니다. \n';
