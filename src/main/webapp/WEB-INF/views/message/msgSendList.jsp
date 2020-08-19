@@ -36,6 +36,8 @@ function pageProc(curPage){
 }
 
 	$(function(){
+		
+		
 		$("#dynamicTbody tr").click(function(){
 			var no = $(this).children(0).val();	
 			window.open('/ice/message/msgSendDetail.do?no='+no,'tr_val',
@@ -60,8 +62,8 @@ function pageProc(curPage){
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-10 ">
-			<div class="card shadow mb-4" style="height: 700px">
+		<div class="col-xl-8 ">
+			<div class="card shadow mb-4" style="height: 600px">
 				<!-- Card Header - Dropdown -->
 				<form name="msgRecListFrm" method="post" action="<c:url value='/message/msgSendList.do'/> ">
 					<input type="hidden" name="currentPage" > 
@@ -108,15 +110,14 @@ function pageProc(curPage){
 					<table class="table table-bordered table-condensed table-hover"
 						id="dynamicTable">
 						<colgroup>
-							<col style="width: 5%;" />
-							<col style="width: 15%;" />
+						
+							<col style="width: 18%;" />
 							<col style="width: 55%;" />
-							<col style="width: 15%;" />
+							<col style="width: 17%;" />
 						</colgroup>
 						<thead>
 							<tr>
-								<th scope="col"><input type="checkbox" id="checkAll"
-									value="option1"></th>
+								
 								<th>받을 사람</th>
 								<th>내용</th>
 								<th>보낸 날짜</th>
@@ -129,8 +130,7 @@ function pageProc(curPage){
 								<tr class="align_center" id="msgRecList${i }">
 									<input type="hidden" value="${msgvo.no }"
 										id="msgRecList_no${i}">
-									<td><input type="checkbox" id="inlineCheckbox1"
-										value="option1"></td>
+									
 									<td>${msgvo.recName}</td>
 									<td class="align_left"><c:if
 											test="${fn:length(msgvo.msgContent)>40 }">
@@ -148,7 +148,7 @@ function pageProc(curPage){
 					</table>
 					<!-- 페이지 번호 추가 -->
 					<!-- 이전 블럭으로 이동 ◀ -->
-					<div class="divPage" style="text-align: center">
+					<div class="divPage" style="text-align: center; ">
 						<c:if test="${pagingInfo.firstPage>1 }">
 							<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})"> <%-- 	<img src="<c:url value='/resources/images/first.JPG'/>" alt="이전 블럭으로 이동"> --%>
 								◀

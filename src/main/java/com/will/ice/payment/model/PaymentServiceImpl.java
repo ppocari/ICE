@@ -227,24 +227,20 @@ public class PaymentServiceImpl implements PaymentService{
 	public List<PaylistViewVO> selectMain(PaymentSearchVO paysearchVo,List<Integer> docNolist) {
 		int docNo=0;
 		List<PaylistViewVO> list = new ArrayList<PaylistViewVO>();
-		int count=0;
 		paysearchVo.setProgress("reject");
 		
 		for(int i=0; i<docNolist.size(); i++) {
-			if(count<5) {
-				docNo = docNolist.get(i);
-				paysearchVo.setDocNo(docNo);
-				logger.info("paysearchVo={}",paysearchVo);
-				PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
-				logger.info("PaylistViewVO={}",vo);
-				
-				if(vo!=null) {
-					if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
-						list.add(vo);
-					}
+			docNo = docNolist.get(i);
+			paysearchVo.setDocNo(docNo);
+			logger.info("paysearchVo={}",paysearchVo);
+			PaylistViewVO vo = paymentDao.selectUndecided(paysearchVo);
+			logger.info("PaylistViewVO={}",vo);
+			
+			if(vo!=null) {
+				if(vo.getGmemNo().equals(paysearchVo.getIdentNum())) {
+					list.add(vo);
 				}
 			}
-			count++;
 		}
 		
 		return list;

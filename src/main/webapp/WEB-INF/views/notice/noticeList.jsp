@@ -68,7 +68,7 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
+		<div class="col-xl-10 ">
 			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -89,8 +89,8 @@
 							<div style="width:98%;margin-left: 1%;margin-top: 1%;">
 								<table class="table table-bordered table-hover" id="dynamicTable" style="font-size: 12pt;">
 									<colgroup>
-										<col style="width:15%;"/>
-										<col style="width:60%;"/>
+										<col style="width:10%;"/>
+										<col style="width:65%;"/>
 										<col style="width:15%;"/>
 										<col style="width:10%;"/>
 									</colgroup>

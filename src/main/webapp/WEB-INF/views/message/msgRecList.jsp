@@ -36,10 +36,19 @@
 	}
 
 	$(function(){
-		
+		//#msgRecList_no1
+		$('#checkAll').click(function(){
+			if($("#checkAll").is(":checked") == true) {
+				$("input[type=checkbox]:checkbox").prop("checked", true);
+			}else{
+				$('#tableForm checkbox').prop("checked", false);
+				$("input[type=checkbox]:checkbox").prop("checked", false);
+			}
+		});
 		
 		$("#dynamicTbody tr").dblclick(function(){
-			var no = $(this).children(0).val();
+			
+			var no = $(".meme").val();
 			window.open('/ice/message/msgRecDetail.do?no='+no,'tr_val',
 			'width=580,height=430,left=50,top=50,location=yes,resizable=yes');	
 			
@@ -84,8 +93,8 @@
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-10 ">
-			<div class="card shadow mb-4" style="height: 700px">
+		<div class="col-xl-8 ">
+			<div class="card shadow mb-4" style="height: 600px">
 				<!-- Card Header - Dropdown -->
 				<form name="msgRecListFrm" method="post"
 					action="<c:url value='/message/msgRecList.do'/> ">
@@ -124,96 +133,97 @@
 							</a>
 						</div>
 					</div>
+				</form>
+				<!-- Card Body -->
+				<div class="card-body">
+					<div style="height: 570px;">
+						<table class="table table-bordered table-condensed table-hover"
+							id="dynamicTable">
+							<thead>
+								<tr>
+									<th style="width: 5%;"><input type="checkbox"
+										id="checkAll" value="option1"></th>
+									<th style="width: 10%;">읽기 여부</th>
+									<th style="width: 10%;">보낸 사람</th>
+									<th style="width: 55%;">내용</th>
+									<th style="width: 20%;">보낸 날짜</th>
+								</tr>
+							</thead>
+							<tbody id="dynamicTbody">
+								<!-- 게시판 내용 반복문시작 -->
 
-					<!-- Card Body -->
-					<div class="card-body">
-						<div style="height: 570px;">
-							<table class="table table-bordered table-condensed table-hover"
-								id="dynamicTable">
-								<thead>
-									<tr>
-										<th style="width: 5%;"><input type="checkbox"
-											id="checkAll" value="option1"></th>
-										<th style="width: 10%;">읽기 여부</th>
-										<th style="width: 10%;">보낸 사람</th>
-										<th style="width: 55%;">내용</th>
-										<th style="width: 20%;">보낸 날짜</th>
-									</tr>
-								</thead>
-								<tbody id="dynamicTbody">
-									<!-- 게시판 내용 반복문시작 -->
 
-
-									<c:set var="i" value="${1 }" />
-									<c:forEach var="msgvo" items="${msgList }">
-										<c:if test="${empty msgvo}">
-											<tr>
-												<td colspan="5" align="center">받은 쪽지가 없습니다.</td>
-											</tr>
-										</c:if>
-										<c:if test="${!empty msgvo}">
-											<tr class="align_center" id="msgRecList${i }">
-
-												<td><input type="checkbox" id="inlineCheckbox${i }"
-													class="inlineCheckbox"> <input type="hidden"
-													value="${msgvo.no }" id="msgRecList_no${i}"
-													name="msgItems[${i }].no" disabled="disabled"></td>
-												<td class="click"><c:if
-														test="${msgvo.msgStatus == 'N'}">
-														<i class="fas fa-envelope" style="color: blue;"></i>
-													</c:if> <c:if test="${msgvo.msgStatus == 'Y'}">
-														<i class="far fa-envelope"></i>
-													</c:if></td>
-												<td class="click">${msgvo.sendName}</td>
-												<td class="align_left click">
-													<!-- 제목보여주기 길면 일부 --> <c:if
-														test="${fn:length(msgvo.msgContent)>30 }">
+								<c:set var="i" value="${1 }" />
+								<c:forEach var="msgvo" items="${msgList }">
+									<c:if test="${empty msgvo}">
+										<tr>
+											<td colspan="5" align="center">받은 쪽지가 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:if test="${!empty msgvo}">
+										<tr class="align_center" id="msgRecList${i }">
+											<input type="hidden" value="${msgvo.no }" class="meme">
+											<td><input type="checkbox" id="inlineCheckbox${i }"
+												class="inlineCheckbox"> <input type="hidden"
+												value="${msgvo.no }" id="msgRecList_no${i}"
+												name="msgItems[${i }].no" disabled="disabled"></td>
+											<td class="click"><c:if test="${msgvo.msgStatus == 'N'}">
+													<i class="fas fa-envelope" style="color: blue;"></i>
+												</c:if> <c:if test="${msgvo.msgStatus == 'Y'}">
+													<i class="far fa-envelope"></i>
+												</c:if></td>
+											<td class="click">${msgvo.sendName}</td>
+											<td class="align_left click">
+												<!-- 제목보여주기 길면 일부 --> <c:if
+													test="${fn:length(msgvo.msgContent)>30 }">
 													${fn:substring(msgvo.msgContent, 0, 30)} ...
 												</c:if> <c:if test="${fn:length(msgvo.msgContent)<=30 }">
 													${msgvo.msgContent}
 												</c:if>
-												</td>
-												<td class="click"><fmt:formatDate
-														value="${msgvo.msgRegdate}" pattern="yyyy-MM-dd" /></td>
-											</tr>
-											<c:set var="i" value="${ i+1 }" />
-										</c:if>
-									</c:forEach>
-								</tbody>
-							</table>
+											</td>
+											<td class="click"><fmt:formatDate
+													value="${msgvo.msgRegdate}" pattern="yyyy-MM-dd" /></td>
+										</tr>
+										<c:set var="i" value="${ i+1 }" />
+									</c:if>
+								</c:forEach>
+							</tbody>
+						</table>
 
+
+						<!-- 페이지 번호 추가 -->
+						<!-- 이전 블럭으로 이동 ◀ -->
+
+
+
+						<div class="divPage" style="text-align: center">
+							<c:if test="${pagingInfo.firstPage>1 }">
+								<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})"> <%-- 	<img src="<c:url value='/resources/images/first.JPG'/>" alt="이전 블럭으로 이동"> --%>
+									◀
+								</a>
+							</c:if>
+
+							<!-- [1][2][3][4][5][6][7][8][9][10] -->
+							<c:forEach var="i" begin="${pagingInfo.firstPage }"
+								end="${pagingInfo.lastPage }">
+								<c:if test="${i!=pagingInfo.currentPage }">
+									<a href="#" onclick="pageProc(${i})">[${i}]</a>
+								</c:if>
+								<c:if test="${i==pagingInfo.currentPage }">
+									<span style="color: blue; font-weight: bold">${i}</span>
+								</c:if>
+							</c:forEach>
+
+							<!-- 다음 블럭으로 이동 ▶ -->
+							<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
+								<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})"> <%-- <img src="<c:url value='/resources/images/last.JPG'/>" alt="다음 블럭으로 이동"> --%>
+									▶
+								</a>
+							</c:if>
+							<!--  페이지 번호 끝 -->
 						</div>
 
-
 					</div>
-				</form>
-				<!-- 페이지 번호 추가 -->
-				<!-- 이전 블럭으로 이동 ◀ -->
-				<div class="divPage" style="text-align: center">
-					<c:if test="${pagingInfo.firstPage>1 }">
-						<a href="#" onclick="pageProc(${pagingInfo.firstPage-1})"> <%-- 	<img src="<c:url value='/resources/images/first.JPG'/>" alt="이전 블럭으로 이동"> --%>
-							◀
-						</a>
-					</c:if>
-
-					<!-- [1][2][3][4][5][6][7][8][9][10] -->
-					<c:forEach var="i" begin="${pagingInfo.firstPage }"
-						end="${pagingInfo.lastPage }">
-						<c:if test="${i!=pagingInfo.currentPage }">
-							<a href="#" onclick="pageProc(${i})">[${i}]</a>
-						</c:if>
-						<c:if test="${i==pagingInfo.currentPage }">
-							<span style="color: blue; font-weight: bold">${i}</span>
-						</c:if>
-					</c:forEach>
-
-					<!-- 다음 블럭으로 이동 ▶ -->
-					<c:if test="${pagingInfo.lastPage < pagingInfo.totalPage }">
-						<a href="#" onclick="pageProc(${pagingInfo.lastPage+1})"> <%-- <img src="<c:url value='/resources/images/last.JPG'/>" alt="다음 블럭으로 이동"> --%>
-							▶
-						</a>
-					</c:if>
-					<!--  페이지 번호 끝 -->
 
 				</div>
 			</div>

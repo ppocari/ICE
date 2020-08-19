@@ -198,7 +198,7 @@ public class SpayController {
 	
 	@RequestMapping(value = "/excelDown.do")
 	@ResponseBody
-	public String excelDown(@ModelAttribute DateSearchVO dateSearchVo,
+	public void excelDown(@ModelAttribute DateSearchVO dateSearchVo,
 			HttpServletResponse response, Model model) throws Exception {
 
 		logger.info("엑셀에 넣을 날짜 파라미터, dateSearchVo={}",dateSearchVo);
@@ -224,9 +224,6 @@ public class SpayController {
 	    List<SpayViewVO> list=spayService.selectSpayViewAll(dateSearchVo);
 		logger.info("엑셀에 넣기전 결과 list.size={}", list.size());
 		
-		String msg="데이터가 없습니다!", url="/spay/sListAll.do";
-		if(list.size()!=0) {
-			
 			// 워크북 생성
 		    Workbook wb = new HSSFWorkbook();
 		    Sheet sheet = wb.createSheet("결제된 목록");
@@ -311,22 +308,16 @@ public class SpayController {
 	            cell.setCellValue(Time);
 		    }
 	
-		    // 컨텐츠 타입과 파일명 지정
-		    response.setContentType("ms-vnd/excel");
-		    response.setHeader("Content-Disposition", "attachment;filename=buyticket.xls");
-	
-		    // 엑셀 출력
-		    wb.write(response.getOutputStream());
-		    wb.close();
-		
-		}else{
-			msg="데이터가 없습니다!";
-		}		  
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-	
-		return "common/message";
+	    // 컨텐츠 타입과 파일명 지정
+        response.setCharacterEncoding("UTF-8");
+	    response.setContentType("ms-vnd/excel");
+	    response.setHeader("Pragma","public");
+	    response.setHeader("Expires","0");
+	    response.setHeader("Content-Disposition", "attachment;filename=buyticket.xls");
+
+	    // 엑셀 출력
+	    wb.write(response.getOutputStream());
+	    wb.close();
 	}
 	
 }

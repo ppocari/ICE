@@ -34,11 +34,11 @@
 <script type="text/javascript">
 	$(function(){
 		$("#wr_submit").click(function(){
-			if($('#memNo').val().length<1){
-				alert('사원번호를 입력하세요');
+			if($('#memNo').val().length<6 || $('#memNo').val().length>6){
+				alert('일치하지 않는 사원번호 입니다.');
 				$('#memNo').focus();
 				event.preventDefault();
-			}else if($('#pwd').val().length<1){
+			}else if($('#email').val().length<1){
 				alert('이메일을 입력하세요');
 				$('#email').focus();
 				event.preventDefault();

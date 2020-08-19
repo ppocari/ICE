@@ -424,7 +424,9 @@
 	}
 	
 	#RESbottom{
-	clear:both;
+		position:absolute;
+	width:100%;
+    bottom:0;
 }
 
 article > div {

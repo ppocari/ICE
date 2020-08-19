@@ -151,6 +151,9 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 });
 </script>
 <style>
+nav{
+	font-size: 1.2em;
+}
 
   body {
     margin: 0;
@@ -236,9 +239,10 @@ window.open(contextPath+'/schedule/detailSchedule.do?title='+dbTitle+'&content='
 <input type="hidden" value="${vo.schNo}">
 <div class="row">
 	<!-- Area Chart -->
-	<div class="col-xl-12 " >
-		<div class="card shadow mb-4" style="fit-content">
+	<div class="col-xl-10 " style="margin: 30px;" >
+		<div class="card shadow mb-4" style="height:fit-content; ">
 			<!-- 스케줄 -->
+			
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h5 class="m-0 font-weight-bold text-primary">스케줄</h5>
 				</div>
