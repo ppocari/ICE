@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="/inc/top.do"/> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:import url="/inc/top.do"></c:import>/> 
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 
 <link rel="stylesheet" type="text/css" 
@@ -50,21 +50,24 @@ function handleReserve(rvNo, mode) {
 	text-align: right;
 } 
 
-article > div {
+#mainDiv article > div {
 	float:left;
 }
 
 #RESbottom{
-	clear:both;
+	position:absolute;
+	width:100%;
+    bottom:0;
+
 }
 
-button{
+#mainDiv button{
 	border: 1px solid lightgray;
 	font-size: 0.8em;
 	
 }
 
-a {
+#mainDiv a {
 	color:#858796;
 	font-size: 0.9em;
 	margin-left:3px;
@@ -72,7 +75,7 @@ a {
 	cursor: pointer;
 }
 
-a:hover{
+#mainDiv a:hover{
 	text-decoration: underline;
 }
 
@@ -126,6 +129,17 @@ article{
 	.orderImgHide{
 		visibility:hidden;
 	}
+	
+	#mainDiv h3{
+		margin-bottom:10px;
+		margin-left:15px;
+	}
+	
+	#mainDiv header{
+		margin-bottom: 15px;
+	}
+	
+	
 </style>
 
 <section>
@@ -135,12 +149,12 @@ article{
 		name="frmPage" method="post">
 		<input type="hidden" name="currentPage">
 	</form>
-		<header>
-			<h3>
+		<header style="margin:15px">
+			<h3 class="h3 mb-0 text-gray-800">
 				예약처리<span></span>
 			</h3>
 		</header>
-		<div class="col-xl-12 ">
+		<div id="mainDiv" class="col-xl-12 ">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">예약신청목록</h6>

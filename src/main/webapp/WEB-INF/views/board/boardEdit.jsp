@@ -66,7 +66,7 @@ $(function(){
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 " >
+		<div class="col-xl-7 " >
 			<div class="card shadow mb-4" style="height: fit-content; min-height: 800px; weight: 500px;">
 				<!-- Card Header - Dropdown -->
 				<form name="frmEdit" method="post"  
@@ -76,18 +76,17 @@ $(function(){
 					<input type="hidden" name="boardNo" value="${param.boardNo }">
 					
 					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<tr>
-							<th>
-								<h6 class="m-0 font-weight-bold text-primary">사내게시판 수정</h6>
-							</th>
-							<td>
-								<a href="<c:url value='/board/boardList.do'/>">
-									<button type="button" class="btn btn-info"
-									 >사내게시판</button>
-								</a>
-							</td>
-						</tr>
-						
+						<div>
+							<h6 class="m-0 font-weight-bold text-primary">사내게시판 수정</h6>
+						</div>
+						<!-- 등록,취소 버튼 -->
+						<div>
+							<input type="Button" class="btn btn-primary btn-sm" id="nList" value="취소"
+								style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/board/boardList.do"/>'"/>
+								
+							<input type = "submit" class="btn btn-primary btn-sm" value="등록"
+								style="width: 60px; font-size: 13px;"/>
+	            		</div>
 					</div>
 					
 					<!-- 분류 -->
@@ -163,17 +162,7 @@ $(function(){
 							</tr>
 						</table>
 					</div>
-					
-					<!-- 등록,취소 버튼 -->
-					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						<input type = "submit" class="form-control" value="등록"
-							style="width: 52px; font-size: 13px;"/>
-            			<input type="Button" class="form-control btList" id="nList" value="글목록"
-							style="width: 60px; font-size: 13px;" onclick="location.href='<c:url value="/board/boardList.do"/>'"/>
-					</div>
 				</form>
-				
-				
 			</div>
 		</div>
 	</div>

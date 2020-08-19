@@ -10,6 +10,8 @@ CREATE TABLE boardComment (
 	regdate DATE DEFAULT sysdate /* ¿€º∫¿œ */
 );
 
+drop sequence boardComment_seq;
+
 create sequence boardComment_seq
 start with 1
 increment by 1;

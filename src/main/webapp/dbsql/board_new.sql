@@ -99,34 +99,6 @@ create sequence board_seq
 start with 1
 increment by 1;
 
-COMMENT ON TABLE board IS '사내게시판';
-
-COMMENT ON COLUMN board.boardNo IS '게시글번호';
-
-COMMENT ON COLUMN board.title IS '글제목';
-
-COMMENT ON COLUMN board.MEMNO IS '사원번호';
-
-COMMENT ON COLUMN board.content IS '글내용';
-
-COMMENT ON COLUMN board.regdate IS '등록일';
-
-COMMENT ON COLUMN board.visited IS '조회수';
-
-COMMENT ON COLUMN board.recommend IS '추천';
-
-COMMENT ON COLUMN board.isMain IS '메인여부';
-
-COMMENT ON COLUMN board.fileName IS '이미지이름';
-
-COMMENT ON COLUMN board.saveFileName IS '이미지저장이름';
-
-COMMENT ON COLUMN board.contentType IS '이미지타입';
-
-COMMENT ON COLUMN board.filePath IS '파일경로';
-
-COMMENT ON COLUMN board.fileSize IS '파일사이즈';
-
 CREATE UNIQUE INDEX PK_board
 	ON board (
 		boardNo ASC
@@ -161,7 +133,7 @@ ALTER TABLE boardComment
 
 ALTER TABLE companyBoard_recommend
 	ADD
-		CONSTRAINT FK_MEMBER_TO_companyBoard_recommend
+		CONSTRAINT FK_MEMBER_TO_comBoard_recom
 		FOREIGN KEY (
 			MEMNO
 		)
@@ -171,7 +143,7 @@ ALTER TABLE companyBoard_recommend
 
 ALTER TABLE companyBoard_recommend
 	ADD
-		CONSTRAINT FK_board_TO_companyBoard_recommend
+		CONSTRAINT FK_board_TO_comBoard_recom
 		FOREIGN KEY (
 			boardNo
 		)

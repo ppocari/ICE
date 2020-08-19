@@ -64,7 +64,7 @@ function pageProc(curPage){
 	<div class="row">
 
 		<!-- Area Chart -->
-		<div class="col-xl-12 ">
+		<div class="col-xl-10 ">
 			<div class="card shadow mb-4" style="height: 560px;">
 				<!-- Card Header - Dropdown -->
 				<div
@@ -84,14 +84,16 @@ function pageProc(curPage){
 							style="font-size: 12pt;">
 							<colgroup>
 								<col style="width: 5%;" />
+								<col style="width: 5%;" />
 								<col style="width: 50%;" />
 								<col style="width: 15%;" />
 								<col style="width: 15%;" />
-								<col style="width: 25%;" />
+								<col style="width: 20%;" />
 							</colgroup>
 							<thead>
 								<tr style="height: 0px">
 									<th scope="col">번호</th>
+									<th scope="col">분류</th>
 									<th scope="col">제목</th>
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
@@ -104,14 +106,16 @@ function pageProc(curPage){
 								<c:forEach var="vo" items="${list }">
 									<tr class="align_center">
 										<td>${vo.boardNo}</td>
+										<td>${vo.category }</td>
 										<td class="align_left"><a
 											href="<c:url value='/board/boardCountUpdate.do?boardNo=${vo.boardNo }'/>">
-												<!-- 제목보여주기 길면 일부 --> <c:if
-													test="${fn:length(vo.title)>30 }">
-															${fn:substring(vo.title, 0, 30)} ...
-														</c:if> <c:if test="${fn:length(vo.title)<=30 }">
-															${vo.title}
-														</c:if>
+												<!-- 제목보여주기 길면 일부 --> 
+												<c:if test="${fn:length(vo.title)>30 }">
+													${fn:substring(vo.title, 0, 30)} ...
+												</c:if> 
+												<c:if test="${fn:length(vo.title)<=30 }">
+													${vo.title}
+												</c:if>
 										</a> <!-- 24시간 공지사항  new 이미지--> <c:if test="${vo.newImgTerm<24 }">
 												<img src="<c:url value='/resources/img/new.gif' />"
 													alt="new이미지">

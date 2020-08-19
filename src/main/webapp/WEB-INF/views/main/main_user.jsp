@@ -61,19 +61,15 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
-                <a href="<c:url value='/payment/confirm/undecided.do' />" style="text-decoration: none;">
+                <a href="<c:url value='/payment/write/payList.do' />" style="text-decoration: none;">
 	                  <div class="row no-gutters align-items-center">
 	                    <div class="col mr-2">
 	                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">결재 서류
-	                      	<c:if test="${!empty paylist}">
-	                      	<span class="badge badge-danger badge-counter" style="position: relative;">
-	                      		${paySize }
-	                      	</span>
-	                      	</c:if>
+	                      
 	                      </div>
 	                      <div class="row no-gutters align-items-center">
 	                        <div class="col-auto">
-	                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">미결함 바로가기</div>
+	                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">결재 작성 바로가기</div>
 	                        </div>
 	                        <div class="col">
 	                          <div class="progress progress-sm mr-2">
@@ -118,12 +114,14 @@
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
               <!-- Project Card Example -->
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" style="height: 440px;">
                	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">미결 문서
-                  	<c:if test="${!empty paylist}">
-                  		<strong style="color: red;">${paySize }</strong>
-                  	</c:if>
+                  		<c:if test="${!empty paylist}">
+	                      	<span class="badge badge-danger badge-counter" style="position: relative;">
+	                      		${paySize }
+	                      	</span>
+	                      </c:if>
                   </h6>
                   <div class="dropdown no-arrow">
                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

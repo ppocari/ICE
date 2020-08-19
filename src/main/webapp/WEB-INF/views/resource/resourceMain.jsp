@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/inc/top.do"/> 
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/divForm.css'/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/divForm/tableForm.css'/>"/>
 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -110,7 +110,6 @@ $(function(){
 					
 					$('#loadDetailResource').css('visibility', 'visible');
 					
-					$('#btEdit').attr('name', '');
 					$('#spanResName').html('');
 					$('#divImage').html('');
 					$('#spanResLocation').html('');
@@ -119,7 +118,6 @@ $(function(){
 					$('#spanRkKind').html('');
 
 					
-					$('#btEdit').attr('name', resNo);
 					$('#spanResName').html(resName);
 					if(res.resImage!=null && res.resImage.length!=0) {
 						$('#divImage').html('<img width="250" height="250" id="spanResImage" style="border: 1px solid lightgray" src="'+resImageVar+'">');
@@ -129,35 +127,6 @@ $(function(){
 					$('#spanResSubdesc').html(resSubdesc);
 					$('#spanRkKind').html(rkKind);
 					
-					/* 수정버튼 처리 */
-					$('#btEdit').click(function(){
-						window.open('<c:url value="/resource/editResource.do?resNo='+resNo+'"/>', 'addRes', 
-						'width=600, height=600, left=800, top=200, location=yes, resizable=yes');
-					});
-					
-					$('#btDel').click(function(){
-						var result=confirm("정말로 \'"+ resName +"\'을/를 삭제하시겠습니까?");
-						
-							$(function(){
-								$.ajax({
-									url:"<c:url value='/resource/canResDelete.do?resNo="+resNo+"'/>",
-									type:"get",
-									data:{
-										resNo:resNo
-									},
-									success:function(res){
-										alert(res)
-									},
-									error:function(xhr, status, error){
-										alert(status+", "+error);
-									}
-								});
-							});
-							
-						/* if(result) {
-							location.href='<c:url value="/resource/deleteResource.do?resNo='+resNo+'&resImage='+resImage+'"/>'
-						} */
-					});
 				},
 				error:function(xhr, status, error) {
 					alert(status+", "+error);
@@ -208,7 +177,6 @@ function resDel(resNo, resName, resImage) {
 
 
 </script>
-
 <style type="text/css">
 
 /* 자원목록 */
@@ -225,16 +193,18 @@ article > div {
 }
 
 #RESbottom{
-	clear:both;
+	position:absolute;
+	width:100%;
+    bottom:0;
 }
 
-button{
+#mainDiv button{
 	border: 1px solid lightgray;
 	font-size: 0.8em;
 	
 }
 
-a {
+#mainDiv a {
 	color:#858796;
 	font-size: 0.9em;
 	margin-left:3px;
@@ -242,7 +212,7 @@ a {
 	cursor: pointer;
 }
 
-a:hover{
+#mainDiv a:hover{
 	text-decoration: underline;
 }
 
@@ -316,6 +286,14 @@ article{
 		margin-right: 5px;
 	}
 	
+	#logestHeight{
+		margin-bottom: 70px;
+	}
+	
+	h3{
+		margin-left:15px;
+	}
+	
 </style>
 
 <section>
@@ -327,13 +305,13 @@ article{
 		<input type="hidden" name="searchKeyword" 
 			value="${param.searchKeyword}">	
 	</form>
-	
-			<div class="d-sm-flex align-items-center justify-content-between mb-4">
-				<h1 class="h3 mb-0 text-gray-800">자원관리</h1>
+			<div id="mainDiv" class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h3 class="h3 mb-0 text-gray-800">자원관리</h3>
 			</div>
-		
+
 		<div class="col-xl-7 ">
-			<div class="card shadow mb-4" style="height: 400px;">
+			<div class="card shadow mb-4" style="height: 700px;">
+
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">자원목록</h6>
 					<div style="float: right">
@@ -347,7 +325,6 @@ article{
 				<div id="tableDivForm">
 					<table id="tableForm">
 						<tr id="tableTrForm" class="card-body">
-
 							<th>자원명</th>
 							<th>종류</th>
 							<th>장소</th>
@@ -414,8 +391,9 @@ article{
 			</div>
 		</div>
 		
+
 		<div class="col-xl-4 ">
-			<div class="card shadow mb-4" style=" height: 400px" >
+			<div class="card shadow mb-4" style=" height: 700px" >
 				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 					<h6 class="m-0 font-weight-bold text-primary">상세보기</h6>
 				</div>
@@ -445,14 +423,10 @@ article{
 								</div>
 								<div class="div_left">
 									<span style="float:left" class="span_left">자원설명: </span>
-									<textarea cols="30" rows="8" style="float: left" id="spanResSubdesc"></textarea>
+									<textarea cols="30" rows="6" style="float: left" id="spanResSubdesc"></textarea>
 										
 								</div>
 							</div>
-						</div>
-						<div id="divButton">
-							<button id="btEdit" name="">수정</button> 
-							<button id="btDel">삭제</button>
 						</div>
 					</div>
 				</div>

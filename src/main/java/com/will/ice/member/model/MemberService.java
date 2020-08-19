@@ -35,5 +35,6 @@ public interface MemberService {
 
 		String selectPwd(String memNo);
 
+		int idCheck(String memno);
 		
 }

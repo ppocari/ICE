@@ -34,9 +34,7 @@
 					
 					<!-- Card Body -->
 					<div class="card-body" style="text-align: center">
-						<textarea style="width: 98%;  height: 280px;" readonly="readonly" id="msgContent" name="msgContent">
-							${msgvo.msgContent }
-						</textarea>
+						<textarea style="width: 98%;  height: 280px;" readonly="readonly" id="msgContent" name="msgContent">${msgvo.msgContent }</textarea>
 					</div>
 						
 				</form>
