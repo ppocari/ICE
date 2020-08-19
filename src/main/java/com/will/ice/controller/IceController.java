@@ -80,21 +80,18 @@ public class IceController {
 		//미결함
 		PaymentSearchVO paysearchVo = new PaymentSearchVO();
 		paysearchVo.setIdentNum(identNum);
-		List<Integer> docNolist = paymentService.docNolist();
-		logger.info("docNolist={}",docNolist);
+		paysearchVo.setProgress("reject");
 		
-		List<PaylistViewVO> paylist = paymentService.selectMain(paysearchVo,docNolist);
-		int paySize = paymentService.selectUndecided2(paysearchVo,docNolist).size();
+		List<Integer> docNolist = paymentService.docNolist();
+		
+		List<PaylistViewVO> paylist = paymentService.selectUndecided2(paysearchVo,docNolist);
 		logger.info("미결함 목록 조회 결과={}",paylist.size());
 		
 		//사내게시판
 		List<BoardVO> boardList = boardService.selectMain();
 		logger.info("사내게시판 목록 조회 결과={}",boardList.size());
 		
-		
-		
 		model.addAttribute("paylist",paylist);
-		model.addAttribute("paySize",paySize);
 		model.addAttribute("notiList",notiList);
 		model.addAttribute("boardList",boardList);
 	}

@@ -135,7 +135,7 @@
 		<![CDATA[
 			where trunc(poscode,-1)>trunc(#{poscode},-1)]]>
 			and poscode!='999' and poscode!='920'
-		order by posCode, poscode desc
+		order by deptName, poscode desc
 	</select>
 	
 	<select id="selectDocument" parameterType="int" resultType="paymentviewVo">

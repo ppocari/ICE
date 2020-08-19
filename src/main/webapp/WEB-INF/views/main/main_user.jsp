@@ -119,7 +119,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">미결 문서
                   		<c:if test="${!empty paylist}">
 	                      	<span class="badge badge-danger badge-counter" style="position: relative;">
-	                      		${paySize }
+	                      		${fn:length(paylist) }
 	                      	</span>
 	                      </c:if>
                   </h6>
@@ -134,22 +134,23 @@
                 </div>
                  
                 <div class="card-body" style="height: 300px;">
-                  <table id="UDpayTable" class="table table-hover">
+                  <table id="UDpayTable" class="table table-hover" style="overflow-x: hidden; overflow-y: scroll;">
 					<tbody>
 					<!-- 반복 시작 -->
 						<c:if test="${!empty paylist }">
-							<c:forEach var="payVo" items="${paylist }">
-								<tr onclick="window.open('../payment/docView.do?docNo=${payVo.docNo}','Docviewer','width=1100,height=950,left=0,top=0,location=no,resizable=no,scroll=no');">
-									<td width="30%;">[${payVo.typeName}] ${payVo.name}</td>
-									<td>${payVo.title}</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-						<c:if test="${empty paylist }">
-							<tr>
-								<td colspan="6" style="text-align: center;">문서가 존재하지 않습니다</td>
+						<c:forEach var="vo" items="${paylist }">
+							<tr onclick="window.open('../docView.do?docNo=${vo.docNo}','Docviewer','width=1150,height=920,left=0,top=0,location=no,resizable=no,scroll=no');">
+								<td>[${vo.typeName }] ${vo.writedate }</td>
+								<td>${vo.name }</td>
+								<td>${vo.title }</td>
 							</tr>
-						</c:if>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty paylist }">
+						<tr>
+							<td colspan="6">문서가 존재하지 않습니다</td>
+						</tr>
+					</c:if>
 						<!-- 반복 끝 -->
 					</tbody>
 				</table>
